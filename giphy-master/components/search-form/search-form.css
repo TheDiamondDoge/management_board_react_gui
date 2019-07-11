@@ -1,0 +1,27 @@
+.container {
+    background-color: #9AB87A;
+    padding: 20px 0 20px 20px;
+    display: flex;
+}
+
+.searchField {
+    font-size: 16px;
+    width: 400px;
+    border: none;
+    background-color: white;
+    padding: 10px;
+    color: #3D315B;
+}
+
+.searchField:focus {
+    outline: none;
+}
+
+.button {
+    background-color: #F8F991;
+    border: none;
+    height: 38px;
+    color: #3D315B;
+    font-size: 14px;
+    cursor: pointer;
+}
