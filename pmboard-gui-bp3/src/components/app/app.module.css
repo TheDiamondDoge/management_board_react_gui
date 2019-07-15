@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+}
+
+.itemSidebar {
+    order: 1;
+}
+
+.itemWorkingArea {
+    order: 2;
+}
