@@ -7,8 +7,7 @@ import PropTypes from 'prop-types';
 
 export default class LeftMenu extends React.Component {
     render() {
-        let {flexItemStyle} = this.props;
-        let style = classNames(styles.container, flexItemStyle);
+        let style = classNames(styles.container);
 
         return (
             <div className={style}>
@@ -17,7 +16,3 @@ export default class LeftMenu extends React.Component {
         )
     }
 }
-
-LeftMenu.propTypes = {
-    flexItemStyle: PropTypes.string
-};

@@ -3,6 +3,7 @@ import styles from './menuNavigation.module.css';
 import classNames from 'classnames';
 import {Button, Collapse, Alignment} from '@blueprintjs/core';
 import PropTypes from 'prop-types';
+import { NavigationMenuItem } from "../../util/customTypes";
 
 export default class MenuNavigation extends React.Component {
 
@@ -63,5 +64,7 @@ export default class MenuNavigation extends React.Component {
 };
 
 MenuNavigation.propTypes = {
-    menuNavigationObjects: PropTypes.array.isRequired,
+    menuNavigationObjects: PropTypes.arrayOf(
+        NavigationMenuItem.isRequired
+    ).isRequired,
 };
