@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './leftMenu.module.css';
-import ProjectButton from "./menuButtons/projectsButton";
+import MenuNavigation from "../menuNavigation/menuNavigation";
+import { MENU_ITEMS_ARRAY } from "../menuNavigation/menuNavigationObject";
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -11,12 +12,12 @@ export default class LeftMenu extends React.Component {
 
         return (
             <div className={style}>
-                <ProjectButton/>
+                <MenuNavigation menuNavigationObjects={MENU_ITEMS_ARRAY}/>
             </div>
         )
     }
 }
 
 LeftMenu.propTypes = {
-    flexItemStyle: PropTypes.string.isRequired
+    flexItemStyle: PropTypes.string
 };

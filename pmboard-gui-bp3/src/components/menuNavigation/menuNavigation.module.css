@@ -1,0 +1,15 @@
+.menuButton {
+    color: white !important;
+}
+
+.menuItem {
+    display: block;
+}
+
+.menuItemsContainer {
+    column-count: 1;
+    background-color: white;
+    width: 80%;
+    margin: 10px auto 10px auto;
+    border-radius: 4px;
+}

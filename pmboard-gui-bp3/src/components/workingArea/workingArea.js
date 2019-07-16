@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './workingArea.module.css';
 import classNames from "classnames";
 
 export default class WorkingArea extends React.Component {
