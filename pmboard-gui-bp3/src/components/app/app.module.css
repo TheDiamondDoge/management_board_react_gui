@@ -1,14 +1,23 @@
 .container {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-areas:
+        "nav header"
+        "nav page";
+    grid-template-rows: 50px 100%;
+    grid-template-columns: 230px 1fr;
+    grid-gap: 0;
     height: 100%;
-    width: 100%;
 }
 
-.itemSidebar {
-    order: 1;
+.leftMenu {
+    grid-area: nav;
+    height: 100%;
 }
 
-.itemWorkingArea {
-    order: 2;
+.header {
+    grid-area: header;
+}
+
+.page {
+    grid-area: page;
 }

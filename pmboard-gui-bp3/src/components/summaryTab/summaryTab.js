@@ -14,8 +14,8 @@ export default class SummaryTab extends React.Component {
                     <div className={styles.left}>
                         <div>
                             {DEFAULT_FIELDS_SET.map((obj) => (
-                                <div style={{display: 'flex'}}>
-                                    <FieldName size={'160px'} name={obj.name}/>
+                                <div>
+                                    <FieldName size={'50%'} name={obj.name}/>
                                     <FieldValue value={obj.value}/>
                                 </div>
                             ))

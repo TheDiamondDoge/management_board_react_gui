@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 
 export default class WorkingArea extends React.Component {
     render() {
-        console.log(this.props);
-        const {children} = this.props;
-        let style = classNames(styles.container);
+        const {children, className} = this.props;
+        const style = classNames(styles.container, className);
+
         return (
             <div className={style}>
                 {children}

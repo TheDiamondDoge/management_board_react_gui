@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alignment, Tab, Tabs} from "@blueprintjs/core";
+import {Tab, Tabs} from "@blueprintjs/core";
 import Test from '../test_comps/test';
 import Hello from '../test_comps/world';
 import styles from './pws.module.css';

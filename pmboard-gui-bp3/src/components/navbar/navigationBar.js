@@ -1,11 +1,15 @@
 import React from 'react';
 import {Navbar, NavbarGroup, NavbarHeading, NavbarDivider, Button, Classes, Alignment} from "@blueprintjs/core";
 import styles from './navigationBar.css';
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
 export default class NavigationBar extends React.Component {
     render() {
+        const {className} = this.props;
+        const style = classNames(styles.container, className);
         return (
-            <nav className={styles.container}>
+            <nav className={style}>
                 <Navbar>
                     <NavbarGroup align={Alignment.RIGHT}>
                         <NavbarHeading>PM BOARD</NavbarHeading>
@@ -18,3 +22,7 @@ export default class NavigationBar extends React.Component {
         )
     }
 }
+
+NavigationBar.propTypes = {
+    className: PropTypes.string,
+};

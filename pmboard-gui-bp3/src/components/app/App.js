@@ -14,16 +14,14 @@ FocusStyleManager.onlyShowFocusOnTabs();
 export default function App() {
     return (
         <div className={styles.container}>
-            <LeftMenu />
-            <WorkingArea>
-                <NavigationBar />
-                <div style={{padding: '5px'}}>
+            <LeftMenu className={styles.leftMenu}/>
+            <NavigationBar className={styles.header} />
+            <WorkingArea className={styles.page}>
                     <Router>
                         <Route path="/" exact component={World}/>
                         <Route path="/pws" exact component={PWS}/>
                         <Route path="/test" exact component={Test}/>
                     </Router>
-                </div>
             </WorkingArea>
         </div>
     );
