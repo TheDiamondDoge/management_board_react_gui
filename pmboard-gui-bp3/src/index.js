@@ -4,7 +4,7 @@ import App from './components/app/App';
 import {applyMiddleware, createStore} from "redux";
 import {createBrowserHistory} from 'history';
 import {Provider} from "react-redux";
-import {ConnectedRouter, routerMiddleware} from "react-router-redux";
+import {routerMiddleware} from "react-router-redux";
 import {createLogger} from "redux-logger";
 import * as serviceWorker from './serviceWorker';
 

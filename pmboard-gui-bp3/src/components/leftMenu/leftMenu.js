@@ -8,10 +8,10 @@ import PropTypes from 'prop-types';
 export default class LeftMenu extends React.Component {
     render() {
         const { className } = this.props;
-        let style = classNames(styles.container, className);
+        let classes = classNames(styles.container, className);
 
         return (
-            <div className={style}>
+            <div className={classes}>
                 <MenuNavigation menuNavigationObjects={MENU_ITEMS_ARRAY}/>
             </div>
         )

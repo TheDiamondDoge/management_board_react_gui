@@ -1,0 +1,24 @@
+.data_fields {
+    display: grid;
+    grid-template-columns: 170px 100%;
+    grid-template-rows:  1em 1em;
+    grid-gap: 0;
+}
+
+.main_card {
+    grid-template-columns: 170px 100%;
+}
+
+.secondary_card {
+    grid-template-columns: 230px 100%;
+}
+
+.data_container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 0;
+}
+
+.pws_data_container {
+    display: grid;
+}

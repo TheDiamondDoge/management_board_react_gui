@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 export default class WorkingArea extends React.Component {
     render() {
         const {children, className} = this.props;
-        const style = classNames(styles.container, className);
+        const classes = classNames(styles.container, className);
 
         return (
-            <div className={style}>
+            <div className={classes}>
                 {children}
             </div>
         )
@@ -17,5 +17,6 @@ export default class WorkingArea extends React.Component {
 }
 
 WorkingArea.propTypes = {
-    children: PropTypes.array,
+    children: PropTypes.node,
+    className: PropTypes.string,
 };

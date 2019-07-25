@@ -1,5 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default ({value, size}) => (
-    <div style={{width: size, display: 'inline-block'}}>{value}</div>
-)
+export const FieldValue = ({value}) => (
+    <div>{value}</div>
+);
+
+FieldValue.propTypes = {
+    value: PropTypes.string.isRequired,
+};

@@ -1,6 +1,11 @@
 import React from 'react';
 import styles from "./fieldName.module.css";
+import PropTypes from 'prop-types';
 
-export default ({name, size}) => (
-    <div style={{width: size, height: '100%'}} className={styles.field}>{name}:</div>
-);
+export const FieldName = ({name}) => {
+    return (<div className={styles.field}>{name}:</div>)
+};
+
+FieldName.propTypes = {
+    name: PropTypes.string.isRequired,
+};
