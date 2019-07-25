@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {stringToUrlElem} from '../../util/transformFuncs';
 
 export const FieldValue = ({value}) => (
-    <div>{value}</div>
+    <div>{stringToUrlElem(value)}</div>
 );
 
 FieldValue.propTypes = {
