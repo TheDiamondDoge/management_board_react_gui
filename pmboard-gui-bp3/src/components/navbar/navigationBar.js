@@ -3,6 +3,7 @@ import {Navbar, NavbarGroup, NavbarHeading, NavbarDivider, Button, Classes, Alig
 import styles from './navigationBar.css';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import {CustomBreadcrumbs} from "../breadcrumbs/breadcrumbs";
 
 export default class NavigationBar extends React.Component {
     render() {
@@ -11,11 +12,14 @@ export default class NavigationBar extends React.Component {
         return (
             <nav className={style}>
                 <Navbar>
+                    <NavbarGroup>
+                        <CustomBreadcrumbs/>
+                    </NavbarGroup>
                     <NavbarGroup align={Alignment.RIGHT}>
                         <NavbarHeading>PM BOARD</NavbarHeading>
-                        <NavbarDivider />
-                        <Button className={Classes.MINIMAL} icon="home" />
-                        <Button className={Classes.MINIMAL} icon="document" text="Files" />
+                        <NavbarDivider/>
+                        <Button className={Classes.MINIMAL} icon="home"/>
+                        <Button className={Classes.MINIMAL} icon="document" text="Files"/>
                     </NavbarGroup>
                 </Navbar>
             </nav>

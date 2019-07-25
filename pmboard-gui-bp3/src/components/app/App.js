@@ -5,7 +5,7 @@ import styles from './app.module.css';
 import NavigationBar from "../navbar/navigationBar";
 import Test from "../test_comps/test";
 import World from "../test_comps/world";
-import PWS from "../pws/pws";
+import PWS from "../pages/pws/pws";
 import { FocusStyleManager } from "@blueprintjs/core";
 import { BrowserRouter as Router, Route} from "react-router-dom";
 
