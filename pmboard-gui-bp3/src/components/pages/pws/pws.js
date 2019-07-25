@@ -1,9 +1,9 @@
 import React from 'react';
 import {Tab, Tabs} from "@blueprintjs/core";
-import Test from '../../test_comps/test';
 import Hello from '../../test_comps/world';
 import styles from './pws.module.css';
-import SummaryTab from "../../summaryTab/summaryTab";
+import SummaryTab from "./tabs/summaryTab/summaryTab";
+import InfoTab from "./tabs/infoTab/infoTab";
 
 export default class PWS extends React.Component {
     state = {
@@ -28,7 +28,7 @@ export default class PWS extends React.Component {
                 >
                     <Tab id="sum" title="Summary" panel={<SummaryTab/>}/>
                     <Tab id="ind" title="Indicators" panel={<Hello/>}/>
-                    <Tab id="inf" title="Information" panel={<Test/>}/>
+                    <Tab id="inf" title="Information" panel={<InfoTab />}/>
                     <Tab id="rep" title="Report" panel={<Hello/>}/>
                 </Tabs>
             </div>
