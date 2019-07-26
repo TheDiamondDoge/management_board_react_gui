@@ -1,11 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {stringToUrlElem} from '../../util/transformFuncs';
+import {InputGroup} from "@blueprintjs/core";
 
-export const FieldValue = ({value}) => (
-    <div>{stringToUrlElem(value)}</div>
-);
+export default class FieldValue extends React.Component{
+    state = {
+        editMode: false,
+    };
+
+    render() {
+        const { value, editMode } = this.props;
+        return (
+            this.getRenderField(value, editMode)
+        )
+    }
+
+    getRenderField = (value, editMode) => {
+        if (editMode === undefined || editMode === false) {
+            return <div>{stringToUrlElem(value)}</div>
+        } else {
+            return (
+                <div>
+                    <InputGroup
+                        type="text"
+                        value={value}
+                    />
+                    {/*<input type="text" value={value}/>*/}
+                </div>
+            )
+        }
+    };
+};
 
 FieldValue.propTypes = {
     value: PropTypes.string.isRequired,
+    editMode: PropTypes.bool,
 };

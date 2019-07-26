@@ -3,33 +3,33 @@ import {CustomCard} from "../../../../card/customCard";
 import MilestoneTable from "../../../../milestoneTable/milestoneTable";
 import {INFO_MAIN_INFO, INFO_URLS} from "./infoTabObject";
 import {FieldName} from "../../../../fieldName/fieldName";
-import {FieldValue} from "../../../../fieldValue/fieldValue";
+import FieldValue from "../../../../fieldValue/fieldValue";
+import EditSaveControls from "../../../../editSaveContols/editSaveControls";
 import {Button, Intent} from "@blueprintjs/core";
 import styles from './infoTab.module.css'
 
 export default class InfoTab extends React.Component {
     state = {
-        isLoading: false
+        isLoading: false,
+        editMode: false,
     };
+
+    editClickHandle = () => (
+        this.setState((prevState) => ({
+            editMode: !prevState.editMode
+        }))
+    );
 
     render() {
         return (
             <div>
-                <Button
-                    minimal={true}
-                    text={"Edit"}
-                    icon={"edit"}
-                    large={true}
-                    loading={this.state.isLoading}
-                    onClick={() => (this.setState((prevState) => ({isLoading: !prevState.isLoading})))}
-                    intent={Intent.PRIMARY}
-                />
+                <EditSaveControls />
                 <CustomCard>
                     {
                         INFO_MAIN_INFO.map((obj, key) => (
                             <div key={key} className={styles.data_container}>
                                 <FieldName name={obj.name}/>
-                                <FieldValue value={obj.value}/>
+                                <FieldValue value={obj.value} editMode={this.state.editMode}/>
                             </div>
                         ))
                     }
@@ -48,7 +48,7 @@ export default class InfoTab extends React.Component {
                         INFO_URLS.map((obj, key) => (
                             <div key={key} className={styles.url_container}>
                                 <FieldName name={obj.name}/>
-                                <FieldValue value={obj.value}/>
+                                <FieldValue value={obj.value} editMode={this.state.editMode}/>
                             </div>
                         ))
                     }

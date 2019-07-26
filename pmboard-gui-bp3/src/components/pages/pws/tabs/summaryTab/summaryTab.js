@@ -1,7 +1,7 @@
 import React from 'react';
 import Timeline from "../../../../timeline/timeline";
 import { FieldName } from "../../../../fieldName/fieldName";
-import { FieldValue } from "../../../../fieldValue/fieldValue";
+import FieldValue from "../../../../fieldValue/fieldValue";
 import styles from './summaryTab.module.css';
 import {DEFAULT_MAIN_FIELDS_SET, DEFAULT_SECONDARY_FIELDS_SET_LEFT, DEFAULT_SECONDARY_FIELDS_SET_RIGHT, DEFAULT_PWS_FIELDS_SET} from './summaryTabObjects';
 import classNames from 'classnames';

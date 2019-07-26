@@ -2,7 +2,7 @@ import React from 'react';
 import {HTMLTable} from "@blueprintjs/core";
 import {FieldName} from "../fieldName/fieldName";
 import {MILESTONE_DATA} from "./milestoneTableObject";
-import {FieldValue} from "../fieldValue/fieldValue";
+import FieldValue from "../fieldValue/fieldValue";
 
 export default class MilestoneTable extends React.Component {
     render() {
