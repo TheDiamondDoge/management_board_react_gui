@@ -1,0 +1,36 @@
+export const INFO_MAIN_INFO = [
+    {name: 'Project Description', value: "Super Project" },
+    {name: 'OEM Partner', value: "Super Partner" },
+    {name: 'Key Customers', value: "Super Customer" },
+    {name: 'Product Release', value: "Super Release" },
+    {name: 'Project Type', value: "Super Type" },
+    {name: 'Project Rigor', value: "Super Rigor" },
+    {name: 'Project State', value: "Super State" },
+    {name: 'Business Division', value: "Super Division" },
+    {name: 'Business Unit', value: "Super Unit" },
+    {name: 'Product Line', value: "Super Line" },
+    {name: 'Product Name', value: "Super Product" },
+    {name: 'Sponsor', value: "Super Sponsor" },
+    {name: 'Business Line Manager', value: "Super BLM" },
+    {name: 'Product Line Manager', value: "Super PLM" },
+    {name: 'Project Manager', value: "Super PM" },
+    {name: 'Charter', value: "https://jira.ale-international.com/secure/RapidBoard.jspa?rapidView=978&projectKey=PMBOARD&selectedIssue=PMBOARD-260&quickFilter=3739&quickFilter=3238" },
+    {name: 'OR Business Plan', value: "OR BP" },
+    {name: 'Updated Business Plan', value: "Super UBP" },
+    {name: 'Tailored DR-checklist', value: "Super Tailored" },
+    {name: 'Lessons Learned', value: "Super Lessons" },
+    {name: 'Project Plan', value: "Super Plan" },
+    {name: 'Metrics Scope', value: "Super MScope" },
+    {name: 'RQ Release Name (JIRA)', value: "Super RQ" },
+    {name: 'ECMA Backlog Target', value: "Super Backlog" },
+    {name: 'Composite Project', value: "Super Composite" },
+];
+
+
+export const INFO_URLS = [
+    {name: 'Project Collaboration Site', value: 'http://super.puper.url'},
+    {name: 'Project Documentation Repository', value: 'http://super.puper.url'},
+    {name: 'Defects (JIRA)', value: 'http://super.puper.url'},
+    {name: 'Requirements (JIRA)', value: 'http://super.puper.url'},
+    {name: 'Continuous Integration Site', value: 'http://super.puper.url'},
+];
