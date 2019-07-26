@@ -3,14 +3,14 @@ import {HTMLTable} from "@blueprintjs/core";
 import {FieldName} from "../fieldName/fieldName";
 import {MILESTONE_DATA} from "./milestoneTableObject";
 import FieldValue from "../fieldValue/fieldValue";
+import PropTypes from "prop-types";
 
 export default class MilestoneTable extends React.Component {
     render() {
+        const {editMode} = this.props;
         return (
             <div>
-                <HTMLTable
-                    striped={true}
-                >
+                <HTMLTable striped={true}>
                     <thead>
                     <tr>
                         <th>
@@ -56,3 +56,7 @@ export default class MilestoneTable extends React.Component {
         objProp ? objProp : "-"
     );
 }
+
+MilestoneTable.propTypes = {
+    editMode: PropTypes.bool,
+};

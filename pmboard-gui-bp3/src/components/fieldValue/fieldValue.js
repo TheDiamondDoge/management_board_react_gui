@@ -16,16 +16,15 @@ export default class FieldValue extends React.Component{
     }
 
     getRenderField = (value, editMode) => {
-        if (editMode === undefined || editMode === false) {
+        if (!editMode) {
             return <div>{stringToUrlElem(value)}</div>
         } else {
             return (
                 <div>
                     <InputGroup
                         type="text"
-                        value={value}
+                        defaultValue={value}
                     />
-                    {/*<input type="text" value={value}/>*/}
                 </div>
             )
         }

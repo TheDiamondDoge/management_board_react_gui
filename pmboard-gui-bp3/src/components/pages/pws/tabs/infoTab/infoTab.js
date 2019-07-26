@@ -5,7 +5,6 @@ import {INFO_MAIN_INFO, INFO_URLS} from "./infoTabObject";
 import {FieldName} from "../../../../fieldName/fieldName";
 import FieldValue from "../../../../fieldValue/fieldValue";
 import EditSaveControls from "../../../../editSaveContols/editSaveControls";
-import {Button, Intent} from "@blueprintjs/core";
 import styles from './infoTab.module.css'
 
 export default class InfoTab extends React.Component {
@@ -21,9 +20,10 @@ export default class InfoTab extends React.Component {
     );
 
     render() {
+        console.log("RENDER infoTab");
         return (
             <div>
-                <EditSaveControls />
+                <EditSaveControls onClick={this.editClickHandle} editMode={this.state.editMode}/>
                 <CustomCard>
                     {
                         INFO_MAIN_INFO.map((obj, key) => (

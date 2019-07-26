@@ -1,18 +1,17 @@
 import React from 'react';
 import {Button, Intent} from "@blueprintjs/core";
+import PropTypes from "prop-types";
 
 export default class EditSaveControls extends React.Component {
-    state = {
-        editMode: false,
-    };
-
     render() {
+        console.log("RENDER EditSave");
+        const {onClick, editMode} = this.props;
         return (
-            this.renderElements(this.state.editMode)
+            this.renderElements(editMode, onClick)
         )
     }
 
-    renderElements = (editMode) => {
+    renderElements = (editMode, onClick) => {
         if (editMode) {
             return (
                 <div>
@@ -21,7 +20,7 @@ export default class EditSaveControls extends React.Component {
                         text={"Save"}
                         icon={"saved"}
                         large={true}
-                        onClick={this.onClickHandler}
+                        onClick={onClick}
                         intent={Intent.PRIMARY}
                     />
                     <Button
@@ -29,7 +28,7 @@ export default class EditSaveControls extends React.Component {
                         text={"Cancel"}
                         icon={"undo"}
                         large={true}
-                        onClick={this.onClickHandler}
+                        onClick={onClick}
                         intent={Intent.PRIMARY}
                     />
                 </div>
@@ -42,19 +41,16 @@ export default class EditSaveControls extends React.Component {
                         text={"Edit"}
                         icon={"edit"}
                         large={true}
-                        onClick={this.onClickHandler}
+                        onClick={onClick}
                         intent={Intent.PRIMARY}
                     />
                 </div>
             )
         }
     };
-
-    onClickHandler = () => {
-        this.setState((prevState) => ({
-            editMode: !prevState.editMode
-        }))
-    };
-
 };
 
+EditSaveControls.propTypes = {
+    onClick: PropTypes.func,
+    editMode: PropTypes.bool,
+};
