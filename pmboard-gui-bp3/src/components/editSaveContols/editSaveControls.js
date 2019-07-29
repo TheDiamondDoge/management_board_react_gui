@@ -14,7 +14,7 @@ export default class EditSaveControls extends React.Component {
     renderElements = (editMode, onClick) => {
         if (editMode) {
             return (
-                <div>
+                <div className={this.props.className}>
                     <Button
                         minimal={true}
                         text={"Save"}
@@ -35,7 +35,7 @@ export default class EditSaveControls extends React.Component {
             )
         } else {
             return (
-                <div>
+                <div className={this.props.className}>
                     <Button
                         minimal={true}
                         text={"Edit"}

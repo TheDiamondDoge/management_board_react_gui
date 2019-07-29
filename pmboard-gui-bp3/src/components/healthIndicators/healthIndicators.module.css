@@ -1,0 +1,17 @@
+.column_align_center {
+    text-align: center !important;
+}
+
+.health_table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.status_col {
+    width: 170px;
+}
+
+.prev_column, .cur_column {
+    width: 90px;
+}
+

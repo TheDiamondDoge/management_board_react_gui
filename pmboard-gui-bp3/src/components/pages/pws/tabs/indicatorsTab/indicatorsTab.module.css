@@ -1,0 +1,38 @@
+.data_grid {
+    display: grid;
+    grid-template-areas:
+        "timeline timeline timeline"
+        "health health health"
+        "req milestones dr4_kpi"
+        "quality quality quality"
+    ;
+    grid-template-rows: 200px 340px 1fr 400px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 18px;
+}
+
+.timeline {
+    grid-area: timeline;
+}
+
+.health {
+    grid-area: health;
+}
+
+.req {
+    grid-area: req;
+}
+
+.milestones {
+    grid-area: milestones;
+}
+
+.dr4_kpi {
+    grid-area: dr4_kpi;
+}
+
+.quality {
+    grid-area: quality;
+}
+
+

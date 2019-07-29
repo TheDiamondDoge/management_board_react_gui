@@ -1,0 +1,16 @@
+.quality_table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.column_align_right {
+    text-align: right !important;
+}
+
+.column_align_center {
+    text-align: center !important;
+}
+
+.float_right {
+    float: right;
+}

@@ -4,6 +4,7 @@ import Hello from '../../test_comps/world';
 import styles from './pws.module.css';
 import SummaryTab from "./tabs/summaryTab/summaryTab";
 import InfoTab from "./tabs/infoTab/infoTab";
+import IndicatorsTab from "./tabs/indicatorsTab/indicatorsTab";
 
 export default class PWS extends React.Component {
     state = {
@@ -26,8 +27,8 @@ export default class PWS extends React.Component {
                     renderActiveTabPanelOnly={true}
                     large={true}
                 >
-                    <Tab id="sum" title="Summary" panel={<SummaryTab/>}/>
-                    <Tab id="ind" title="Indicators" panel={<Hello/>}/>
+                    <Tab id="sum" title="Summary" panel={<IndicatorsTab/>}/>
+                    <Tab id="ind" title="Indicators" panel={<SummaryTab/>}/>
                     <Tab id="inf" title="Information" panel={<InfoTab />}/>
                     <Tab id="rep" title="Report" panel={<Hello/>}/>
                 </Tabs>
