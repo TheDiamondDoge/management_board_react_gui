@@ -38,7 +38,7 @@ export default class InfoTab extends React.Component {
                 <br/>
 
                 <CustomCard>
-                    <MilestoneTable />
+                    <MilestoneTable editMode={this.state.editMode} />
                 </CustomCard>
 
                 <br/>
