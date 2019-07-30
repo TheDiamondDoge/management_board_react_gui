@@ -1,0 +1,14 @@
+.kpi_table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.column_align_center {
+    text-align: center !important;
+}
+
+.border_top {
+    border-top: 1px solid lightgray;
+}
+
+

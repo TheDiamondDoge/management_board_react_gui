@@ -1,0 +1,28 @@
+.mil_table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.column_align_center {
+    text-align: center !important;
+}
+
+.borderBottom {
+    border-bottom: 1px solid lightgray;
+}
+
+.mil_col {
+    width: 60px;
+}
+
+.adh_col {
+    width: 70px;
+}
+
+.delay_col {
+    width: 50px;
+}
+
+.duration_col {
+    width: 60px;
+}

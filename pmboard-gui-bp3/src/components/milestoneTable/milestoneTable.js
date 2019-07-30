@@ -1,5 +1,5 @@
 import React from 'react';
-import {Checkbox, HTMLTable, NumericInput, Position} from "@blueprintjs/core";
+import {Checkbox, HTMLTable, NumericInput} from "@blueprintjs/core";
 import {FieldName} from "../fieldName/fieldName";
 import {MILESTONE_DATA} from "./milestoneTableObject";
 import FieldValue from "../fieldValue/fieldValue";

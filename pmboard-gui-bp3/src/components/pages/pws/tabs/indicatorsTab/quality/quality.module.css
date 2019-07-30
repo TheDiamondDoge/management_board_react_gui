@@ -14,3 +14,15 @@
 .float_right {
     float: right;
 }
+
+.float_left {
+    float: left;
+}
+
+.descr_col {
+    width: 230px;
+}
+
+.obj_col, .actual_col {
+    width: 75px;
+}

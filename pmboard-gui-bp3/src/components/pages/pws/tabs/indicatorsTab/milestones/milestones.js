@@ -1,43 +1,54 @@
 import React from 'react';
 import {HTMLTable} from "@blueprintjs/core";
 import {FieldName} from "../../../../../fieldName/fieldName";
+import styles from "./milestones.module.css";
+import {MILESTONES_DATA} from "./milestonesObject";
+import classNames from 'classnames';
 
 export default class Milestones extends React.Component {
     render() {
+        let headerClasses = classNames(styles.column_align_center, styles.borderBottom);
         return (
-            <HTMLTable>
+            <HTMLTable
+                className={styles.mil_table}
+                striped={true}
+            >
+                <colgroup>
+                    <col className={styles.mil_col}/>
+                    <col className={styles.adh_col}/>
+                    <col className={styles.delay_col}/>
+                    <col className={styles.duration_col}/>
+                </colgroup>
                 <thead>
                     <tr>
-                        <th>&nbsp;</th>
-                        <th colSpan={2}>COMMITTED versus ACTUAL</th>
-                        <th>&nbsp;</th>
+                        <th className={headerClasses} colSpan={4}>COMMITTED versus ACTUAL</th>
                     </tr>
                     <tr>
-                        <th>Milestone</th>
-                        <th>Schedule Adherence</th>
-                        <th>Delay (in days)</th>
-                        <th>Project Duration from DR1</th>
+                        <th>
+                            Milestone
+                        </th>
+                        <th className={styles.column_align_center}>
+                            Schedule Adherence
+                        </th>
+                        <th className={styles.column_align_center}>
+                            Delay (days)
+                        </th>
+                        <th className={styles.column_align_center}>
+                            Project Duration from DR1
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><FieldName name={"TR"}/></td>
-                        <td>100%</td>
-                        <td>0</td>
-                        <td>188 days</td>
-                    </tr>
-                    <tr>
-                        <td><FieldName name={"DR4"}/></td>
-                        <td>100%</td>
-                        <td>0</td>
-                        <td>202 days</td>
-                    </tr>
-                    <tr>
-                        <td><FieldName name={"CI"}/></td>
-                        <td>100%</td>
-                        <td>0</td>
-                        <td>104 days</td>
-                    </tr>
+                {
+                    MILESTONES_DATA.map((obj, i) => (
+                        <tr key={i}>
+                            <td><FieldName name={obj.label}/></td>
+                            <td className={styles.column_align_center}>{obj.adherence}%</td>
+                            <td className={styles.column_align_center}>{obj.delay}</td>
+                            <td className={styles.column_align_center}>{obj.duration} days</td>
+                        </tr>
+                    ))
+                }
                 </tbody>
             </HTMLTable>
         );

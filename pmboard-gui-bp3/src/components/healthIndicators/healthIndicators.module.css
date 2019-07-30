@@ -13,5 +13,9 @@
 
 .prev_column, .cur_column {
     width: 90px;
+    text-align: center !important;
 }
 
+.inline_block {
+    display: inline-block;
+}
