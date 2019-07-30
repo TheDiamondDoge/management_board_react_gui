@@ -15,7 +15,7 @@ export default class IndicatorsTab extends React.Component {
                 <Timeline className={styles.timeline} />
                 <CustomCard className={styles.health}>
                     <h3>Health</h3>
-                    <HealthIndicators/>
+                    <HealthIndicators isSummaryMode={false} />
                 </CustomCard>
                 <CustomCard className={styles.req}>
                     <h3>Requirements</h3>

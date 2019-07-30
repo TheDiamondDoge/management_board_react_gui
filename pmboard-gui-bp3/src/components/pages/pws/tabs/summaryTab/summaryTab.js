@@ -6,11 +6,12 @@ import styles from './summaryTab.module.css';
 import {DEFAULT_MAIN_FIELDS_SET, DEFAULT_SECONDARY_FIELDS_SET_LEFT, DEFAULT_SECONDARY_FIELDS_SET_RIGHT, DEFAULT_PWS_FIELDS_SET} from './summaryTabObjects';
 import classNames from 'classnames';
 import { CustomCard } from "../../../../card/customCard.js";
+import HealthIndicators from "../../../../healthIndicators/healthIndicators";
 
 export default class SummaryTab extends React.Component {
     render() {
         console.log("Summary tab", "Render");
-        let mainCardStyle = classNames(styles.data_fields, styles.main_card);
+        let mainCardStyle = classNames(styles.data_fields);
         let secondaryCardStyle = classNames(styles.data_fields, styles.secondary_card);
         return (
             <div>
@@ -27,7 +28,9 @@ export default class SummaryTab extends React.Component {
                             ))
                         }
                     </div>
-                    <div className="right_part"></div>
+                    <div className={styles.right_part}>
+                        <HealthIndicators isSummaryMode={true} />
+                    </div>
                 </CustomCard>
 
                 <br/>
