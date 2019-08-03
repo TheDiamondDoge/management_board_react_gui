@@ -3,12 +3,9 @@
     vertical-align: middle !important;
 }
 
-.border_right {
-    /*border-right: 1px solid lightblue;*/
-}
-
 .blc_table {
     width: 100%;
+    min-width: 1225px;
     table-layout: fixed;
 }
 
@@ -45,6 +42,10 @@
     width: 50px;
 }
 
-.comments {
+.risks_col {
     width: 55px;
+}
+
+.comment {
+    /*width: 70px;*/
 }

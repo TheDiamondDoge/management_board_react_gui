@@ -1,5 +1,5 @@
 import React from "react";
-import {HTMLTable} from "@blueprintjs/core";
+import {HTMLTable, Button, Classes, Intent} from "@blueprintjs/core";
 import {CustomCard} from "../../../../card/customCard";
 import styles from "./blc.module.css";
 import classNames from 'classnames';
@@ -11,6 +11,9 @@ export default class BlcDashboard extends React.Component {
         const thCommentClasses = classNames(styles.column_align_center);
         return (
             <CustomCard>
+                <Button intent={Intent.SUCCESS} className={Classes.MINIMAL} icon={"upload"} text={"Publish Dashboard"}/>
+                <br/>
+                <br/>
                 <HTMLTable
                     bordered={true}
                     className={styles.blc_table}
@@ -31,7 +34,8 @@ export default class BlcDashboard extends React.Component {
                         <col className={styles.lp_plan}/>
                         <col className={styles.lp_sales}/>
                         <col className={styles.les_learned}/>
-                        <col className={styles.comments}/>
+                        <col className={styles.risks_col}/>
+                        <col className={styles.comment}/>
                     </colgroup>
                     <thead>
                     <tr>

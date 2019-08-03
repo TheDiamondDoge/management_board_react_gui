@@ -1,8 +1,9 @@
 html, body, #root {
     height: 100%;
+    width: 100%;
     background-color: #f8f9fc;
 }
 
 html {
-    overflow-x: hidden;
+    overflow-x: auto;
 }

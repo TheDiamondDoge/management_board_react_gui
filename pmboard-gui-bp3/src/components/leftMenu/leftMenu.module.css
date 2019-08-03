@@ -1,7 +1,6 @@
 .container {
     background-image: linear-gradient(180deg,#4e73df 10%,#224abe 100%);
     height: 100%;
-    width: 230px;
     overflow-x: hidden;
     padding-top: 20px;
 }

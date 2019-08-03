@@ -21,7 +21,7 @@ export default class EditSaveControls extends React.Component {
                         icon={"saved"}
                         large={true}
                         onClick={onClick}
-                        intent={Intent.PRIMARY}
+                        intent={Intent.SUCCESS}
                     />
                     <Button
                         minimal={true}
@@ -29,7 +29,7 @@ export default class EditSaveControls extends React.Component {
                         icon={"undo"}
                         large={true}
                         onClick={onClick}
-                        intent={Intent.PRIMARY}
+                        intent={Intent.DANGER}
                     />
                 </div>
             )

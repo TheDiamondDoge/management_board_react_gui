@@ -12,7 +12,7 @@ export default class SummaryTab extends React.Component {
     render() {
         console.log("Summary tab", "Render");
         let mainCardStyle = classNames(styles.data_fields);
-        let secondaryCardStyle = classNames(styles.data_fields, styles.secondary_card);
+        let secondaryCardStyle = classNames(styles.secondary_card);
         return (
             <div>
                 <Timeline/>
