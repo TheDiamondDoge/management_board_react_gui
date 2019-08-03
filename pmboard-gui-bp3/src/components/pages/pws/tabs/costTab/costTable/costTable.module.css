@@ -1,0 +1,16 @@
+.column_align_center {
+    text-align: center !important;
+}
+
+.cost_table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.effort_col {
+    width: 150px;
+}
+
+.value_col {
+    width: 100px;
+}

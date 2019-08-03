@@ -1,0 +1,50 @@
+.column_align_center {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.border_right {
+    /*border-right: 1px solid lightblue;*/
+}
+
+.blc_table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.role_col,
+.updated_col,
+.who_col {
+    width: 100px;
+    border-left: 40px red solid;
+}
+
+.or_col {
+    width: 95px;
+}
+
+.proj_plan_col,
+.charter_col {
+    width: 65px;
+}
+
+.tailoring_col,
+.core_col {
+    width: 75px;
+}
+
+.prog_mgr_col,
+.bp_sales,
+.lp_sales,
+.les_learned {
+    width: 70px;
+}
+
+.bp_plan_col,
+.lp_plan {
+    width: 50px;
+}
+
+.comments {
+    width: 55px;
+}

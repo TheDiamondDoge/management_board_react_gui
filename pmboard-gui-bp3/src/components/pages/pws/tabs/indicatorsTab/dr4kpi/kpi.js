@@ -13,8 +13,8 @@ export default class Kpi extends React.Component {
                 striped={true}
             >
                 <colgroup>
-                    <col style={{width: "130px"}}/>
-                    <col style={{width: "131px"}}/>
+                    <col className={styles.name_col}/>
+                    <col className={styles.value_col}/>
                 </colgroup>
                 <thead>
                 <tr>
