@@ -1,9 +1,9 @@
 import React from 'react';
 import {HTMLTable} from "@blueprintjs/core";
-import EditSaveControls from "../../../../../editSaveContols/editSaveControls";
+import EditSaveControls from "../../../editSaveContols/editSaveControls";
 import styles from "./requirements.module.css";
 import classNames from "classnames";
-import {FieldName} from "../../../../../fieldName/fieldName";
+import {FieldName} from "../../../fieldName/fieldName";
 
 export default class Requirements extends React.Component {
     render() {

@@ -9,3 +9,16 @@ let isUrl = (url) => {
     const regExp = new RegExp(expr);
     return url.match(regExp);
 };
+
+export const blcNumberToState = (num) => {
+    switch (num) {
+        case 1:
+            return "red";
+        case 3:
+            return "yellow";
+        case 6:
+            return "green";
+        default:
+            return "blank"
+    }
+};

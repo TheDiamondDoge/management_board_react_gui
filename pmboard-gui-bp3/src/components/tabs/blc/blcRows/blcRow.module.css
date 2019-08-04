@@ -2,6 +2,10 @@
     text-align: center !important;
 }
 
+.word_break {
+    word-wrap: break-word;
+}
+
 .inline_block {
     display: inline-block !important;
 }

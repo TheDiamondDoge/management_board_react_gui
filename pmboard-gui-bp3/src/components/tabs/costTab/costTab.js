@@ -1,8 +1,8 @@
 import React from "react";
 import CostTable from "./costTable/costTable";
-import {CustomCard} from "../../../../card/customCard";
+import {CustomCard} from "../../card/customCard";
 import styles from "./costTab.module.css";
-import EditSaveControls from "../../../../editSaveContols/editSaveControls";
+import EditSaveControls from "../../editSaveContols/editSaveControls";
 
 export default class CostTab extends React.Component {
     render() {

@@ -9,9 +9,15 @@
     table-layout: fixed;
 }
 
-.role_col,
-.updated_col,
+.role_col {
+    width: 160px;
+}
+
 .who_col {
+    width: 80px;
+}
+
+.updated_col {
     width: 100px;
     border-left: 40px red solid;
 }

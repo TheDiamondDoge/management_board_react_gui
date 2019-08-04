@@ -1,10 +1,10 @@
 import React from 'react';
-import {CustomCard} from "../../../../card/customCard";
-import MilestoneTable from "../../../../milestoneTable/milestoneTable";
+import {CustomCard} from "../../card/customCard";
+import MilestoneTable from "../../milestoneTable/milestoneTable";
 import {INFO_MAIN_INFO, INFO_URLS} from "./infoTabObject";
-import {FieldName} from "../../../../fieldName/fieldName";
-import FieldValue from "../../../../fieldValue/fieldValue";
-import EditSaveControls from "../../../../editSaveContols/editSaveControls";
+import {FieldName} from "../../fieldName/fieldName";
+import FieldValue from "../../fieldValue/fieldValue";
+import EditSaveControls from "../../editSaveContols/editSaveControls";
 import styles from './infoTab.module.css'
 
 export default class InfoTab extends React.Component {
