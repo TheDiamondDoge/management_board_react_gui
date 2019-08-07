@@ -5,42 +5,41 @@ import PropTypes from "prop-types";
 export default class EditSaveControls extends React.Component {
     render() {
         console.log("RENDER EditSave");
-        const {onClick, editMode} = this.props;
+        const {onClick, editMode, smallSize} = this.props;
         return (
-            this.renderElements(editMode, onClick)
+            this.renderElements(editMode, smallSize, onClick)
         )
     }
 
-    renderElements = (editMode, onClick) => {
+    renderElements = (editMode, smallSize, onClick) => {
+        let condProps = this.getButtonProps(smallSize);
         if (editMode) {
             return (
                 <div className={this.props.className}>
                     <Button
+                        {...condProps}
                         minimal={true}
-                        text={"Save"}
                         icon={"saved"}
-                        large={true}
                         onClick={onClick}
                         intent={Intent.SUCCESS}
                     />
                     <Button
+                        {...condProps}
                         minimal={true}
-                        text={"Cancel"}
                         icon={"undo"}
-                        large={true}
                         onClick={onClick}
                         intent={Intent.DANGER}
                     />
                 </div>
             )
         } else {
+            condProps.text = "Edit";
             return (
                 <div className={this.props.className}>
                     <Button
+                        {...condProps}
                         minimal={true}
-                        text={"Edit"}
                         icon={"edit"}
-                        large={true}
                         onClick={onClick}
                         intent={Intent.PRIMARY}
                     />
@@ -48,9 +47,22 @@ export default class EditSaveControls extends React.Component {
             )
         }
     };
+
+    getButtonProps = (isSmall) => {
+        if (isSmall) {
+            return {}
+        } else {
+            return {
+                text: "Save",
+                large: true,
+            }
+        }
+    };
 };
 
 EditSaveControls.propTypes = {
     onClick: PropTypes.func,
     editMode: PropTypes.bool,
+    smallSize: PropTypes.bool,
+    className: PropTypes.string,
 };

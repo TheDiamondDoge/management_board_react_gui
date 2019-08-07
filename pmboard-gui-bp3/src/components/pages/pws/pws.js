@@ -10,7 +10,7 @@ import BlcDashboard from "../../tabs/blc/blc";
 
 export default class PWS extends React.Component {
     state = {
-        selectedId: 'sum'
+        selectedId: 'ind'
     };
 
     handleTabsOnChange = (tabId) => (

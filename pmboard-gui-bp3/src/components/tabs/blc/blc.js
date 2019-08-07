@@ -44,8 +44,11 @@ export default class BlcDashboard extends React.Component {
         return (
             <>
                 <CustomCard>
-                    <Button intent={Intent.SUCCESS} className={Classes.MINIMAL} icon={"upload"}
-                            text={"Publish Dashboard"}/>
+                    <Button intent={Intent.SUCCESS}
+                            className={Classes.MINIMAL}
+                            icon={"upload"}
+                            text={"Publish Dashboard"}
+                    />
                     <br/>
                     <br/>
                     <HTMLTable

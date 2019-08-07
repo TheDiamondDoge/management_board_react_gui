@@ -2,9 +2,20 @@ import React from "react";
 import CostTable from "./costTable/costTable";
 import {CustomCard} from "../../card/customCard";
 import styles from "./costTab.module.css";
-import EditSaveControls from "../../editSaveContols/editSaveControls";
+import UploadFileControls from "../../uploadFileControls/uploadFileControls";
 
 export default class CostTab extends React.Component {
+    state = {
+        editMode: false,
+    };
+
+    toggleControls = () => {
+        console.log("toggle");
+        this.setState((prevState) => ({
+            editMode: !prevState.editMode
+        }));
+    };
+
     render() {
         return (
             <>
@@ -15,7 +26,10 @@ export default class CostTab extends React.Component {
                 </CustomCard>
                 <br/>
                 <CustomCard>
-                    <EditSaveControls/>
+                    <UploadFileControls
+                        editMode={this.state.editMode}
+                        onClick={this.toggleControls}
+                    />
                     <br/>
                     <CostTable tableName={"Effort"}/>
                 </CustomCard>
