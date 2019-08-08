@@ -6,7 +6,7 @@
         "req milestones dr4_kpi"
         "quality quality quality"
     ;
-    grid-template-rows: 200px auto 1fr 400px;
+    grid-template-rows: 200px auto auto auto;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 18px;
 }

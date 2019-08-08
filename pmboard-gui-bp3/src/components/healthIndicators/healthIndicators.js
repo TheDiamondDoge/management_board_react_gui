@@ -13,19 +13,15 @@ export default class HealthIndicators extends React.Component {
     };
 
     onClickEditStatus = () => {
-        this.setState((prevState) => (
-            {
-                editStatusMode: !prevState.editStatusMode
-            }
-        ))
+        this.setState(
+            (prevState) => ({ editStatusMode: !prevState.editStatusMode })
+        )
     };
 
     onClickEditComment = () => {
-        this.setState((prevState) => (
-            {
-                editCommentMode: !prevState.editCommentMode
-            }
-        ))
+        this.setState(
+            (prevState) => ({ editCommentMode: !prevState.editCommentMode })
+        )
     };
 
     render() {
@@ -63,10 +59,11 @@ export default class HealthIndicators extends React.Component {
                     </th>
 
                     {
+                        !isSummaryMode &&
                         <th className={styles.column_align_center}>
                             <FieldName name={"Comments"}/>
                             {
-                                !isSummaryMode && !this.state.editStatusMode &&
+                               !this.state.editStatusMode &&
                                 <EditSaveControls
                                     className={styles.inline_block}
                                     editMode={this.state.editCommentMode}

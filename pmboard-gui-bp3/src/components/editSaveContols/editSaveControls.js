@@ -33,7 +33,7 @@ export default class EditSaveControls extends React.Component {
                 </div>
             )
         } else {
-            condProps.text = "Edit";
+            if (!smallSize) condProps.text = "Edit";
             return (
                 <div className={this.props.className}>
                     <Button
