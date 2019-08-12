@@ -1,0 +1,26 @@
+.timeline_table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.milestone {
+    display: inline-block;
+    width: 60px;
+    height: 100px;
+    box-sizing: border-box;
+}
+
+.bordered {
+    border: 1px solid black;
+}
+
+.indicator {
+    position: relative;
+    width: 20px;
+    height: 20px;
+}
+
+.align_center {
+    text-align: center;
+}
