@@ -12,26 +12,28 @@ export default class IndicatorsTab extends React.Component {
     render() {
         return (
             <div className={styles.data_grid}>
-                <Timeline className={styles.timeline} />
+                <CustomCard className={styles.timeline}>
+                    <Timeline/>
+                </CustomCard>
                 <CustomCard className={styles.health}>
                     <h3>Health</h3>
-                    <HealthIndicators isSummaryMode={false} />
+                    <HealthIndicators isSummaryMode={false}/>
                 </CustomCard>
                 <CustomCard className={styles.req}>
                     <h3>Requirements</h3>
-                    <Requirements />
+                    <Requirements/>
                 </CustomCard>
                 <CustomCard className={styles.milestones}>
                     <h3>Milestones</h3>
-                    <Milestones />
+                    <Milestones/>
                 </CustomCard>
                 <CustomCard className={styles.dr4_kpi}>
                     <h3>Project DR4 KPI</h3>
-                    <Kpi />
+                    <Kpi/>
                 </CustomCard>
                 <CustomCard className={styles.quality}>
                     <h3>Quality</h3>
-                    <Quality />
+                    <Quality/>
                 </CustomCard>
             </div>
         )

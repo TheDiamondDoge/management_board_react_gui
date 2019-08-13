@@ -2,6 +2,7 @@ import React from 'react';
 import {MILESTONES} from "./timelineDataObject";
 import styles from './timeline.module.css';
 import classNames from 'classnames';
+import StatusIndicator from "../statusIndicator/statusIndicator";
 
 export default class Timeline extends React.Component {
     state = {
@@ -11,23 +12,32 @@ export default class Timeline extends React.Component {
     render() {
         console.log("timeline render");
         return (
-            <div className={this.props.className} style={{width: '100%', height: "200px"}}>
+            <div className={this.props.className} style={{width: '100%', height: "150px"}}>
                 <table className={styles.timeline_table}>
                     <tbody>
                     <tr>
                         {
                             MILESTONES.map((milestone) => (
-                                this.createLabelCell(milestone.label)
+                                this.createContentCell(milestone.label)
                             ))
                         }
                     </tr>
 
+                    {this.createDecorativeRow()}
                     {this.createTimelineRow()}
+                    {this.createDecorativeRow()}
 
                     <tr>
                         {
                             MILESTONES.map((milestone) => (
-                                this.createDateCell(milestone.actualDate)
+                                this.createContentCell(milestone.actualDate)
+                            ))
+                        }
+                    </tr>
+                    <tr>
+                        {
+                            MILESTONES.map((milestone) => (
+                                this.createContentCell(milestone.actualDate)
                             ))
                         }
                     </tr>
@@ -37,12 +47,12 @@ export default class Timeline extends React.Component {
         )
     }
 
-    createEmptyCell = (i, pos, marginLeft) => {
+    createCell = (i, pos, marginLeft) => {
         marginLeft = marginLeft || 0.5;
-        const timelineIndClasses = classNames(styles.indicator, styles.bordered);
+        const timelineIndClasses = classNames(styles.indicator, styles.line);
         const fullMargin = `calc(${marginLeft * 100}% - 10px)`;
         return (
-            <td key={i}>
+            <td key={i} className={styles.line}>
                 {
                     i === pos
                         ? (
@@ -50,6 +60,7 @@ export default class Timeline extends React.Component {
                                 className={timelineIndClasses}
                                 style={{marginLeft: fullMargin}}
                             >
+                                <StatusIndicator status={"red"} />
                             </div>
                         )
                         : ""
@@ -58,15 +69,16 @@ export default class Timeline extends React.Component {
         )
     };
 
-    createLabelCell = (label) => (
-        <td key={label}>
-            {this.getDivContainer(label + "<br/>|")}
+    createContentCell = (content) => (
+        <td key={content}>
+            {this.getDivContainer(content)}
         </td>
     );
 
     createTimelineRow = () => {
         const clazz = this;
         const positionObj = this.getCurrentDatePosition();
+        console.log("position", positionObj);
         return (
             <>
                 {
@@ -75,7 +87,10 @@ export default class Timeline extends React.Component {
                         :
                         positionObj.first === positionObj.last
                             ? rowWithIndicatorOnMilestone()
-                            : rowIndicatorFloatPosition()
+                            :
+                            positionObj.first === -1
+                                ? rowWithIndicatorLeft()
+                                : rowIndicatorFloatPosition()
 
                 }
             </>
@@ -86,7 +101,19 @@ export default class Timeline extends React.Component {
                 <tr>
                     {
                         MILESTONES.map((obj, i) => (
-                            <td key={i}>{clazz.createEmptyCell(i, positionObj.first - 1, 1)}</td>
+                            clazz.createCell(i, positionObj.first - 1, 0.9)
+                        ))
+                    }
+                </tr>
+            )
+        }
+
+        function rowWithIndicatorLeft() {
+            return (
+                <tr>
+                    {
+                        MILESTONES.map((obj, i) => (
+                            clazz.createCell(i, 0, 0.1)
                         ))
                     }
                 </tr>
@@ -98,7 +125,7 @@ export default class Timeline extends React.Component {
                 <tr>
                     {
                         MILESTONES.map((obj, i) => (
-                            <td key={i}>{clazz.createEmptyCell(i, positionObj.first)}</td>
+                            clazz.createCell(i, positionObj.first)
                         ))
                     }
                 </tr>
@@ -119,7 +146,7 @@ export default class Timeline extends React.Component {
                 <tr>
                     {
                         MILESTONES.map((obj, i) => (
-                           clazz.createEmptyCell(i, milestoneCell, pos)
+                           clazz.createCell(i, milestoneCell, pos)
                         ))
                     }
                 </tr>
@@ -127,18 +154,28 @@ export default class Timeline extends React.Component {
         }
     };
 
+    createDecorativeRow = () => (
+        <tr>
+            {
+                MILESTONES.map((obj, i) => (
+                    <td
+                        key={i}
+                        className={styles.align_center}
+                    >
+                        |
+                    </td>
+                ))
+            }
+        </tr>
+    );
+
     calcPositionBetween = (positionObj) => {
+        console.log(positionObj);
         let firstDate = new Date(MILESTONES[positionObj.first].actualDate);
         let lastDate = new Date(MILESTONES[positionObj.last].actualDate);
 
         return ((this.state.currentDate - firstDate.getTime()) / (lastDate.getTime() - firstDate.getTime()));
     };
-
-    createDateCell = (content) => (
-        <td key={content}>
-            {this.getDivContainer(content)}
-        </td>
-    );
 
     getCurrentDate() {
         let tmp = new Date();
@@ -147,10 +184,6 @@ export default class Timeline extends React.Component {
 
     getDivContainer = (children) => (
         <div className={styles.align_center}>
-            {
-                <br/>
-            }
-            "|"
             {children}
         </div>
     );
