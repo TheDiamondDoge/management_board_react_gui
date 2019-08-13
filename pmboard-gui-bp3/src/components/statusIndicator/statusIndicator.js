@@ -6,7 +6,7 @@ import styles from './statusIndicator.module.css';
 export default class StatusIndicator extends React.Component {
     render() {
         const {className, status} = this.props;
-        let classes = classNames(className, styles.indicator_size, styles[this.getClassName(status)]);
+        let classes = classNames(className, styles.indicator, styles[this.getClassName(status)]);
 
         return (
             <>
@@ -40,6 +40,7 @@ export default class StatusIndicator extends React.Component {
                 return 'Y';
             case 'green':
                 return 'G';
+            case 'blank':
             default:
                 return '';
         }

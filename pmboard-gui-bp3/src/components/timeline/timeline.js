@@ -3,6 +3,7 @@ import {MILESTONES} from "./timelineDataObject";
 import styles from './timeline.module.css';
 import classNames from 'classnames';
 import StatusIndicator from "../statusIndicator/statusIndicator";
+import {Icon, Intent} from "@blueprintjs/core";
 
 export default class Timeline extends React.Component {
     state = {
@@ -15,7 +16,11 @@ export default class Timeline extends React.Component {
             <div className={this.props.className} style={{width: '100%', height: "150px"}}>
                 <table className={styles.timeline_table}>
                     <tbody>
+
+                    {this.createMileStatusRow()}
+
                     <tr>
+                        <td>&nbsp;</td>
                         {
                             MILESTONES.map((milestone) => (
                                 this.createContentCell(milestone.label)
@@ -28,6 +33,7 @@ export default class Timeline extends React.Component {
                     {this.createDecorativeRow()}
 
                     <tr>
+                        <td className={styles.legend}>Committed (Baseline)</td>
                         {
                             MILESTONES.map((milestone) => (
                                 this.createContentCell(milestone.actualDate)
@@ -35,6 +41,7 @@ export default class Timeline extends React.Component {
                         }
                     </tr>
                     <tr>
+                        <td className={styles.legend}>Actual / Forecast</td>
                         {
                             MILESTONES.map((milestone) => (
                                 this.createContentCell(milestone.actualDate)
@@ -49,8 +56,8 @@ export default class Timeline extends React.Component {
 
     createCell = (i, pos, marginLeft) => {
         marginLeft = marginLeft || 0.5;
-        const timelineIndClasses = classNames(styles.indicator, styles.line);
-        const fullMargin = `calc(${marginLeft * 100}% - 10px)`;
+        const timelineIndClasses = classNames(styles.indicator);
+        const fullMargin = `calc(${marginLeft * 100}% - 13px)`;
         return (
             <td key={i} className={styles.line}>
                 {
@@ -99,6 +106,7 @@ export default class Timeline extends React.Component {
         function rowWithIndicatorRight() {
             return (
                 <tr>
+                    <td className={styles.line}>&nbsp;</td>
                     {
                         MILESTONES.map((obj, i) => (
                             clazz.createCell(i, positionObj.first - 1, 0.9)
@@ -111,6 +119,7 @@ export default class Timeline extends React.Component {
         function rowWithIndicatorLeft() {
             return (
                 <tr>
+                    <td className={styles.line}>&nbsp;</td>
                     {
                         MILESTONES.map((obj, i) => (
                             clazz.createCell(i, 0, 0.1)
@@ -123,6 +132,7 @@ export default class Timeline extends React.Component {
         function rowWithIndicatorOnMilestone() {
             return (
                 <tr>
+                    <td className={styles.line}>&nbsp;</td>
                     {
                         MILESTONES.map((obj, i) => (
                             clazz.createCell(i, positionObj.first)
@@ -144,6 +154,7 @@ export default class Timeline extends React.Component {
             }
             return (
                 <tr>
+                    <td className={styles.line}>&nbsp;</td>
                     {
                         MILESTONES.map((obj, i) => (
                            clazz.createCell(i, milestoneCell, pos)
@@ -156,6 +167,7 @@ export default class Timeline extends React.Component {
 
     createDecorativeRow = () => (
         <tr>
+            <td>&nbsp;</td>
             {
                 MILESTONES.map((obj, i) => (
                     <td
@@ -163,6 +175,20 @@ export default class Timeline extends React.Component {
                         className={styles.align_center}
                     >
                         |
+                    </td>
+                ))
+            }
+        </tr>
+    );
+
+    createMileStatusRow = () => (
+        <tr>
+            <td>&nbsp;</td>
+            {
+                MILESTONES.map((obj, i) => (
+                    <td key={i} className={styles.align_center}>
+                        <Icon icon={"tick"} intent={Intent.SUCCESS}/>
+                        {/*<Icon icon={"cross"} intent={Intent.DANGER}/>*/}
                     </td>
                 ))
             }

@@ -1,8 +1,9 @@
-.indicator_size {
+.indicator {
     width: 25px;
     height: 25px;
     border-radius: 5px;
     text-align: center;
+    font-weight: bold;
 }
 
 .color_red {
