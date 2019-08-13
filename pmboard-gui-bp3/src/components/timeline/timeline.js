@@ -12,9 +12,10 @@ export default class Timeline extends React.Component {
     //TODO: br, timeline arrow, styling
     render() {
         console.log("timeline render");
+        const containerClasses = classNames(this.props.className, styles.container);
         return (
-            <div className={this.props.className} style={{width: '100%', height: "150px"}}>
-                <table className={styles.timeline_table}>
+            <div className={containerClasses}>
+                <table id={"timeline"} className={styles.timeline_table}>
                     <tbody>
 
                     {this.createMileStatusRow()}
