@@ -2,7 +2,7 @@ import React from 'react';
 import {HTMLTable} from "@blueprintjs/core";
 import styles from "./kpi.module.css";
 import classNames from "classnames";
-import {FieldName} from "../../../fieldName/fieldName";
+import {FieldName} from "../../../field-name/field-name";
 
 export default class Kpi extends React.Component {
     render() {

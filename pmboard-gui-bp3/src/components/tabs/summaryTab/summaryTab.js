@@ -1,7 +1,7 @@
 import React from 'react';
 import Timeline from "../../timeline/timeline";
-import {FieldName} from "../../fieldName/fieldName";
-import FieldValue from "../../fieldValue/fieldValue";
+import {FieldName} from "../../field-name/field-name";
+import FieldValue from "../../field-value/field-value";
 import styles from './summaryTab.module.css';
 import {
     DEFAULT_MAIN_FIELDS_SET,
@@ -11,7 +11,7 @@ import {
 } from './summaryTabObjects';
 import classNames from 'classnames';
 import {CustomCard} from "../../card/customCard.js";
-import HealthIndicators from "../../healthIndicators/healthIndicators";
+import HealthIndicators from "../../health-indicators/health-indicators";
 
 export default class SummaryTab extends React.Component {
     render() {

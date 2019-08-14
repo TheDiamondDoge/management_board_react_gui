@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import StatusIndicator from "../../../statusIndicator/statusIndicator";
+import StatusIndicator from "../../../status-indicator/status-indicator";
 import classNames from "classnames";
 import style from "./blcRow.module.css";
 import {Button, TextArea} from "@blueprintjs/core";

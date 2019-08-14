@@ -4,7 +4,7 @@ import {CustomCard} from "../../card/customCard";
 import styles from "./blc.module.css";
 import classNames from 'classnames';
 import BlcRow from "./blcRows/blcRow";
-import EditSaveControls from "../../editSaveContols/editSaveControls";
+import EditSaveControls from "../../edit-save-contols/edit-save-controls";
 import {DEFAULT_ROW_VALUES} from "./blcRows/blcRowsDataObject";
 import style from "./blcRows/blcRow.module.css";
 

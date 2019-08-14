@@ -1,10 +1,10 @@
 import React from 'react';
 import {Checkbox, HTMLTable, NumericInput} from "@blueprintjs/core";
-import {FieldName} from "../fieldName/fieldName";
-import {MILESTONE_DATA} from "./milestoneTableObject";
-import FieldValue from "../fieldValue/fieldValue";
+import {FieldName} from "../field-name/field-name";
+import {MILESTONE_DATA} from "./milestone-table-object";
+import FieldValue from "../field-value/field-value";
 import {DateInput} from "@blueprintjs/datetime";
-import styles from './milestoneTable.module.css';
+import styles from './milestone-table.module.css';
 import PropTypes from "prop-types";
 
 export default class MilestoneTable extends React.Component {

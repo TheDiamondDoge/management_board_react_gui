@@ -1,6 +1,6 @@
 import React from 'react';
 import {Tab, Tabs} from "@blueprintjs/core";
-import Hello from '../../test_comps/world';
+import Hello from '../../test_comps/world.container';
 import styles from './pws.module.css';
 import SummaryTab from "../../tabs/summaryTab/summaryTab";
 import InfoTab from "../../tabs/infoTab/infoTab";

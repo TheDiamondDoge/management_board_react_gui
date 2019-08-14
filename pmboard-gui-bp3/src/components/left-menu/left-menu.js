@@ -1,7 +1,7 @@
 import React from 'react';
-import styles from './leftMenu.module.css';
-import MenuNavigation from "../menuNavigation/menuNavigation";
-import { MENU_ITEMS_ARRAY } from "../menuNavigation/menuNavigationObject";
+import styles from './left-menu.module.css';
+import MenuNavigation from "../menu-navigation/menu-navigation";
+import { MENU_ITEMS_ARRAY } from "../menu-navigation/menu-navigation-object";
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 

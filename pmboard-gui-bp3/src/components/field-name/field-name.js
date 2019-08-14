@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "./fieldName.module.css";
+import styles from "./field-name.module.css";
 import PropTypes from 'prop-types';
 
 export const FieldName = ({name}) => {

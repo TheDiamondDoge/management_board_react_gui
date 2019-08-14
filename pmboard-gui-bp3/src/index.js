@@ -6,6 +6,7 @@ import {createBrowserHistory} from 'history';
 import {Provider} from "react-redux";
 import {routerMiddleware} from "react-router-redux";
 import {createLogger} from "redux-logger";
+import reducer from "./reducers"
 import * as serviceWorker from './serviceWorker';
 
 import './index.css';
@@ -18,6 +19,7 @@ import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
 
 const history = createBrowserHistory();
 const store = createStore(
+    reducer,
     applyMiddleware(
         routerMiddleware(history),
         createLogger()

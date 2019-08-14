@@ -1,10 +1,10 @@
 import React from "react";
-import {FieldName} from "../fieldName/fieldName";
+import {FieldName} from "../field-name/field-name";
 import {HTMLTable, TextArea} from "@blueprintjs/core";
-import styles from "./healthIndicators.module.css";
-import StatusIndicator from "../statusIndicator/statusIndicator";
+import styles from "./health-indicators.module.css";
+import StatusIndicator from "../status-indicator/status-indicator";
 import PropTypes from "prop-types";
-import EditSaveControls from "../editSaveContols/editSaveControls";
+import EditSaveControls from "../edit-save-contols/edit-save-controls";
 
 export default class HealthIndicators extends React.Component {
     state = {

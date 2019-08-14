@@ -2,7 +2,7 @@ import React from 'react';
 import {MILESTONES} from "./timelineDataObject";
 import styles from './timeline.module.css';
 import classNames from 'classnames';
-import StatusIndicator from "../statusIndicator/statusIndicator";
+import StatusIndicator from "../status-indicator/status-indicator";
 import {Icon, Intent} from "@blueprintjs/core";
 
 export default class Timeline extends React.Component {

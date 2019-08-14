@@ -1,9 +1,9 @@
 import React from 'react';
 import {HTMLTable, Icon, Button, TextArea} from "@blueprintjs/core";
-import EditSaveControls from "../../../editSaveContols/editSaveControls";
+import EditSaveControls from "../../../edit-save-contols/edit-save-controls";
 import styles from "./quality.module.css";
-import {FieldName} from "../../../fieldName/fieldName";
-import FieldValue from "../../../fieldValue/fieldValue";
+import {FieldName} from "../../../field-name/field-name";
+import FieldValue from "../../../field-value/field-value";
 
 export default class Quality extends React.Component {
     state = {

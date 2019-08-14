@@ -1,6 +1,6 @@
 import React from 'react';
 import {HTMLTable} from "@blueprintjs/core";
-import {FieldName} from "../../../fieldName/fieldName";
+import {FieldName} from "../../../field-name/field-name";
 import styles from "./milestones.module.css";
 import {MILESTONES_DATA} from "./milestonesObject";
 import classNames from 'classnames';
