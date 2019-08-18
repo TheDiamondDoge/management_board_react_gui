@@ -6,6 +6,8 @@ import {createBrowserHistory} from 'history';
 import {Provider} from "react-redux";
 import {routerMiddleware} from "react-router-redux";
 import {createLogger} from "redux-logger";
+import createSagaMiddleware from 'redux-saga';
+import summaryTabSaga from './sagas/summaryTab';
 import reducer from "./reducers"
 import * as serviceWorker from './serviceWorker';
 
@@ -16,15 +18,18 @@ import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/table/lib/css/table.css";
 import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
 
-
+const sagas = createSagaMiddleware();
 const history = createBrowserHistory();
 const store = createStore(
     reducer,
     applyMiddleware(
         routerMiddleware(history),
-        createLogger()
+        createLogger(),
+        sagas,
     )
 );
+
+sagas.run(summaryTabSaga);
 
 ReactDOM.render(
     <Provider store={store}>

@@ -11,7 +11,9 @@ export default class StatusIndicator extends React.Component {
         return (
             <>
                 <div className={classes}>
+                    <span className={styles.text_container}>
                     {this.getIndicatorSymbol(status)}
+                    </span>
                 </div>
             </>
         );
