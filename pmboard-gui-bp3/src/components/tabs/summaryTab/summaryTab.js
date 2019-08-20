@@ -4,142 +4,101 @@ import {FieldName} from "../../field-name/field-name";
 import FieldValue from "../../field-value/field-value";
 import styles from './summaryTab.module.css';
 import classNames from 'classnames';
+import getLabelById from "./fields";
 import {CustomCard} from "../../card/customCard.js";
 import HealthIndicators from "../../health-indicators/health-indicators";
 import PropTypes from 'prop-types';
+import {Intent, ProgressBar} from "@blueprintjs/core";
 
+//TODO: Grid problems on second card; Column gap required
 export default class SummaryTab extends React.Component {
     componentDidMount() {
         this.props.loadData();
     }
 
+    componentWillUnmount() {
+        this.props.resetData();
+    }
+
     render() {
-        console.log("Summary tab", "Render");
-        let mainCardStyle = classNames(styles.data_fields);
-        let secondaryCardStyle = classNames(styles.secondary_card);
-        return (
-            <div>
-                <CustomCard>
-                    <Timeline/>
-                </CustomCard>
-                <br/>
-                <CustomCard className={styles.data_container}>
-                    <div className="left_part">
-                        <div className={mainCardStyle}>
-                            <FieldName name="Product Name"/>
-                            <FieldValue value={this.props.summaryData.productName}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Project Description"/>
-                            <FieldValue value={this.props.summaryData.projectDescription}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Project Manager"/>
-                            <FieldValue value={this.props.summaryData.projectManager}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Business Line Manager"/>
-                            <FieldValue value={this.props.summaryData.businessLineManager}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Product Line Manager"/>
-                            <FieldValue value={this.props.summaryData.productLineManager}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Project State"/>
-                            <FieldValue value={this.props.summaryData.projectState}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Project Rigor"/>
-                            <FieldValue value={this.props.summaryData.projectRigor}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Charter"/>
-                            <FieldValue value={this.props.summaryData.charter}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="OR Business Plan"/>
-                            <FieldValue value={this.props.summaryData.orBusinessPlan}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Updated Business Plan"/>
-                            <FieldValue value={this.props.summaryData.updatedBusinessPlan}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Tailored DR-checklist"/>
-                            <FieldValue value="null"/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Lessons Learned"/>
-                            <FieldValue value={this.props.summaryData.lessonsLearned}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Sponsor"/>
-                            <FieldValue value={this.props.summaryData.sponsor}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Business Division"/>
-                            <FieldValue value={this.props.summaryData.businessDivision}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Business Unit"/>
-                            <FieldValue value={this.props.summaryData.businessUnit}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Product Line"/>
-                            <FieldValue value={this.props.summaryData.productLine}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="PWS State"/>
-                            <FieldValue value={this.props.summaryData.workspaceState}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="Project Type"/>
-                            <FieldValue value={this.props.summaryData.projectType}/>
-                        </div>
-                        <div className={mainCardStyle}>
-                            <FieldName name="OEM Partner"/>
-                            <FieldValue value={this.props.summaryData.oemPartner}/>
-                        </div>
-                    </div>
-                    <div className={styles.right_part}>
-                        <HealthIndicators isSummaryMode={true}/>
-                    </div>
-                </CustomCard>
+        const loaded = this.props.loaded;
 
-                <br/>
-
-                <CustomCard className={styles.data_container}>
-                    <div className="left_part">
-                        <div className={secondaryCardStyle}>
-                            <FieldName name="test"/>
-                            <FieldValue value="test"/>
+        if (!loaded) {
+            return (<ProgressBar intent={Intent.PRIMARY}/>);
+        } else {
+            const {general, status, links, pwsInfo} = this.props.summaryData;
+            let mainCardStyle = classNames(styles.data_fields);
+            let secondaryCardStyle = classNames(styles.secondary_card);
+            return (
+                <div>
+                    <CustomCard>
+                        <Timeline/>
+                    </CustomCard>
+                    <br/>
+                    <CustomCard className={styles.data_container}>
+                        <div className="left_part">
+                            {
+                                general.map((obj) => (
+                                    <div key={obj.id} className={mainCardStyle}>
+                                        <FieldName name={getLabelById(obj.id)}/>
+                                        <FieldValue value={obj.name}/>
+                                    </div>
+                                ))
+                            }
                         </div>
-                    </div>
-                    <div className="right_part">
-                        <div className={secondaryCardStyle}>
-                            <FieldName name="test"/>
-                            <FieldValue value="test"/>
+                        <div className={styles.right_part}>
+                            <HealthIndicators isSummaryMode={true}/>
                         </div>
-                    </div>
-                </CustomCard>
+                    </CustomCard>
 
-                <br/>
+                    <br/>
 
-                <CustomCard className={styles.pws_data_container}>
-                    <div>
-                        <div className={styles.data_fields}>
-                            <FieldName name="test"/>
-                            <FieldValue value="test"/>
+                    <CustomCard className={styles.data_container}>
+                        <div className="left_part">
+                            {
+                                status.map((obj) => (
+                                    <div key={obj.id} className={secondaryCardStyle}>
+                                        <FieldName name={getLabelById(obj.id)}/>
+                                        <FieldValue value={`${obj.name}`}/>
+                                    </div>
+                                ))
+                            }
                         </div>
-                    </div>
-                </CustomCard>
-            </div>
-        )
+                        <div className="right_part">
+                            {
+                                links.map((obj) => (
+                                    <div key={obj.id} className={secondaryCardStyle}>
+                                        <FieldName name={getLabelById(obj.id)}/>
+                                        <FieldValue value={`${obj.name}`}/>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </CustomCard>
+
+                    <br/>
+
+                    <CustomCard className={styles.pws_data_container}>
+                        <div>
+                            {
+                                pwsInfo.map((obj) => (
+                                    <div key={obj.id} className={styles.data_fields}>
+                                        <FieldName name={getLabelById(obj.id)}/>
+                                        <FieldValue value={`${obj.name}`}/>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </CustomCard>
+                </div>
+            )
+        }
     }
 }
 
 SummaryTab.propTypes = {
     loadData: PropTypes.func,
+    resetData: PropTypes.func,
     summaryData: PropTypes.object.isRequired,
+    loaded: PropTypes.bool,
 };
