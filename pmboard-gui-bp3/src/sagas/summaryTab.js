@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { put, call, select } from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 import { takeLatest } from 'redux-saga/effects';
 import {LOAD_SUMMARY, loadError, loadSuccess} from "../actions/summaryTab";
 
@@ -11,7 +11,7 @@ function* doSearch() {
         );
         yield put(loadSuccess(searchResults.data));
     } catch (e) {
-        yield put(loadError())
+        yield put(loadError(e))
     }
 }
 

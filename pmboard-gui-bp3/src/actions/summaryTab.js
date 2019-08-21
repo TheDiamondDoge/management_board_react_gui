@@ -5,7 +5,6 @@ export const RESET_STATE = "RESET_STATE";
 
 export const loadSummary = () => ({
         type: LOAD_SUMMARY,
-        isLoading: true,
     }
 );
 
@@ -15,9 +14,9 @@ export const loadSuccess = (data) => ({
     }
 );
 
-export const loadError = () => ({
+export const loadError = (error) => ({
         type: LOAD_SUMMARY_FAIL,
-        isLoading: false,
+        error: error
     }
 );
 

@@ -4,7 +4,7 @@ import {FieldName} from "../../field-name/field-name";
 import FieldValue from "../../field-value/field-value";
 import styles from './summaryTab.module.css';
 import classNames from 'classnames';
-import getLabelById from "./fields";
+import {getLabelById, displayOrNot} from "./fields";
 import {CustomCard} from "../../card/customCard.js";
 import HealthIndicators from "../../health-indicators/health-indicators";
 import PropTypes from 'prop-types';
@@ -26,7 +26,8 @@ export default class SummaryTab extends React.Component {
         if (!loaded) {
             return (<ProgressBar intent={Intent.PRIMARY}/>);
         } else {
-            const {general, status, links, pwsInfo} = this.props.summaryData;
+            const {general, status, links, pwsInfo, validationParams} = this.props.summaryData;
+            const validationPrjParams = {...validationParams};
             let mainCardStyle = classNames(styles.data_fields);
             let secondaryCardStyle = classNames(styles.secondary_card);
             return (
@@ -39,10 +40,12 @@ export default class SummaryTab extends React.Component {
                         <div className="left_part">
                             {
                                 general.map((obj) => (
-                                    <div key={obj.id} className={mainCardStyle}>
-                                        <FieldName name={getLabelById(obj.id)}/>
-                                        <FieldValue value={obj.name}/>
-                                    </div>
+                                    displayOrNot(obj.id, validationPrjParams)
+                                        ? <div key={obj.id} className={mainCardStyle}>
+                                                <FieldName name={getLabelById(obj.id)}/>
+                                                <FieldValue value={obj.name}/>
+                                            </div>
+                                        : ""
                                 ))
                             }
                         </div>
@@ -57,20 +60,24 @@ export default class SummaryTab extends React.Component {
                         <div className="left_part">
                             {
                                 status.map((obj) => (
-                                    <div key={obj.id} className={secondaryCardStyle}>
-                                        <FieldName name={getLabelById(obj.id)}/>
-                                        <FieldValue value={`${obj.name}`}/>
-                                    </div>
+                                    displayOrNot(obj.id, validationPrjParams)
+                                        ? <div key={obj.id} className={secondaryCardStyle}>
+                                              <FieldName name={getLabelById(obj.id)}/>
+                                              <FieldValue value={`${obj.name}`}/>
+                                          </div>
+                                        : ""
                                 ))
                             }
                         </div>
                         <div className="right_part">
                             {
                                 links.map((obj) => (
-                                    <div key={obj.id} className={secondaryCardStyle}>
-                                        <FieldName name={getLabelById(obj.id)}/>
-                                        <FieldValue value={`${obj.name}`}/>
-                                    </div>
+                                    displayOrNot(obj.id, validationPrjParams)
+                                        ? <div key={obj.id} className={secondaryCardStyle}>
+                                             <FieldName name={getLabelById(obj.id)}/>
+                                             <FieldValue value={`${obj.name}`}/>
+                                           </div>
+                                        : ""
                                 ))
                             }
                         </div>
@@ -82,10 +89,12 @@ export default class SummaryTab extends React.Component {
                         <div>
                             {
                                 pwsInfo.map((obj) => (
-                                    <div key={obj.id} className={styles.data_fields}>
-                                        <FieldName name={getLabelById(obj.id)}/>
-                                        <FieldValue value={`${obj.name}`}/>
-                                    </div>
+                                    displayOrNot(obj.id, validationPrjParams)
+                                        ? <div key={obj.id} className={styles.data_fields}>
+                                              <FieldName name={getLabelById(obj.id)}/>
+                                              <FieldValue value={`${obj.name}`}/>
+                                          </div>
+                                        : ""
                                 ))
                             }
                         </div>

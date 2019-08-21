@@ -3,6 +3,7 @@ import {LOAD_SUMMARY, LOAD_SUMMARY_FAIL, LOAD_SUMMARY_SUCCESS, RESET_STATE} from
 const initState = {
     loaded: false,
     summaryData: {},
+    error: "",
 };
 
 export default (state, action) => {
@@ -14,6 +15,7 @@ export default (state, action) => {
         case LOAD_SUMMARY:
             return {
                 ...state,
+                loaded: false,
             };
         case LOAD_SUMMARY_SUCCESS:
             return {
@@ -24,7 +26,8 @@ export default (state, action) => {
         case LOAD_SUMMARY_FAIL:
             return {
                 ...state,
-                isLoading: false
+                error: action.error,
+                loaded: false,
             };
         case RESET_STATE:
             return initState;
@@ -54,7 +57,8 @@ let dataComposer = (data) => ({
         {id: "workspaceState", name: data.workspaceState},
         {id: "projectType", name: data.projectType},
         {id: "oemPartner", name: data.oemPartner},
-        {id: "disabledTime", name: data.disabledTime}
+        {id: "disabledTime", name: data.disabledTime},
+        {id: "isEpm", name: data.epm},
     ],
     status: [
         {id: "executiveSummary", name: data.executiveSummary},
@@ -71,7 +75,12 @@ let dataComposer = (data) => ({
         {id: "epmLastSavedDate", name: data.epmLastSavedDate},
         {id: "pwsLastUpdatedDate", name: data.pwsLastUpdatedDate},
         {id: "pwsLastUpdatedBy", name: data.pwsLastUpdatedBy}
-    ]
+    ],
+    validationParams: {
+        projectType: data.projectType,
+        workspaceState: data.workspaceState,
+        isEpm: data.epm,
+    }
 });
 
 
