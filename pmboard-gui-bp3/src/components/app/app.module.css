@@ -3,8 +3,8 @@
     grid-template-areas:
         "nav header"
         "nav page";
-    grid-template-rows: 50px 1fr;
-    grid-template-columns: 230px 1fr;
+    grid-template-rows: 50px auto;
+    grid-template-columns: 230px auto;
     grid-gap: 0;
     height: 100%;
 }

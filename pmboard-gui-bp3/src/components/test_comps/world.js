@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
-import {ProgressBar, Intent} from "@blueprintjs/core";
+import LoadingCard from "../loading-card/loading-card";
 
 export default class World extends React.Component {
     render() {
@@ -9,7 +9,7 @@ export default class World extends React.Component {
         const {test, testPassed, onClick1, onClick2} = this.props;
         return (
             <>
-                <ProgressBar intent={Intent.PRIMARY} />
+                <LoadingCard />
                 <NavLink exact to="/pws">
                     <button>PWS</button>
                 </NavLink>

@@ -7,8 +7,8 @@ import classNames from 'classnames';
 import {getLabelById, displayOrNot} from "./fields";
 import {CustomCard} from "../../card/customCard.js";
 import HealthIndicators from "../../health-indicators/health-indicators";
+import LoadingCard from "../../loading-card/loading-card";
 import PropTypes from 'prop-types';
-import {Intent, ProgressBar} from "@blueprintjs/core";
 
 //TODO: Grid problems on second card; Column gap required
 export default class SummaryTab extends React.Component {
@@ -24,7 +24,7 @@ export default class SummaryTab extends React.Component {
         const loaded = this.props.loaded;
 
         if (!loaded) {
-            return (<ProgressBar intent={Intent.PRIMARY}/>);
+            return (<LoadingCard />);
         } else {
             const {general, status, links, pwsInfo, validationParams} = this.props.summaryData;
             const validationPrjParams = {...validationParams};
