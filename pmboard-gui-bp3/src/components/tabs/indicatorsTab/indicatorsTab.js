@@ -8,6 +8,7 @@ import Milestones from "./milestones/milestones";
 import Kpi from "./dr4kpi/kpi";
 import Quality from "./quality/quality";
 
+//TODO: HINT: How to map json with fields - check summary realisation
 export default class IndicatorsTab extends React.Component {
     render() {
         return (

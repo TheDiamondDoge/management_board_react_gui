@@ -1,3 +1,42 @@
+const dataObj = {
+   milestones: [],
+   mainInfo: {
+       description: "",
+       oemPartner: "",
+       customers: "",
+       release: "",
+       type: "",
+       rigor: "",
+       state: "",
+       division: "",
+       unit: "",
+       line: "",
+       prodName: "",
+       sponsor: "",
+       blm: "",
+       plm: "",
+       pm: "",
+       charter: "",
+       orbp: "",
+       updbp: "",
+       tailored: "",
+       lessons: "",
+       prjPlan: "",
+       scope: "",
+       rqName: "",
+       ecmaBacklog: "",
+       composite: "",
+   },
+   urls: {
+       collabSite: "",
+       documentationRepo: "",
+       defects: "",
+       rqs: "",
+       cis: "",
+   }
+};
+
+///////////////////OLD///////////////////////
 export const INFO_MAIN_INFO = [
     {name: 'Project Description', value: "Super Project" },
     {name: 'OEM Partner', value: "Super Partner" },
