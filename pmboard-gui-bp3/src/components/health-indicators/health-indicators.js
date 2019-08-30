@@ -7,10 +7,13 @@ import PropTypes from "prop-types";
 import EditSaveControls from "../edit-save-contols/edit-save-controls";
 
 export default class HealthIndicators extends React.Component {
-    state = {
-        editStatusMode: false,
-        editCommentMode: false,
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            editStatusMode: false,
+            editCommentMode: false,
+        };
+    }
 
     onClickEditStatus = () => {
         this.setState(
@@ -253,5 +256,6 @@ export default class HealthIndicators extends React.Component {
 }
 
 HealthIndicators.propTypes = {
+    indicators: PropTypes.array.isRequired,
     isSummaryMode: PropTypes.bool,
 };

@@ -26,14 +26,14 @@ export default class SummaryTab extends React.Component {
         if (!loaded) {
             return (<LoadingCard />);
         } else {
-            const {general, status, links, pwsInfo, validationParams} = this.props.summaryData;
+            const {general, status, links, pwsInfo, milestones, validationParams} = this.props.summaryData;
             const validationPrjParams = {...validationParams};
             let mainCardStyle = classNames(styles.data_fields);
             let secondaryCardStyle = classNames(styles.secondary_card);
             return (
                 <div>
                     <CustomCard>
-                        <Timeline/>
+                        <Timeline milestones={milestones}/>
                     </CustomCard>
                     <br/>
                     <CustomCard className={styles.data_container}>
