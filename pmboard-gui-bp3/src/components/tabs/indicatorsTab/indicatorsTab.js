@@ -14,7 +14,7 @@ export default class IndicatorsTab extends React.Component {
         return (
             <div className={styles.data_grid}>
                 <CustomCard className={styles.timeline}>
-                    <Timeline/>
+                    <Timeline />
                 </CustomCard>
                 <CustomCard className={styles.health}>
                     <h3>Health</h3>

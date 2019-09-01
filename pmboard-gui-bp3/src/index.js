@@ -10,6 +10,7 @@ import {routerMiddleware} from "react-router-redux";
 import {createLogger} from "redux-logger";
 import createSagaMiddleware from 'redux-saga';
 import summaryTabSaga from './sagas/summaryTab';
+import infoTabSaga from './sagas/infoTab';
 import reducer from "./reducers"
 import * as serviceWorker from './serviceWorker';
 
@@ -32,6 +33,7 @@ const store = createStore(
 );
 
 sagas.run(summaryTabSaga);
+sagas.run(infoTabSaga);
 
 ReactDOM.render(
     <Provider store={store}>

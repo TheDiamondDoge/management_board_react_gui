@@ -1,19 +1,20 @@
 import React from 'react';
 import {Checkbox, HTMLTable, NumericInput} from "@blueprintjs/core";
 import {FieldName} from "../field-name/field-name";
-import {MILESTONE_DATA} from "./milestone-table-object";
 import FieldValue from "../field-value/field-value";
 import {DateInput} from "@blueprintjs/datetime";
 import styles from './milestone-table.module.css';
 import PropTypes from "prop-types";
 
 export default class MilestoneTable extends React.Component {
-    state = {
-        date: new Date("2019-10-15")
-    };
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            date: new Date("2019-10-15")
+        };
+    }
     render() {
-        const {editMode} = this.props;
+        const {editMode, milestonesData} = this.props;
         return (
             <div>
                 <HTMLTable striped={true}>
@@ -41,7 +42,7 @@ export default class MilestoneTable extends React.Component {
                     </thead>
                     <tbody>
                     {
-                        this.renderValues(MILESTONE_DATA, editMode)
+                        this.renderValues(milestonesData, editMode)
                     }
                     </tbody>
                 </HTMLTable>
@@ -97,7 +98,7 @@ export default class MilestoneTable extends React.Component {
                     <td>{this.ifEmpty(milestone.actualDate)}</td>
                     <td>{this.ifEmpty(milestone.baselineDate)}</td>
                     <td>{this.ifEmpty(milestone.completion)}</td>
-                    <td>{this.ifEmpty(milestone.isShown)}</td>
+                    <td>{this.ifEmpty(milestone.shown)}</td>
                     <td><FieldValue value={this.ifEmpty(milestone.meetingMinutes)}/></td>
                 </tr>
             ))
@@ -111,4 +112,5 @@ export default class MilestoneTable extends React.Component {
 
 MilestoneTable.propTypes = {
     editMode: PropTypes.bool,
+    milestonesData: PropTypes.array,
 };
