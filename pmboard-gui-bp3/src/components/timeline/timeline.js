@@ -18,7 +18,6 @@ export default class Timeline extends React.Component {
     render() {
         console.log("timeline render");
         const milestones = this.props.milestones;
-        console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",milestones);
         const containerClasses = classNames(this.props.className, styles.container);
         return (
             <div className={containerClasses}>
@@ -151,7 +150,7 @@ export default class Timeline extends React.Component {
         }
 
         function rowIndicatorFloatPosition(milestones) {
-            let pos = clazz.calcPositionBetween(positionObj);
+            let pos = clazz.calcPositionBetween(positionObj, milestones);
             let milestoneCell;
             if (pos < 0.5) {
                 milestoneCell = positionObj.first;
@@ -189,24 +188,29 @@ export default class Timeline extends React.Component {
         </tr>
     );
 
-    createMileStatusRow = (milestones) => (
-        <tr>
-            <td>&nbsp;</td>
-            {
-                milestones.map((obj, i) => (
-                    <td key={i} className={styles.align_center}>
-                        <Icon icon={"tick"} intent={Intent.SUCCESS}/>
-                        {/*<Icon icon={"cross"} intent={Intent.DANGER}/>*/}
-                    </td>
-                ))
-            }
-        </tr>
-    );
+    createMileStatusRow = (milestones) => {
+        const iconsStyle = classNames(styles.align_center, styles.min_width);
+        return (
+            <tr>
+                <td>&nbsp;</td>
+                {
+                    milestones.map((obj, i) => (
+                        <td key={i} className={iconsStyle}>
+                            <Icon icon={"tick"} intent={Intent.SUCCESS}/>
+                            {/*<Icon icon={"cross"} intent={Intent.DANGER}/>*/}
+                        </td>
+                    ))
+                }
+            </tr>
+        )
+    };
 
-    calcPositionBetween = (positionObj) => {
+    calcPositionBetween = (positionObj, milestones) => {
         console.log(positionObj);
-        let firstDate = new Date(this.milestones[positionObj.first].actualDate);
-        let lastDate = new Date(this.milestones[positionObj.last].actualDate);
+        console.log("AAAAAAAAAAAAAAAAAAAAAAA", this.milestones);
+
+        let firstDate = new Date(milestones[positionObj.first].actualDate);
+        let lastDate = new Date(milestones[positionObj.last].actualDate);
 
         return ((this.state.currentDate - firstDate.getTime()) / (lastDate.getTime() - firstDate.getTime()));
     };

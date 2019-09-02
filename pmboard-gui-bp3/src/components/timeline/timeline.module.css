@@ -1,6 +1,6 @@
 .timeline_table {
     border-collapse: collapse;
-    table-layout: fixed;
+    /*table-layout: fixed;*/
     width: 100%;
 }
 
@@ -23,6 +23,10 @@
 
 .align_center {
     text-align: center;
+}
+
+.min_width {
+    min-width: 85px;
 }
 
 .line {

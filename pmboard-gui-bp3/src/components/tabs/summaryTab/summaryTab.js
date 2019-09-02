@@ -26,7 +26,7 @@ export default class SummaryTab extends React.Component {
         if (!loaded) {
             return (<LoadingCard />);
         } else {
-            const {general, status, links, pwsInfo, milestones, validationParams} = this.props.summaryData;
+            const {general, status, links, pwsInfo, milestones, healthIndicators, validationParams} = this.props.summaryData;
             const validationPrjParams = {...validationParams};
             let mainCardStyle = classNames(styles.data_fields);
             let secondaryCardStyle = classNames(styles.secondary_card);
@@ -50,7 +50,10 @@ export default class SummaryTab extends React.Component {
                             }
                         </div>
                         <div className={styles.right_part}>
-                            <HealthIndicators isSummaryMode={true}/>
+                            <HealthIndicators
+                                indicators={healthIndicators}
+                                isSummaryMode={true}
+                            />
                         </div>
                     </CustomCard>
 
@@ -61,7 +64,7 @@ export default class SummaryTab extends React.Component {
                             {
                                 status.map((obj) => (
                                     displayOrNot(obj.id, validationPrjParams)
-                                        ? <div key={obj.id} className={secondaryCardStyle}>
+                                        ? <div key={obj.id} className={styles.executive_block}>
                                               <FieldName name={getLabelById(obj.id)}/>
                                               <FieldValue value={`${obj.name}`}/>
                                           </div>

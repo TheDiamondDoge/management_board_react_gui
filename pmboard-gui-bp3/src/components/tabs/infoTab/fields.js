@@ -45,8 +45,6 @@ const fieldsParam = {
 };
 
 export const getLabelById = (id) => {
-    console.log("AAAAAAAAAAAAAAAAAAAAA", id);
-    console.log(id, fieldsParam[id].label);
     if (isLabelExists(id)) {
         return fieldsParam[id].label;
     }

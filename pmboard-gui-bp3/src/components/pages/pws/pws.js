@@ -9,9 +9,12 @@ import CostTab from "../../tabs/costTab/costTab";
 import BlcDashboard from "../../tabs/blc/blc";
 
 export default class PWS extends React.Component {
-    state = {
-        selectedId: 'inf'
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedId: 'sum'
+        };
+    }
 
     handleTabsOnChange = (tabId) => (
         this.setState({selectedId: tabId})

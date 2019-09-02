@@ -22,6 +22,7 @@ export default class FieldValue extends React.Component{
             return (
                 <div>
                     <InputGroup
+                        onChange={(e) => console.log(e.target.value)}
                         type="text"
                         defaultValue={value}
                     />

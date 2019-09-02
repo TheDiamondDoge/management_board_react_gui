@@ -13,6 +13,8 @@ export default class HealthIndicators extends React.Component {
             editStatusMode: false,
             editCommentMode: false,
         };
+
+        this.labels = ['Overall Project Status', 'Schedule', 'Scope', 'Quality', 'Cost'];
     }
 
     onClickEditStatus = () => {
@@ -28,7 +30,7 @@ export default class HealthIndicators extends React.Component {
     };
 
     render() {
-        const {isSummaryMode} = this.props;
+        const {isSummaryMode, indicators} = this.props;
         return (
             <HTMLTable
                 className={styles.health_table}
@@ -56,9 +58,11 @@ export default class HealthIndicators extends React.Component {
                     </th>
                     <th className={styles.column_align_center}>
                         <FieldName name={"Previous"}/>
+                        <FieldName name={indicators.prevStatusSet}/>
                     </th>
                     <th className={styles.column_align_center}>
                         <FieldName name={"Current"}/>
+                        <FieldName name={indicators.currentStatusSet}/>
                     </th>
 
                     {

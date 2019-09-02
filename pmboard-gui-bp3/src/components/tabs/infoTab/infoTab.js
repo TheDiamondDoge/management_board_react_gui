@@ -26,11 +26,11 @@ export default class InfoTab extends React.Component {
         this.props.resetData();
     }
 
-    editClickHandle = () => (
+    editClickHandle = () => {
         this.setState((prevState) => ({
-            editMode: !prevState.editMode
+            editMode: !prevState.editMode,
         }))
-    );
+    };
 
     render() {
         const {loaded} = this.props;
