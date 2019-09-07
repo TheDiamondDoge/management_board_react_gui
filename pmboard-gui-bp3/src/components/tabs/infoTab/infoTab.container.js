@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import InfoTab from './infoTab';
-import {editData, loadInfo, resetState} from "../../../actions/info-tab";
+import {editGeneralData, editMilestoneData, loadInfo, resetState} from "../../../actions/info-tab";
 
 function mapStateToProps(state) {
     return {
@@ -16,7 +16,8 @@ function mapDispatchToProps(dispatch) {
     return {
         loadData: () => (dispatch(loadInfo())),
         resetData: () => (dispatch(resetState())),
-        onChangeGeneral: (obj, id) => (dispatch(editData(obj, id)))
+        onChangeGeneral: (obj, id) => (dispatch(editGeneralData(obj, id))),
+        onChangeMilestones: (obj, id) => (dispatch(editMilestoneData(obj, id)))
     }
 }
 

@@ -1,4 +1,12 @@
-import {EDIT_DATA, LOAD_INFO, LOAD_INFO_FAIL, LOAD_INFO_SUCCESS, RESET_STATE} from '../actions/info-tab';
+import {
+    EDIT_GENERAL_DATA,
+    EDIT_MILESTONE_DATA,
+    LOAD_INFO,
+    LOAD_INFO_FAIL,
+    LOAD_INFO_SUCCESS,
+    RESET_STATE
+} from '../actions/info-tab';
+import milestones from "../components/tabs/indicatorsTab/milestones/milestones";
 
 const initState = {
     loaded: false,
@@ -30,7 +38,7 @@ export default (state, action) => {
                 loaded: false,
                 error: action.error
             };
-        case EDIT_DATA:
+        case EDIT_GENERAL_DATA:
             return {
                 ...state,
                 [action.id]: {
@@ -38,11 +46,26 @@ export default (state, action) => {
                     ...action.data,
                 }
             };
+        case EDIT_MILESTONE_DATA:
+            return {
+                ...state,
+                milestones: editMilestones(state.milestones, action)
+            };
         case RESET_STATE:
         default:
             return initState;
     }
 }
+
+let editMilestones = (prevMilestones, action) => {
+    let milestonesCopy = [...prevMilestones];
+    milestonesCopy[action.id] = {
+        ...milestonesCopy[action.id],
+        ...action.data,
+    };
+
+    return milestonesCopy;
+};
 
 let dataComposer = (data) => ({
     general: {

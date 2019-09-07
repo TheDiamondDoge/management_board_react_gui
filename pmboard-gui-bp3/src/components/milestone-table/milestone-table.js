@@ -5,6 +5,7 @@ import FieldValue from "../field-value/field-value";
 import {DateInput} from "@blueprintjs/datetime";
 import styles from './milestone-table.module.css';
 import PropTypes from "prop-types";
+import {dateFormatToString, dateToDashedString, stringToDateFormat} from "../../util/transformFuncs";
 
 export default class MilestoneTable extends React.Component {
     constructor(props) {
@@ -51,7 +52,9 @@ export default class MilestoneTable extends React.Component {
     }
 
     renderValues = (milestoneData, editMode) => {
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAA",milestoneData);
         if (editMode) {
+            let {onChange} = this.props;
             return milestoneData.map((milestone, key) => (
                 <tr key={key}>
                     <td>
@@ -59,18 +62,33 @@ export default class MilestoneTable extends React.Component {
                     </td>
                     <td>
                         <DateInput
-                            formatDate={date => date.toLocaleString()}
-                            parseDate={str => console.log(str)}
-                            onChange={date => this.setState({date})}
-                            value={this.state.date}
+                            formatDate={
+                                date => {
+                                    console.log("FORMATDATE", typeof date, date)
+                                    return dateFormatToString(date)
+                                }
+                            }
+                            parseDate={
+                                str => {
+                                    console.log("PARSEDATE", typeof str, str);
+                                    return stringToDateFormat(str.toString())
+                                }
+                            }
+                            onChange={
+                                date => {
+                                    console.log("DATE", date);
+                                    return onChange("actualDate", dateToDashedString(date), key)
+                                }
+                            }
+                            value={new Date(milestone.actualDate)}
                         />
                     </td>
                     <td>
                         <DateInput
-                            formatDate={date => date.toLocaleString()}
-                            parseDate={str => console.log(str)}
-                            onChange={date => this.setState({date})}
-                            value={this.state.date}
+                            formatDate={date => dateFormatToString(date)}
+                            parseDate={str => stringToDateFormat(str.toString())}
+                            onChange={date => onChange("baselineDate", dateToDashedString(date), key)}
+                            value={new Date(milestone.baselineDate)}
                         />
                     </td>
                     <td>
@@ -81,13 +99,21 @@ export default class MilestoneTable extends React.Component {
                             minorStepSize={1}
                             value={milestone.completion}
                             buttonPosition="none"
+                            onValueChange={value => onChange("completion", value, key)}
                         />
                     </td>
                     <td className={styles.column_align_center}>
-                        <Checkbox checked={true}/>
+                        <Checkbox
+                            defaultChecked={milestone.shown}
+                            onChange={event => onChange("shown", event.target.checked, key)}
+                        />
                     </td>
                     <td>
-                        <FieldValue editMode={true} value={this.ifEmpty(milestone.meetingMinutes)}/>
+                        <FieldValue
+                            editMode={editMode}
+                            value={this.ifEmpty(milestone.meetingMinutes)}
+                            onChange={value => onChange("meetingMinutes", value, key)}
+                        />
                     </td>
                 </tr>
             ))
@@ -113,4 +139,5 @@ export default class MilestoneTable extends React.Component {
 MilestoneTable.propTypes = {
     editMode: PropTypes.bool,
     milestonesData: PropTypes.array,
+    onChange: PropTypes.func,
 };

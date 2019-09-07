@@ -19,6 +19,7 @@ export default class FieldValue extends React.Component{
     }
 
     getRenderField = (value, editMode, onChange) => {
+        if (!onChange) onChange = () => {};
         if (!editMode) {
             return <div>{stringToUrlElem(value)}</div>
         } else {

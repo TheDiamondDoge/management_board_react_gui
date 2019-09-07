@@ -1,5 +1,7 @@
 import React from "react";
 
+const MONTHS_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
 export const stringToUrlElem = (url) => (
     isUrl(url) ? (<a href={url}>Click here</a>) : url
 );
@@ -22,4 +24,26 @@ export const blcNumberToState = (num) => {
         default:
             return "blank"
     }
+};
+
+export const dateFormatToString = (date) => {
+    let day = date.getDate();
+    let month = MONTHS_NAMES[date.getMonth()];
+    let year = date.getFullYear();
+
+    return `${day}-${month}-${year}`;
+};
+
+export const stringToDateFormat = (string) => {
+    let [day, month, year] = string.split("-");
+    return new Date(year, MONTHS_NAMES.indexOf(month), day);
+};
+
+//TODO: This is huge UGLY workaround. TO REMOVE!!!!
+export const dateToDashedString = (date) => {
+    let day = date.getDate();
+    let month = date.getMonth();
+    let year = date.getFullYear();
+
+    return `${year}-${month}-${day}`;
 };
