@@ -1,8 +1,10 @@
-import {LOAD_INFO, LOAD_INFO_FAIL, LOAD_INFO_SUCCESS, RESET_STATE} from '../actions/infoTab';
+import {EDIT_DATA, LOAD_INFO, LOAD_INFO_FAIL, LOAD_INFO_SUCCESS, RESET_STATE} from '../actions/info-tab';
 
 const initState = {
     loaded: false,
-    data: {},
+    general: {},
+    milestones: [],
+    urls: {},
     error: "",
 };
 export default (state, action) => {
@@ -19,14 +21,22 @@ export default (state, action) => {
         case LOAD_INFO_SUCCESS:
             return {
                 ...state,
+                ...dataComposer(action.data),
                 loaded: true,
-                data: dataComposer(action.data),
             };
         case LOAD_INFO_FAIL:
             return {
                 ...state,
                 loaded: false,
                 error: action.error
+            };
+        case EDIT_DATA:
+            return {
+                ...state,
+                [action.id]: {
+                    ...state[action.id],
+                    ...action.data,
+                }
             };
         case RESET_STATE:
         default:
@@ -35,40 +45,40 @@ export default (state, action) => {
 }
 
 let dataComposer = (data) => ({
-    general: [
-        {id: 'projectDescription', value: data.projectDescription},
-        {id: 'oemPartner', value: data.oemPartner},
-        {id: 'productRelease', value: data.productRelease},
-        {id: 'projectType', value: data.projectType},
-        {id: 'projectRigor', value: data.projectRigor},
-        {id: 'projectState', value: data.projectState},
-        {id: 'businessDivision', value: data.businessDivision},
-        {id: 'businessUnit', value: data.businessUnit},
-        {id: 'productLine', value: data.productLine},
-        {id: 'productName', value: data.productName},
-        {id: 'sponsor', value: data.sponsor},
-        {id: 'businessLineManager', value: data.businessLineManager},
-        {id: 'productLineManager', value: data.productLineManager},
-        {id: 'projectManager', value: data.projectManager},
-        {id: 'charter', value: data.charter},
-        {id: 'orBusinessPlan', value: data.orBusinessPlan},
-        {id: 'updatedBusinessPlan', value: data.updatedBusinessPlan},
-        {id: 'drChecklist', value: data.drChecklist},
-        {id: 'lessonsLearned', value: data.lessonsLearned},
-        {id: 'metricsScope', value: data.metricsScope},
-        {id: 'rqRelease', value: data.rqRelease},
-        {id: 'ecmaBacklogTarget', value: data.ecmaBacklogTarget},
-        {id: 'composite', value: data.composite},
-    ],
+    general: {
+        projectDescription: data.projectDescription,
+        oemPartner: data.oemPartner,
+        productRelease: data.productRelease,
+        projectType: data.projectType,
+        projectRigor: data.projectRigor,
+        projectState: data.projectState,
+        businessDivision: data.businessDivision,
+        businessUnit: data.businessUnit,
+        productLine: data.productLine,
+        productName: data.productName,
+        sponsor: data.sponsor,
+        businessLineManager: data.businessLineManager,
+        productLineManager: data.productLineManager,
+        projectManager: data.projectManager,
+        charter: data.charter,
+        orBusinessPlan: data.orBusinessPlan,
+        updatedBusinessPlan: data.updatedBusinessPlan,
+        drChecklist: data.drChecklist,
+        lessonsLearned: data.lessonsLearned,
+        metricsScope: data.metricsScope,
+        rqRelease: data.rqRelease,
+        ecmaBacklogTarget: data.ecmaBacklogTarget,
+        composite: data.composite,
+    },
     milestones: data.milestones,
-    urls: [
-        {id: 'projectCollabUrl', value: data.projectCollabUrl},
-        {id: 'projectPWASiteUrl', value: data.projectPWASiteUrl},
-        {id: 'docRepositoryUrl', value: data.projectPWASiteUrl},
-        {id: 'defectsUrl', value: data.defectsUrl},
-        {id: 'requirementsUrl', value: data.requirementsUrl},
-        {id: 'cisUrl', value: data.cisUrl},
-    ],
+    urls: {
+        projectCollabUrl: data.projectCollabUrl,
+        projectPWASiteUrl: data.projectPWASiteUrl,
+        docRepositoryUrl: data.projectPWASiteUrl,
+        defectsUrl: data.defectsUrl,
+        requirementsUrl: data.requirementsUrl,
+        cisUrl: data.cisUrl,
+    },
     validationParams: {
         projectType: data.projectType,
     }

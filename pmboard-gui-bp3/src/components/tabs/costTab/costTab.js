@@ -1,6 +1,6 @@
 import React from "react";
 import CostTable from "./costTable/costTable";
-import {CustomCard} from "../../card/customCard";
+import {CustomCard} from "../../card/custom-card";
 import styles from "./costTab.module.css";
 import UploadFileControls from "../../upload-file-controls/upload-file-controls";
 
@@ -10,7 +10,6 @@ export default class CostTab extends React.Component {
     };
 
     toggleControls = () => {
-        console.log("toggle");
         this.setState((prevState) => ({
             editMode: !prevState.editMode
         }));

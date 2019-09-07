@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { put, call } from 'redux-saga/effects';
 import { takeLatest } from 'redux-saga/effects';
-import {LOAD_SUMMARY, loadError, loadSuccess} from "../actions/summaryTab";
+import {LOAD_SUMMARY, loadError, loadSuccess} from "../actions/summary-tab";
 
 function* doSearch() {
     try {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {CustomCard} from "../../card/customCard";
+import {CustomCard} from "../../card/custom-card";
 import MilestoneTable from "../../milestone-table/milestone-table";
 import {FieldName} from "../../field-name/field-name";
 import FieldValue from "../../field-value/field-value";
@@ -38,19 +38,32 @@ export default class InfoTab extends React.Component {
             return (<LoadingCard/>)
         } else {
             console.log("RENDER infoTab");
-            const {general, urls, milestones, validationParams} = this.props.infoData;
+            const {general, urls, milestones, validationParams, onChangeGeneral} = this.props;
             return (
                 <div>
                     <EditSaveControls onClick={this.editClickHandle} editMode={this.state.editMode}/>
                     <CustomCard>
                         {
-                            general.map((obj) => (
-                                displayOrNot(obj.id, validationParams)
-                                ? <div key={obj.id} className={styles.data_container}>
-                                      <FieldName name={getLabelById(obj.id)}/>
-                                      <FieldValue value={obj.value} editMode={this.state.editMode}/>
-                                  </div>
-                                : ""
+                            Object.keys(general).map((obj) => (
+                                displayOrNot(obj, validationParams)
+                                    ? <div key={obj} className={styles.data_container}>
+                                        <FieldName name={getLabelById(obj)}/>
+                                        <FieldValue
+                                            value={general[obj]}
+                                            editMode={this.state.editMode}
+                                            onChange={
+                                                (value) => {
+                                                    if (this.timeout) clearTimeout(this.timeout);
+                                                    this.timeout = setTimeout(() => {
+                                                        onChangeGeneral({
+                                                            [obj]: value
+                                                        }, "general")
+                                                    }, 300);
+                                                }
+                                            }
+                                        />
+                                    </div>
+                                    : ""
                             ))
                         }
                     </CustomCard>
@@ -68,13 +81,26 @@ export default class InfoTab extends React.Component {
 
                     <CustomCard>
                         {
-                            urls.map((obj) => (
-                                displayOrNot(obj.id, validationParams)
-                                ? <div key={obj.id} className={styles.url_container}>
-                                    <FieldName name={getLabelById(obj.id)}/>
-                                    <FieldValue value={obj.value} editMode={this.state.editMode}/>
-                                  </div>
-                                : ""
+                            Object.keys(urls).map((obj) => (
+                                displayOrNot(obj, validationParams)
+                                    ? <div key={obj} className={styles.url_container}>
+                                        <FieldName name={getLabelById(obj)}/>
+                                        <FieldValue
+                                            value={urls[obj]}
+                                            editMode={this.state.editMode}
+                                            onChange={
+                                                (value) => {
+                                                    if (this.timeout) clearTimeout(this.timeout);
+                                                    this.timeout = setTimeout(() => {
+                                                        onChangeGeneral({
+                                                            [obj]: value
+                                                        }, "urls")
+                                                    }, 300);
+                                                }
+                                            }
+                                        />
+                                    </div>
+                                    : ""
                             ))
                         }
                     </CustomCard>
@@ -85,8 +111,11 @@ export default class InfoTab extends React.Component {
 }
 
 InfoTab.propTypes = {
-    infoData: PropTypes.object.isRequired,
+    general: PropTypes.object.isRequired,
+    urls: PropTypes.object.isRequired,
+    milestones: PropTypes.object.isRequired,
     loaded: PropTypes.bool,
     loadData: PropTypes.func,
     resetData: PropTypes.func,
+    onChangeGeneral: PropTypes.func,
 };

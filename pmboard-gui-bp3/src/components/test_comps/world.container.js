@@ -3,7 +3,6 @@ import World from './world';
 import {testSuccess, testFailure} from "../../actions/test";
 
 function mapStateToProps(state) {
-    console.log(state);
     return {
         test: state.test.test,
         testPassed: state.test.testPassed,

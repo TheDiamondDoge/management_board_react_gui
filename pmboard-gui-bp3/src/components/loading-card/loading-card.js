@@ -1,5 +1,5 @@
 import React from 'react';
-import {CustomCard} from "../card/customCard";
+import {CustomCard} from "../card/custom-card";
 import {Spinner} from "@blueprintjs/core";
 
 export default class LoadingCard extends React.Component {

@@ -5,7 +5,6 @@ import LoadingCard from "../loading-card/loading-card";
 
 export default class World extends React.Component {
     render() {
-        console.log(this.props);
         const {test, testPassed, onClick1, onClick2} = this.props;
         return (
             <>
@@ -19,6 +18,7 @@ export default class World extends React.Component {
                     <button onClick={onClick1}>1</button>
                     <button onClick={onClick2}>2</button>
                 </div>
+                <input onChange={(x) => (console.log(x.target.value))}/>
             </>
         );
     }

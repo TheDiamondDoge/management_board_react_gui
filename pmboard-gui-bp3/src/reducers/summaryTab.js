@@ -1,4 +1,4 @@
-import {LOAD_SUMMARY, LOAD_SUMMARY_FAIL, LOAD_SUMMARY_SUCCESS, RESET_STATE} from "../actions/summaryTab";
+import {LOAD_SUMMARY, LOAD_SUMMARY_FAIL, LOAD_SUMMARY_SUCCESS, RESET_STATE} from "../actions/summary-tab";
 
 const initState = {
     loaded: false,
@@ -7,7 +7,7 @@ const initState = {
 };
 
 export default (state, action) => {
-    if (state === undefined){
+    if (state === undefined) {
         return initState;
     }
 
@@ -37,45 +37,45 @@ export default (state, action) => {
 }
 
 let dataComposer = (data) => ({
-    general: [
-        {id: "projectName", name: data.projectName},
-        {id: "projectDescription", name: data.projectDescription},
-        {id: "projectManager", name: data.projectManager},
-        {id: "businessLineManager", name: data.businessLineManager},
-        {id: "productLineManager", name: data.productLineManager},
-        {id: "projectState", name: data.projectState},
-        {id: "projectRigor", name: data.projectRigor},
-        {id: "charter", name: data.charter},
-        {id: "orBusinessPlan", name: data.orBusinessPlan},
-        {id: "updatedBusinessPlan", name: data.updatedBusinessPlan},
-        {id: "drChecklist", name: data.drChecklist},
-        {id: "lessonsLearned", name: data.lessonsLearned},
-        {id: "sponsor", name: data.sponsor},
-        {id: "businessDivision", name: data.businessDivision},
-        {id: "businessUnit", name: data.businessUnit},
-        {id: "productLine", name: data.productLine},
-        {id: "workspaceState", name: data.workspaceState},
-        {id: "projectType", name: data.projectType},
-        {id: "oemPartner", name: data.oemPartner},
-        {id: "disabledTime", name: data.disabledTime},
-        {id: "isEpm", name: data.epm},
-    ],
-    status: [
-        {id: "executiveSummary", name: data.executiveSummary},
-        {id: "executiveActions", name: data.executiveActions},
-    ],
-    links: [
-        {id: "collabSite", name: data.collabSite},
-        {id: "epmPwaSite", name: data.epmPwaSite},
-        {id: "documentationRepo", name: data.documentationRepo},
-        {id: "defectsReportSite", name: data.defectsReportSite},
-        {id: "activeRisks", name: data.activeRisks}
-    ],
-    pwsInfo: [
-        {id: "epmLastSavedDate", name: data.epmLastSavedDate},
-        {id: "pwsLastUpdatedDate", name: data.pwsLastUpdatedDate},
-        {id: "pwsLastUpdatedBy", name: data.pwsLastUpdatedBy}
-    ],
+    general: {
+        projectName: data.projectName,
+        projectDescription: data.projectDescription,
+        projectManager: data.projectManager,
+        businessLineManager: data.businessLineManager,
+        productLineManager: data.productLineManager,
+        projectState: data.projectState,
+        projectRigor: data.projectRigor,
+        charter: data.charter,
+        orBusinessPlan: data.orBusinessPlan,
+        updatedBusinessPlan: data.updatedBusinessPlan,
+        drChecklist: data.drChecklist,
+        lessonsLearned: data.lessonsLearned,
+        sponsor: data.sponsor,
+        businessDivision: data.businessDivision,
+        businessUnit: data.businessUnit,
+        productLine: data.productLine,
+        workspaceState: data.workspaceState,
+        projectType: data.projectType,
+        oemPartner: data.oemPartner,
+        disabledTime: data.disabledTime,
+        isEpm: data.epm
+    },
+    status: {
+        executiveSummary: data.executiveSummary,
+        executiveActions: data.executiveActions,
+    },
+    links: {
+        collabSite: data.collabSite,
+        epmPwaSite: data.epmPwaSite,
+        documentationRepo: data.documentationRepo,
+        defectsReportSite: data.defectsReportSite,
+        activeRisks: data.activeRisks,
+    },
+    pwsInfo: {
+        epmLastSavedDate: data.epmLastSavedDate,
+        pwsLastUpdatedDate: data.pwsLastUpdatedDate,
+        pwsLastUpdatedBy: data.pwsLastUpdatedBy,
+    },
     milestones: data.milestones,
     healthIndicators: data.healthIndicators,
     validationParams: {

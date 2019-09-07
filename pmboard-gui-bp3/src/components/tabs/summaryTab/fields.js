@@ -87,7 +87,6 @@ export const displayOrNot = (id, options) => {
         for (let prop in fieldProps) {
             if (options[prop] !== undefined) {
                 for (let i = 0; i < fieldProps[prop].length; i++) {
-                    console.log(fieldProps[prop][i]);
                     if (fieldProps[prop][i] == options[prop]) {
                         return false;
                     }

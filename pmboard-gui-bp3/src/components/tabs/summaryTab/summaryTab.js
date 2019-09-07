@@ -5,7 +5,7 @@ import FieldValue from "../../field-value/field-value";
 import styles from './summaryTab.module.css';
 import classNames from 'classnames';
 import {getLabelById, displayOrNot} from "./fields";
-import {CustomCard} from "../../card/customCard.js";
+import {CustomCard} from "../../card/custom-card.js";
 import HealthIndicators from "../../health-indicators/health-indicators";
 import LoadingCard from "../../loading-card/loading-card";
 import PropTypes from 'prop-types';
@@ -39,11 +39,11 @@ export default class SummaryTab extends React.Component {
                     <CustomCard className={styles.data_container}>
                         <div className="left_part">
                             {
-                                general.map((obj) => (
-                                    displayOrNot(obj.id, validationPrjParams)
-                                        ? <div key={obj.id} className={mainCardStyle}>
-                                                <FieldName name={getLabelById(obj.id)}/>
-                                                <FieldValue value={obj.name}/>
+                                Object.keys(general).map((obj) => (
+                                    displayOrNot(obj, validationPrjParams)
+                                        ? <div key={obj} className={mainCardStyle}>
+                                                <FieldName name={getLabelById(obj)}/>
+                                                <FieldValue value={general[obj]}/>
                                             </div>
                                         : ""
                                 ))
@@ -62,11 +62,11 @@ export default class SummaryTab extends React.Component {
                     <CustomCard className={styles.data_container}>
                         <div className="left_part">
                             {
-                                status.map((obj) => (
-                                    displayOrNot(obj.id, validationPrjParams)
-                                        ? <div key={obj.id} className={styles.executive_block}>
-                                              <FieldName name={getLabelById(obj.id)}/>
-                                              <FieldValue value={`${obj.name}`}/>
+                                Object.keys(status).map((obj) => (
+                                    displayOrNot(obj, validationPrjParams)
+                                        ? <div key={obj} className={styles.executive_block}>
+                                              <FieldName name={getLabelById(obj)}/>
+                                              <FieldValue value={`${status[obj]}`}/>
                                           </div>
                                         : ""
                                 ))
@@ -74,11 +74,11 @@ export default class SummaryTab extends React.Component {
                         </div>
                         <div className="right_part">
                             {
-                                links.map((obj) => (
-                                    displayOrNot(obj.id, validationPrjParams)
-                                        ? <div key={obj.id} className={secondaryCardStyle}>
-                                             <FieldName name={getLabelById(obj.id)}/>
-                                             <FieldValue value={`${obj.name}`}/>
+                                Object.keys(links).map((obj) => (
+                                    displayOrNot(obj, validationPrjParams)
+                                        ? <div key={obj} className={secondaryCardStyle}>
+                                             <FieldName name={getLabelById(obj)}/>
+                                             <FieldValue value={`${links[obj]}`}/>
                                            </div>
                                         : ""
                                 ))
@@ -91,11 +91,11 @@ export default class SummaryTab extends React.Component {
                     <CustomCard className={styles.pws_data_container}>
                         <div>
                             {
-                                pwsInfo.map((obj) => (
-                                    displayOrNot(obj.id, validationPrjParams)
-                                        ? <div key={obj.id} className={styles.data_fields}>
-                                              <FieldName name={getLabelById(obj.id)}/>
-                                              <FieldValue value={`${obj.name}`}/>
+                                Object.keys(pwsInfo).map((obj) => (
+                                    displayOrNot(obj, validationPrjParams)
+                                        ? <div key={obj} className={styles.data_fields}>
+                                              <FieldName name={getLabelById(obj)}/>
+                                              <FieldValue value={`${pwsInfo[obj]}`}/>
                                           </div>
                                         : ""
                                 ))

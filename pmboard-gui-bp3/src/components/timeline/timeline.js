@@ -92,7 +92,6 @@ export default class Timeline extends React.Component {
     createTimelineRow = (milestones) => {
         const clazz = this;
         const positionObj = this.getCurrentDatePosition(milestones);
-        console.log("position", positionObj);
         return (
             <>
                 {
@@ -206,9 +205,6 @@ export default class Timeline extends React.Component {
     };
 
     calcPositionBetween = (positionObj, milestones) => {
-        console.log(positionObj);
-        console.log("AAAAAAAAAAAAAAAAAAAAAAA", this.milestones);
-
         let firstDate = new Date(milestones[positionObj.first].actualDate);
         let lastDate = new Date(milestones[positionObj.last].actualDate);
 
@@ -227,7 +223,6 @@ export default class Timeline extends React.Component {
     );
 
     getCurrentDatePosition = (milestones) => {
-        console.log(this.state.currentDate);
         let i = 0;
         for (; i < milestones.length; i++) {
             let currMilestoneDate = new Date(milestones[i].actualDate);

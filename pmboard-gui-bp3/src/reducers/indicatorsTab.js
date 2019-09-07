@@ -1,4 +1,4 @@
-import {LOAD_INDICATORS, LOAD_INDICATORS_SUCCESS, LOAD_INDICATORS_FAIL, RESET_STATE} from '../actions/indicatorsTab';
+import {LOAD_INDICATORS, LOAD_INDICATORS_SUCCESS, LOAD_INDICATORS_FAIL, RESET_STATE} from '../actions/indicators-tab';
 
 const initState = {
     loaded: false,

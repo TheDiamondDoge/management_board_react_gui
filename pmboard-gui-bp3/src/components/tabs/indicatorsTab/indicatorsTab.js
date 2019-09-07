@@ -1,6 +1,6 @@
 import React from 'react';
 import Timeline from "../../timeline/timeline";
-import {CustomCard} from "../../card/customCard";
+import {CustomCard} from "../../card/custom-card";
 import HealthIndicators from "../../health-indicators/health-indicators";
 import styles from "./indicatorsTab.module.css";
 import Requirements from "./requirements/requirements";

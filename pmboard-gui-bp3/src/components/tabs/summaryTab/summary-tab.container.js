@@ -1,9 +1,8 @@
 import { connect } from 'react-redux';
 import summaryTab from './summaryTab';
-import {loadSummary, resetState} from "../../../actions/summaryTab";
+import {loadSummary, resetState} from "../../../actions/summary-tab";
 
 function mapStateToProps(state) {
-    console.log("MAPPING STATE", state)
     return {
         summaryData: state.summaryTab.summaryData,
         loaded: state.summaryTab.loaded,

@@ -2,7 +2,7 @@ import React from 'react';
 import LeftMenu from '../left-menu/left-menu';
 import WorkingArea from '../working-area/working-area';
 import styles from './app.module.css';
-import NavigationBar from "../navbar/navigationBar";
+import NavigationBar from "../navbar/navigation-bar";
 import Test from "../test_comps/test";
 import World from "../test_comps/world";
 import PWS from "../pages/pws/pws";

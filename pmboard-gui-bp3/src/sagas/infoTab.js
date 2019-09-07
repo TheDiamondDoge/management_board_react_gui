@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {put, call, takeLatest} from 'redux-saga/effects';
-import {LOAD_INFO, loadSuccess, loadError} from "../actions/infoTab";
+import {LOAD_INFO, loadSuccess, loadError} from "../actions/info-tab";
 
 function* doSearch() {
     try {

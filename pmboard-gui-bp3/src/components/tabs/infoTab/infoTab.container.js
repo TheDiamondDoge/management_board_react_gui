@@ -1,10 +1,13 @@
 import { connect } from 'react-redux';
 import InfoTab from './infoTab';
-import {loadInfo, resetState} from "../../../actions/infoTab";
+import {editData, loadInfo, resetState} from "../../../actions/info-tab";
 
 function mapStateToProps(state) {
     return {
-        infoData: state.infoTab.data,
+        general: state.infoTab.general,
+        milestones: state.infoTab.milestones,
+        urls: state.infoTab.urls,
+        validationParams: state.infoTab.validationParams,
         loaded: state.infoTab.loaded,
     }
 }
@@ -12,7 +15,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         loadData: () => (dispatch(loadInfo())),
-        resetData: () => (dispatch(resetState()))
+        resetData: () => (dispatch(resetState())),
+        onChangeGeneral: (obj, id) => (dispatch(editData(obj, id)))
     }
 }
 
