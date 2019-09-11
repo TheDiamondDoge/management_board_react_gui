@@ -1,3 +1,37 @@
-.column_align_center {
+.actual,
+.baseline,
+.completion,
+.timeline {
     text-align: center !important;
+}
+
+.table {
+    width: 100%;
+    /*table-layout: fixed;*/
+}
+
+.label {
+    min-width: 90px !important;
+    max-width: 90px !important;
+}
+
+.actual {
+    min-width: 130px !important;
+}
+
+.baseline {
+    min-width: 130px !important;
+}
+
+.completion {
+    min-width: 120px;
+
+}
+
+.timeline {
+    min-width: 90px;
+}
+
+.minutes {
+
 }

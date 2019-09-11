@@ -18,25 +18,26 @@ export default class MilestoneTable extends React.Component {
         const {editMode, milestonesData} = this.props;
         return (
             <div>
-                <HTMLTable striped={true}>
+                <HTMLTable striped={true} className={styles.table}>
                     <thead>
                     <tr>
-                        <th>
+                        <th className={styles.label}>
                             <FieldName name={"Project Milestone Label"}/>
                         </th>
-                        <th>
+                        <th className={styles.actual}>
                             <FieldName name={"Actual/Forecast Date"}/>
                         </th>
-                        <th>
+                        <th className={styles.baseline}>
                             <FieldName name={"Baseline Date"}/>
                         </th>
-                        <th>
+                        <th className={styles.completion}>
                             <FieldName name={"Milestone Completion (%)"}/>
                         </th>
-                        <th className={styles.column_align_center}>
+                        {/*<th className={styles.column_align_center}>*/}
+                        <th className={styles.timeline}>
                             <FieldName name={"Shown in Timeline"}/>
                         </th>
-                        <th>
+                        <th className={styles.minutes}>
                             <FieldName name={"Milestone meeting minutes"}/>
                         </th>
                     </tr>
@@ -57,10 +58,10 @@ export default class MilestoneTable extends React.Component {
             let {onChange} = this.props;
             return milestoneData.map((milestone, key) => (
                 <tr key={key}>
-                    <td>
+                    <td className={styles.label}>
                         <FieldValue value={milestone.label}/>
                     </td>
-                    <td>
+                    <td className={styles.actual}>
                         <DateInput
                             formatDate={
                                 date => {
@@ -83,7 +84,7 @@ export default class MilestoneTable extends React.Component {
                             value={new Date(milestone.actualDate)}
                         />
                     </td>
-                    <td>
+                    <td className={styles.baseline}>
                         <DateInput
                             formatDate={date => dateFormatToString(date)}
                             parseDate={str => stringToDateFormat(str.toString())}
@@ -91,8 +92,9 @@ export default class MilestoneTable extends React.Component {
                             value={new Date(milestone.baselineDate)}
                         />
                     </td>
-                    <td>
+                    <td className={styles.completion}>
                         <NumericInput
+                            style={{width: "50px", display: "inline-block"}}
                             allowNumericCharactersOnly={true}
                             min={0}
                             max={100}
@@ -102,13 +104,13 @@ export default class MilestoneTable extends React.Component {
                             onValueChange={value => onChange("completion", value, key)}
                         />
                     </td>
-                    <td className={styles.column_align_center}>
+                    <td className={styles.timeline}>
                         <Checkbox
                             defaultChecked={milestone.shown}
                             onChange={event => onChange("shown", event.target.checked, key)}
                         />
                     </td>
-                    <td>
+                    <td className={styles.minutes}>
                         <FieldValue
                             editMode={editMode}
                             value={this.ifEmpty(milestone.meetingMinutes)}
@@ -120,12 +122,12 @@ export default class MilestoneTable extends React.Component {
         } else {
             return milestoneData.map((milestone, key) => (
                 <tr key={key}>
-                    <td>{this.ifEmpty(milestone.label)}</td>
-                    <td>{this.ifEmpty(milestone.actualDate)}</td>
-                    <td>{this.ifEmpty(milestone.baselineDate)}</td>
-                    <td>{this.ifEmpty(milestone.completion)}</td>
-                    <td>{this.ifEmpty(milestone.shown)}</td>
-                    <td><FieldValue value={this.ifEmpty(milestone.meetingMinutes)}/></td>
+                    <td className={styles.label}>{this.ifEmpty(milestone.label)}</td>
+                    <td className={styles.actual}>{dateFormatToString(milestone.actualDate ? new Date(milestone.actualDate) : "")}</td>
+                    <td className={styles.baseline}>{dateFormatToString(milestone.baselineDate ? new Date(milestone.baselineDate) : "")}</td>
+                    <td className={styles.completion}>{this.ifEmpty(milestone.completion)}</td>
+                    <td className={styles.timeline}>{this.ifChecked(milestone.shown)}</td>
+                    <td className={styles.minutes}><FieldValue value={this.ifEmpty(milestone.meetingMinutes)}/></td>
                 </tr>
             ))
         }
@@ -133,6 +135,10 @@ export default class MilestoneTable extends React.Component {
 
     ifEmpty = (objProp) => (
         objProp ? objProp : "-"
+    );
+
+    ifChecked = (checked) => (
+        checked ? "Yes" : "No"
     );
 }
 

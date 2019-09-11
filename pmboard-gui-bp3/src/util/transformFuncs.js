@@ -27,6 +27,8 @@ export const blcNumberToState = (num) => {
 };
 
 export const dateFormatToString = (date) => {
+    if (!date) return "";
+
     let day = date.getDate();
     let month = MONTHS_NAMES[date.getMonth()];
     let year = date.getFullYear();
