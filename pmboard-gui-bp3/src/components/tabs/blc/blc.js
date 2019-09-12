@@ -9,12 +9,15 @@ import {DEFAULT_ROW_VALUES} from "./blcRows/blcRowsDataObject";
 import style from "./blcRows/blcRow.module.css";
 
 export default class BlcDashboard extends React.Component {
-    state = {
-        isPmRow: false,
-        isPmoRow: false,
-        isSalesRow: false,
-        isCommentsEdit: false,
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            isPmRow: false,
+            isPmoRow: false,
+            isSalesRow: false,
+            isCommentsEdit: false,
+        };
+    }
 
     onClickEdit = (row) => {
         this.setState((prevState) => ({

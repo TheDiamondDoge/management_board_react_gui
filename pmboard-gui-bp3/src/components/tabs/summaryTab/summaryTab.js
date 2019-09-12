@@ -10,7 +10,6 @@ import HealthIndicators from "../../health-indicators/health-indicators";
 import LoadingCard from "../../loading-card/loading-card";
 import PropTypes from 'prop-types';
 
-//TODO: Grid problems on second card; Column gap required
 export default class SummaryTab extends React.Component {
     componentDidMount() {
         this.props.loadData();

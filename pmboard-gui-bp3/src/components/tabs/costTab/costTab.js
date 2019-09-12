@@ -5,9 +5,12 @@ import styles from "./costTab.module.css";
 import UploadFileControls from "../../upload-file-controls/upload-file-controls";
 
 export default class CostTab extends React.Component {
-    state = {
-        editMode: false,
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            editMode: false,
+        };
+    }
 
     toggleControls = () => {
         this.setState((prevState) => ({

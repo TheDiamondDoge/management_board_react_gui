@@ -123,10 +123,11 @@ let selectClass = (stateBranch) => {
     }
 };
 
+//TODO: shape of milestones???
 InfoTab.propTypes = {
     general: PropTypes.object.isRequired,
     urls: PropTypes.object.isRequired,
-    milestones: PropTypes.object.isRequired,
+    milestones: PropTypes.array.isRequired,
     loaded: PropTypes.bool,
     loadData: PropTypes.func,
     resetData: PropTypes.func,

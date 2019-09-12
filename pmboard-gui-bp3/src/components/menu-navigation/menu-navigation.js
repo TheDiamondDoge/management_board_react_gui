@@ -6,17 +6,19 @@ import PropTypes from 'prop-types';
 import { NavigationMenuItem } from "../../util/customTypes";
 
 export default class MenuNavigation extends React.Component {
-
-    state = {
-        adminOpen: false,
-        projectsOpen: false,
-        kpiOpen: false,
-        internalsOpen: false,
-        portfolioOpen: false,
-        bpOpen: false,
-        blcOpen: false,
-        navigationOpen: false,
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            adminOpen: false,
+            projectsOpen: false,
+            kpiOpen: false,
+            internalsOpen: false,
+            portfolioOpen: false,
+            bpOpen: false,
+            blcOpen: false,
+            navigationOpen: false,
+        };
+    }
 
     handleClick = (stateName) => {
         let stateProp = stateName + "Open";

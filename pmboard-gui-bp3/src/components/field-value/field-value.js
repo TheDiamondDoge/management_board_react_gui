@@ -37,7 +37,12 @@ export default class FieldValue extends React.Component{
 };
 
 FieldValue.propTypes = {
-    value: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.number,
+        PropTypes.bool,
+        PropTypes.instanceOf(Date),
+    ]).isRequired,
     editMode: PropTypes.bool,
     onChange: PropTypes.func,
 };

@@ -6,9 +6,12 @@ import {FieldName} from "../../../field-name/field-name";
 import FieldValue from "../../../field-value/field-value";
 
 export default class Quality extends React.Component {
-    state = {
-        editMode: false,
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            editMode: false,
+        };
+    }
 
     onClickEdit = () => {
         this.setState(
