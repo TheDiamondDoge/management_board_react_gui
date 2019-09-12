@@ -4,7 +4,7 @@ import Hello from '../../test_comps/world.container';
 import styles from './pws.module.css';
 import SummaryTab from "../../tabs/summaryTab/summary-tab.container";
 import InfoTab from "../../tabs/infoTab/infoTab.container";
-import IndicatorsTab from "../../tabs/indicatorsTab/indicatorsTab";
+import IndicatorsTab from "../../tabs/indicatorsTab/indicatorsTab.container";
 import CostTab from "../../tabs/costTab/costTab";
 import BlcDashboard from "../../tabs/blc/blc";
 
