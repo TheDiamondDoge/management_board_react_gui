@@ -6,7 +6,6 @@ import {
     LOAD_INFO_SUCCESS,
     RESET_STATE
 } from '../actions/info-tab';
-import milestones from "../components/tabs/indicatorsTab/milestones/milestones";
 
 const initState = {
     loaded: false,
@@ -52,8 +51,9 @@ export default (state, action) => {
                 milestones: editMilestones(state.milestones, action)
             };
         case RESET_STATE:
-        default:
             return initState;
+        default:
+            return state;
     }
 }
 

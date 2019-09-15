@@ -6,7 +6,7 @@ import SummaryTab from "../../tabs/summaryTab/summary-tab.container";
 import InfoTab from "../../tabs/infoTab/infoTab.container";
 import IndicatorsTab from "../../tabs/indicatorsTab/indicatorsTab.container";
 import CostTab from "../../tabs/costTab/costTab";
-import BlcDashboard from "../../tabs/blc/blc";
+import BlcDashboard from "../../tabs/blc/blc.container";
 
 export default class PWS extends React.Component {
     constructor(props) {

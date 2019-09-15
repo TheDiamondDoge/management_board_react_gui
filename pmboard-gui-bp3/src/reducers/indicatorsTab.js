@@ -30,7 +30,8 @@ export default (state, action) => {
                 data: action.data,
             };
         case RESET_STATE:
-        default:
             return initState;
+        default:
+            return state;
     }
 }

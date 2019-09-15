@@ -3,11 +3,13 @@ import {HTMLTable, Button, Classes, Intent} from "@blueprintjs/core";
 import {CustomCard} from "../../card/custom-card";
 import styles from "./blc.module.css";
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import BlcRow from "./blcRows/blcRow";
 import EditSaveControls from "../../edit-save-contols/edit-save-controls";
 import {DEFAULT_ROW_VALUES} from "./blcRows/blcRowsDataObject";
 import style from "./blcRows/blcRow.module.css";
 
+//TODO: Fetch is OK, need to populate
 export default class BlcDashboard extends React.Component {
     constructor(props){
         super(props);
@@ -17,6 +19,10 @@ export default class BlcDashboard extends React.Component {
             isSalesRow: false,
             isCommentsEdit: false,
         };
+    }
+
+    componentDidMount() {
+        this.props.loadData();
     }
 
     onClickEdit = (row) => {
@@ -166,3 +172,8 @@ export default class BlcDashboard extends React.Component {
         return (this.state.isPmRow || this.state.isPmoRow || this.state.isSalesRow || this.state.isCommentsEdit)
     }
 }
+
+BlcDashboard.propTypes = {
+    loadData: PropTypes.func,
+    blcData: PropTypes.object,
+};

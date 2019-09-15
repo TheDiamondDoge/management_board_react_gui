@@ -79,6 +79,7 @@ const isLabelExists = (id) => {
 };
 
 //TODO: Need to add 'notAllowedExcept' situation
+//TODO: Also refactor this. This is a code duplicate (info tab)
 export const displayOrNot = (id, options) => {
     if (!isLabelExists(id)) return false;
 

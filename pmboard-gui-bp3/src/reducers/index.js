@@ -4,6 +4,7 @@ import summaryTabReducer from './summaryTab';
 import indicatorsTabReducer from "./indicatorsTab";
 import infoTabReducer from "./infoTab";
 import costTabReducer from "./costTab";
+import blcTabReducer from "./blc-tab";
 
 export default combineReducers({
     test: testReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
     indicatorsTab: indicatorsTabReducer,
     infoTab: infoTabReducer,
     costTab: costTabReducer,
+    blcTab: blcTabReducer,
 });

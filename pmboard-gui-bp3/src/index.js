@@ -12,6 +12,7 @@ import createSagaMiddleware from 'redux-saga';
 import summaryTabSaga from './sagas/summaryTab';
 import infoTabSaga from './sagas/infoTab';
 import indicatorsTabSaga from './sagas/indicatorsTab';
+import blcTabSaga from './sagas/blc-tab';
 import reducer from "./reducers"
 import * as serviceWorker from './serviceWorker';
 
@@ -33,10 +34,11 @@ const store = createStore(
     )
 );
 
-//TODO: This must be refactored into 1 'PWS tab' saga!
+//TODO: This must be refactored into 1 'PWS tab' saga!!!!!!
 sagas.run(summaryTabSaga);
 sagas.run(infoTabSaga);
 sagas.run(indicatorsTabSaga);
+sagas.run(blcTabSaga);
 
 ReactDOM.render(
     <Provider store={store}>
