@@ -17,18 +17,20 @@ export default class EditSaveControls extends React.Component {
             return (
                 <div className={this.props.className}>
                     <Button
-                        {...condProps}
+                        text={"Save"}
                         minimal={true}
                         icon={"saved"}
                         onClick={onClick}
                         intent={Intent.SUCCESS}
+                        {...condProps}
                     />
                     <Button
-                        {...condProps}
+                        text={"Cancel"}
                         minimal={true}
                         icon={"undo"}
                         onClick={onClick}
                         intent={Intent.DANGER}
+                        {...condProps}
                     />
                 </div>
             )
@@ -50,10 +52,11 @@ export default class EditSaveControls extends React.Component {
 
     getButtonProps = (isSmall) => {
         if (isSmall) {
-            return {}
+            return {
+                text: null
+            }
         } else {
             return {
-                text: "Save",
                 large: true,
             }
         }

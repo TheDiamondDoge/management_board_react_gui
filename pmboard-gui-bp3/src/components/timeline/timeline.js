@@ -29,8 +29,8 @@ export default class Timeline extends React.Component {
                     <tr>
                         <td>&nbsp;</td>
                         {
-                            milestones.map((milestone) => (
-                                this.createContentCell(milestone.label)
+                            milestones.map((milestone, key) => (
+                                this.createContentCell(milestone.label, key)
                             ))
                         }
                     </tr>
@@ -42,16 +42,16 @@ export default class Timeline extends React.Component {
                     <tr>
                         <td className={styles.legend}>Committed (Baseline)</td>
                         {
-                            milestones.map((milestone) => (
-                                this.createContentCell(milestone.actualDate)
+                            milestones.map((milestone, key) => (
+                                this.createContentCell(milestone.actualDate, key)
                             ))
                         }
                     </tr>
                     <tr>
                         <td className={styles.legend}>Actual / Forecast</td>
                         {
-                            milestones.map((milestone) => (
-                                this.createContentCell(milestone.actualDate)
+                            milestones.map((milestone, key) => (
+                                this.createContentCell(milestone.actualDate, key)
                             ))
                         }
                     </tr>
@@ -83,8 +83,8 @@ export default class Timeline extends React.Component {
         )
     };
 
-    createContentCell = (content) => (
-        <td key={content}>
+    createContentCell = (content, key) => (
+        <td key={key + "_content"}>
             {this.getDivContainer(content)}
         </td>
     );
@@ -177,7 +177,7 @@ export default class Timeline extends React.Component {
             {
                 milestones.map((obj, i) => (
                     <td
-                        key={i}
+                        key={i + "_decorative"}
                         className={styles.align_center}
                     >
                         |
@@ -194,7 +194,7 @@ export default class Timeline extends React.Component {
                 <td>&nbsp;</td>
                 {
                     milestones.map((obj, i) => (
-                        <td key={i} className={iconsStyle}>
+                        <td key={i + "_status"} className={iconsStyle}>
                             <Icon icon={"tick"} intent={Intent.SUCCESS}/>
                             {/*<Icon icon={"cross"} intent={Intent.DANGER}/>*/}
                         </td>

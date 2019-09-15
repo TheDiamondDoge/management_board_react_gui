@@ -14,7 +14,13 @@ export default class HealthIndicators extends React.Component {
             editCommentMode: false,
         };
 
-        this.labels = ['Overall Project Status', 'Schedule', 'Scope', 'Quality', 'Cost'];
+        this.labels = {
+            overall: 'Overall Project Status',
+            schedule: 'Schedule',
+            scope: 'Scope',
+            quality: 'Quality',
+            cost: 'Cost'
+        };
     }
 
     onClickEditStatus = () => {
@@ -83,167 +89,43 @@ export default class HealthIndicators extends React.Component {
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>
-                        <FieldName name={"Overall Project Status"}/>
-                    </td>
-                    <td className={styles.column_align_center}>
-                        <StatusIndicator
-                            className={styles.inline_block}
-                            status={"yellow"}
-                        />
-                    </td>
-                    <td className={styles.column_align_center}>
-                        {
-                            this.state.editStatusMode
-                                ? this.selectElement(1)
-                                : <StatusIndicator
+                {
+                    Object.keys(this.labels).map((key) => (
+                        <tr key={key}>
+                            <td>
+                                <FieldName name={this.labels[key]}/>
+                            </td>
+                            <td className={styles.column_align_center}>
+                                <StatusIndicator
                                     className={styles.inline_block}
-                                    status={"red"}
+                                    status={this.getColor(indicators.statuses.prev[key])}
                                 />
-                        }
-                    </td>
-                    {
-                        isSummaryMode ||
-                        (
-                            this.state.editCommentMode
-                                ? <td>
-                                    <TextArea fill={true} defaultValue={"First comment"}/>
-                                  </td>
-                                : <td className={styles.column_align_center}>
-                                    First comment
-                                  </td>
-                        )
-                    }
-                </tr>
-                <tr>
-                    <td>
-                        <FieldName name={"Schedule"}/>
-                    </td>
-                    <td className={styles.column_align_center}>
-                        <StatusIndicator
-                            className={styles.inline_block}
-                            status={"green"}
-                        />
-                    </td>
-                    <td className={styles.column_align_center}>
-                        {
-                            this.state.editStatusMode
-                                ? this.selectElement(1)
-                                : <StatusIndicator
-                                    className={styles.inline_block}
-                                />
-                        }
-                    </td>
-                    {
-                        isSummaryMode ||
-                        (
-                            this.state.editCommentMode
-                                ? <td>
-                                    <TextArea fill={true} defaultValue={"First comment"}/>
-                                </td>
-                                : <td className={styles.column_align_center}>
-                                    First comment
-                                </td>
-                        )
-                    }
-                </tr>
-                <tr>
-                    <td>
-                        <FieldName name={"Scope"}/>
-                    </td>
-                    <td className={styles.column_align_center}>
-                        <StatusIndicator
-                            className={styles.inline_block}
-                            status={"yellow"}
-                        />
-                    </td>
-                    <td className={styles.column_align_center}>
-                        {
-                            this.state.editStatusMode
-                                ? this.selectElement(1)
-                                : <StatusIndicator
-                                    className={styles.inline_block}
-                                />
-                        }
-                    </td>
-                    {
-                        isSummaryMode ||
-                        (
-                            this.state.editCommentMode
-                                ? <td>
-                                    <TextArea fill={true} defaultValue={"First comment"}/>
-                                </td>
-                                : <td className={styles.column_align_center}>
-                                    First comment
-                                </td>
-                        )
-                    }
-                </tr>
-                <tr>
-                    <td>
-                        <FieldName name={"Quality"}/>
-                    </td>
-                    <td className={styles.column_align_center}>
-                        <StatusIndicator
-                            className={styles.inline_block}
-                            status={"yellow"}
-                        />
-                    </td>
-                    <td className={styles.column_align_center}>
-                        {
-                            this.state.editStatusMode
-                                ? this.selectElement(1)
-                                : <StatusIndicator
-                                    className={styles.inline_block}
-                                />
-                        }
-                    </td>
-                    {
-                        isSummaryMode ||
-                        (
-                            this.state.editCommentMode
-                                ? <td>
-                                    <TextArea fill={true} defaultValue={"First comment"}/>
-                                </td>
-                                : <td className={styles.column_align_center}>
-                                    First comment
-                                </td>
-                        )
-                    }
-                </tr>
-                <tr>
-                    <td>
-                        <FieldName name={"Cost"}/>
-                    </td>
-                    <td className={styles.column_align_center}>
-                        <StatusIndicator
-                            className={styles.inline_block}
-                            status={"yellow"}
-                        />
-                    </td>
-                    <td className={styles.column_align_center}>
-                        {
-                            this.state.editStatusMode
-                                ? this.selectElement(1)
-                                : <StatusIndicator
-                                    className={styles.inline_block}
-                                />
-                        }
-                    </td>
-                    {
-                        isSummaryMode ||
-                        (
-                            this.state.editCommentMode
-                                ? <td>
-                                    <TextArea fill={true} defaultValue={"First comment"}/>
-                                </td>
-                                : <td className={styles.column_align_center}>
-                                    First comment
-                                </td>
-                        )
-                    }
-                </tr>
+                            </td>
+                            <td className={styles.column_align_center}>
+                                {
+                                    this.state.editStatusMode
+                                        ? this.selectElement(indicators.statuses.current[key])
+                                        : <StatusIndicator
+                                            className={styles.inline_block}
+                                            status={this.getColor(indicators.statuses.current[key])}
+                                        />
+                                }
+                            </td>
+                            {
+                                isSummaryMode ||
+                                (
+                                    this.state.editCommentMode
+                                        ? <td>
+                                            <TextArea fill={true} defaultValue={indicators.comments[key]}/>
+                                        </td>
+                                        : <td className={styles.column_align_center}>
+                                            indicators.comments[key]
+                                        </td>
+                                )
+                            }
+                        </tr>
+                    ))
+                }
                 </tbody>
             </HTMLTable>
         )
@@ -257,9 +139,23 @@ export default class HealthIndicators extends React.Component {
             <option value="3">Red</option>
         </select>
     );
+
+    getColor = (number) => {
+        switch (number) {
+            case 3:
+                return "green";
+            case 2:
+                return "yellow";
+            case 1:
+                return "red";
+            default:
+                return "blank";
+        }
+    };
 }
 
+
 HealthIndicators.propTypes = {
-    indicators: PropTypes.array.isRequired,
+    indicators: PropTypes.object.isRequired,
     isSummaryMode: PropTypes.bool,
 };

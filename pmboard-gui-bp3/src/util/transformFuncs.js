@@ -49,3 +49,7 @@ export const dateToDashedString = (date) => {
 
     return `${year}-${month}-${day}`;
 };
+
+export const nullToEmptyStr = (str) => (
+    str === null ? "" : str
+);
