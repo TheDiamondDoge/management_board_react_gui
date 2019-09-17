@@ -33,12 +33,12 @@ export default class BlcRow extends React.Component {
                 </td>
                 <td className={tdClasses}>{lastUpdatedBy}</td>
                 <td className={tdClasses}>{updatedOn}</td>
-                {rowValues.map((val, key) => (
+                {Object.keys(rowValues).map((key) => (
                     <td key={key} className={tdClasses}>
                         {
                             isValuesEdit
-                                ? this.selectElement(val)
-                                : <StatusIndicator className={style.inline_block} status={blcNumberToState(val)}/>
+                                ? this.selectElement(rowValues[key])
+                                : <StatusIndicator className={style.inline_block} status={blcNumberToState(rowValues[key])}/>
                         }
                     </td>
                 ))}
@@ -50,14 +50,17 @@ export default class BlcRow extends React.Component {
         )
     }
 
-    selectElement = (num) => (
-        <select defaultValue={num}>
-            <option value="">&nbsp;</option>
-            <option value="1">1</option>
-            <option value="3">3</option>
-            <option value="6">6</option>
-        </select>
-    );
+    selectElement = (num) => {
+        num = num || "";
+        return (
+            <select defaultValue={num}>
+                <option value="">&nbsp;</option>
+                <option value="1">1</option>
+                <option value="3">3</option>
+                <option value="6">6</option>
+            </select>
+        )
+    };
 }
 
 BlcRow.propTypes = {
@@ -69,5 +72,5 @@ BlcRow.propTypes = {
     isValuesEdit: PropTypes.bool,
     isCommentsEdit: PropTypes.bool,
     isControlsHidden: PropTypes.bool,
-    rowValues: PropTypes.arrayOf(PropTypes.number).isRequired,
+    rowValues: PropTypes.object.isRequired,
 };

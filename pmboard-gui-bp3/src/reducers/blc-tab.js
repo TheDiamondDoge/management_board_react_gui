@@ -19,7 +19,7 @@ export default (state, action) => {
         case LOAD_BLC_SUCCESS:
             return {
                 ...state,
-                data: action.data,
+                data: {...action.data},
                 loaded: true,
             };
         case LOAD_BLC_FAILURE:

@@ -6,12 +6,15 @@ export const stringToUrlElem = (url) => (
     isUrl(url) ? (<a href={url}>Click here</a>) : url
 );
 
-let isUrl = (url) => {
+let isUrl = (value) => {
     const expr = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/gi;
     const regExp = new RegExp(expr);
-    // make sure that all values will be converted to string before match()
-    return (url + "").match(regExp);
+    return toStr(value).match(regExp);
 };
+
+let toStr = (value) => (
+    value + ""
+);
 
 export const blcNumberToState = (num) => {
     switch (num) {

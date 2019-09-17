@@ -5,6 +5,7 @@ import {loadBlc} from "../../../actions/blc-tab";
 function mapStateToProps(state) {
     return {
         blcData: state.blcTab.data,
+        loaded: state.blcTab.loaded,
     }
 }
 
