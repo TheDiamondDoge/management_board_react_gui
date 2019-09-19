@@ -73,6 +73,7 @@ export default class InfoTab extends React.Component {
     }
 }
 
+//TODO: TIMEOUTS WRAPPER (!!??!?!!)
 let mainRows = (general, validationParams, onChangeGeneral, editMode, stateBranch) => {
     const style = selectClass(stateBranch);
     let timeout;

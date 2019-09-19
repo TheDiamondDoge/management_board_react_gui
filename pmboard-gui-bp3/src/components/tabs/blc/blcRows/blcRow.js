@@ -8,9 +8,12 @@ import {blcNumberToState} from "../../../../util/transformFuncs";
 
 export default class BlcRow extends React.Component {
     render() {
-        const {roleName, lastUpdatedBy, updatedOn, rowValues, onClickEdit, isValuesEdit, isCommentsEdit, isControlsHidden} = this.props;
+        console.log("RENDER BLC ROW");
+        const {
+            roleName, lastUpdatedBy, updatedOn, rowValues, comment,
+            onClickEdit, isValuesEdit, isCommentsEdit, isControlsHidden
+        } = this.props;
         const tdClasses = classNames(style.column_align_center, style.word_break);
-
         return (
             <tr>
                 <td>
@@ -37,23 +40,23 @@ export default class BlcRow extends React.Component {
                     <td key={key} className={tdClasses}>
                         {
                             isValuesEdit
-                                ? this.selectElement(rowValues[key])
+                                ? this.selectElement(rowValues[key], key)
                                 : <StatusIndicator className={style.inline_block} status={blcNumberToState(rowValues[key])}/>
                         }
                     </td>
                 ))}
 
                 <td className={tdClasses}>
-                    {isCommentsEdit ? <TextArea fill={true} defaultValue={"Hello There!"}/> : "Hello There!"}
+                    {isCommentsEdit ? <TextArea fill={true} defaultValue={comment}/> : comment}
                 </td>
             </tr>
         )
     }
 
-    selectElement = (num) => {
+    selectElement = (num, key) => {
         num = num || "";
         return (
-            <select defaultValue={num}>
+            <select onChange={(e) => this.props.onChange(key, e.target.value)} defaultValue={num}>
                 <option value="">&nbsp;</option>
                 <option value="1">1</option>
                 <option value="3">3</option>
@@ -69,8 +72,10 @@ BlcRow.propTypes = {
     updatedOn: PropTypes.string,
     className: PropTypes.string,
     onClickEdit: PropTypes.func,
+    onChange: PropTypes.func,
     isValuesEdit: PropTypes.bool,
     isCommentsEdit: PropTypes.bool,
     isControlsHidden: PropTypes.bool,
     rowValues: PropTypes.object.isRequired,
+    comment: PropTypes.string,
 };

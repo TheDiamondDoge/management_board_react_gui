@@ -1,8 +1,10 @@
-import {LOAD_BLC, LOAD_BLC_FAILURE, LOAD_BLC_SUCCESS, RESET_STATE} from "../actions/blc-tab";
+import {EDIT_ROW_VALUE, LOAD_BLC, LOAD_BLC_FAILURE, LOAD_BLC_SUCCESS, RESET_STATE} from "../actions/blc-tab";
 
 const initState = {
     loaded: false,
-    data: {},
+    pm: {},
+    pmo: {},
+    sales: {},
     error: "",
 };
 
@@ -14,12 +16,13 @@ export default (state, action) => {
     switch (action.type) {
         case LOAD_BLC:
             return {
-                ...state
+                ...state,
+                loaded: false,
             };
         case LOAD_BLC_SUCCESS:
             return {
                 ...state,
-                data: {...action.data},
+                ...action.data,
                 loaded: true,
             };
         case LOAD_BLC_FAILURE:
@@ -28,9 +31,25 @@ export default (state, action) => {
                 loaded: false,
                 error: action.error,
             };
+        case EDIT_ROW_VALUE:
+            return {
+                ...state,
+                [action.fieldData.propKey]: {...editRowData(state, action)}
+            };
         case RESET_STATE:
             return initState;
         default:
             return state;
     }
 }
+
+let editRowData = (state, action) => {
+    console.log(state);
+    console.log(action);
+
+    let rowObject = {...state[action.fieldData.propKey]};
+    rowObject.indicators[action.fieldData.key] = action.fieldData.value;
+    console.log({...state[action.fieldData.propKey]});
+
+    return rowObject;
+};

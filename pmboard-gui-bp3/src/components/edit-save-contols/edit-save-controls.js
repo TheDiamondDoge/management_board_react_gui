@@ -5,13 +5,13 @@ import PropTypes from "prop-types";
 export default class EditSaveControls extends React.Component {
     render() {
         console.log("RENDER EditSave");
-        const {onClick, editMode, smallSize} = this.props;
+        const {onSubmit, onCancel, onClick, editMode, smallSize} = this.props;
         return (
-            this.renderElements(editMode, smallSize, onClick)
+            this.renderElements(editMode, smallSize, onSubmit, onCancel, onClick)
         )
     }
 
-    renderElements = (editMode, smallSize, onClick) => {
+    renderElements = (editMode, smallSize, onSubmit, onCancel, onClick) => {
         let condProps = this.getButtonProps(smallSize);
         if (editMode) {
             return (
@@ -20,7 +20,7 @@ export default class EditSaveControls extends React.Component {
                         text={"Save"}
                         minimal={true}
                         icon={"saved"}
-                        onClick={onClick}
+                        onClick={onSubmit}
                         intent={Intent.SUCCESS}
                         {...condProps}
                     />
@@ -28,7 +28,7 @@ export default class EditSaveControls extends React.Component {
                         text={"Cancel"}
                         minimal={true}
                         icon={"undo"}
-                        onClick={onClick}
+                        onClick={onCancel}
                         intent={Intent.DANGER}
                         {...condProps}
                     />
@@ -39,11 +39,11 @@ export default class EditSaveControls extends React.Component {
             return (
                 <div className={this.props.className}>
                     <Button
-                        {...condProps}
                         minimal={true}
                         icon={"edit"}
                         onClick={onClick}
                         intent={Intent.PRIMARY}
+                        {...condProps}
                     />
                 </div>
             )
@@ -65,6 +65,8 @@ export default class EditSaveControls extends React.Component {
 
 EditSaveControls.propTypes = {
     onClick: PropTypes.func,
+    onSubmit: PropTypes.func,
+    onCancel: PropTypes.func,
     editMode: PropTypes.bool,
     smallSize: PropTypes.bool,
     className: PropTypes.string,

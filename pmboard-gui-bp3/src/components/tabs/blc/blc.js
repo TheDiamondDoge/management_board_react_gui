@@ -11,7 +11,7 @@ import style from "./blcRows/blcRow.module.css";
 
 //TODO: Fetch is OK, need to populate
 export default class BlcDashboard extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             isPmRow: false,
@@ -23,6 +23,10 @@ export default class BlcDashboard extends React.Component {
 
     componentDidMount() {
         this.props.loadData();
+    }
+
+    componentWillUnmount() {
+        this.props.resetData();
     }
 
     onClickEdit = (row) => {
@@ -38,7 +42,7 @@ export default class BlcDashboard extends React.Component {
         })
     };
 
-    onClickCancel = () => {
+    cancelEdit = () => {
         this.setState({
             isPmRow: false,
             isPmoRow: false,
@@ -48,14 +52,13 @@ export default class BlcDashboard extends React.Component {
     };
 
     render() {
+        console.log("RENDER BLC", this.props);
         const thClasses = classNames(styles.column_align_center, styles.border_right);
         const thCommentClasses = classNames(styles.column_align_center);
         const {loaded} = this.props;
 
         if (loaded) {
-            const {pm, pmo, sales} = this.props.blcData;
-            const {role, csl, updatedOn} = pm;
-            // console.log(least);
+            const {pm, pmo, sales} = this.props;
             return (
                 <>
                     <CustomCard>
@@ -137,27 +140,33 @@ export default class BlcDashboard extends React.Component {
                                 lastUpdatedBy={pm.csl}
                                 updatedOn={pm.updatedOn}
                                 rowValues={pm.indicators}
+                                comment={pm.comment}
                                 onClickEdit={() => (this.onClickEdit("isPmRow"))}
+                                onChange={this.onChange("pm")}
                                 isValuesEdit={this.state.isPmRow}
                                 isCommentsEdit={this.state.isCommentsEdit}
                                 isControlsHidden={this.isInEditMode()}
                             />
                             <BlcRow
-                                roleName={"PMO - Quality"}
-                                lastUpdatedBy={"dgavrilov"}
-                                updatedOn={"2019-08-04 14:45"}
-                                rowValues={DEFAULT_ROW_VALUES}
+                                roleName={pmo.role}
+                                lastUpdatedBy={pmo.csl}
+                                updatedOn={pmo.updatedOn}
+                                rowValues={pmo.indicators}
+                                comment={pmo.comment}
                                 onClickEdit={() => (this.onClickEdit("isPmoRow"))}
+                                onChange={this.onChange("pmo")}
                                 isValuesEdit={this.state.isPmoRow}
                                 isCommentsEdit={this.state.isCommentsEdit}
                                 isControlsHidden={this.isInEditMode()}
                             />
                             <BlcRow
-                                roleName={"Sales"}
-                                lastUpdatedBy={"npashinskyi"}
-                                updatedOn={"2019-08-04 14:23"}
-                                rowValues={DEFAULT_ROW_VALUES}
+                                roleName={sales.role}
+                                lastUpdatedBy={sales.csl}
+                                updatedOn={sales.updatedOn}
+                                rowValues={sales.indicators}
+                                comment={sales.comment}
                                 onClickEdit={() => (this.onClickEdit("isSalesRow"))}
+                                onChange={this.onChange("sales")}
                                 isValuesEdit={this.state.isSalesRow}
                                 isCommentsEdit={this.state.isCommentsEdit}
                                 isControlsHidden={this.isInEditMode()}
@@ -167,7 +176,12 @@ export default class BlcDashboard extends React.Component {
                     </CustomCard>
                     {
                         (this.state.isPmoRow || this.state.isPmRow || this.state.isSalesRow || this.state.isCommentsEdit)
-                            ? <EditSaveControls editMode={true} onClick={this.onClickCancel}/>
+                            ? <EditSaveControls editMode={true}
+                                                onCancel={() => {
+                                                    this.cancelEdit();
+                                                    this.props.loadData();
+                                                }}
+                            />
                             : ""
                     }
                 </>
@@ -179,11 +193,21 @@ export default class BlcDashboard extends React.Component {
 
     isInEditMode = () => {
         return (this.state.isPmRow || this.state.isPmoRow || this.state.isSalesRow || this.state.isCommentsEdit)
-    }
+    };
+
+    onChange = (propKey) => {
+        return (val, key) => {
+            this.props.onRowValuesChange(propKey, val, key);
+        }
+    };
 }
 
 BlcDashboard.propTypes = {
     loadData: PropTypes.func,
-    blcData: PropTypes.object,
+    resetData: PropTypes.func,
+    onRowValuesChange: PropTypes.func,
+    pm: PropTypes.object,
+    pmo: PropTypes.object,
+    sales: PropTypes.object,
     loaded: PropTypes.bool,
 };
