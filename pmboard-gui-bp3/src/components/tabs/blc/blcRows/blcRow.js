@@ -4,7 +4,7 @@ import StatusIndicator from "../../../status-indicator/status-indicator";
 import classNames from "classnames";
 import style from "./blcRow.module.css";
 import {Button, TextArea} from "@blueprintjs/core";
-import {blcNumberToState} from "../../../../util/transformFuncs";
+import {blcNumberToState, dateFormatToString, dateToDashedString} from "../../../../util/transformFuncs";
 
 export default class BlcRow extends React.Component {
     render() {
@@ -34,8 +34,11 @@ export default class BlcRow extends React.Component {
                         </div>
                     </div>
                 </td>
+
                 <td className={tdClasses}>{lastUpdatedBy}</td>
-                <td className={tdClasses}>{updatedOn}</td>
+
+                <td className={tdClasses}>{dateFormatToString(new Date(updatedOn))}</td>
+
                 {Object.keys(rowValues).map((key) => (
                     <td key={key} className={tdClasses}>
                         {
@@ -47,7 +50,7 @@ export default class BlcRow extends React.Component {
                 ))}
 
                 <td className={tdClasses}>
-                    {isCommentsEdit ? <TextArea fill={true} defaultValue={comment}/> : comment}
+                    {isCommentsEdit ? <TextArea fill={true} onChange={(e) => this.props.onChange("comment", e.target.value)} defaultValue={comment}/> : comment}
                 </td>
             </tr>
         )

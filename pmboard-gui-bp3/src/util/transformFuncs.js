@@ -34,7 +34,7 @@ export const dateFormatToString = (date) => {
 
     let day = date.getDate();
     let month = MONTHS_NAMES[date.getMonth()];
-    let year = date.getFullYear();
+    let year = date.getFullYear().toString().substr(-2);
 
     return `${day}-${month}-${year}`;
 };

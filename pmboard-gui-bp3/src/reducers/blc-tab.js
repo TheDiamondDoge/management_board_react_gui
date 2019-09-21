@@ -44,12 +44,13 @@ export default (state, action) => {
 }
 
 let editRowData = (state, action) => {
-    console.log(state);
-    console.log(action);
-
     let rowObject = {...state[action.fieldData.propKey]};
-    rowObject.indicators[action.fieldData.key] = action.fieldData.value;
-    console.log({...state[action.fieldData.propKey]});
+
+    if (action.fieldData.key === "comment") {
+        rowObject.comment = action.fieldData.value;
+    } else {
+        rowObject.indicators[action.fieldData.key] = action.fieldData.value;
+    }
 
     return rowObject;
 };

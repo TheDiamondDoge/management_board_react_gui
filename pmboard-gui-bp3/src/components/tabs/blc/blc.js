@@ -6,8 +6,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import BlcRow from "./blcRows/blcRow";
 import EditSaveControls from "../../edit-save-contols/edit-save-controls";
-import {DEFAULT_ROW_VALUES} from "./blcRows/blcRowsDataObject";
 import style from "./blcRows/blcRow.module.css";
+import {funcWithDelay} from "../../../util/wrappers";
 
 //TODO: Fetch is OK, need to populate
 export default class BlcDashboard extends React.Component {
@@ -52,10 +52,12 @@ export default class BlcDashboard extends React.Component {
     };
 
     render() {
-        console.log("RENDER BLC", this.props);
+        console.log("RENDER BLC");
         const thClasses = classNames(styles.column_align_center, styles.border_right);
         const thCommentClasses = classNames(styles.column_align_center);
         const {loaded} = this.props;
+
+        this.delayedOnChange = funcWithDelay(this.props.onRowValuesChange, 300);
 
         if (loaded) {
             const {pm, pmo, sales} = this.props;
@@ -197,7 +199,7 @@ export default class BlcDashboard extends React.Component {
 
     onChange = (propKey) => {
         return (val, key) => {
-            this.props.onRowValuesChange(propKey, val, key);
+            this.delayedOnChange(propKey, val, key);
         }
     };
 }
@@ -206,8 +208,8 @@ BlcDashboard.propTypes = {
     loadData: PropTypes.func,
     resetData: PropTypes.func,
     onRowValuesChange: PropTypes.func,
-    pm: PropTypes.object,
-    pmo: PropTypes.object,
-    sales: PropTypes.object,
-    loaded: PropTypes.bool,
+    pm: PropTypes.object.isRequired,
+    pmo: PropTypes.object.isRequired,
+    sales: PropTypes.object.isRequired,
+    loaded: PropTypes.bool.isRequired,
 };
