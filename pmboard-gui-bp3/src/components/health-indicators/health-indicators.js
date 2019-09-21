@@ -5,6 +5,7 @@ import styles from "./health-indicators.module.css";
 import StatusIndicator from "../status-indicator/status-indicator";
 import PropTypes from "prop-types";
 import EditSaveControls from "../edit-save-contols/edit-save-controls";
+import {dateFormatToString} from "../../util/transformFuncs";
 
 export default class HealthIndicators extends React.Component {
     constructor(props){
@@ -64,11 +65,11 @@ export default class HealthIndicators extends React.Component {
                     </th>
                     <th className={styles.column_align_center}>
                         <FieldName name={"Previous"}/>
-                        <FieldName name={indicators.prevStatusSet}/>
+                        <FieldName name={dateFormatToString(new Date(indicators.prevStatusSet))}/>
                     </th>
                     <th className={styles.column_align_center}>
                         <FieldName name={"Current"}/>
-                        <FieldName name={indicators.currentStatusSet}/>
+                        <FieldName name={dateFormatToString(new Date(indicators.currentStatusSet))}/>
                     </th>
 
                     {
@@ -119,7 +120,7 @@ export default class HealthIndicators extends React.Component {
                                             <TextArea fill={true} defaultValue={indicators.comments[key]}/>
                                         </td>
                                         : <td className={styles.column_align_center}>
-                                            indicators.comments[key]
+                                            {indicators.comments[key]}
                                         </td>
                                 )
                             }

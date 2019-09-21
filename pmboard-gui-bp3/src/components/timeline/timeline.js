@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import StatusIndicator from "../status-indicator/status-indicator";
 import {Icon, Intent} from "@blueprintjs/core";
 import PropTypes from 'prop-types';
+import {FieldName} from "../field-name/field-name";
+import {dateFormatToString} from "../../util/transformFuncs";
 
 export default class Timeline extends React.Component {
     constructor(props) {
@@ -39,19 +41,25 @@ export default class Timeline extends React.Component {
                     {this.createTimelineRow(milestones)}
                     {this.createDecorativeRow(milestones)}
 
+                    <br/>
                     <tr>
-                        <td className={styles.legend}>Committed (Baseline)</td>
+                        <td className={styles.legend}>
+                            <FieldName name={"Committed (Baseline)"}/>
+                        </td>
                         {
                             milestones.map((milestone, key) => (
-                                this.createContentCell(milestone.actualDate, key)
+                                this.createContentCell(dateFormatToString(new Date(milestone.actualDate)), key)
                             ))
                         }
                     </tr>
+                    <br/>
                     <tr>
-                        <td className={styles.legend}>Actual / Forecast</td>
+                        <td className={styles.legend}>
+                            <FieldName name={"Actual / Forecast"}/>
+                        </td>
                         {
                             milestones.map((milestone, key) => (
-                                this.createContentCell(milestone.actualDate, key)
+                                this.createContentCell(dateFormatToString(new Date(milestone.actualDate)), key)
                             ))
                         }
                     </tr>

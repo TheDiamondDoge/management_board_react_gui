@@ -16,36 +16,45 @@ export default class IndicatorsTab extends React.Component {
     }
 
     render() {
-        return (
-            <div className={styles.data_grid}>
-                <CustomCard className={styles.timeline}>
-                    {/*<Timeline />*/}
-                </CustomCard>
-                <CustomCard className={styles.health}>
-                    <h3>Health</h3>
-                    {/*<HealthIndicators isSummaryMode={false}/>*/}
-                </CustomCard>
-                <CustomCard className={styles.req}>
-                    <h3>Requirements</h3>
-                    <Requirements/>
-                </CustomCard>
-                <CustomCard className={styles.milestones}>
-                    <h3>Milestones</h3>
-                    <Milestones/>
-                </CustomCard>
-                <CustomCard className={styles.dr4_kpi}>
-                    <h3>Project DR4 KPI</h3>
-                    <Kpi/>
-                </CustomCard>
-                <CustomCard className={styles.quality}>
-                    <h3>Quality</h3>
-                    <Quality/>
-                </CustomCard>
-            </div>
-        )
+        const {loaded, milestones, healthIndicators, requirements} = this.props;
+        if (loaded) {
+            return (
+                <div className={styles.data_grid}>
+                    <CustomCard className={styles.timeline}>
+                        <Timeline milestones={milestones}/>
+                    </CustomCard>
+                    <CustomCard className={styles.health}>
+                        <h3>Health</h3>
+                        <HealthIndicators indicators={healthIndicators} isSummaryMode={false}/>
+                    </CustomCard>
+                    <CustomCard className={styles.req}>
+                        <h3>Requirements</h3>
+                        <Requirements requirements={requirements}/>
+                    </CustomCard>
+                    <CustomCard className={styles.milestones}>
+                        <h3>Milestones</h3>
+                        <Milestones/>
+                    </CustomCard>
+                    <CustomCard className={styles.dr4_kpi}>
+                        <h3>Project DR4 KPI</h3>
+                        <Kpi/>
+                    </CustomCard>
+                    <CustomCard className={styles.quality}>
+                        <h3>Quality</h3>
+                        <Quality/>
+                    </CustomCard>
+                </div>
+            )
+        } else {
+            return ""
+        }
     }
 }
 
 IndicatorsTab.propTypes = {
+    milestones: PropTypes.array,
+    healthIndicators: PropTypes.object,
+    requirements: PropTypes.object,
+    loaded: PropTypes.bool,
     loadData: PropTypes.func,
 };

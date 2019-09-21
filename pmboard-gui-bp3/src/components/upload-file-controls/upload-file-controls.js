@@ -16,7 +16,6 @@ export default class UploadFileControls extends React.Component {
                 <div className={this.props.className}>
                     <FileInput
                         text={"Choose file..."}
-                        large={true}
                         onInputChange={onClick}
                     />
                 </div>
@@ -28,7 +27,6 @@ export default class UploadFileControls extends React.Component {
                         minimal={true}
                         text={"Edit"}
                         icon={"edit"}
-                        large={true}
                         onClick={onClick}
                         intent={Intent.PRIMARY}
                     />

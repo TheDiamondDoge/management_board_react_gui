@@ -2,7 +2,6 @@ import {LOAD_INDICATORS, LOAD_INDICATORS_SUCCESS, LOAD_INDICATORS_FAIL, RESET_ST
 
 const initState = {
     loaded: false,
-    data: {},
     error: "",
 };
 
@@ -26,8 +25,8 @@ export default (state, action) => {
         case LOAD_INDICATORS_SUCCESS:
             return {
                 ...state,
+                ...action.data,
                 loaded: true,
-                data: action.data,
             };
         case RESET_STATE:
             return initState;

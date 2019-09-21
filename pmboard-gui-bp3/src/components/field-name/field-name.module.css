@@ -1,7 +1,7 @@
 .field {
+    display: inline-block;
     font-style: italic;
     color: #666666;
     padding-right: 10px;
-    display: inline-block;
     height: 100%;
 }
