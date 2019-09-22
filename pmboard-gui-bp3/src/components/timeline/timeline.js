@@ -17,6 +17,7 @@ export default class Timeline extends React.Component {
     }
 
     //TODO: br, timeline arrow, styling
+    //TODO: Milestone status pick
     render() {
         console.log("timeline render");
         const milestones = this.props.milestones;
@@ -41,7 +42,7 @@ export default class Timeline extends React.Component {
                     {this.createTimelineRow(milestones)}
                     {this.createDecorativeRow(milestones)}
 
-                    <br/>
+                    <tr><td>&nbsp;</td></tr>
                     <tr>
                         <td className={styles.legend}>
                             <FieldName name={"Committed (Baseline)"}/>
@@ -52,7 +53,9 @@ export default class Timeline extends React.Component {
                             ))
                         }
                     </tr>
-                    <br/>
+
+                    <tr><td>&nbsp;</td></tr>
+
                     <tr>
                         <td className={styles.legend}>
                             <FieldName name={"Actual / Forecast"}/>
@@ -203,13 +206,22 @@ export default class Timeline extends React.Component {
                 {
                     milestones.map((obj, i) => (
                         <td key={i + "_status"} className={iconsStyle}>
-                            <Icon icon={"tick"} intent={Intent.SUCCESS}/>
-                            {/*<Icon icon={"cross"} intent={Intent.DANGER}/>*/}
+                            {this.getMilestoneStatusIcon(obj)}
                         </td>
                     ))
                 }
             </tr>
         )
+    };
+
+    getMilestoneStatusIcon = (milestone) => {
+        if(milestone.completion === 100) {
+            return <Icon icon={"tick"} intent={Intent.SUCCESS}/>
+        } else if (new Date(milestone.actual) > this.state.current) {
+            return <Icon icon={"cross"} intent={Intent.DANGER}/>;
+        } else {
+            return "";
+        }
     };
 
     calcPositionBetween = (positionObj, milestones) => {

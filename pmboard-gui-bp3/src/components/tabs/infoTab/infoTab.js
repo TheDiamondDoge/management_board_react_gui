@@ -85,7 +85,8 @@ let mainRows = (general, validationParams, onChangeGeneral, editMode, stateBranc
                     value={general[obj]}
                     editMode={editMode}
                     onChange={
-                        (value) => {
+                        (e) => {
+                            let value = e.target.value;
                             if (timeout) clearTimeout(timeout);
                             timeout = setTimeout(() => {
                                 onChangeGeneral({

@@ -49,7 +49,7 @@ export default class Requirements extends React.Component {
                         </tr>
                         <tr>
                             <td><FieldName name={"# Requirements committed (baseline) at DR1"}/></td>
-                            <td><FieldValue value={ committedAtDr1 } editMode={this.state.editMode}/></td>
+                            <td><FieldValue value={ committedAtDr1 } onInput={this.onInput} editMode={this.state.editMode}/></td>
                         </tr>
                         <tr>
                             <td><FieldName name={"Current # of requirements added after DR1"}/></td>
@@ -71,6 +71,11 @@ export default class Requirements extends React.Component {
                 </HTMLTable>
             </>
         )
+    }
+
+    onInput = (event) => {
+        let str = "" + event.target.value;
+        event.target.value = str.replace(/[^0-9]/gm, "");
     }
 }
 

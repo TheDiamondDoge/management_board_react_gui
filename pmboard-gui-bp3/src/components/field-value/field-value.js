@@ -12,22 +12,23 @@ export default class FieldValue extends React.Component {
     }
 
     render() {
-        const {value, editMode, onChange} = this.props;
+        const {value, editMode, type} = this.props;
         return (
-            this.getRenderField(value, editMode, onChange)
+            this.getRenderField(value, editMode, type)
         )
     }
 
-    getRenderField = (value, editMode, onChange) => {
-        if (!onChange) onChange = () => {};
+    getRenderField = (value, editMode, type) => {
+        type = type || "text";
         if (!editMode) {
             return <div>{stringToUrlElem(nullToEmptyStr(value))}</div>
         } else {
             return (
                 <div>
                     <InputGroup
-                        onChange={e => onChange(e.target.value)}
-                        type="text"
+                        onInput={this.props.onInput}
+                        onChange={this.props.onChange}
+                        type={type}
                         defaultValue={nullToEmptyStr(value)}
                     />
                 </div>
@@ -45,4 +46,6 @@ FieldValue.propTypes = {
     ]),
     editMode: PropTypes.bool,
     onChange: PropTypes.func,
+    onInput: PropTypes.func,
+    type: PropTypes.string,
 };
