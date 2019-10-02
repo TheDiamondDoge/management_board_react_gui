@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import Timeline from "../../timeline/timeline";
 import {CustomCard} from "../../card/custom-card";
 import HealthIndicators from "../../health-indicators/health-indicators";
-import styles from "./indicatorsTab.module.css";
-import Requirements from "./requirements/requirements";
-import Milestones from "./milestones/milestones";
-import Kpi from "./dr4kpi/kpi";
-import Quality from "./quality/quality";
+import styles from "./indicators-tab.module.css";
+import Requirements from "../../requirements/requirements";
+import Milestones from "../../milestones/milestones";
+import Kpi from "../../dr4kpi/kpi";
+import Quality from "../../quality/quality";
 
 //TODO: HINT: How to map json with fields - check summary realisation
 export default class IndicatorsTab extends React.Component {

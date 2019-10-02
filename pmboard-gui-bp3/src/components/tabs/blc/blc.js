@@ -4,9 +4,9 @@ import {CustomCard} from "../../card/custom-card";
 import styles from "./blc.module.css";
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import BlcRow from "./blcRows/blcRow";
+import BlcRow from "../../blc-rows/blcRow";
 import EditSaveControls from "../../edit-save-contols/edit-save-controls";
-import style from "./blcRows/blcRow.module.css";
+import style from "../../blc-rows/blcRow.module.css";
 import {funcWithDelay} from "../../../util/wrappers";
 
 //TODO: Fetch is OK, need to populate

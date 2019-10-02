@@ -1,12 +1,12 @@
 import React from 'react';
 import {HTMLTable} from "@blueprintjs/core";
-import EditSaveControls from "../../../edit-save-contols/edit-save-controls";
+import EditSaveControls from "../edit-save-contols/edit-save-controls";
 import styles from "./requirements.module.css";
 import classNames from "classnames";
-import {FieldName} from "../../../field-name/field-name";
-import FieldValue from "../../../field-value/field-value";
+import {FieldName} from "../field-name/field-name";
+import FieldValue from "../field-value/field-value";
 import PropTypes from 'prop-types';
-import {dateFormatToString} from "../../../../util/transformFuncs";
+import {dateFormatToString} from "../../util/transformFuncs";
 
 export default class Requirements extends React.Component {
     constructor(props){

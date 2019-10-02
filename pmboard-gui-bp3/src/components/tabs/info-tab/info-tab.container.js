@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import InfoTab from './infoTab';
+import InfoTab from './info-tab';
 import {editGeneralData, editMilestoneData, loadInfo, resetState} from "../../../actions/info-tab";
 
 function mapStateToProps(state) {

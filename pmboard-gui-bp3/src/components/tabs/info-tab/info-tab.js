@@ -4,7 +4,7 @@ import MilestoneTable from "../../milestone-table/milestone-table";
 import {FieldName} from "../../field-name/field-name";
 import FieldValue from "../../field-value/field-value";
 import EditSaveControls from "../../edit-save-contols/edit-save-controls";
-import styles from './infoTab.module.css'
+import styles from './info-tab.module.css'
 import PropTypes from 'prop-types';
 import LoadingCard from "../../loading-card/loading-card";
 import {displayOrNot, getLabelById} from "./fields";

@@ -1,7 +1,7 @@
 import React from "react";
-import CostTable from "./costTable/costTable";
+import CostTable from "../../cost-table/costTable";
 import {CustomCard} from "../../card/custom-card";
-import styles from "./costTab.module.css";
+import styles from "./cost-tab.module.css";
 import UploadFileControls from "../../upload-file-controls/upload-file-controls";
 
 export default class CostTab extends React.Component {

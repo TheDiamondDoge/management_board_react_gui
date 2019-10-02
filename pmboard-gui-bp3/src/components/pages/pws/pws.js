@@ -2,10 +2,10 @@ import React from 'react';
 import {Tab, Tabs} from "@blueprintjs/core";
 import Hello from '../../test_comps/world.container';
 import styles from './pws.module.css';
-import SummaryTab from "../../tabs/summaryTab/summary-tab.container";
-import InfoTab from "../../tabs/infoTab/infoTab.container";
-import IndicatorsTab from "../../tabs/indicatorsTab/indicatorsTab.container";
-import CostTab from "../../tabs/costTab/costTab";
+import SummaryTab from "../../tabs/summary-tab/summary-tab.container";
+import InfoTab from "../../tabs/info-tab/info-tab.container";
+import IndicatorsTab from "../../tabs/indicators-tab/indicators-tab.container";
+import CostTab from "../../tabs/cost-tab/cost-tab";
 import BlcDashboard from "../../tabs/blc/blc.container";
 
 export default class PWS extends React.Component {
