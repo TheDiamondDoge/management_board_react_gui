@@ -60,11 +60,13 @@ export const displayOrNot = (id, options) => {
 
     if (fieldsParam[id].hasOwnProperty("notAllowedIn")) {
         let fieldProps = fieldsParam[id].notAllowedIn;
-        for (let prop of fieldProps) {
-            if (options[prop] !== undefined) {
-                for (let i = 0; i < fieldProps[prop].length; i++) {
-                    if (fieldProps[prop][i] === options[prop]) {
-                        return false;
+        for (let prop in fieldProps) {
+            if (fieldProps.hasOwnProperty(prop)) {
+                if (options[prop] !== undefined) {
+                    for (let i = 0; i < fieldProps[prop].length; i++) {
+                        if (fieldProps[prop][i] === options[prop]) {
+                            return false;
+                        }
                     }
                 }
             }
