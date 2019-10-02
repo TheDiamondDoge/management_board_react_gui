@@ -3,9 +3,18 @@ import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
 import LoadingCard from "../loading-card/loading-card";
 import {Formik, Field, Form, ErrorMessage} from "formik";
-import TogglingInput from "./toggling-input/toggling-input";
+import {InputGroup, TextArea} from "@blueprintjs/core";
+import FormInput from "./form-input/form-input";
 
 export default class World extends React.Component {
+    customInputComponent = ({field, form: {touched, errors}, ...props}) => (
+        <div>
+            <TextArea type="text" {...field} {...props} />
+            {touched[field.name] &&
+            errors[field.name] && <div className="error">{errors[field.name]}</div>}
+        </div>
+    );
+
     render() {
         const {test, testPassed, onClick1, onClick2} = this.props;
         return (
@@ -29,11 +38,11 @@ export default class World extends React.Component {
                         console.log(b);
                     }
                     }
-                    initialValues={{email: "het", semail: {test: "heheh@mail.ru"}}}
+                    initialValues={{date: new Date(), semail: {test: "heheh@mail.ru"}}}
                     render={
                         () => (
                             <Form>
-                                <Field name="email" component={TogglingInput}/>
+                                <Field type="date" name="date" component={FormInput}/>
                                 <ErrorMessage name="email" component="div"/>
                                 <Field type="email" name="semail.test"/>
                                 <ErrorMessage name="semail.test" component="div"/>
