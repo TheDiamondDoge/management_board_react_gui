@@ -6,9 +6,10 @@ import StatusIndicator from "../status-indicator/status-indicator";
 import PropTypes from "prop-types";
 import EditSaveControls from "../edit-save-contols/edit-save-controls";
 import {dateFormatToString} from "../../util/transformFuncs";
+import {Field, Form} from "formik";
 
 export default class HealthIndicators extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             editStatusMode: false,
@@ -26,13 +27,13 @@ export default class HealthIndicators extends React.Component {
 
     onClickEditStatus = () => {
         this.setState(
-            (prevState) => ({ editStatusMode: !prevState.editStatusMode })
+            (prevState) => ({editStatusMode: !prevState.editStatusMode})
         )
     };
 
     onClickEditComment = () => {
         this.setState(
-            (prevState) => ({ editCommentMode: !prevState.editCommentMode })
+            (prevState) => ({editCommentMode: !prevState.editCommentMode})
         )
     };
 
@@ -73,11 +74,11 @@ export default class HealthIndicators extends React.Component {
                     </th>
 
                     {
-                        !isSummaryMode &&
+                        isSummaryMode ||
                         <th className={styles.column_align_center}>
                             <FieldName name={"Comments"}/>
                             {
-                               !this.state.editStatusMode &&
+                                !this.state.editStatusMode &&
                                 <EditSaveControls
                                     className={styles.inline_block}
                                     editMode={this.state.editCommentMode}
@@ -96,32 +97,14 @@ export default class HealthIndicators extends React.Component {
                             <td>
                                 <FieldName name={this.labels[key]}/>
                             </td>
-                            <td className={styles.column_align_center}>
-                                <StatusIndicator
-                                    className={styles.inline_block}
-                                    status={this.getColor(indicators.statuses.prev[key])}
-                                />
-                            </td>
-                            <td className={styles.column_align_center}>
-                                {
-                                    this.state.editStatusMode
-                                        ? this.selectElement(indicators.statuses.current[key])
-                                        : <StatusIndicator
-                                            className={styles.inline_block}
-                                            status={this.getColor(indicators.statuses.current[key])}
-                                        />
-                                }
-                            </td>
+
+                            {this.getImmutableIndicatorTd(indicators.statuses.prev[key], styles)}
+                            {this.getIndicatorTd(indicators.statuses.current[key], "statuses.current." + key, styles)}
+
                             {
                                 isSummaryMode ||
                                 (
-                                    this.state.editCommentMode
-                                        ? <td>
-                                            <TextArea fill={true} defaultValue={indicators.comments[key]}/>
-                                        </td>
-                                        : <td className={styles.column_align_center}>
-                                            {indicators.comments[key]}
-                                        </td>
+                                    this.getCommentTd(indicators.comments[key], styles)
                                 )
                             }
                         </tr>
@@ -132,7 +115,47 @@ export default class HealthIndicators extends React.Component {
         )
     }
 
+    getCommentTd = (comment, styles) => {
+        if (this.state.editCommentMode) {
+            return (
+                <td>
+                    <TextArea fill={true} defaultValue={comment}/>
+                </td>
+            )
+        } else {
+            return (
+                <td className={styles.column_align_center}>
+                    {comment}
+                </td>
+            )
+        }
+    };
+
+    getImmutableIndicatorTd = (status, styles) => (
+        this.getIndicatorTd(status, styles, false)
+    );
+
+    getIndicatorTd = (status, styles, isMutable = true) => {
+        if (isMutable && this.state.editStatusMode) {
+            return (
+                <td className={styles.column_align_center}>
+                    {this.selectElement(status)}
+                </td>
+            )
+        } else {
+            return (
+                <td className={styles.column_align_center}>
+                    <StatusIndicator
+                        className={styles.inline_block}
+                        status={this.getColor(status)}
+                    />
+                </td>
+            )
+        }
+    };
+
     selectElement = (val) => (
+      //  {/*<Field component="select" name={name} defaultValue={val}>*/}
         <select defaultValue={val}>
             <option value="">&nbsp;</option>
             <option value="1">Green</option>

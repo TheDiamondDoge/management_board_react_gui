@@ -15,8 +15,6 @@ export default class FormInput extends React.Component {
 
     render() {
         const {field, form: {touched, errors}, type, ...props} = this.props;
-        console.log("CHANGE", this.props);
-        console.log(this.props);
         return (
             <div>
                 {this.fieldFactory(type, field, props)}

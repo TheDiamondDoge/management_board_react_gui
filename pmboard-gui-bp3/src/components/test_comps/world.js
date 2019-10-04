@@ -3,8 +3,9 @@ import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
 import LoadingCard from "../loading-card/loading-card";
 import {Formik, Field, Form, ErrorMessage} from "formik";
-import {InputGroup, TextArea} from "@blueprintjs/core";
+import {InputGroup, TextArea, HTMLTable} from "@blueprintjs/core";
 import FormInput from "./form-input/form-input";
+import testHOC from "../../util/formikHealthHOC";
 
 export default class World extends React.Component {
     customInputComponent = ({field, form: {touched, errors}, ...props}) => (
@@ -17,6 +18,7 @@ export default class World extends React.Component {
 
     render() {
         const {test, testPassed, onClick1, onClick2} = this.props;
+        const Compp = testHOC();
         return (
             <>
                 <LoadingCard/>
@@ -42,15 +44,28 @@ export default class World extends React.Component {
                     render={
                         () => (
                             <Form>
-                                <Field type="date" name="date" component={FormInput}/>
-                                <ErrorMessage name="email" component="div"/>
-                                <Field type="email" name="semail.test"/>
-                                <ErrorMessage name="semail.test" component="div"/>
-                                <button type="submit">Submit</button>
+                                <HTMLTable>
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            <Field type="date" name="date" component={FormInput}/>
+                                            <ErrorMessage name="email" component="div"/>
+                                        </td>
+                                        <td>
+                                            <Field type="email" name="semail.test"/>
+                                            <ErrorMessage name="semail.test" component="div"/>
+                                        </td>
+                                        <td>
+                                            <button type="submit">Submit</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </HTMLTable>
                             </Form>
                         )
                     }
                 />
+                <Compp/>
             </>
         );
     }
