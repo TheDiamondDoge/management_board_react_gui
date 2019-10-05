@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import LoadingCard from "../loading-card/loading-card";
 import {Formik, Field, Form, ErrorMessage} from "formik";
 import {InputGroup, TextArea, HTMLTable} from "@blueprintjs/core";
-import FormInput from "./form-input/form-input";
+import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import testHOC from "../../util/formikHealthHOC";
 
 export default class World extends React.Component {
@@ -48,7 +48,7 @@ export default class World extends React.Component {
                                     <tbody>
                                     <tr>
                                         <td>
-                                            <Field type="date" name="date" component={FormInput}/>
+                                            <Field type="date" name="date" component={FormikCustomField}/>
                                             <ErrorMessage name="email" component="div"/>
                                         </td>
                                         <td>

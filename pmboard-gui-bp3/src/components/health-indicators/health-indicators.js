@@ -6,8 +6,10 @@ import StatusIndicator from "../status-indicator/status-indicator";
 import PropTypes from "prop-types";
 import EditSaveControls from "../edit-save-contols/edit-save-controls";
 import {dateFormatToString} from "../../util/transformFuncs";
-import {Field, Form} from "formik";
+import {Field, Formik} from "formik";
+import FormikCustomField from "../formik-custom-field/formik-custom-field";
 
+//TODO sync data edit with display form
 export default class HealthIndicators extends React.Component {
     constructor(props) {
         super(props);
@@ -25,6 +27,12 @@ export default class HealthIndicators extends React.Component {
         };
     }
 
+    submitForm = null;
+
+    bindFormSubmission = (formikSubmitForm) => {
+        this.submitForm = formikSubmitForm;
+    };
+
     onClickEditStatus = () => {
         this.setState(
             (prevState) => ({editStatusMode: !prevState.editStatusMode})
@@ -40,86 +48,124 @@ export default class HealthIndicators extends React.Component {
     render() {
         const {isSummaryMode, indicators} = this.props;
         return (
-            <HTMLTable
-                className={styles.health_table}
-                striped={true}
-            >
-                <colgroup>
-                    <col className={styles.status_col}/>
-                    <col className={styles.prev_column}/>
-                    <col className={styles.cur_column}/>
-                    <col/>
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>
-                        <FieldName name={"Status"}/>
+            <Formik
+                onSubmit={(values, formikActions) => {
+                    formikActions.setSubmitting(false);
+                    console.log(values);
+                }}
+                //TODO: dont work with selects?? oO
+                initialValues={{
+                    statuses: {
+                        current: {
+                            overall: 1,
+                            schedule: 2,
+                            scope: 3,
+                            quality: 3,
+                            cost: 2,
+                        }
+                    },
+                    comments: {
+                        overall: "Overall Comment",
+                        schedule: "Schedule Comment",
+                        scope: "Scope Comment",
+                        quality: "Quality Comment",
+                        cost: "Cost Comment!",
+                    }
+                }}
+                render={
+                    (formikProps) => {
+                        this.bindFormSubmission(formikProps.submitForm);
+                        return (this.getHealthIndicatorsTable(indicators, isSummaryMode))
+                    }
+                }
+            />
+        )
+    }
+
+    getHealthIndicatorsTable = (indicators, isSummaryMode) => (
+        <HTMLTable
+            className={styles.health_table}
+            striped={true}
+        >
+            <colgroup>
+                <col className={styles.status_col}/>
+                <col className={styles.prev_column}/>
+                <col className={styles.cur_column}/>
+                <col/>
+            </colgroup>
+            <thead>
+            <tr>
+                <th>
+                    <FieldName name={"Status"}/>
+                    {
+                        !isSummaryMode && !this.state.editCommentMode &&
+                        <EditSaveControls
+                            className={styles.inline_block}
+                            editMode={this.state.editStatusMode}
+                            onClick={() => this.onClickEditStatus()}
+                            onSubmit={() => this.submitForm()}
+                            onCancel={() => this.onClickEditStatus()}
+                            smallSize={true}
+                        />
+                    }
+                </th>
+                <th className={styles.column_align_center}>
+                    <FieldName name={"Previous"}/>
+                    <FieldName name={dateFormatToString(new Date(indicators.prevStatusSet))}/>
+                </th>
+                <th className={styles.column_align_center}>
+                    <FieldName name={"Current"}/>
+                    <FieldName name={dateFormatToString(new Date(indicators.currentStatusSet))}/>
+                </th>
+
+                {
+                    isSummaryMode ||
+                    <th className={styles.column_align_center}>
+                        <FieldName name={"Comments"}/>
                         {
-                            !isSummaryMode && !this.state.editCommentMode &&
+                            !this.state.editStatusMode &&
                             <EditSaveControls
                                 className={styles.inline_block}
-                                editMode={this.state.editStatusMode}
-                                onClick={() => this.onClickEditStatus()}
+                                editMode={this.state.editCommentMode}
+                                onClick={() => this.onClickEditComment()}
+                                onCancel={() => this.onClickEditComment()}
+                                onSubmit={() => this.submitForm()}
                                 smallSize={true}
                             />
                         }
                     </th>
-                    <th className={styles.column_align_center}>
-                        <FieldName name={"Previous"}/>
-                        <FieldName name={dateFormatToString(new Date(indicators.prevStatusSet))}/>
-                    </th>
-                    <th className={styles.column_align_center}>
-                        <FieldName name={"Current"}/>
-                        <FieldName name={dateFormatToString(new Date(indicators.currentStatusSet))}/>
-                    </th>
-
-                    {
-                        isSummaryMode ||
-                        <th className={styles.column_align_center}>
-                            <FieldName name={"Comments"}/>
-                            {
-                                !this.state.editStatusMode &&
-                                <EditSaveControls
-                                    className={styles.inline_block}
-                                    editMode={this.state.editCommentMode}
-                                    onClick={() => this.onClickEditComment()}
-                                    smallSize={true}
-                                />
-                            }
-                        </th>
-                    }
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    Object.keys(this.labels).map((key) => (
-                        <tr key={key}>
-                            <td>
-                                <FieldName name={this.labels[key]}/>
-                            </td>
-
-                            {this.getImmutableIndicatorTd(indicators.statuses.prev[key], styles)}
-                            {this.getIndicatorTd(indicators.statuses.current[key], "statuses.current." + key, styles)}
-
-                            {
-                                isSummaryMode ||
-                                (
-                                    this.getCommentTd(indicators.comments[key], styles)
-                                )
-                            }
-                        </tr>
-                    ))
                 }
-                </tbody>
-            </HTMLTable>
-        )
-    }
+            </tr>
+            </thead>
+            <tbody>
+            {
+                Object.keys(this.labels).map((key) => (
+                    <tr key={key}>
+                        <td>
+                            <FieldName name={this.labels[key]}/>
+                        </td>
 
-    getCommentTd = (comment, styles) => {
+                        {this.getImmutableIndicatorTd(indicators.statuses.prev[key], "statuses.current." + key, styles)}
+                        {this.getIndicatorTd(indicators.statuses.current[key], "statuses.current." + key, styles)}
+
+                        {
+                            isSummaryMode ||
+                            (
+                                this.getCommentTd(indicators.comments[key], "comments." + key, styles)
+                            )
+                        }
+                    </tr>
+                ))
+            }
+            </tbody>
+        </HTMLTable>
+    );
+
+    getCommentTd = (comment, name, styles) => {
         if (this.state.editCommentMode) {
             return (
                 <td>
-                    <TextArea fill={true} defaultValue={comment}/>
+                    <Field type="area" name={name} component={FormikCustomField}/>
                 </td>
             )
         } else {
@@ -131,15 +177,15 @@ export default class HealthIndicators extends React.Component {
         }
     };
 
-    getImmutableIndicatorTd = (status, styles) => (
-        this.getIndicatorTd(status, styles, false)
+    getImmutableIndicatorTd = (status, name, styles) => (
+        this.getIndicatorTd(status, name, styles, false)
     );
 
-    getIndicatorTd = (status, styles, isMutable = true) => {
+    getIndicatorTd = (status, name, styles, isMutable = true) => {
         if (isMutable && this.state.editStatusMode) {
             return (
                 <td className={styles.column_align_center}>
-                    {this.selectElement(status)}
+                    {this.selectElement(name)}
                 </td>
             )
         } else {
@@ -154,23 +200,25 @@ export default class HealthIndicators extends React.Component {
         }
     };
 
-    selectElement = (val) => (
-      //  {/*<Field component="select" name={name} defaultValue={val}>*/}
-        <select defaultValue={val}>
-            <option value="">&nbsp;</option>
-            <option value="1">Green</option>
-            <option value="2">Yellow</option>
-            <option value="3">Red</option>
-        </select>
-    );
+    selectElement = (name) => {
+        console.log(name);
+        return (
+            <Field component="select" name={name}>
+                <option value="">&nbsp;</option>
+                <option value="1">Green</option>
+                <option value="2">Yellow</option>
+                <option value="3">Red</option>
+            </Field>
+        )
+    };
 
     getColor = (number) => {
         switch (number) {
-            case 3:
+            case 1:
                 return "green";
             case 2:
                 return "yellow";
-            case 1:
+            case 3:
                 return "red";
             default:
                 return "blank";
