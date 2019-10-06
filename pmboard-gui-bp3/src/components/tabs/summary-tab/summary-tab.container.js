@@ -11,7 +11,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadData: () => dispatch(loadSummary()),
+        loadData: () => dispatch(loadSummary("Hi, some tests right here!")),
         resetData: () => dispatch(resetState()),
     }
 }

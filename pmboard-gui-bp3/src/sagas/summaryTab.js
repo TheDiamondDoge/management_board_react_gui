@@ -3,7 +3,8 @@ import { put, call } from 'redux-saga/effects';
 import { takeLatest } from 'redux-saga/effects';
 import {LOAD_SUMMARY, loadError, loadSuccess} from "../actions/summary-tab";
 
-function* doSearch() {
+function* doSearch(test) {
+    console.log("doSearch", test);
     try {
         const searchResults = yield call(
             axios.get,
