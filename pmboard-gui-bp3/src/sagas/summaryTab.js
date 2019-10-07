@@ -17,5 +17,5 @@ function* doSearch(test) {
 }
 
 export default function* () {
-    yield takeLatest(LOAD_SUMMARY, doSearch);
+    // yield takeLatest(LOAD_SUMMARY, doSearch);
 }

@@ -20,7 +20,7 @@ export default (state, action) => {
         case LOAD_SUMMARY_SUCCESS:
             return {
                 ...state,
-                summaryData: dataComposer(action.summaryData),
+                summaryData: dataComposer(action.summaryData.data),
                 loaded: true,
             };
         case LOAD_SUMMARY_FAIL:

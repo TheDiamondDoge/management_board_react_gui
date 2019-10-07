@@ -5,7 +5,6 @@ export const RESET_STATE = "RESET_STATE";
 
 export const loadSummary = (test) => ({
         type: LOAD_SUMMARY,
-        test: process.env.REACT_APP_TEST,
     }
 );
 
