@@ -7,12 +7,12 @@ export const loadHealth = () => ({
     type: LOAD_HEALTH
 });
 
-export const loadSuccess = (data) => ({
+export const loadHealthSuccess = (data) => ({
     type: LOAD_HEALTH_SUCCESS,
     healthIndicators: data,
 });
 
-export const loadError = (error) => ({
+export const loadHealthError = (error) => ({
     type: LOAD_HEALTH_FAIL,
     error: error,
 });

@@ -5,6 +5,8 @@ import indicatorsTabReducer from "./indicatorsTab";
 import infoTabReducer from "./infoTab";
 import costTabReducer from "./costTab";
 import blcTabReducer from "./blc-tab";
+import healthIndicatorsReducer from "./health-indicators";
+import milestonesReducer from "./milestones";
 
 export default combineReducers({
     test: testReducer,
@@ -13,4 +15,6 @@ export default combineReducers({
     infoTab: infoTabReducer,
     costTab: costTabReducer,
     blcTab: blcTabReducer,
+    healthIndicators: healthIndicatorsReducer,
+    milestones: milestonesReducer,
 });

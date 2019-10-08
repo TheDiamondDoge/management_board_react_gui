@@ -76,8 +76,6 @@ let dataComposer = (data) => ({
         pwsLastUpdatedDate: data.pwsLastUpdatedDate,
         pwsLastUpdatedBy: data.pwsLastUpdatedBy,
     },
-    milestones: data.milestones,
-    healthIndicators: data.healthIndicators,
     validationParams: {
         projectType: data.projectType,
         workspaceState: data.workspaceState,

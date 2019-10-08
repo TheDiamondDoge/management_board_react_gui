@@ -8,3 +8,6 @@ export const getHealthIndicators = (projectID) => (
     axios.get(`http://localhost:8080/api/health/${projectID}`)
 );
 
+export const getMilestones = (projectID) => (
+    axios.get(`http://localhost:8080/api/milestones/${projectID}`)
+);
