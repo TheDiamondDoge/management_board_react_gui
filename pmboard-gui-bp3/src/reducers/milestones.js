@@ -6,9 +6,7 @@ import {
 } from "../actions/milestones";
 
 const initState = {
-    data: [],
-    loaded: false,
-    error: ""
+    loading: true,
 };
 
 export default (state, action) => {
@@ -20,19 +18,18 @@ export default (state, action) => {
         case LOAD_MILESTONES:
             return {
                 ...state,
-                loaded: false,
+                loading: false,
             };
         case LOAD_MILESTONES_SUCCESS:
             return {
                 ...state,
-                loaded: true,
-                data: action.data,
+                data: [...action.data],
+                loading: false,
             };
         case LOAD_MILESTONES_FAIL:
             return {
                 ...state,
-                error: action.error,
-                loaded: false,
+                loading: false,
             };
         case RESET_MILESTONES_STATE:
             return initState;

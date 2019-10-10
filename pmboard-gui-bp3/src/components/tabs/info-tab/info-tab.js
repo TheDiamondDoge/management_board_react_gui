@@ -6,7 +6,7 @@ import FieldValue from "../../field-value/field-value";
 import EditSaveControls from "../../edit-save-contols/edit-save-controls";
 import styles from './info-tab.module.css'
 import PropTypes from 'prop-types';
-import LoadingCard from "../../loading-card/loading-card";
+import Loading from "../../loading-card/loading";
 import {displayOrNot, getLabelById} from "./fields";
 
 export default class InfoTab extends React.Component {
@@ -35,7 +35,7 @@ export default class InfoTab extends React.Component {
     render() {
         const {loaded} = this.props;
         if (!loaded) {
-            return (<LoadingCard/>)
+            return (<Loading/>)
         } else {
             console.log("RENDER infoTab");
             const {general, urls, milestones, validationParams, onChangeGeneral, onChangeMilestones} = this.props;

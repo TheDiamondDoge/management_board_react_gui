@@ -7,7 +7,7 @@ export const loadMilestones = () => ({
     type: LOAD_MILESTONES,
 });
 
-export const loadMilestonesSuccess = (data) => ({
+export const loadMilestonesSuccess = ({data}) => ({
     type: LOAD_MILESTONES_SUCCESS,
     data
 });

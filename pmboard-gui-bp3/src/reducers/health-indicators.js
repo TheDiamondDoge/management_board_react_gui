@@ -1,9 +1,7 @@
-import {LOAD_HEALTH, LOAD_HEALTH_FAIL, LOAD_HEALTH_SUCCESS, RESET_STATE} from "../actions/health-indicators";
+import {LOAD_HEALTH, LOAD_HEALTH_FAIL, LOAD_HEALTH_SUCCESS, RESET_HEALTH_STATE} from "../actions/health-indicators";
 
 const initState = {
-    loaded: false,
-    data: {},
-    error: null
+    loading: true,
 };
 
 export default (state, action) => {
@@ -15,25 +13,23 @@ export default (state, action) => {
         case LOAD_HEALTH:
             return {
                 ...state,
-                loaded: false,
+                loading: true,
             };
         case LOAD_HEALTH_SUCCESS:
             return {
                 ...state,
-                data: action.healthIndicators,
-                loaded: true,
+                ...action.healthIndicators,
+                loading: false,
             };
         case LOAD_HEALTH_FAIL:
             return {
                 ...state,
                 error: action.error,
-                loaded: false
+                loading: false
             };
-        case RESET_STATE:
+        case RESET_HEALTH_STATE:
             return initState;
         default:
-            return {
-                ...state
-            }
+            return state;
     }
 }

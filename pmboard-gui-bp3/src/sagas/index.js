@@ -1,4 +1,4 @@
-import pwsSagas from './watch-sagas';
+import pwsSagas from './pws/watch-sagas';
 import {all} from 'redux-saga/effects';
 
 export default function* rootSaga() {

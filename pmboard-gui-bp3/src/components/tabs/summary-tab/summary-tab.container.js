@@ -1,20 +1,25 @@
 import { connect } from 'react-redux';
 import summaryTab from './summary-tab';
 import {loadSummary, resetSummaryState} from "../../../actions/summary-tab";
+import {resetMilestonesState} from "../../../actions/milestones";
+import {resetHealthState} from "../../../actions/health-indicators";
 
 function mapStateToProps(state) {
     return {
-        summaryData: state.summaryTab.summaryData,
+        summaryData: state.summaryTab,
         milestones: state.milestones,
         healthIndicators: state.healthIndicators,
-        loaded: state.summaryTab.loaded,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         loadData: () => dispatch(loadSummary("Hi, some tests right here!")),
-        resetData: () => dispatch(resetSummaryState()),
+        resetData: () => {
+            dispatch(resetSummaryState());
+            dispatch(resetMilestonesState());
+            dispatch(resetHealthState())
+        },
     }
 }
 

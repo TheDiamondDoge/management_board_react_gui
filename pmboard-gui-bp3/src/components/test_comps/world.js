@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
-import LoadingCard from "../loading-card/loading-card";
+import Loading from "../loading-card/loading";
 import {Formik, Field, Form, ErrorMessage} from "formik";
 import {InputGroup, TextArea, HTMLTable} from "@blueprintjs/core";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
@@ -21,7 +21,7 @@ export default class World extends React.Component {
         const Compp = testHOC();
         return (
             <>
-                <LoadingCard/>
+                <Loading/>
                 <NavLink exact to="/pws">
                     <button>PWS</button>
                 </NavLink>

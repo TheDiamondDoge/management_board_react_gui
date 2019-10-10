@@ -1,16 +1,16 @@
-import {getSummaryInfo, getHealthIndicators, getMilestones} from '../api/pws';
+import {getSummaryInfo, getHealthIndicators, getMilestones} from '../../api/pws';
 import {call, put} from 'redux-saga/effects';
-import {loadSummaryError, loadSummarySuccess} from "../actions/summary-tab";
-import {loadHealthError, loadHealthSuccess} from "../actions/health-indicators";
-import {loadMilestonesFail, loadMilestonesSuccess} from "../actions/milestones";
+import {loadSummaryError, loadSummarySuccess} from "../../actions/summary-tab";
+import {loadHealthError, loadHealthSuccess} from "../../actions/health-indicators";
+import {loadMilestonesFail, loadMilestonesSuccess} from "../../actions/milestones";
 
 export function* loadSummaryTab() {
     try {
-        yield call(loadHealthIndicators);
-        yield call(loadMilestones);
-
         const summaryInfo = yield call(getSummaryInfo, 1);
         yield put(loadSummarySuccess(summaryInfo));
+
+        yield call(loadHealthIndicators);
+        yield call(loadMilestones);
     } catch (e) {
         yield put(loadSummaryError(e));
     }

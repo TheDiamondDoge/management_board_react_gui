@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import {getLabelById, displayOrNot} from "./fields";
 import {CustomCard} from "../../card/custom-card.js";
 import HealthIndicators from "../../health-indicators/health-indicators";
-import LoadingCard from "../../loading-card/loading-card";
+import Loading from "../../loading-card/loading";
 import PropTypes from 'prop-types';
 
 export default class SummaryTab extends React.Component {
@@ -20,26 +20,27 @@ export default class SummaryTab extends React.Component {
     }
 
     render() {
-        const loaded = this.props.loaded;
+        const {loading} = this.props.summaryData;
 
-        if (!loaded) {
-            return (<LoadingCard />);
+        if (loading) {
+            return (<Loading />);
         } else {
             const {general, status, links, pwsInfo, validationParams} = this.props.summaryData;
-            const milestones = this.props.milestones.data.data;
-            const healthIndicators = this.props.healthIndicators.data.data;
-
-            console.log(milestones);
-            console.log(healthIndicators);
-
+            const loadingMilestones = this.props.milestones.loading;
+            const milestones = this.props.milestones.data;
+            const healthIndicators = this.props.healthIndicators;
 
             const validationPrjParams = {...validationParams};
             let mainCardStyle = classNames(styles.data_fields);
             let secondaryCardStyle = classNames(styles.secondary_card);
+            console.log();
             return (
                 <div>
                     <CustomCard>
-                        <Timeline milestones={milestones}/>
+                        {loadingMilestones
+                            ? <Loading />
+                            : <Timeline milestones={milestones}/>
+                        }
                     </CustomCard>
                     <br/>
                     <CustomCard className={styles.data_container}>
@@ -56,10 +57,13 @@ export default class SummaryTab extends React.Component {
                             }
                         </div>
                         <div className={styles.right_part}>
-                            <HealthIndicators
-                                indicators={healthIndicators}
-                                isSummaryMode={true}
-                            />
+                            {healthIndicators.loading
+                                ? <Loading />
+                                : <HealthIndicators
+                                    indicators={healthIndicators}
+                                    isSummaryMode={true}
+                                  />
+                            }
                         </div>
                     </CustomCard>
 
@@ -120,5 +124,4 @@ SummaryTab.propTypes = {
     summaryData: PropTypes.object.isRequired,
     milestones: PropTypes.object.isRequired,
     healthIndicators: PropTypes.object.isRequired,
-    loaded: PropTypes.bool,
 };
