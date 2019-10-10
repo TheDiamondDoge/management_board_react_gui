@@ -8,13 +8,13 @@ export const loadIndicators = () => ({
     }
 );
 
-export const loadSuccess = (data) => ({
+export const loadIndicatorsSuccess = (data) => ({
         type: LOAD_INDICATORS_SUCCESS,
         data: data,
     }
 );
 
-export const loadError = (error) => ({
+export const loadIndicatorsError = (error) => ({
         type: LOAD_INDICATORS_FAIL,
         error: error
     }

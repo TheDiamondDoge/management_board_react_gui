@@ -3,6 +3,7 @@ import {call, put} from 'redux-saga/effects';
 import {loadSummaryError, loadSummarySuccess} from "../../actions/summary-tab";
 import {loadHealthError, loadHealthSuccess} from "../../actions/health-indicators";
 import {loadMilestonesFail, loadMilestonesSuccess} from "../../actions/milestones";
+import {loadIndicatorsError} from "../../actions/indicators-tab";
 
 export function* loadSummaryTab() {
     try {
@@ -13,6 +14,15 @@ export function* loadSummaryTab() {
         yield call(loadMilestones);
     } catch (e) {
         yield put(loadSummaryError(e));
+    }
+}
+
+export function* loadIndicatorsTab() {
+    try {
+        yield call(getMilestones, 1);
+        yield call(getHealthIndicators, 1);
+    } catch (e) {
+        yield put(loadIndicatorsError(e));
     }
 }
 
@@ -33,3 +43,5 @@ export function* loadMilestones() {
         yield put(loadMilestonesFail(e));
     }
 }
+
+
