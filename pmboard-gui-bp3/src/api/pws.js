@@ -11,3 +11,7 @@ export const getHealthIndicators = (projectID) => (
 export const getMilestones = (projectID) => (
     axios.get(`http://localhost:8080/api/milestones/${projectID}`)
 );
+
+export const getIndicatorsRqs = (projectID) => (
+    axios.get(`http://localhost:8080/api/indicators/requirements/${projectID}`)
+);
