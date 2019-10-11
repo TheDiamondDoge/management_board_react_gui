@@ -1,9 +1,9 @@
-import {getSummaryInfo, getHealthIndicators, getMilestones} from '../../api/pws';
+import {getSummaryInfo, getHealthIndicators, getMilestones, getIndicatorsRqs} from '../../api/pws';
 import {call, put} from 'redux-saga/effects';
 import {loadSummaryError, loadSummarySuccess} from "../../actions/summary-tab";
 import {loadHealthError, loadHealthSuccess} from "../../actions/health-indicators";
 import {loadMilestonesFail, loadMilestonesSuccess} from "../../actions/milestones";
-import {loadIndicatorsError} from "../../actions/indicators-tab";
+import {loadIndicatorsError, loadIndicatorsRqsError, loadIndicatorsRqsSuccess} from "../../actions/indicators-tab";
 
 export function* loadSummaryTab() {
     try {
@@ -19,10 +19,11 @@ export function* loadSummaryTab() {
 
 export function* loadIndicatorsTab() {
     try {
-        yield call(getMilestones, 1);
-        yield call(getHealthIndicators, 1);
+        yield call(loadMilestones);
+        yield call(loadHealthIndicators);
+        yield call(loadIndicatorsRqs);
     } catch (e) {
-        yield put(loadIndicatorsError(e));
+        yield put(loadIndicatorsError)
     }
 }
 
@@ -44,4 +45,11 @@ export function* loadMilestones() {
     }
 }
 
-
+export function* loadIndicatorsRqs() {
+    try {
+        const indicatorRqs = yield call(getIndicatorsRqs, 1);
+        yield put(loadIndicatorsRqsSuccess(indicatorRqs));
+    } catch (e) {
+        yield put(loadIndicatorsRqsError(e));
+    }
+}

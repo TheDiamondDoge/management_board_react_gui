@@ -5,7 +5,6 @@ import Loading from "../loading-card/loading";
 import {Formik, Field, Form, ErrorMessage} from "formik";
 import {InputGroup, TextArea, HTMLTable} from "@blueprintjs/core";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
-import testHOC from "../../util/formikHealthHOC";
 
 export default class World extends React.Component {
     customInputComponent = ({field, form: {touched, errors}, ...props}) => (
@@ -18,7 +17,6 @@ export default class World extends React.Component {
 
     render() {
         const {test, testPassed, onClick1, onClick2} = this.props;
-        const Compp = testHOC();
         return (
             <>
                 <Loading/>
@@ -65,7 +63,6 @@ export default class World extends React.Component {
                         )
                     }
                 />
-                <Compp/>
             </>
         );
     }
