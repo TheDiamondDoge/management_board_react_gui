@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import IndicatorsTab from "./indicators-tab";
 import {loadIndicators} from "../../../actions/indicators-tab";
 import {resetMilestonesState} from "../../../actions/milestones";
-import {resetHealthState} from "../../../actions/health-indicators";
+import {resetHealthState, saveHealthIndicators} from "../../../actions/health-indicators";
 import {indicatorsRqsResetState} from "../../../actions/indicators-rqs";
 import {milestonesKpiResetState} from "../../../actions/milestones-kpi";
 import {dr4KpiResetState} from "../../../actions/dr4-kpi";
@@ -21,6 +21,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch) {
     return {
+        healthIndicatorsSubmit: (data) => dispatch(saveHealthIndicators(data)),
         loadData: () => dispatch(loadIndicators()),
         resetState: () => {
             dispatch(resetMilestonesState());

@@ -1,5 +1,13 @@
 import axios from 'axios';
 
+const config = {
+    headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+    }
+};
+
 export const getSummaryInfo = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/summary`)
 );
@@ -7,6 +15,11 @@ export const getSummaryInfo = (projectID) => (
 export const getHealthIndicators = (projectID) => (
     axios.get(`http://localhost:8080/api/health/${projectID}`)
 );
+
+export const saveHealthIndicatorsPost = (projectID, payload) => {
+    console.log(payload);
+    return axios.post(`http://localhost:8080/api/health/${projectID}`, payload, config)
+};
 
 export const getMilestones = (projectID) => (
     axios.get(`http://localhost:8080/api/milestones/${projectID}`)

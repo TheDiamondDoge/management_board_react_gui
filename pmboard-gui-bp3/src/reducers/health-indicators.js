@@ -1,4 +1,10 @@
-import {LOAD_HEALTH, LOAD_HEALTH_FAIL, LOAD_HEALTH_SUCCESS, RESET_HEALTH_STATE} from "../actions/health-indicators";
+import {
+    LOAD_HEALTH,
+    LOAD_HEALTH_FAIL,
+    LOAD_HEALTH_SUCCESS,
+    RESET_HEALTH_STATE,
+    SAVE_HEALTH
+} from "../actions/health-indicators";
 
 const initState = {
     payload: {},
@@ -21,6 +27,10 @@ export default (state, action) => {
                 ...state,
                 payload: action.healthIndicators,
                 loading: false,
+            };
+        case SAVE_HEALTH:
+            return {
+                ...state,
             };
         case LOAD_HEALTH_FAIL:
             return {

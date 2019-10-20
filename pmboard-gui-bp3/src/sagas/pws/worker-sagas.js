@@ -6,7 +6,7 @@ import {
     getMilestonesKpi,
     getDr4Kpi,
     getQualityKpi,
-    getInformationTab
+    getInformationTab, saveHealthIndicatorsPost
 } from '../../api/pws';
 import {call, put} from 'redux-saga/effects';
 import {loadSummaryError, loadSummarySuccess} from "../../actions/summary-tab";
@@ -106,5 +106,18 @@ export function* loadQualityKpi() {
         yield put(qualityKpiSuccess(qualityKpi))
     } catch (e) {
         yield put(qualityKpiFail(e))
+    }
+}
+
+export function* saveHealthIndicators(action) {
+    console.log("Hi! Saving!");
+    try {
+        yield call(saveHealthIndicatorsPost, 1, action.data);
+        yield call(loadHealthIndicators);
+        console.log("SUCCESSSSSSSS");
+    } catch (e) {
+        yield put(loadHealthError(e))
+        console.log("ERRRRRRRRRRRRRROR");
+
     }
 }

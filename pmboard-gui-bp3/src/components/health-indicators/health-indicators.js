@@ -46,14 +46,14 @@ export default class HealthIndicators extends React.Component {
     };
 
     render() {
-        const {isSummaryMode, indicators} = this.props;
+        const {isSummaryMode, indicators, onSubmit} = this.props;
         return (
             <Formik
                 onSubmit={(values, formikActions) => {
                     formikActions.setSubmitting(false);
                     console.log(values);
+                    onSubmit(values);
                 }}
-                //TODO: dont work with selects?? oO
                 initialValues={{
                     statuses: {
                         current: {
@@ -230,4 +230,5 @@ export default class HealthIndicators extends React.Component {
 HealthIndicators.propTypes = {
     indicators: PropTypes.object.isRequired,
     isSummaryMode: PropTypes.bool,
+    onSubmit: PropTypes.func,
 };
