@@ -1,4 +1,9 @@
-import {LOAD_HEALTH, LOAD_HEALTH_FAIL, LOAD_HEALTH_SUCCESS, RESET_HEALTH_STATE} from "../actions/health-indicators";
+import {
+    INDICATORS_RESET_STATE,
+    INDICATORS_RQS_FAIL, INDICATORS_RQS_SAVE,
+    INDICATORS_RQS_SUCCESS,
+    LOAD_INDICATORS_RQS
+} from "../actions/indicators-rqs";
 
 const initState = {
     payload: {},
@@ -11,23 +16,27 @@ export default (state, action) => {
     }
 
     switch (action.type) {
-        case LOAD_HEALTH:
+        case LOAD_INDICATORS_RQS:
             return {
                 ...state,
                 loading: true,
             };
-        case LOAD_HEALTH_SUCCESS:
+        case INDICATORS_RQS_SUCCESS:
             return {
                 ...state,
-                payload: action.healthIndicators,
+                payload: action.data,
                 loading: false,
             };
-        case LOAD_HEALTH_FAIL:
+        case INDICATORS_RQS_FAIL:
             return {
                 ...state,
-                loading: false
+                loading: false,
             };
-        case RESET_HEALTH_STATE:
+        case INDICATORS_RQS_SAVE:
+            return {
+                ...state,
+            };
+        case INDICATORS_RESET_STATE:
             return initState;
         default:
             return state;

@@ -25,7 +25,7 @@ export default class SummaryTab extends React.Component {
         if (loading) {
             return (<Loading />);
         } else {
-            const {general, status, links, pwsInfo, validationParams} = this.props.summaryData;
+            const {general, status, links, pwsInfo, validationParams} = this.props.summaryData.payload;
             const loadingMilestones = this.props.milestones.loading;
             const milestones = this.props.milestones.data;
             const healthIndicators = this.props.healthIndicators;
@@ -33,7 +33,6 @@ export default class SummaryTab extends React.Component {
             const validationPrjParams = {...validationParams};
             let mainCardStyle = classNames(styles.data_fields);
             let secondaryCardStyle = classNames(styles.secondary_card);
-            console.log();
             return (
                 <div>
                     <CustomCard>

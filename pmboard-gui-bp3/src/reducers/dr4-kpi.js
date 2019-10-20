@@ -1,9 +1,7 @@
-import {
-    LOAD_MILESTONES,
-    LOAD_MILESTONES_FAIL,
-    LOAD_MILESTONES_SUCCESS,
-    RESET_MILESTONES_STATE
-} from "../actions/milestones";
+import {LOAD_DR4_KPI} from "../actions/dr4-kpi";
+import {DR4_KPI_SUCCESS} from "../actions/dr4-kpi";
+import {DR4_KPI_FAIL} from "../actions/dr4-kpi";
+import {DR4_KPI_RESET_STATE} from "../actions/dr4-kpi";
 
 const initState = {
     payload: {},
@@ -11,28 +9,28 @@ const initState = {
 };
 
 export default (state, action) => {
-    if (state === undefined){
+    if (state === undefined) {
         return initState;
     }
 
     switch (action.type) {
-        case LOAD_MILESTONES:
+        case LOAD_DR4_KPI:
+            return {
+                ...state,
+                loading: true,
+            };
+        case DR4_KPI_SUCCESS:
+            return {
+                ...state,
+                payload: action.data,
+                loading: false,
+            };
+        case DR4_KPI_FAIL:
             return {
                 ...state,
                 loading: false,
             };
-        case LOAD_MILESTONES_SUCCESS:
-            return {
-                ...state,
-                payload: [...action.data],
-                loading: false,
-            };
-        case LOAD_MILESTONES_FAIL:
-            return {
-                ...state,
-                loading: false,
-            };
-        case RESET_MILESTONES_STATE:
+        case DR4_KPI_RESET_STATE:
             return initState;
         default:
             return state;

@@ -1,9 +1,20 @@
-import {getSummaryInfo, getHealthIndicators, getMilestones, getIndicatorsRqs} from '../../api/pws';
+import {
+    getSummaryInfo,
+    getHealthIndicators,
+    getMilestones,
+    getIndicatorsRqs,
+    getMilestonesKpi,
+    getDr4Kpi, getQualityKpi
+} from '../../api/pws';
 import {call, put} from 'redux-saga/effects';
 import {loadSummaryError, loadSummarySuccess} from "../../actions/summary-tab";
 import {loadHealthError, loadHealthSuccess} from "../../actions/health-indicators";
 import {loadMilestonesFail, loadMilestonesSuccess} from "../../actions/milestones";
-import {loadIndicatorsError, loadIndicatorsRqsError, loadIndicatorsRqsSuccess} from "../../actions/indicators-tab";
+import {loadIndicatorsError} from "../../actions/indicators-tab";
+import {indicatorsRqsFail, indicatorsRqsSuccess} from "../../actions/indicators-rqs";
+import {milestonesKpiFail, milestonesKpiSuccess} from "../../actions/milestones-kpi";
+import {dr4KpiFail, dr4KpiSuccess} from "../../actions/dr4-kpi";
+import {qualityKpiFail, qualityKpiSuccess} from "../../actions/quality-kpi";
 
 export function* loadSummaryTab() {
     try {
@@ -22,6 +33,9 @@ export function* loadIndicatorsTab() {
         yield call(loadMilestones);
         yield call(loadHealthIndicators);
         yield call(loadIndicatorsRqs);
+        yield call(loadMilestonesKpi);
+        yield call(loadDr4Kpi);
+        yield call(loadQualityKpi)
     } catch (e) {
         yield put(loadIndicatorsError)
     }
@@ -48,8 +62,35 @@ export function* loadMilestones() {
 export function* loadIndicatorsRqs() {
     try {
         const indicatorRqs = yield call(getIndicatorsRqs, 1);
-        yield put(loadIndicatorsRqsSuccess(indicatorRqs));
+        yield put(indicatorsRqsSuccess(indicatorRqs));
     } catch (e) {
-        yield put(loadIndicatorsRqsError(e));
+        yield put(indicatorsRqsFail(e));
+    }
+}
+
+export function* loadMilestonesKpi() {
+    try {
+        const milestonesKpi = yield call(getMilestonesKpi, 1);
+        yield put(milestonesKpiSuccess(milestonesKpi));
+    } catch (e) {
+        yield put(milestonesKpiFail(e))
+    }
+}
+
+export function* loadDr4Kpi() {
+    try {
+        const dr4Kpi = yield call(getDr4Kpi, 1);
+        yield put(dr4KpiSuccess(dr4Kpi));
+    } catch (e) {
+        yield put(dr4KpiFail(e))
+    }
+}
+
+export function* loadQualityKpi() {
+    try {
+        const qualityKpi = yield call(getQualityKpi, 1);
+        yield put(qualityKpiSuccess(qualityKpi))
+    } catch (e) {
+        yield put(qualityKpiFail(e))
     }
 }

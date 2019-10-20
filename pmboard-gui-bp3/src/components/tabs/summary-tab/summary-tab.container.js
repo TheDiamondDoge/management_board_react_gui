@@ -6,9 +6,9 @@ import {resetHealthState} from "../../../actions/health-indicators";
 
 function mapStateToProps(state) {
     return {
-        summaryData: state.summaryTab,
-        milestones: state.milestones,
-        healthIndicators: state.healthIndicators,
+        summaryData: state.pws.summaryTab,
+        milestones: state.pws.milestones,
+        healthIndicators: state.pws.healthIndicators,
     }
 }
 

@@ -1,6 +1,7 @@
 import {LOAD_SUMMARY, LOAD_SUMMARY_FAIL, LOAD_SUMMARY_SUCCESS, RESET_STATE} from "../actions/summary-tab";
 
 const initState = {
+    payload: {},
     loading: true,
 };
 
@@ -18,7 +19,7 @@ export default (state, action) => {
         case LOAD_SUMMARY_SUCCESS:
             return {
                 ...state,
-                ...dataComposer(action.summaryData.data),
+                payload: dataComposer(action.summaryData.data),
                 loading: false,
             };
         case LOAD_SUMMARY_FAIL:

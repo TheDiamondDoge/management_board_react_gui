@@ -10,11 +10,10 @@ import {routerMiddleware} from "react-router-redux";
 import {createLogger} from "redux-logger";
 import createSagaMiddleware from 'redux-saga';
 import infoTabSaga from './sagas/infoTab';
-import indicatorsTabSaga from './sagas/indicatorsTab';
 import blcTabSaga from './sagas/blc-tab';
+import rootSaga from "./sagas";
 import reducer from "./reducers"
 import * as serviceWorker from './serviceWorker';
-import axios from 'axios';
 import dotenv from 'dotenv';
 
 import './index.css';
@@ -23,12 +22,9 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/table/lib/css/table.css";
 import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
-import rootSaga from "./sagas";
+
 
 dotenv.config();
-
-//dont work? or just dont care about port?
-// axios.default.baseURL = "http://localhost:8080";
 
 const sagas = createSagaMiddleware();
 const history = createBrowserHistory();
@@ -46,7 +42,6 @@ sagas.run(rootSaga);
 
 //TODO: This must be refactored into 1 'PWS tab' saga!!!!!!
 sagas.run(infoTabSaga);
-sagas.run(indicatorsTabSaga);
 sagas.run(blcTabSaga);
 
 ReactDOM.render(
