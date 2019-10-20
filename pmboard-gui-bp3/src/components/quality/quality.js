@@ -4,6 +4,7 @@ import EditSaveControls from "../edit-save-contols/edit-save-controls";
 import styles from "./quality.module.css";
 import {FieldName} from "../field-name/field-name";
 import FieldValue from "../field-value/field-value";
+import PropTypes from "prop-types";
 
 export default class Quality extends React.Component {
     constructor(props){
@@ -20,6 +21,8 @@ export default class Quality extends React.Component {
     };
 
     render() {
+        const {qualityKpi} = this.props;
+        console.log(qualityKpi);
         return (
             <>
                 <div>
@@ -30,7 +33,7 @@ export default class Quality extends React.Component {
                         >
                             <Icon icon={"refresh"}/>
                         </Button>
-                        Last synchro: 2019-07-29 14:43:54
+                        Last synchro: {qualityKpi.syncDate}
                     </div>
                     <EditSaveControls
                         className={styles.float_right}
@@ -148,3 +151,7 @@ export default class Quality extends React.Component {
         );
     }
 }
+
+Quality.propTypes = {
+    qualityKpi: PropTypes.object,
+};

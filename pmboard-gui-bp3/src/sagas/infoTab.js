@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {put, call, takeLatest} from 'redux-saga/effects';
-import {LOAD_INFO, loadSuccess, loadError} from "../actions/info-tab";
+import {LOAD_INFO, loadInfoSuccess, loadInfoError} from "../actions/info-tab";
 
 function* doSearch() {
     try {
@@ -8,9 +8,9 @@ function* doSearch() {
             axios.get,
             "http://localhost:8080/api/projects/1/tabs/information",
         );
-        yield put(loadSuccess(searchResults.data));
+        yield put(loadInfoSuccess(searchResults.data));
     } catch (e) {
-        yield put(loadError(e))
+        yield put(loadInfoError(e))
     }
 }
 

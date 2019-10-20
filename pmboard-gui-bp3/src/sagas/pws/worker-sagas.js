@@ -4,7 +4,9 @@ import {
     getMilestones,
     getIndicatorsRqs,
     getMilestonesKpi,
-    getDr4Kpi, getQualityKpi
+    getDr4Kpi,
+    getQualityKpi,
+    getInformationTab
 } from '../../api/pws';
 import {call, put} from 'redux-saga/effects';
 import {loadSummaryError, loadSummarySuccess} from "../../actions/summary-tab";
@@ -15,6 +17,7 @@ import {indicatorsRqsFail, indicatorsRqsSuccess} from "../../actions/indicators-
 import {milestonesKpiFail, milestonesKpiSuccess} from "../../actions/milestones-kpi";
 import {dr4KpiFail, dr4KpiSuccess} from "../../actions/dr4-kpi";
 import {qualityKpiFail, qualityKpiSuccess} from "../../actions/quality-kpi";
+import {loadInfoError, loadInfoSuccess} from "../../actions/info-tab";
 
 export function* loadSummaryTab() {
     try {
@@ -38,6 +41,17 @@ export function* loadIndicatorsTab() {
         yield call(loadQualityKpi)
     } catch (e) {
         yield put(loadIndicatorsError)
+    }
+}
+
+export function* loadInformationTab() {
+    try {
+        const infoTab = yield call(getInformationTab, 1);
+        yield put(loadInfoSuccess(infoTab));
+
+        yield call(loadMilestones);
+    } catch (e) {
+        yield put(loadInfoError);
     }
 }
 

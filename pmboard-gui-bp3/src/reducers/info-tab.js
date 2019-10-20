@@ -1,19 +1,10 @@
-import {
-    EDIT_GENERAL_DATA,
-    EDIT_MILESTONE_DATA,
-    LOAD_INFO,
-    LOAD_INFO_FAIL,
-    LOAD_INFO_SUCCESS,
-    RESET_STATE
-} from '../actions/info-tab';
+import {LOAD_INFO, LOAD_INFO_FAIL, LOAD_INFO_SUCCESS, RESET_STATE, SAVE_INFO_DATA} from '../actions/info-tab';
 
 const initState = {
-    loaded: false,
-    general: {},
-    milestones: [],
-    urls: {},
-    error: "",
+    loading: true,
+    payload: {}
 };
+
 export default (state, action) => {
     if (state === undefined){
         return initState;
@@ -23,49 +14,30 @@ export default (state, action) => {
         case LOAD_INFO:
             return {
                 ...state,
-                loaded: false,
+                loading: true,
             };
         case LOAD_INFO_SUCCESS:
             return {
                 ...state,
-                ...dataComposer(action.data),
-                loaded: true,
+                payload: dataComposer(action.data),
+                loading: false,
             };
         case LOAD_INFO_FAIL:
             return {
                 ...state,
-                loaded: false,
+                loading: false,
                 error: action.error
             };
-        case EDIT_GENERAL_DATA:
+        case SAVE_INFO_DATA:
             return {
-                ...state,
-                [action.id]: {
-                    ...state[action.id],
-                    ...action.data,
-                }
+                ...state
             };
-        case EDIT_MILESTONE_DATA:
-            return {
-                ...state,
-                milestones: editMilestones(state.milestones, action)
-            };
-        case RESET_STATE:
+       case RESET_STATE:
             return initState;
         default:
             return state;
     }
 }
-
-let editMilestones = (prevMilestones, action) => {
-    let milestonesCopy = [...prevMilestones];
-    milestonesCopy[action.id] = {
-        ...milestonesCopy[action.id],
-        ...action.data,
-    };
-
-    return milestonesCopy;
-};
 
 let dataComposer = (data) => ({
     general: {

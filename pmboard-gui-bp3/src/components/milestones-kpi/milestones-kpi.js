@@ -2,12 +2,13 @@ import React from 'react';
 import {HTMLTable} from "@blueprintjs/core";
 import {FieldName} from "../field-name/field-name";
 import styles from "./milestones.module.css";
-import {MILESTONES_DATA} from "./milestonesObject";
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 
-export default class Milestones extends React.Component {
+export default class MilestonesKpi extends React.Component {
     render() {
         let headerClasses = classNames(styles.column_align_center, styles.borderBottom);
+        const {milestonesKpi} = this.props;
         return (
             <HTMLTable
                 className={styles.mil_table}
@@ -40,10 +41,13 @@ export default class Milestones extends React.Component {
                 </thead>
                 <tbody>
                 {
-                    MILESTONES_DATA.map((obj, i) => (
+                    //TODO: Round at backend
+                    milestonesKpi
+                        .filter((obj) => !(obj.adherence === 0 && obj.delay === 0 && obj.duration === 0))
+                        .map((obj, i) => (
                         <tr key={i}>
                             <td><FieldName name={obj.label}/></td>
-                            <td className={styles.column_align_center}>{obj.adherence}%</td>
+                            <td className={styles.column_align_center}>{obj.adherence * 100}%</td>
                             <td className={styles.column_align_center}>{obj.delay}</td>
                             <td className={styles.column_align_center}>{obj.duration} days</td>
                         </tr>
@@ -54,3 +58,7 @@ export default class Milestones extends React.Component {
         );
     }
 }
+
+MilestonesKpi.propTypes = {
+    milestonesKpi: PropTypes.array,
+};

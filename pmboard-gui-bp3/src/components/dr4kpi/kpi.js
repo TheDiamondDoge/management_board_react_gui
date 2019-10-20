@@ -3,10 +3,14 @@ import {HTMLTable} from "@blueprintjs/core";
 import styles from "./kpi.module.css";
 import classNames from "classnames";
 import {FieldName} from "../field-name/field-name";
+import PropTypes from "prop-types";
+import {nullToNA} from "../../util/transformFuncs";
 
 export default class Kpi extends React.Component {
     render() {
         let headerClasses = classNames(styles.column_align_center, styles.border_top);
+        const {dr4Kpi} = this.props;
+        console.log(dr4Kpi);
         return (
             <HTMLTable
                 className={styles.kpi_table}
@@ -21,7 +25,7 @@ export default class Kpi extends React.Component {
                     <td>
                         <FieldName name={"Year (based on DR1 date)"}/>
                     </td>
-                    <td>2019</td>
+                    <td>{dr4Kpi.year}</td>
                 </tr>
                 <tr>
                     <td colSpan={2} className={headerClasses}>COMMITTED vs ACTUAL</td>
@@ -32,28 +36,32 @@ export default class Kpi extends React.Component {
                     <td>
                         <FieldName name={"Schedule Adherence"}/>
                     </td>
-                    <td>100%</td>
+                    <td>{nullToNA(dr4Kpi.scheduleAdherence)}</td>
                 </tr>
                 <tr>
                     <td>
                         <FieldName name={"Content Adherence"}/>
                     </td>
-                    <td>N/A</td>
+                    <td>{nullToNA(dr4Kpi.contentAdherence)}</td>
                 </tr>
                 <tr>
                     <td>
                         <FieldName name={"Requirements Change"}/>
                     </td>
-                    <td>N/A</td>
+                    <td>{nullToNA(dr4Kpi.rqsChange)}</td>
                 </tr>
                 <tr>
                     <td>
                         <FieldName name={"Cost Adherence"}/>
                     </td>
-                    <td>N/A</td>
+                    <td>{nullToNA(dr4Kpi.costAdherence)}</td>
                 </tr>
                 </tbody>
             </HTMLTable>
         )
     }
 }
+
+Kpi.propTypes = {
+    dr4Kpi: PropTypes.object,
+};

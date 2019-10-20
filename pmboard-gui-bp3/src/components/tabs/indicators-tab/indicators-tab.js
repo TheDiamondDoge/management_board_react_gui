@@ -5,15 +5,20 @@ import {CustomCard} from "../../card/custom-card";
 import HealthIndicators from "../../health-indicators/health-indicators";
 import styles from "./indicators-tab.module.css";
 import Requirements from "../../requirements/requirements";
-import Milestones from "../../milestones/milestones";
+import MilestonesKpi from "../../milestones-kpi/milestones-kpi";
 import Kpi from "../../dr4kpi/kpi";
 import Quality from "../../quality/quality";
 import Loading from "../../loading-card/loading";
 
 //TODO: HINT: How to map json with fields - check summary realisation
+//TODO: Check what should be displayed if no value in q, m and dr4 tables
 export default class IndicatorsTab extends React.Component {
     componentDidMount() {
         this.props.loadData();
+    }
+
+    componentWillUnmount() {
+        this.props.resetState();
     }
 
     render() {
@@ -48,7 +53,7 @@ export default class IndicatorsTab extends React.Component {
                     {
                         milestonesKpi.loading
                             ? <Loading />
-                            : <Milestones/>
+                            : <MilestonesKpi milestonesKpi={milestonesKpi.payload} />
                     }
                 </CustomCard>
                 <CustomCard className={styles.dr4_kpi}>
@@ -56,7 +61,7 @@ export default class IndicatorsTab extends React.Component {
                     {
                         dr4Kpi.loading
                             ? <Loading />
-                            : <Kpi/>
+                            : <Kpi dr4Kpi={dr4Kpi.payload} />
                     }
                 </CustomCard>
                 <CustomCard className={styles.quality}>
@@ -64,7 +69,7 @@ export default class IndicatorsTab extends React.Component {
                     {
                         qualityKpi.loading
                             ? <Loading />
-                            : <Quality/>
+                            : <Quality qualityKpi={qualityKpi.payload}/>
                     }
                 </CustomCard>
             </div>
@@ -73,11 +78,12 @@ export default class IndicatorsTab extends React.Component {
 }
 
 IndicatorsTab.propTypes = {
-    milestones: PropTypes.array,
+    milestones: PropTypes.object,
     healthIndicators: PropTypes.object,
     requirements: PropTypes.object,
     milestonesKpi: PropTypes.object,
     dr4Kpi: PropTypes.object,
     qualityKpi: PropTypes.object,
     loadData: PropTypes.func,
+    resetState: PropTypes.func,
 };

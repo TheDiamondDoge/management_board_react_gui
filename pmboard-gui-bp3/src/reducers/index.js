@@ -2,7 +2,7 @@ import {combineReducers} from 'redux';
 import testReducer from './test'
 import summaryTabReducer from './summaryTab';
 import indicatorsTabReducer from "./indicatorsTab";
-import infoTabReducer from "./infoTab";
+import infoTabReducer from "./info-tab";
 import costTabReducer from "./costTab";
 import blcTabReducer from "./blc-tab";
 import healthIndicatorsReducer from "./health-indicators";

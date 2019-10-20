@@ -1,5 +1,5 @@
 import {
-    INDICATORS_RESET_STATE,
+    INDICATORS_RQS_RESET_STATE,
     INDICATORS_RQS_FAIL, INDICATORS_RQS_SAVE,
     INDICATORS_RQS_SUCCESS,
     LOAD_INDICATORS_RQS
@@ -36,7 +36,7 @@ export default (state, action) => {
             return {
                 ...state,
             };
-        case INDICATORS_RESET_STATE:
+        case INDICATORS_RQS_RESET_STATE:
             return initState;
         default:
             return state;

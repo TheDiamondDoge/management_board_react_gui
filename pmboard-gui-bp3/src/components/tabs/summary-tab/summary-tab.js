@@ -26,19 +26,18 @@ export default class SummaryTab extends React.Component {
             return (<Loading />);
         } else {
             const {general, status, links, pwsInfo, validationParams} = this.props.summaryData.payload;
-            const loadingMilestones = this.props.milestones.loading;
-            const milestones = this.props.milestones.data;
+            const milestones = this.props.milestones;
             const healthIndicators = this.props.healthIndicators;
 
-            const validationPrjParams = {...validationParams};
             let mainCardStyle = classNames(styles.data_fields);
             let secondaryCardStyle = classNames(styles.secondary_card);
             return (
                 <div>
                     <CustomCard>
-                        {loadingMilestones
-                            ? <Loading />
-                            : <Timeline milestones={milestones}/>
+                        {
+                            milestones.loading
+                                ? <Loading />
+                                : <Timeline milestones={milestones.payload}/>
                         }
                     </CustomCard>
                     <br/>
@@ -46,7 +45,7 @@ export default class SummaryTab extends React.Component {
                         <div className="left_part">
                             {
                                 Object.keys(general).map((obj) => (
-                                    displayOrNot(obj, validationPrjParams)
+                                    displayOrNot(obj, validationParams)
                                         ? <div key={obj} className={mainCardStyle}>
                                                 <FieldName name={getLabelById(obj)}/>
                                                 <FieldValue value={general[obj]}/>
@@ -59,7 +58,7 @@ export default class SummaryTab extends React.Component {
                             {healthIndicators.loading
                                 ? <Loading />
                                 : <HealthIndicators
-                                    indicators={healthIndicators}
+                                    indicators={healthIndicators.payload}
                                     isSummaryMode={true}
                                   />
                             }
@@ -72,7 +71,7 @@ export default class SummaryTab extends React.Component {
                         <div className="left_part">
                             {
                                 Object.keys(status).map((obj) => (
-                                    displayOrNot(obj, validationPrjParams)
+                                    displayOrNot(obj, validationParams)
                                         ? <div key={obj} className={styles.executive_block}>
                                               <FieldName name={getLabelById(obj)}/>
                                               <FieldValue value={`${status[obj]}`}/>
@@ -84,7 +83,7 @@ export default class SummaryTab extends React.Component {
                         <div className="right_part">
                             {
                                 Object.keys(links).map((obj) => (
-                                    displayOrNot(obj, validationPrjParams)
+                                    displayOrNot(obj, validationParams)
                                         ? <div key={obj} className={secondaryCardStyle}>
                                              <FieldName name={getLabelById(obj)}/>
                                              <FieldValue value={`${links[obj]}`}/>
@@ -101,7 +100,7 @@ export default class SummaryTab extends React.Component {
                         <div>
                             {
                                 Object.keys(pwsInfo).map((obj) => (
-                                    displayOrNot(obj, validationPrjParams)
+                                    displayOrNot(obj, validationParams)
                                         ? <div key={obj} className={styles.data_fields}>
                                               <FieldName name={getLabelById(obj)}/>
                                               <FieldValue value={`${pwsInfo[obj]}`}/>

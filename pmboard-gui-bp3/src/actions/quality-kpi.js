@@ -8,7 +8,7 @@ export const loadQualityKpi = () => ({
     type: LOAD_QUALITY_KPI
 });
 
-export const qualityKpiSuccess = (data) => ({
+export const qualityKpiSuccess = ({data}) => ({
     type: QUALITY_KPI_SUCCESS,
     data
 });

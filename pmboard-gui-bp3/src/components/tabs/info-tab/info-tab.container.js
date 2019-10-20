@@ -1,23 +1,22 @@
 import { connect } from 'react-redux';
 import InfoTab from './info-tab';
-import {editGeneralData, editMilestoneData, loadInfo, resetState} from "../../../actions/info-tab";
+import {loadInfo, resetState} from "../../../actions/info-tab";
+import {resetMilestonesState} from "../../../actions/milestones";
 
 function mapStateToProps(state) {
     return {
-        general: state.infoTab.general,
-        milestones: state.infoTab.milestones,
-        urls: state.infoTab.urls,
-        validationParams: state.infoTab.validationParams,
-        loaded: state.infoTab.loaded,
+        information: state.pws.infoTab,
+        milestones: state.pws.milestones,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         loadData: () => (dispatch(loadInfo())),
-        resetData: () => (dispatch(resetState())),
-        onChangeGeneral: (obj, id) => (dispatch(editGeneralData(obj, id))),
-        onChangeMilestones: (obj, id) => (dispatch(editMilestoneData(obj, id)))
+        resetData: () => {
+            dispatch(resetState());
+            dispatch(resetMilestonesState());
+        },
     }
 }
 

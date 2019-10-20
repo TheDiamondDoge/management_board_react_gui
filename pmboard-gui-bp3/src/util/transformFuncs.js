@@ -56,3 +56,7 @@ export const dateToDashedString = (date) => {
 export const nullToEmptyStr = (str) => (
     str === null ? "" : str
 );
+
+export const nullToNA = (value) => (
+    value === null ? "N/A" : value
+);

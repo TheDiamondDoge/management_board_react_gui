@@ -7,7 +7,7 @@ export const loadMilestonesKpi = () => ({
     type: LOAD_MILESTONES_KPI
 });
 
-export const milestonesKpiSuccess = (data) => ({
+export const milestonesKpiSuccess = ({data}) => ({
     type: MILESTONES_KPI_SUCCESS,
     data
 });

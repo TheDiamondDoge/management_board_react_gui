@@ -27,3 +27,7 @@ export const getDr4Kpi = (projectID) => (
 export const getQualityKpi = (projectID) => (
     axios.get(`http://localhost:8080/api/indicators/quality/${projectID}`)
 );
+
+export const getInformationTab = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/information`)
+);

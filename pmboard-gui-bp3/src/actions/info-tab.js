@@ -1,8 +1,7 @@
 export const LOAD_INFO = "LOAD_INFO";
 export const LOAD_INFO_SUCCESS = "LOAD_INFO_SUCCESS";
 export const LOAD_INFO_FAIL = "LOAD_INFO_FAIL";
-export const EDIT_GENERAL_DATA = "EDIT_GENERAL_DATA";
-export const EDIT_MILESTONE_DATA = "EDIT_MILESTONE_DATA";
+export const SAVE_INFO_DATA = "SAVE_INFO_DATA";
 export const RESET_STATE = "RESET_STATE";
 
 export const loadInfo = () => ({
@@ -10,28 +9,21 @@ export const loadInfo = () => ({
     }
 );
 
-export const loadSuccess = (data) => ({
+export const loadInfoSuccess = (data) => ({
         type: LOAD_INFO_SUCCESS,
         data: data,
     }
 );
 
-export const loadError = (error) => ({
+export const loadInfoError = (error) => ({
         type: LOAD_INFO_FAIL,
         error: error
     }
 );
 
-export const editGeneralData = (data, id) => ({
-    type: EDIT_GENERAL_DATA,
-    data: data,
-    id: id
-});
-
-export const editMilestoneData = (data, id) => ({
-    type: EDIT_MILESTONE_DATA,
-    data: data,
-    id: id
+export const saveInfoDate = (data) => ({
+    type: SAVE_INFO_DATA,
+    data
 });
 
 export const resetState = () => ({

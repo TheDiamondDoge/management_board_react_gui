@@ -33,38 +33,38 @@ export default class InfoTab extends React.Component {
     };
 
     render() {
-        const {loaded} = this.props;
-        if (!loaded) {
+        const {information, milestones} = this.props;
+        if (information.loading) {
             return (<Loading/>)
         } else {
-            console.log("RENDER infoTab");
-            const {general, urls, milestones, validationParams, onChangeGeneral, onChangeMilestones} = this.props;
+            const {general, urls, validationParams} = information.payload;
             return (
                 <div>
                     <EditSaveControls onClick={this.editClickHandle} editMode={this.state.editMode}/>
                     <CustomCard>
                         {
-                            mainRows(general, validationParams, onChangeGeneral, this.state.editMode, "general")
+                            mainRows(general, validationParams, this.state.editMode, "general")
                         }
                     </CustomCard>
 
                     <br/>
 
                     <CustomCard>
-                        <MilestoneTable
-                            editMode={this.state.editMode}
-                            milestonesData={milestones}
-                            onChange={
-                                milestonesOnChange(onChangeMilestones)
-                            }
-                        />
+                        {
+                            milestones.loading
+                                ? <Loading />
+                                : <MilestoneTable
+                                    editMode={this.state.editMode}
+                                    milestonesData={milestones.payload}
+                                  />
+                        }
                     </CustomCard>
 
                     <br/>
 
                     <CustomCard>
                         {
-                            mainRows(urls, validationParams, onChangeGeneral, this.state.editMode, "urls")
+                            mainRows(urls, validationParams, this.state.editMode, "urls")
                         }
                     </CustomCard>
                 </div>
@@ -73,10 +73,8 @@ export default class InfoTab extends React.Component {
     }
 }
 
-//TODO: TIMEOUTS WRAPPER (!!??!?!!)
-let mainRows = (general, validationParams, onChangeGeneral, editMode, stateBranch) => {
+let mainRows = (general, validationParams, editMode, stateBranch) => {
     const style = selectClass(stateBranch);
-    let timeout;
     return (Object.keys(general).map((obj) => (
         displayOrNot(obj, validationParams)
             ? <div key={obj} className={style}>
@@ -84,35 +82,10 @@ let mainRows = (general, validationParams, onChangeGeneral, editMode, stateBranc
                 <FieldValue
                     value={general[obj]}
                     editMode={editMode}
-                    onChange={
-                        (e) => {
-                            let value = e.target.value;
-                            if (timeout) clearTimeout(timeout);
-                            timeout = setTimeout(() => {
-                                onChangeGeneral({
-                                    [obj]: value
-                                }, stateBranch)
-                            }, 300);
-                        }
-                    }
                 />
             </div>
             : ""
     )))
-};
-
-let milestonesOnChange = (onChangeMilestones) => {
-    let timeout;
-    return (
-        (id, value, index) => {
-            if (timeout) clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                onChangeMilestones({
-                    [id]: value
-                }, index)
-            }, 300);
-        }
-    )
 };
 
 let selectClass = (stateBranch) => {
@@ -127,12 +100,8 @@ let selectClass = (stateBranch) => {
 
 //TODO: shape of milestones???
 InfoTab.propTypes = {
-    general: PropTypes.object.isRequired,
-    urls: PropTypes.object.isRequired,
+    information: PropTypes.object.isRequired,
     milestones: PropTypes.array.isRequired,
-    loaded: PropTypes.bool,
     loadData: PropTypes.func,
     resetData: PropTypes.func,
-    onChangeGeneral: PropTypes.func,
-    onChangeMilestones: PropTypes.func,
 };
