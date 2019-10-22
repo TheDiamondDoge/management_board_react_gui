@@ -17,7 +17,6 @@ export const getHealthIndicators = (projectID) => (
 );
 
 export const saveHealthIndicatorsPost = (projectID, payload) => {
-    console.log(payload);
     return axios.post(`http://localhost:8080/api/health/${projectID}`, payload, config)
 };
 
@@ -28,6 +27,10 @@ export const getMilestones = (projectID) => (
 export const getIndicatorsRqs = (projectID) => (
     axios.get(`http://localhost:8080/api/indicators/requirements/${projectID}`)
 );
+
+export const saveIndicatorsRqs = (projectID, payload) => {
+    axios.post(`http://localhost:8080/api/indicators/requirements/${projectID}`, payload);
+};
 
 export const getMilestonesKpi = (projectID) => (
     axios.get(`http://localhost:8080/api/indicators/milestones/${projectID}`)

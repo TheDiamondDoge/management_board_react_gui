@@ -1,9 +1,16 @@
 import {takeEvery, takeLatest, fork} from 'redux-saga/effects';
 import {LOAD_SUMMARY} from "../../actions/summary-tab";
-import {loadIndicatorsTab, loadInformationTab, loadSummaryTab, saveHealthIndicators} from "./worker-sagas";
+import {
+    loadIndicatorsTab,
+    loadInformationTab,
+    loadSummaryTab,
+    saveHealthIndicators,
+    saveIndicatorsRqs
+} from "./worker-sagas";
 import {LOAD_INDICATORS} from "../../actions/indicators-tab";
 import {LOAD_INFO} from "../../actions/info-tab";
 import {SAVE_COMMENTS, SAVE_HEALTH} from "../../actions/health-indicators";
+import {INDICATORS_RQS_SAVE} from "../../actions/indicators-rqs";
 
 function* watchSummaryTabLoad() {
     yield takeEvery(LOAD_SUMMARY, loadSummaryTab);
@@ -25,12 +32,17 @@ function* watchHealthCommentsSave() {
     yield takeLatest(SAVE_COMMENTS, saveHealthIndicators);
 }
 
+function* watchIndicatorsRqsSave() {
+    yield takeLatest(INDICATORS_RQS_SAVE, saveIndicatorsRqs);
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
     fork(watchInformationTabLoad),
     fork(watchHealthIndicatorsSave),
-    fork(watchHealthCommentsSave)
+    fork(watchHealthCommentsSave),
+    fork(watchIndicatorsRqsSave)
 ];
 
 export default exportSagas;

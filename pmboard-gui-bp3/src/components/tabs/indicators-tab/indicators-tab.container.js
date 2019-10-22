@@ -3,7 +3,7 @@ import IndicatorsTab from "./indicators-tab";
 import {loadIndicators} from "../../../actions/indicators-tab";
 import {resetMilestonesState} from "../../../actions/milestones";
 import {resetHealthState, saveHealthComments, saveHealthIndicators} from "../../../actions/health-indicators";
-import {indicatorsRqsResetState} from "../../../actions/indicators-rqs";
+import {indicatorsRqsResetState, indicatorsRqsSave} from "../../../actions/indicators-rqs";
 import {milestonesKpiResetState} from "../../../actions/milestones-kpi";
 import {dr4KpiResetState} from "../../../actions/dr4-kpi";
 import {qualityKpiResetState} from "../../../actions/quality-kpi";
@@ -23,6 +23,7 @@ function mapDispatchToProps(dispatch) {
     return {
         healthIndicatorsSubmit: (data) => dispatch(saveHealthIndicators(data)),
         healthCommentsSubmit: (data) => dispatch(saveHealthComments(data)),
+        rqsSubmit: (data) => dispatch(indicatorsRqsSave(data)),
         loadData: () => dispatch(loadIndicators()),
         resetState: () => {
             dispatch(resetMilestonesState());

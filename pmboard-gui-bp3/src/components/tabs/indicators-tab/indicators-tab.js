@@ -23,7 +23,7 @@ export default class IndicatorsTab extends React.Component {
 
     render() {
         const {milestones, healthIndicators, requirements, milestonesKpi, dr4Kpi, qualityKpi} = this.props;
-        const {healthIndicatorsSubmit, healthCommentsSubmit} = this.props;
+        const {healthIndicatorsSubmit, healthCommentsSubmit, rqsSubmit} = this.props;
         return (
             <div className={styles.data_grid}>
                 <CustomCard className={styles.timeline}>
@@ -51,7 +51,10 @@ export default class IndicatorsTab extends React.Component {
                     {
                         requirements.loading
                             ? <Loading />
-                            : <Requirements requirements={requirements.payload}/>
+                            : <Requirements
+                                requirements={requirements.payload}
+                                onSubmit={rqsSubmit}
+                              />
                     }
                 </CustomCard>
                 <CustomCard className={styles.milestones}>
@@ -94,4 +97,5 @@ IndicatorsTab.propTypes = {
     resetState: PropTypes.func,
     healthIndicatorsSubmit: PropTypes.func,
     healthCommentsSubmit: PropTypes.func,
+    rqsSubmit: PropTypes.func,
 };

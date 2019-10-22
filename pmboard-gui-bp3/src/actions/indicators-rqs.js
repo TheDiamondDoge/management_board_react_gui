@@ -13,8 +13,9 @@ export const indicatorsRqsSuccess = ({data}) => ({
     data
 });
 
-export const indicatorsRqsSave = () => ({
-    type: INDICATORS_RQS_SAVE
+export const indicatorsRqsSave = (data) => ({
+    type: INDICATORS_RQS_SAVE,
+    data
 });
 
 export const indicatorsRqsFail = () => ({
