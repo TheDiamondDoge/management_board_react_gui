@@ -3,7 +3,7 @@ import {LOAD_SUMMARY} from "../../actions/summary-tab";
 import {loadIndicatorsTab, loadInformationTab, loadSummaryTab, saveHealthIndicators} from "./worker-sagas";
 import {LOAD_INDICATORS} from "../../actions/indicators-tab";
 import {LOAD_INFO} from "../../actions/info-tab";
-import {SAVE_HEALTH} from "../../actions/health-indicators";
+import {SAVE_COMMENTS, SAVE_HEALTH} from "../../actions/health-indicators";
 
 function* watchSummaryTabLoad() {
     yield takeEvery(LOAD_SUMMARY, loadSummaryTab);
@@ -21,11 +21,16 @@ function* watchHealthIndicatorsSave() {
     yield takeLatest(SAVE_HEALTH, saveHealthIndicators);
 }
 
+function* watchHealthCommentsSave() {
+    yield takeLatest(SAVE_COMMENTS, saveHealthIndicators);
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
     fork(watchInformationTabLoad),
     fork(watchHealthIndicatorsSave),
+    fork(watchHealthCommentsSave)
 ];
 
 export default exportSagas;

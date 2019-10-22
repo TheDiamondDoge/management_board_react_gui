@@ -46,31 +46,24 @@ export default class HealthIndicators extends React.Component {
     };
 
     render() {
-        const {isSummaryMode, indicators, onSubmit} = this.props;
+        const {isSummaryMode, indicators, onIndicatorsSubmit, onCommentsSubmit} = this.props;
         return (
             <Formik
                 onSubmit={(values, formikActions) => {
                     formikActions.setSubmitting(false);
-                    console.log(values);
-                    onSubmit(values);
+                    if (this.state.editStatusMode) {
+                        onIndicatorsSubmit(values);
+                        this.onClickEditStatus();
+                    } else if (this.state.editCommentMode) {
+                        onCommentsSubmit(values);
+                        this.onClickEditComment();
+                    }
                 }}
                 initialValues={{
                     statuses: {
-                        current: {
-                            overall: 1,
-                            schedule: 2,
-                            scope: 3,
-                            quality: 3,
-                            cost: 2,
-                        }
+                        current: indicators.statuses.current
                     },
-                    comments: {
-                        overall: "Overall Comment",
-                        schedule: "Schedule Comment",
-                        scope: "Scope Comment",
-                        quality: "Quality Comment",
-                        cost: "Cost Comment!",
-                    }
+                    comments: indicators.comments
                 }}
                 render={
                     (formikProps) => {
@@ -230,5 +223,6 @@ export default class HealthIndicators extends React.Component {
 HealthIndicators.propTypes = {
     indicators: PropTypes.object.isRequired,
     isSummaryMode: PropTypes.bool,
-    onSubmit: PropTypes.func,
+    onIndicatorsSubmit: PropTypes.func,
+    onCommentsSubmit: PropTypes.func,
 };
