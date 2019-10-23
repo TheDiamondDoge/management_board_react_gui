@@ -53,7 +53,7 @@ export default class IndicatorsTab extends React.Component {
                             ? <Loading />
                             : <Requirements
                                 requirements={requirements.payload}
-                                onSubmit={rqsSubmit}
+                                rqsSubmit={rqsSubmit}
                               />
                     }
                 </CustomCard>

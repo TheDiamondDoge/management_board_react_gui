@@ -8,7 +8,8 @@ import FieldValue from "../field-value/field-value";
 import PropTypes from 'prop-types';
 import {dateFormatToString} from "../../util/transformFuncs";
 import {digitsOnly} from "../../util/filters";
-import {Formik} from "formik";
+import {Field, Formik} from "formik";
+import FormikCustomField from "../formik-custom-field/formik-custom-field";
 
 //TODO THink how to re-write it
 export default class Requirements extends React.Component {
@@ -32,12 +33,15 @@ export default class Requirements extends React.Component {
     onSubmit = null;
 
     render() {
+        console.log("RENDER REQUIEREDGHKASBDVASDHPOASDHJUO:IASHDASOLDHDHSHASDhs", this.props);
         const { addedAfterDr1, committedAtDr1, dr1Actual, modifiedAfterDr1, removedAfterDr1, sum } = this.props.requirements;
+        const { rqsSubmit } = this.props;
         return (
            <Formik
                onSubmit={(values, formikActions) => {
                    formikActions.setSubmitting(false);
-                   this.props.rqsSubmit(values);
+                   rqsSubmit(values);
+                   this.onClickEdit();
                }}
                initialValues={{
                    committedAtDr1,
@@ -70,8 +74,12 @@ export default class Requirements extends React.Component {
                     <thead>
                     <tr>
                         <th className={styles.table_header} colSpan={2}>
-                            <EditSaveControls onClick={this.onClickEdit} editMode={this.state.editMode}
-                                              smallSize={true}/>
+                            <EditSaveControls onClick={this.onClickEdit}
+                                              editMode={this.state.editMode}
+                                              onSubmit={this.onSubmit}
+                                              onCancel={this.onClickEdit}
+                                              smallSize={true}
+                            />
                         </th>
                     </tr>
                     </thead>
@@ -82,20 +90,19 @@ export default class Requirements extends React.Component {
                     </tr>
                     <tr>
                         <td><FieldName name={"# Requirements committed (baseline) at DR1"}/></td>
-                        <td><FieldValue value={committedAtDr1} onInput={digitsOnly} editMode={this.state.editMode}/>
-                        </td>
+                        <td>{this.renderInput("committedAtDr1", committedAtDr1, this.state.editMode)}</td>
                     </tr>
                     <tr>
                         <td><FieldName name={"Current # of requirements added after DR1"}/></td>
-                        <td><FieldValue value={addedAfterDr1} editMode={this.state.editMode}/></td>
+                        <td>{this.renderInput("addedAfterDr1", addedAfterDr1, this.state.editMode)}</td>
                     </tr>
                     <tr>
                         <td><FieldName name={"Current # of baselined requirements removed after DR1"}/></td>
-                        <td><FieldValue value={removedAfterDr1} editMode={this.state.editMode}/></td>
+                        <td>{this.renderInput("removedAfterDr1", removedAfterDr1, this.state.editMode)}</td>
                     </tr>
                     <tr>
                         <td><FieldName name={"Current # of baselined requirements modified after DR1"}/></td>
-                        <td><FieldValue value={modifiedAfterDr1} editMode={this.state.editMode}/></td>
+                        <td>{this.renderInput("modifiedAfterDr1", modifiedAfterDr1, this.state.editMode)}</td>
                     </tr>
                     <tr>
                         <td><FieldName name={"Current # of scoped requirements"}/></td>
@@ -105,6 +112,14 @@ export default class Requirements extends React.Component {
                 </HTMLTable>
             </>
         )
+    };
+
+    renderInput = (name, value, isEditMode) => {
+        if (isEditMode) {
+            return <Field name={name} component={FormikCustomField} />
+        } else {
+            return <FieldValue value={value} />
+        }
     }
 }
 

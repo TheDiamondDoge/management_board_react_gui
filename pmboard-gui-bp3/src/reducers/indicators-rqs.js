@@ -35,6 +35,7 @@ export default (state, action) => {
         case INDICATORS_RQS_SAVE:
             return {
                 ...state,
+                loading: true,
             };
         case INDICATORS_RQS_RESET_STATE:
             return initState;

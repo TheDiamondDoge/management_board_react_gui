@@ -31,7 +31,7 @@ export function* loadIndicatorsTab() {
         yield call(loadDr4Kpi);
         yield call(loadQualityKpi)
     } catch (e) {
-        yield put(loadIndicatorsError)
+        yield put(loadIndicatorsError(e))
     }
 }
 
@@ -67,6 +67,7 @@ export function* loadMilestones() {
 export function* loadIndicatorsRqs() {
     try {
         const indicatorRqs = yield call(api.getIndicatorsRqs, 1);
+        console.log("LOADEDDDDD", indicatorRqs);
         yield put(indicatorsRqsSuccess(indicatorRqs));
     } catch (e) {
         yield put(indicatorsRqsFail(e));
@@ -113,7 +114,6 @@ export function* saveIndicatorsRqs(action) {
     try {
         yield call(api.saveIndicatorsRqs, 1, action.data);
         yield call(loadIndicatorsRqs);
-        yield call(loadMilestonesKpi);
         yield call(loadDr4Kpi);
     } catch(e) {
         yield put(indicatorsRqsFail(e));
