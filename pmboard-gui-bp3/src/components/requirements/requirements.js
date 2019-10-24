@@ -7,11 +7,10 @@ import {FieldName} from "../field-name/field-name";
 import FieldValue from "../field-value/field-value";
 import PropTypes from 'prop-types';
 import {dateFormatToString} from "../../util/transformFuncs";
-import {digitsOnly} from "../../util/filters";
 import {Field, Formik} from "formik";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
+import fields from "./fields";
 
-//TODO THink how to re-write it
 export default class Requirements extends React.Component {
     constructor(props) {
         super(props);
@@ -26,15 +25,14 @@ export default class Requirements extends React.Component {
         )
     };
 
-    bindFormSubmittion = (formikSubmitForm) => {
+    bindFormSubmission = (formikSubmitForm) => {
         this.onSubmit = formikSubmitForm;
     };
 
     onSubmit = null;
 
     render() {
-        console.log("RENDER REQUIEREDGHKASBDVASDHPOASDHJUO:IASHDASOLDHDHSHASDhs", this.props);
-        const { addedAfterDr1, committedAtDr1, dr1Actual, modifiedAfterDr1, removedAfterDr1, sum } = this.props.requirements;
+        const { addedAfterDr1, committedAtDr1, modifiedAfterDr1, removedAfterDr1 } = this.props.requirements;
         const { rqsSubmit } = this.props;
         return (
            <Formik
@@ -51,15 +49,15 @@ export default class Requirements extends React.Component {
                }}
                render={
                    (formikProps) => {
-                       this.bindFormSubmittion(formikProps.submitForm);
-                       return this.renderRqsTable(addedAfterDr1, committedAtDr1, dr1Actual, modifiedAfterDr1, removedAfterDr1, sum);
+                       this.bindFormSubmission(formikProps.submitForm);
+                       return this.renderRqsTable();
                    }
                }
            />
         )
     }
 
-    renderRqsTable = (addedAfterDr1, committedAtDr1, dr1Actual, modifiedAfterDr1, removedAfterDr1, sum) => {
+    renderRqsTable = () => {
         let valueColumnClasses = classNames(styles.value_col, styles.column_align_center);
         return (
             <>
@@ -84,34 +82,29 @@ export default class Requirements extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td><FieldName name={"DR1 date (actual)"}/></td>
-                        <td><FieldValue value={dateFormatToString(new Date(dr1Actual))}/></td>
-                    </tr>
-                    <tr>
-                        <td><FieldName name={"# Requirements committed (baseline) at DR1"}/></td>
-                        <td>{this.renderInput("committedAtDr1", committedAtDr1, this.state.editMode)}</td>
-                    </tr>
-                    <tr>
-                        <td><FieldName name={"Current # of requirements added after DR1"}/></td>
-                        <td>{this.renderInput("addedAfterDr1", addedAfterDr1, this.state.editMode)}</td>
-                    </tr>
-                    <tr>
-                        <td><FieldName name={"Current # of baselined requirements removed after DR1"}/></td>
-                        <td>{this.renderInput("removedAfterDr1", removedAfterDr1, this.state.editMode)}</td>
-                    </tr>
-                    <tr>
-                        <td><FieldName name={"Current # of baselined requirements modified after DR1"}/></td>
-                        <td>{this.renderInput("modifiedAfterDr1", modifiedAfterDr1, this.state.editMode)}</td>
-                    </tr>
-                    <tr>
-                        <td><FieldName name={"Current # of scoped requirements"}/></td>
-                        <td><FieldValue value={sum}/></td>
-                    </tr>
+                    {
+                        Object.keys(fields).map((field) => (
+                            <tr>
+                                <td><FieldName name={fields[field].label}/></td>
+                                <td>{this.renderValueField(field)}</td>
+                            </tr>
+                        ))
+                    }
                     </tbody>
                 </HTMLTable>
             </>
         )
+    };
+
+    renderValueField = (propName) => {
+        switch (propName) {
+            case "dr1Actual":
+                return <FieldValue value={dateFormatToString(new Date(this.props.requirements.dr1Actual))}/>;
+            case "sum":
+                return <FieldValue value={this.props.requirements.sum}/>;
+            default:
+                return this.renderInput(propName, this.props.requirements[propName], this.state.editMode);
+        }
     };
 
     renderInput = (name, value, isEditMode) => {

@@ -1,13 +1,5 @@
 import axios from 'axios';
 
-const config = {
-    headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
-    }
-};
-
 export const getSummaryInfo = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/summary`)
 );
@@ -17,7 +9,7 @@ export const getHealthIndicators = (projectID) => (
 );
 
 export const saveHealthIndicatorsPost = (projectID, payload) => {
-    return axios.post(`http://localhost:8080/api/health/${projectID}`, payload, config)
+    return axios.post(`http://localhost:8080/api/health/${projectID}`, payload)
 };
 
 export const getMilestones = (projectID) => (
@@ -28,9 +20,9 @@ export const getIndicatorsRqs = (projectID) => (
     axios.get(`http://localhost:8080/api/indicators/requirements/${projectID}`)
 );
 
-export const saveIndicatorsRqs = (projectID, payload) => {
-    axios.post(`http://localhost:8080/api/indicators/requirements/${projectID}`, payload);
-};
+export const saveIndicatorsRqs = (projectID, payload) => (
+    axios.post(`http://localhost:8080/api/indicators/requirements/${projectID}`, payload)
+);
 
 export const getMilestonesKpi = (projectID) => (
     axios.get(`http://localhost:8080/api/indicators/milestones/${projectID}`)
