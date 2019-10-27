@@ -16,10 +16,10 @@ export default class Quality extends React.Component {
         };
     }
 
-    onSubmit = null;
+    onSubmitForm = null;
 
     bindFormSubmission = (formikSubmit) => {
-        this.onSubmit = formikSubmit;
+        this.onSubmitForm = formikSubmit;
     };
 
     onClickEdit = () => {
@@ -29,7 +29,7 @@ export default class Quality extends React.Component {
     };
 
     render() {
-        const {qualityKpi, fields} = this.props;
+        const {qualityKpi, fields, onSubmit} = this.props;
         return (
             <Formik
                 initialValues={
@@ -41,10 +41,13 @@ export default class Quality extends React.Component {
                         testRate: qualityKpi.testRate
                     }
                 }
-                onSubmit={values =>
+                onSubmit={values => {
                     setTimeout(() => {
                         alert(JSON.stringify(values, null, 2));
-                    }, 500)
+                    }, 500);
+
+                    onSubmit(values);
+                }
                 }
                 render={
                     (formikProps) => {
@@ -72,7 +75,7 @@ export default class Quality extends React.Component {
                 <EditSaveControls
                     className={styles.float_right}
                     onClick={this.onClickEdit}
-                    onSubmit={this.onSubmit}
+                    onSubmit={this.onSubmitForm}
                     editMode={this.state.editMode}
                 />
             </div>
@@ -156,9 +159,9 @@ export default class Quality extends React.Component {
                                         {
                                             this.state.editMode
                                                 ? this.getMiniButton(
-                                                    () => arrayHelpers.push(this.getEmptyRowObject()),
-                                                    "add",
-                                                    Intent.SUCCESS
+                                                () => arrayHelpers.push(this.getEmptyRowObject()),
+                                                "add",
+                                                Intent.SUCCESS
                                                 )
                                                 : ""
                                         }
@@ -169,9 +172,9 @@ export default class Quality extends React.Component {
                                 {
                                     this.state.editMode
                                         ? this.getMiniButton(
-                                            () => this.removeRow(values[field], arrayHelpers, i),
-                                            "delete",
-                                            Intent.DANGER
+                                        () => this.removeRow(values[field], arrayHelpers, i),
+                                        "delete",
+                                        Intent.DANGER
                                         )
                                         : ""
                                 }
@@ -199,7 +202,7 @@ export default class Quality extends React.Component {
                     ))
                 }
                 }/>
-    )
+        )
     };
 
     getEmptyRowObject = () => ({
@@ -220,7 +223,7 @@ export default class Quality extends React.Component {
     );
 
     removeRow = (values, arrayHelpers, i) => {
-        if(values.length === 1) {
+        if (values.length === 1) {
             arrayHelpers.unshift(this.getEmptyRowObject());
             arrayHelpers.pop();
         } else {
@@ -232,4 +235,5 @@ export default class Quality extends React.Component {
 Quality.propTypes = {
     fields: PropTypes.object,
     qualityKpi: PropTypes.object,
+    onSubmit: PropTypes.func,
 };

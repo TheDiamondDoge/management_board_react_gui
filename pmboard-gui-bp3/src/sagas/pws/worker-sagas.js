@@ -119,3 +119,12 @@ export function* saveIndicatorsRqs(action) {
         yield put(indicatorsRqsFail(e));
     }
 }
+
+export function* saveIndicatorsQuality(action) {
+    try {
+        yield call(api.saveQualityKpi, 1, action.data);
+        yield call(loadQualityKpi);
+    } catch (e) {
+        yield put(qualityKpiFail(e));
+    }
+}

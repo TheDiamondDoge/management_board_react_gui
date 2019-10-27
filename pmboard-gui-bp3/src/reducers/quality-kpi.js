@@ -1,7 +1,7 @@
 import {
     LOAD_QUALITY_KPI,
     QUALITY_KPI_FAIL,
-    QUALITY_KPI_RESET_STATE,
+    QUALITY_KPI_RESET_STATE, QUALITY_KPI_SAVE,
     QUALITY_KPI_SUCCESS,
     QUALITY_KPI_SYNC
 } from "../actions/quality-kpi";
@@ -31,6 +31,11 @@ export default (state, action) => {
         case QUALITY_KPI_SYNC:
             return {
                 ...state,
+            };
+        case QUALITY_KPI_SAVE:
+            return {
+                ...state,
+                loading: true,
             };
         case QUALITY_KPI_FAIL:
             return {
