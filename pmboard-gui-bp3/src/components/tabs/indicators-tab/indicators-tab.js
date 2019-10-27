@@ -8,6 +8,7 @@ import Requirements from "../../requirements/requirements";
 import MilestonesKpi from "../../milestones-kpi/milestones-kpi";
 import Kpi from "../../dr4kpi/kpi";
 import Quality from "../../quality/quality";
+import qualityFields from "../../quality/qualityFields";
 import Loading from "../../loading-card/loading";
 
 //TODO: HINT: How to map json with fields - check summary realisation
@@ -78,7 +79,10 @@ export default class IndicatorsTab extends React.Component {
                     {
                         qualityKpi.loading
                             ? <Loading />
-                            : <Quality qualityKpi={qualityKpi.payload}/>
+                            : <Quality
+                                qualityKpi={qualityKpi.payload}
+                                fields={qualityFields}
+                              />
                     }
                 </CustomCard>
             </div>

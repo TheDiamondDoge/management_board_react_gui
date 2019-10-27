@@ -7,7 +7,7 @@ import FieldValue from "../field-value/field-value";
 import PropTypes from "prop-types";
 
 export default class Quality extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             editMode: false,
@@ -21,8 +21,7 @@ export default class Quality extends React.Component {
     };
 
     render() {
-        const {qualityKpi} = this.props;
-        console.log(qualityKpi);
+        const {qualityKpi, fields} = this.props;
         return (
             <>
                 <div>
@@ -60,98 +59,80 @@ export default class Quality extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>
-                            <FieldName name={"Quality KPI"}/>
-                        </td>
-                        <td className={styles.column_align_center}>
-                            <FieldValue value={"100"} editMode={this.state.editMode}/>
-                        </td>
-                        <td className={styles.column_align_center}>0</td>
-                        <td className={styles.column_align_center}>
-                            {
-                                this.state.editMode
-                                    ? <TextArea fill={true} defaultValue={"Comment"}/>
-                                    : "Comment"
-
+                    {
+                        Object.keys(fields).map(field => {
+                                if (field === "testExecution" || field === "testRate") {
+                                    return this.renderComplexRows(field);
+                                } else {
+                                    return this.renderSingleRow(field);
+                                }
                             }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <FieldName name={"New Open Defects"}/>
-                        </td>
-                        <td className={styles.column_align_center}>
-                            <FieldValue value={"200"} editMode={this.state.editMode}/>
-                        </td>
-                        <td className={styles.column_align_center}>0</td>
-                        <td className={styles.column_align_center}>
-                            {
-                                this.state.editMode
-                                    ? <TextArea fill={true} defaultValue={"Comment"}/>
-                                    : "Comment"
-
-                            }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <FieldName name={"Backlog Reduction"}/>
-                        </td>
-                        <td className={styles.column_align_center}>
-                            <FieldValue value={"300"} editMode={this.state.editMode}/>
-                        </td>
-                        <td className={styles.column_align_center}>0</td>
-                        <td className={styles.column_align_center}>
-                            {
-                                this.state.editMode
-                                    ? <TextArea fill={true} defaultValue={"Comment"}/>
-                                    : "Comment"
-
-                            }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <FieldName name={"Test execution (rate or number)"}/>
-                        </td>
-                        <td className={styles.column_align_center}>
-                            <FieldValue value={"40"} editMode={this.state.editMode}/>
-                        </td>
-                        <td className={styles.column_align_center}>40</td>
-                        <td className={styles.column_align_center}>
-                            {
-                                this.state.editMode
-                                    ? <TextArea fill={true} defaultValue={"Comment"}/>
-                                    : "Comment"
-
-                            }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <FieldName name={"Test pass (rate or number)"}/>
-                        </td>
-                        <td className={styles.column_align_center}>
-                            <FieldValue value={"50"} editMode={this.state.editMode}/>
-                        </td>
-                        <td className={styles.column_align_center}>50</td>
-                        <td className={styles.column_align_center}>
-                            {
-                                this.state.editMode
-                                    ? <TextArea fill={true} defaultValue={"Comment"}/>
-                                    : "Comment"
-
-                            }
-                        </td>
-                    </tr>
+                        )
+                    }
                     </tbody>
                 </HTMLTable>
             </>
         );
     }
+
+    renderSingleRow = (field) => (
+        <tr key={field}>
+            <td>
+                <FieldName name={this.props.fields[field].label}/>
+            </td>
+            <td className={styles.column_align_center}>
+                <FieldValue value={this.props.qualityKpi[field].objective} editMode={this.state.editMode}/>
+            </td>
+            <td className={styles.column_align_center}>
+                <FieldValue value={this.props.qualityKpi[field].actual}/>
+            </td>
+            <td className={styles.column_align_center}>
+                {
+                    this.state.editMode
+                        ? <TextArea fill={true} defaultValue={this.props.qualityKpi[field].comment}/>
+                        : this.props.qualityKpi[field].comment
+                }
+            </td>
+        </tr>
+    );
+
+    renderComplexRows = (field) => {
+        const rowsNum = this.props.qualityKpi[field].length;
+        const rowSpan = rowsNum < 2 ? 1 : rowsNum;
+        return (
+            this.props.qualityKpi[field].map((row, i) => (
+                <tr key={`${field}_${i}`}>
+                    {
+                        i === 0
+                            ? <td rowSpan={rowSpan}>
+                                <FieldName name={this.props.fields[field].label}/>
+                              </td>
+                            : ""
+                    }
+                    <td className={styles.column_align_center}>
+                        <FieldValue value={row.objective} editMode={this.state.editMode}/>
+                    </td>
+                    <td className={styles.column_align_center}>
+                        <FieldValue value={row.actual} editMode={this.state.editMode}/>
+                    </td>
+                    {
+                        i === 0
+                            ? <td rowSpan={rowSpan} className={styles.column_align_center}>
+                                {
+                                    this.state.editMode
+                                        ? <TextArea fill={true} defaultValue={row.comment}/>
+                                        : row.comment
+                                }
+                            </td>
+                            : ""
+                    }
+                </tr>
+            ))
+        )
+    }
 }
 
 Quality.propTypes = {
+    fields: PropTypes.object,
     qualityKpi: PropTypes.object,
 };

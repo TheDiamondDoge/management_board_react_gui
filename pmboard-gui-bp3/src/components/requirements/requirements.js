@@ -84,7 +84,7 @@ export default class Requirements extends React.Component {
                     <tbody>
                     {
                         Object.keys(fields).map((field) => (
-                            <tr>
+                            <tr key={field}>
                                 <td><FieldName name={fields[field].label}/></td>
                                 <td>{this.renderValueField(field)}</td>
                             </tr>
