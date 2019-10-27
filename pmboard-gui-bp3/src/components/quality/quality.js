@@ -1,5 +1,5 @@
 import React from 'react';
-import {HTMLTable, Icon, Button, TextArea, Intent} from "@blueprintjs/core";
+import {HTMLTable, Icon, Button, Intent} from "@blueprintjs/core";
 import EditSaveControls from "../edit-save-contols/edit-save-controls";
 import styles from "./quality.module.css";
 import {FieldName} from "../field-name/field-name";
@@ -143,6 +143,10 @@ export default class Quality extends React.Component {
                 key={field}
                 name={field}
                 render={(arrayHelpers) => {
+                    if (values[field] && values[field].length === 0) {
+                        values[field] = [this.getEmptyRowObject()];
+                    }
+
                     return values[field].map((row, i) => (
                         <tr key={`${field}_${i}`}>
                             {
