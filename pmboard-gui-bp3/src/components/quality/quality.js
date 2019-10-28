@@ -3,7 +3,6 @@ import {HTMLTable, Icon, Button, Intent} from "@blueprintjs/core";
 import EditSaveControls from "../edit-save-contols/edit-save-controls";
 import styles from "./quality.module.css";
 import {FieldName} from "../field-name/field-name";
-import FieldValue from "../field-value/field-value";
 import PropTypes from "prop-types";
 import {FieldArray, Formik} from "formik";
 import {renderComment, renderInput} from "../../util/util-renders";
@@ -29,30 +28,25 @@ export default class Quality extends React.Component {
     };
 
     render() {
-        const {qualityKpi, fields, onSubmit} = this.props;
+        const {qualityKpi, onSubmit} = this.props;
+        const {quality, defects, backlog, testExecution, testRate} = qualityKpi;
         return (
             <Formik
                 initialValues={
                     {
-                        quality: qualityKpi.quality,
-                        defects: qualityKpi.defects,
-                        backlog: qualityKpi.backlog,
-                        testExecution: qualityKpi.testExecution,
-                        testRate: qualityKpi.testRate
+                        quality, defects, backlog, testExecution, testRate
                     }
                 }
-                onSubmit={values => {
-                    setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
-                    }, 500);
-
-                    onSubmit(values);
-                }
+                onSubmit={
+                    values => {
+                        onSubmit(values);
+                        this.onClickEdit();
+                    }
                 }
                 render={
                     (formikProps) => {
                         this.bindFormSubmission(formikProps.submitForm);
-                        return this.renderQualityForm(formikProps.values, fields);
+                        return this.renderQualityForm(formikProps.values);
                     }
                 }
             />
@@ -60,123 +54,105 @@ export default class Quality extends React.Component {
         );
     }
 
-    renderQualityForm = (values, fields) => (
-        <>
-            <div>
-                <div className={styles.float_left}>
-                    <Button
-                        intent={"primary"}
-                        minimal={true}
-                    >
-                        <Icon icon={"refresh"}/>
-                    </Button>
-                    Last synchro: {this.props.qualityKpi.syncDate}
+    renderQualityForm = (values) => {
+        const {syncDate} = this.props.qualityKpi;
+        const fields = this.props.fields;
+        return(
+            <>
+                <div>
+                    <div className={styles.float_left}>
+                        <Button
+                            intent={"primary"}
+                            minimal={true}
+                        >
+                            <Icon icon={"refresh"}/>
+                        </Button>
+                        Last synchro: {syncDate}
+                    </div>
+                    <EditSaveControls
+                        className={styles.float_right}
+                        onClick={this.onClickEdit}
+                        onSubmit={this.onSubmitForm}
+                        editMode={this.state.editMode}
+                    />
                 </div>
-                <EditSaveControls
-                    className={styles.float_right}
-                    onClick={this.onClickEdit}
-                    onSubmit={this.onSubmitForm}
-                    editMode={this.state.editMode}
-                />
-            </div>
-            <HTMLTable
-                className={styles.quality_table}
-                striped={true}
-            >
-                <colgroup>
-                    <col className={styles.descr_col}/>
-                    <col className={styles.controls_col}/>
-                    <col className={styles.obj_col}/>
-                    <col className={styles.actual_col}/>
-                    <col/>
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th className={styles.column_align_center}>Objective</th>
-                    <th className={styles.column_align_center}>Actual value</th>
-                    <th className={styles.column_align_center}>Comment</th>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    Object.keys(fields).map(field => {
-                            if (field === "testExecution" || field === "testRate") {
-                                return this.renderComplexRows(values, field);
-                            } else {
-                                return this.renderSingleRow(values, field);
+                <HTMLTable
+                    className={styles.quality_table}
+                    striped={true}
+                >
+                    <colgroup>
+                        <col className={styles.descr_col}/>
+                        <col className={styles.controls_col}/>
+                        <col className={styles.obj_col}/>
+                        <col className={styles.actual_col}/>
+                        <col/>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>&nbsp;</th>
+                        <th className={styles.column_align_center}>Objective</th>
+                        <th className={styles.column_align_center}>Actual value</th>
+                        <th className={styles.column_align_center}>Comment</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        Object.keys(fields).map(field => {
+                                if (field === "testExecution" || field === "testRate") {
+                                    return this.renderComplexRows(values, field, true);
+                                } else {
+                                    return this.renderComplexRows(values, field, false);
+
+                                }
                             }
-                        }
-                    )
-                }
-                </tbody>
-            </HTMLTable>
-        </>
-    );
+                        )
+                    }
+                    </tbody>
+                </HTMLTable>
+            </>
+        )
+    };
 
-    renderSingleRow = (values, field) => (
-        <tr key={field}>
-            <td>
-                <FieldName name={this.props.fields[field].label}/>
-            </td>
-            <td>&nbsp;</td>
-            <td className={styles.column_align_center}>
-                <FieldValue value={values[field].objective} editMode={this.state.editMode}/>
-            </td>
-            <td className={styles.column_align_center}>
-                {
-                    renderInput(`${field}.actual`, values[field].actual, this.state.editMode)
-                }
-
-            </td>
-            <td className={styles.column_align_center}>
-                {
-                    renderComment(`${field}.comment`, values[field].comment, this.state.editMode)
-                }
-            </td>
-        </tr>
-    );
-
-    renderComplexRows = (values, field) => {
+    renderComplexRows = (values, field, isControlled) => {
         const rowsNum = values[field].length;
         const rowSpan = rowsNum < 2 ? 1 : rowsNum;
+        let indicators = values[field];
         return (
             <FieldArray
                 key={field}
                 name={field}
                 render={(arrayHelpers) => {
-                    if (values[field] && values[field].length === 0) {
-                        values[field] = [this.getEmptyRowObject()];
+                    const rowTitle = this.props.fields[field].label;
+                    if (indicators && indicators.length === 0) {
+                        indicators = [this.getEmptyRowObject()];
                     }
 
-                    return values[field].map((row, i) => (
+                    return indicators.map((row, i) => (
                         <tr key={`${field}_${i}`}>
                             {
                                 i === 0
                                     ? <td rowSpan={rowSpan}>
-                                        <FieldName name={this.props.fields[field].label}/>
+                                        <FieldName name={rowTitle}/>
                                         {
-                                            this.state.editMode
-                                                ? this.getMiniButton(
-                                                () => arrayHelpers.push(this.getEmptyRowObject()),
+                                            this.renderControls(
                                                 "add",
-                                                Intent.SUCCESS
-                                                )
-                                                : ""
+                                                () => arrayHelpers.push(this.getEmptyRowObject()),
+                                                this.state.editMode,
+                                                isControlled
+                                            )
                                         }
                                     </td>
                                     : ""
                             }
                             <td>
                                 {
-                                    this.state.editMode
-                                        ? this.getMiniButton(
-                                        () => this.removeRow(values[field], arrayHelpers, i),
+                                    this.renderControls(
                                         "delete",
-                                        Intent.DANGER
-                                        )
-                                        : ""
+                                        () => this.removeRow(values[field], arrayHelpers, i),
+                                        this.state.editMode,
+                                        isControlled
+                                    )
                                 }
                             </td>
                             <td className={styles.column_align_center}>
@@ -203,6 +179,29 @@ export default class Quality extends React.Component {
                 }
                 }/>
         )
+    };
+
+    renderControls = (type, onClick, isEditMode, isControlled) => {
+        const args = this.getControlProps(type);
+        return (
+            isEditMode && isControlled
+                ? this.getMiniButton(onClick, args.icon, args.intent)
+                : ""
+        )
+    };
+
+    getControlProps = (type) => {
+        if (type === "delete") {
+            return ({
+                icon: "delete",
+                intent: Intent.DANGER
+            })
+        } else {
+            return ({
+                icon: "add",
+                intent: Intent.SUCCESS
+            })
+        }
     };
 
     getEmptyRowObject = () => ({
