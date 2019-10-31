@@ -51,6 +51,8 @@ export default class FormikCustomField extends React.Component {
                                }}
                     />
                 );
+            case "numeric":
+                return (<InputGroup {...field} {...props} onChange={(e) => digitsOnly(e, this.props.form.setFieldValue, field.name)} />);
             case "text":
             default:
                 return (<InputGroup {...field} {...props} />);

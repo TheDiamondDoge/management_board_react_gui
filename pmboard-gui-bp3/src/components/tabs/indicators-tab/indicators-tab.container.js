@@ -6,7 +6,7 @@ import {resetHealthState, saveHealthComments, saveHealthIndicators} from "../../
 import {indicatorsRqsResetState, indicatorsRqsSave} from "../../../actions/indicators-rqs";
 import {milestonesKpiResetState} from "../../../actions/milestones-kpi";
 import {dr4KpiResetState} from "../../../actions/dr4-kpi";
-import {qualityKpiResetState, qualityKpiSave} from "../../../actions/quality-kpi";
+import {loadQualityKpi, qualityKpiResetState, qualityKpiSave} from "../../../actions/quality-kpi";
 
 function mapStateToProps(state){
     return {
@@ -25,6 +25,7 @@ function mapDispatchToProps(dispatch) {
         healthCommentsSubmit: (data) => dispatch(saveHealthComments(data)),
         rqsSubmit: (data) => dispatch(indicatorsRqsSave(data)),
         qualitySubmit: (data) => dispatch(qualityKpiSave(data)),
+        qualityReload: () => dispatch(loadQualityKpi()),
         loadData: () => dispatch(loadIndicators()),
         resetState: () => {
             dispatch(resetMilestonesState());

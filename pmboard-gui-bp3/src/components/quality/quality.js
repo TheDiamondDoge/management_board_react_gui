@@ -11,7 +11,7 @@ export default class Quality extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            editMode: true,
+            editMode: false,
         };
     }
 
@@ -56,7 +56,8 @@ export default class Quality extends React.Component {
 
     renderQualityForm = (values) => {
         const {syncDate} = this.props.qualityKpi;
-        const fields = this.props.fields;
+        const {fields, onCancel} = this.props;
+
         return(
             <>
                 <div>
@@ -74,6 +75,7 @@ export default class Quality extends React.Component {
                         onClick={this.onClickEdit}
                         onSubmit={this.onSubmitForm}
                         editMode={this.state.editMode}
+                        onCancel={onCancel}
                     />
                 </div>
                 <HTMLTable
@@ -125,9 +127,9 @@ export default class Quality extends React.Component {
                 render={(arrayHelpers) => {
                     const rowTitle = this.props.fields[field].label;
                     if (indicators && indicators.length === 0) {
-                        indicators = [this.getEmptyRowObject()];
+                        indicators = [this.getEmptyRowObject("")];
                     }
-
+                    const comment = indicators[0].comment;
                     return indicators.map((row, i) => (
                         <tr key={`${field}_${i}`}>
                             {
@@ -137,7 +139,7 @@ export default class Quality extends React.Component {
                                         {
                                             this.renderControls(
                                                 "add",
-                                                () => arrayHelpers.push(this.getEmptyRowObject()),
+                                                () => arrayHelpers.push(this.getEmptyRowObject(comment)),
                                                 this.state.editMode,
                                                 isControlled
                                             )
@@ -157,19 +159,19 @@ export default class Quality extends React.Component {
                             </td>
                             <td className={styles.column_align_center}>
                                 {
-                                    renderInput(`${field}[${i}].objective`, row.objective, this.state.editMode)
+                                    renderInput(`${field}[${i}].objective`, row.objective, this.state.editMode, "numeric")
                                 }
                             </td>
                             <td className={styles.column_align_center}>
                                 {
-                                    renderInput(`${field}[${i}].actual`, row.actual, this.state.editMode)
+                                    renderInput(`${field}[${i}].actual`, row.actual, this.state.editMode, "numeric")
                                 }
                             </td>
                             {
                                 i === 0
                                     ? <td rowSpan={rowSpan} className={styles.column_align_center}>
                                         {
-                                            renderComment(`${field}[${i}].comment`, row.comment, this.state.editMode)
+                                            renderComment(`${field}[${i}].comment`, comment, this.state.editMode)
                                         }
                                     </td>
                                     : ""
@@ -204,11 +206,11 @@ export default class Quality extends React.Component {
         }
     };
 
-    getEmptyRowObject = () => ({
+    getEmptyRowObject = (comment) => ({
         rowNumber: "",
         objective: "",
         actual: "",
-        comment: ""
+        comment: comment
     });
 
     getMiniButton = (onClick, icon, intent) => (
@@ -235,4 +237,5 @@ Quality.propTypes = {
     fields: PropTypes.object,
     qualityKpi: PropTypes.object,
     onSubmit: PropTypes.func,
+    onCancel: PropTypes.func,
 };
