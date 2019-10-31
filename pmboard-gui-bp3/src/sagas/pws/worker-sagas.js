@@ -67,7 +67,6 @@ export function* loadMilestones() {
 export function* loadIndicatorsRqs() {
     try {
         const indicatorRqs = yield call(api.getIndicatorsRqs, 1);
-        console.log("LOADEDDDDD", indicatorRqs);
         yield put(indicatorsRqsSuccess(indicatorRqs));
     } catch (e) {
         yield put(indicatorsRqsFail(e));

@@ -39,7 +39,6 @@ export default class Requirements extends React.Component {
                 onSubmit={(values, formikActions) => {
                     formikActions.setSubmitting(false);
                     rqsSubmit(values);
-                    this.onClickEdit();
                 }}
                 initialValues={{
                     committedAtDr1,
@@ -50,15 +49,16 @@ export default class Requirements extends React.Component {
                 render={
                     (formikProps) => {
                         this.bindFormSubmission(formikProps.submitForm);
-                        return this.renderRqsTable();
+                        return this.renderRqsTable(formikProps.values);
                     }
                 }
             />
         )
     }
 
-    renderRqsTable = () => {
+    renderRqsTable = (values) => {
         let valueColumnClasses = classNames(styles.value_col, styles.column_align_center);
+        const {rqsReload} = this.props;
         return (
             <HTMLTable
                 className={styles.req_table}
@@ -74,7 +74,7 @@ export default class Requirements extends React.Component {
                         <EditSaveControls onClick={this.onClickEdit}
                                           editMode={this.state.editMode}
                                           onSubmit={this.onSubmit}
-                                          onCancel={this.onClickEdit}
+                                          onCancel={rqsReload}
                                           smallSize={true}
                         />
                     </th>
@@ -82,26 +82,33 @@ export default class Requirements extends React.Component {
                 </thead>
                 <tbody>
                 {
-                    Object.keys(fields).map((field) => (
-                        <tr key={field}>
-                            <td><FieldName name={fields[field].label}/></td>
-                            <td>{this.renderValueField(field)}</td>
-                        </tr>
-                    ))
+                    Object.keys(fields).map((propName) => {
+                        const label = fields[propName].label;
+                        return (
+                            <tr key={propName}>
+                                <td><FieldName name={label}/></td>
+                                <td>{this.renderValueField(propName, values)}</td>
+                            </tr>
+                        )
+                    })
                 }
                 </tbody>
             </HTMLTable>
         )
     };
 
-    renderValueField = (propName) => {
+    renderValueField = (propName, values) => {
+        const {dr1Actual} = this.props.requirements;
+        const dr1 = (dr1Actual === null || dr1Actual === "") ? "" : new Date(dr1Actual);
+        const {sum} = this.props.requirements;
+        const value = values[propName];
         switch (propName) {
             case "dr1Actual":
-                return <FieldValue value={dateFormatToString(new Date(this.props.requirements.dr1Actual))}/>;
+                return <FieldValue value={dateFormatToString(dr1)}/>;
             case "sum":
-                return <FieldValue value={this.props.requirements.sum}/>;
+                return <FieldValue value={sum}/>;
             default:
-                return renderInput(propName, this.props.requirements[propName], this.state.editMode);
+                return renderInput(propName, value, this.state.editMode, "numeric");
         }
     };
 
@@ -110,4 +117,5 @@ export default class Requirements extends React.Component {
 Requirements.propTypes = {
     requirements: PropTypes.object.isRequired,
     rqsSubmit: PropTypes.func,
+    rqsReload: PropTypes.func
 };
