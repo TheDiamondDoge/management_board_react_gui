@@ -10,7 +10,6 @@ export default class Kpi extends React.Component {
     render() {
         let headerClasses = classNames(styles.column_align_center, styles.border_top);
         const {dr4Kpi} = this.props;
-        console.log(dr4Kpi);
         return (
             <HTMLTable
                 className={styles.kpi_table}

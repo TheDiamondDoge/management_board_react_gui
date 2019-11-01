@@ -5,7 +5,7 @@ import styles from "./health-indicators.module.css";
 import StatusIndicator from "../status-indicator/status-indicator";
 import PropTypes from "prop-types";
 import EditSaveControls from "../edit-save-contols/edit-save-controls";
-import {dateFormatToString} from "../../util/transformFuncs";
+import {dateFormatToString, nullToEmptyStr} from "../../util/transformFuncs";
 import {Field, Formik} from "formik";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 
@@ -45,17 +45,17 @@ export default class HealthIndicators extends React.Component {
     };
 
     render() {
-        const {isSummaryMode, indicators, onIndicatorsSubmit, onCommentsSubmit, onCancel} = this.props;
+        const {isSummaryMode, indicators, onIndicatorsSubmit, onCommentsSubmit} = this.props;
         return (
             <Formik
                 onSubmit={(values, formikActions) => {
                     formikActions.setSubmitting(false);
                     if (this.state.editStatusMode) {
+                        console.log("INDICATORS SUBMIT")
                         onIndicatorsSubmit(values);
-                        onCancel();
                     } else if (this.state.editCommentMode) {
+                        console.log("COMMENTS SUBMIT")
                         onCommentsSubmit(values);
-                        onCancel();
                     }
                 }}
                 initialValues={{
@@ -133,8 +133,15 @@ export default class HealthIndicators extends React.Component {
                 {
                     Object.keys(this.labels).map((key) => {
                         const label = this.labels[key];
-                        const prevValue = values.statuses.prev[key];
-                        const currentValue = values.statuses.current[key];
+                        let prevValue = "", currentValue = "";
+                        if (values.statuses.prev) {
+                            prevValue = values.statuses.prev[key];
+                        }
+
+                        if (values.statuses.current) {
+                            currentValue = values.statuses.current[key];
+                        }
+
                         const comment = values.comments[key];
                         return (
                             <tr key={key}>

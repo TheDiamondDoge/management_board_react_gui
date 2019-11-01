@@ -1,5 +1,4 @@
 import React from 'react';
-// import {MILESTONES} from "./timelineDataObject";
 import styles from './timeline.module.css';
 import classNames from 'classnames';
 import StatusIndicator from "../status-indicator/status-indicator";
@@ -7,6 +6,7 @@ import {Icon, Intent} from "@blueprintjs/core";
 import PropTypes from 'prop-types';
 import {FieldName} from "../field-name/field-name";
 import {dateFormatToString} from "../../util/transformFuncs";
+import {milestonesCompare} from "../../util/comparators";
 
 export default class Timeline extends React.Component {
     constructor(props) {
@@ -19,8 +19,7 @@ export default class Timeline extends React.Component {
     //TODO: br, timeline arrow, styling
     //TODO: Milestone status pick
     render() {
-        console.log("timeline render");
-        const milestones = this.props.milestones;
+        const milestones = this.filterMilestones(this.props.milestones);
         const containerClasses = classNames(this.props.className, styles.container);
         return (
             <div className={containerClasses}>
@@ -71,6 +70,11 @@ export default class Timeline extends React.Component {
             </div>
         )
     }
+
+    filterMilestones = (milestones) => {
+        let result = milestones.filter(milestone => milestone.shown && milestone.actualDate);
+        return result.sort(milestonesCompare);
+    };
 
     createCell = (i, pos, marginLeft) => {
         marginLeft = marginLeft || 0.5;
@@ -215,9 +219,13 @@ export default class Timeline extends React.Component {
     };
 
     getMilestoneStatusIcon = (milestone) => {
+        // console.log("MILESTONE COMPLETION", milestone.completion);
+        // console.log("ACTUAL", milestone);
+        // console.log("CURRENT", this.state.currentDate);
+        // console.log("ACTUAL > CURRENT", new Date(milestone.actual) > this.state.currentDate);
         if(milestone.completion === 100) {
             return <Icon icon={"tick"} intent={Intent.SUCCESS}/>
-        } else if (new Date(milestone.actual) > this.state.current) {
+        } else if (new Date(milestone.actualDate) < this.state.currentDate) {
             return <Icon icon={"cross"} intent={Intent.DANGER}/>;
         } else {
             return "";

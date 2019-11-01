@@ -30,7 +30,8 @@ export const blcNumberToState = (num) => {
 };
 
 export const dateFormatToString = (date) => {
-    if (!date) return "";
+    if (!isDate(date)) return "";
+    if (date.getTime() === new Date("1970-01-01").getTime()) return "";
 
     let day = date.getDate();
     let month = MONTHS_NAMES[date.getMonth()];
@@ -38,6 +39,10 @@ export const dateFormatToString = (date) => {
 
     return `${day}-${month}-${year}`;
 };
+
+function isDate(date) {
+    return typeof date.getMonth === "function";
+}
 
 export const stringToDateFormat = (string) => {
     let [day, month, year] = string.split("-");

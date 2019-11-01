@@ -23,6 +23,7 @@ function* watchInformationTabLoad() {
 }
 
 function* watchHealthIndicatorsLoad() {
+    
     yield takeEvery(LOAD_HEALTH, loadHealthIndicators)
 }
 
