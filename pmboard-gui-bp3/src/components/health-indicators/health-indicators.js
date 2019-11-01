@@ -1,6 +1,6 @@
 import React from "react";
 import {FieldName} from "../field-name/field-name";
-import {HTMLTable, TextArea} from "@blueprintjs/core";
+import {HTMLTable} from "@blueprintjs/core";
 import styles from "./health-indicators.module.css";
 import StatusIndicator from "../status-indicator/status-indicator";
 import PropTypes from "prop-types";
@@ -9,7 +9,6 @@ import {dateFormatToString} from "../../util/transformFuncs";
 import {Field, Formik} from "formik";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 
-//TODO sync data edit with display form
 export default class HealthIndicators extends React.Component {
     constructor(props) {
         super(props);
@@ -46,113 +45,120 @@ export default class HealthIndicators extends React.Component {
     };
 
     render() {
-        const {isSummaryMode, indicators, onIndicatorsSubmit, onCommentsSubmit} = this.props;
+        const {isSummaryMode, indicators, onIndicatorsSubmit, onCommentsSubmit, onCancel} = this.props;
         return (
             <Formik
                 onSubmit={(values, formikActions) => {
                     formikActions.setSubmitting(false);
                     if (this.state.editStatusMode) {
                         onIndicatorsSubmit(values);
-                        this.onClickEditStatus();
+                        onCancel();
                     } else if (this.state.editCommentMode) {
                         onCommentsSubmit(values);
-                        this.onClickEditComment();
+                        onCancel();
                     }
                 }}
                 initialValues={{
-                    statuses: {
-                        current: indicators.statuses.current
-                    },
-                    comments: indicators.comments
+                    ...indicators
                 }}
                 render={
                     (formikProps) => {
                         this.bindFormSubmission(formikProps.submitForm);
-                        return (this.getHealthIndicatorsTable(indicators, isSummaryMode))
+                        return (this.getHealthIndicatorsTable(formikProps.values, isSummaryMode))
                     }
                 }
             />
         )
     }
 
-    getHealthIndicatorsTable = (indicators, isSummaryMode) => (
-        <HTMLTable
-            className={styles.health_table}
-            striped={true}
-        >
-            <colgroup>
-                <col className={styles.status_col}/>
-                <col className={styles.prev_column}/>
-                <col className={styles.cur_column}/>
-                <col/>
-            </colgroup>
-            <thead>
-            <tr>
-                <th>
-                    <FieldName name={"Status"}/>
-                    {
-                        !isSummaryMode && !this.state.editCommentMode &&
-                        <EditSaveControls
-                            className={styles.inline_block}
-                            editMode={this.state.editStatusMode}
-                            onClick={() => this.onClickEditStatus()}
-                            onSubmit={() => this.submitForm()}
-                            onCancel={() => this.onClickEditStatus()}
-                            smallSize={true}
-                        />
-                    }
-                </th>
-                <th className={styles.column_align_center}>
-                    <FieldName name={"Previous"}/>
-                    <FieldName name={dateFormatToString(new Date(indicators.prevStatusSet))}/>
-                </th>
-                <th className={styles.column_align_center}>
-                    <FieldName name={"Current"}/>
-                    <FieldName name={dateFormatToString(new Date(indicators.currentStatusSet))}/>
-                </th>
-
-                {
-                    isSummaryMode ||
-                    <th className={styles.column_align_center}>
-                        <FieldName name={"Comments"}/>
+    getHealthIndicatorsTable = (values, isSummaryMode) => {
+        const {prevStatusSet, currentStatusSet} = values;
+        const {onCancel} = this.props;
+        return (
+            <HTMLTable
+                className={styles.health_table}
+                striped={true}
+            >
+                <colgroup>
+                    <col className={styles.status_col}/>
+                    <col className={styles.prev_column}/>
+                    <col className={styles.cur_column}/>
+                    <col/>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>
+                        <FieldName name={"Status"}/>
                         {
-                            !this.state.editStatusMode &&
+                            !isSummaryMode && !this.state.editCommentMode &&
                             <EditSaveControls
                                 className={styles.inline_block}
-                                editMode={this.state.editCommentMode}
-                                onClick={() => this.onClickEditComment()}
-                                onCancel={() => this.onClickEditComment()}
+                                editMode={this.state.editStatusMode}
+                                onClick={() => this.onClickEditStatus()}
                                 onSubmit={() => this.submitForm()}
+                                onCancel={onCancel}
                                 smallSize={true}
                             />
                         }
                     </th>
+                    <th className={styles.column_align_center}>
+                        <FieldName name={"Previous"}/>
+                        <FieldName name={dateFormatToString(new Date(prevStatusSet))}/>
+                    </th>
+                    <th className={styles.column_align_center}>
+                        <FieldName name={"Current"}/>
+                        <FieldName name={dateFormatToString(new Date(currentStatusSet))}/>
+                    </th>
+
+                    {
+                        isSummaryMode ||
+                        <th className={styles.column_align_center}>
+                            <FieldName name={"Comments"}/>
+                            {
+                                !this.state.editStatusMode &&
+                                <EditSaveControls
+                                    className={styles.inline_block}
+                                    editMode={this.state.editCommentMode}
+                                    onClick={() => this.onClickEditComment()}
+                                    onCancel={onCancel}
+                                    onSubmit={() => this.submitForm()}
+                                    smallSize={true}
+                                />
+                            }
+                        </th>
+                    }
+                </tr>
+                </thead>
+                <tbody>
+                {
+                    Object.keys(this.labels).map((key) => {
+                        const label = this.labels[key];
+                        const prevValue = values.statuses.prev[key];
+                        const currentValue = values.statuses.current[key];
+                        const comment = values.comments[key];
+                        return (
+                            <tr key={key}>
+                                <td>
+                                    <FieldName name={label}/>
+                                </td>
+
+                                {this.getImmutableIndicatorTd(prevValue, "statuses.current." + key, styles)}
+                                {this.getIndicatorTd(currentValue, "statuses.current." + key, styles)}
+
+                                {
+                                    isSummaryMode ||
+                                    (
+                                        this.getCommentTd(comment, "comments." + key, styles)
+                                    )
+                                }
+                            </tr>
+                        )
+                    })
                 }
-            </tr>
-            </thead>
-            <tbody>
-            {
-                Object.keys(this.labels).map((key) => (
-                    <tr key={key}>
-                        <td>
-                            <FieldName name={this.labels[key]}/>
-                        </td>
-
-                        {this.getImmutableIndicatorTd(indicators.statuses.prev[key], "statuses.current." + key, styles)}
-                        {this.getIndicatorTd(indicators.statuses.current[key], "statuses.current." + key, styles)}
-
-                        {
-                            isSummaryMode ||
-                            (
-                                this.getCommentTd(indicators.comments[key], "comments." + key, styles)
-                            )
-                        }
-                    </tr>
-                ))
-            }
-            </tbody>
-        </HTMLTable>
-    );
+                </tbody>
+            </HTMLTable>
+        )
+    };
 
     getCommentTd = (comment, name, styles) => {
         if (this.state.editCommentMode) {
@@ -194,7 +200,6 @@ export default class HealthIndicators extends React.Component {
     };
 
     selectElement = (name) => {
-        console.log(name);
         return (
             <Field component="select" name={name}>
                 <option value="">&nbsp;</option>
@@ -225,4 +230,5 @@ HealthIndicators.propTypes = {
     isSummaryMode: PropTypes.bool,
     onIndicatorsSubmit: PropTypes.func,
     onCommentsSubmit: PropTypes.func,
+    onCancel: PropTypes.func,
 };

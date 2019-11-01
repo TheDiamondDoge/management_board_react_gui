@@ -6,7 +6,7 @@ export const LOAD_HEALTH_FAIL = "LOAD_HEALTH_FAIL";
 export const RESET_HEALTH_STATE = "RESET_HEALTH_STATE";
 
 export const loadHealth = () => ({
-    type: LOAD_HEALTH
+    type: LOAD_HEALTH,
 });
 
 export const loadHealthSuccess = ({data}) => ({
@@ -27,7 +27,10 @@ export const saveHealthIndicators = (data) => {
 export const saveHealthComments = (data) => {
     return {
         type: SAVE_COMMENTS,
-        data: {comments: {...data.comments}},
+        data: {
+            comments:
+                {...data.comments}
+        },
     }
 };
 

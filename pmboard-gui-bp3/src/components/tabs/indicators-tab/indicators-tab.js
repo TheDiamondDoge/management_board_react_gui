@@ -24,7 +24,7 @@ export default class IndicatorsTab extends React.Component {
 
     render() {
         const {milestones, healthIndicators, requirements, milestonesKpi, dr4Kpi, qualityKpi} = this.props;
-        const {healthIndicatorsSubmit, healthCommentsSubmit, rqsSubmit, qualitySubmit, qualityReload, rqsReload} = this.props;
+        const {healthIndicatorsSubmit, healthCommentsSubmit, healthReload, rqsSubmit, qualitySubmit, qualityReload, rqsReload} = this.props;
         return (
             <div className={styles.data_grid}>
                 <CustomCard className={styles.timeline}>
@@ -44,6 +44,7 @@ export default class IndicatorsTab extends React.Component {
                                 isSummaryMode={false}
                                 onIndicatorsSubmit={healthIndicatorsSubmit}
                                 onCommentsSubmit={healthCommentsSubmit}
+                                onCancel={healthReload}
                               />
                     }
                 </CustomCard>
@@ -104,6 +105,7 @@ IndicatorsTab.propTypes = {
     resetState: PropTypes.func,
     healthIndicatorsSubmit: PropTypes.func,
     healthCommentsSubmit: PropTypes.func,
+    healthReload: PropTypes.func,
     rqsSubmit: PropTypes.func,
     rqsReload: PropTypes.func,
     qualityReload: PropTypes.func,
