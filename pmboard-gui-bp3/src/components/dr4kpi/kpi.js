@@ -9,7 +9,7 @@ import {nullToNA} from "../../util/transformFuncs";
 export default class Kpi extends React.Component {
     render() {
         let headerClasses = classNames(styles.column_align_center, styles.border_top);
-        const {dr4Kpi} = this.props;
+        const {dr4Kpi, fieldsToRender} = this.props;
         return (
             <HTMLTable
                 className={styles.kpi_table}
@@ -22,7 +22,7 @@ export default class Kpi extends React.Component {
                 <thead>
                 <tr>
                     <td>
-                        <FieldName name={"Year (based on DR1 date)"}/>
+                        <FieldName name={fieldsToRender.year.label}/>
                     </td>
                     <td>{dr4Kpi.year}</td>
                 </tr>
@@ -31,30 +31,22 @@ export default class Kpi extends React.Component {
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>
-                        <FieldName name={"Schedule Adherence"}/>
-                    </td>
-                    <td>{nullToNA(dr4Kpi.scheduleAdherence)}</td>
-                </tr>
-                <tr>
-                    <td>
-                        <FieldName name={"Content Adherence"}/>
-                    </td>
-                    <td>{nullToNA(dr4Kpi.contentAdherence)}</td>
-                </tr>
-                <tr>
-                    <td>
-                        <FieldName name={"Requirements Change"}/>
-                    </td>
-                    <td>{nullToNA(dr4Kpi.rqsChange)}</td>
-                </tr>
-                <tr>
-                    <td>
-                        <FieldName name={"Cost Adherence"}/>
-                    </td>
-                    <td>{nullToNA(dr4Kpi.costAdherence)}</td>
-                </tr>
+                {
+                    Object.keys(fieldsToRender).map((field) => {
+                        if (field === "year") return true;
+
+                        const label = fieldsToRender[field].label;
+                        const value = dr4Kpi[field];
+                        return (
+                            <tr key={field}>
+                                <td>
+                                    <FieldName name={label}/>
+                                </td>
+                                <td>{nullToNA(value)}</td>
+                            </tr>
+                        )
+                    })
+                }
                 </tbody>
             </HTMLTable>
         )
@@ -62,5 +54,6 @@ export default class Kpi extends React.Component {
 }
 
 Kpi.propTypes = {
-    dr4Kpi: PropTypes.object,
+    dr4Kpi: PropTypes.object.isRequired,
+    fieldsToRender: PropTypes.object.isRequired,
 };

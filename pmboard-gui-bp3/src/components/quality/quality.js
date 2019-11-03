@@ -29,12 +29,23 @@ export default class Quality extends React.Component {
 
     render() {
         const {qualityKpi, onSubmit} = this.props;
-        const {quality, defects, backlog, testExecution, testRate} = qualityKpi;
+        let {quality, defects, backlog, testExecution, testRate} = qualityKpi;
+
+        quality = this.fillArrayIfEmpty(quality);
+        defects = this.fillArrayIfEmpty(defects);
+        backlog = this.fillArrayIfEmpty(backlog);
+        testExecution = this.fillArrayIfEmpty(testExecution);
+        testRate = this.fillArrayIfEmpty(testRate);
+
         return (
             <Formik
                 initialValues={
                     {
-                        quality, defects, backlog, testExecution, testRate
+                        quality,
+                        defects,
+                        backlog,
+                        testExecution,
+                        testRate
                     }
                 }
                 onSubmit={
@@ -54,11 +65,18 @@ export default class Quality extends React.Component {
         );
     }
 
+    fillArrayIfEmpty(object) {
+        if (object.length === 0) {
+            object.push(this.getEmptyRowObject(""));
+        }
+        return object;
+    };
+
     renderQualityForm = (values) => {
         const {syncDate} = this.props.qualityKpi;
-        const {fields, onCancel} = this.props;
+        const {fieldsToRender, onCancel} = this.props;
 
-        return(
+        return (
             <>
                 <div>
                     <div className={styles.float_left}>
@@ -100,7 +118,7 @@ export default class Quality extends React.Component {
                     </thead>
                     <tbody>
                     {
-                        Object.keys(fields).map(field => {
+                        Object.keys(fieldsToRender).map(field => {
                                 if (field === "testExecution" || field === "testRate") {
                                     return this.renderComplexRows(values, field, true);
                                 } else {
@@ -125,11 +143,12 @@ export default class Quality extends React.Component {
                 key={field}
                 name={field}
                 render={(arrayHelpers) => {
-                    const rowTitle = this.props.fields[field].label;
+                    const rowTitle = this.props.fieldsToRender[field].label;
                     if (indicators && indicators.length === 0) {
                         indicators = [this.getEmptyRowObject("")];
                     }
                     const comment = indicators[0].comment;
+                    const isObjEditable = this.isEditable(field);
                     return indicators.map((row, i) => (
                         <tr key={`${field}_${i}`}>
                             {
@@ -145,7 +164,7 @@ export default class Quality extends React.Component {
                                             )
                                         }
                                     </td>
-                                    : ""
+                                    : false
                             }
                             <td>
                                 {
@@ -159,7 +178,7 @@ export default class Quality extends React.Component {
                             </td>
                             <td className={styles.column_align_center}>
                                 {
-                                    renderInput(`${field}[${i}].objective`, row.objective, this.state.editMode, "numeric")
+                                    renderInput(`${field}[${i}].objective`, row.objective, isObjEditable, "numeric")
                                 }
                             </td>
                             <td className={styles.column_align_center}>
@@ -174,7 +193,7 @@ export default class Quality extends React.Component {
                                             renderComment(`${field}[${i}].comment`, comment, this.state.editMode)
                                         }
                                     </td>
-                                    : ""
+                                    : false
                             }
                         </tr>
                     ))
@@ -188,7 +207,7 @@ export default class Quality extends React.Component {
         return (
             isEditMode && isControlled
                 ? this.getMiniButton(onClick, args.icon, args.intent)
-                : ""
+                : <>&nbsp;</>
         )
     };
 
@@ -203,6 +222,14 @@ export default class Quality extends React.Component {
                 icon: "add",
                 intent: Intent.SUCCESS
             })
+        }
+    };
+
+    isEditable = (field) => {
+        if (field === "quality" || field === "defects" || field === "backlog") {
+            return false;
+        } else {
+            return this.state.editMode;
         }
     };
 
@@ -234,7 +261,7 @@ export default class Quality extends React.Component {
 }
 
 Quality.propTypes = {
-    fields: PropTypes.object,
+    fieldsToRender: PropTypes.object,
     qualityKpi: PropTypes.object,
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func,

@@ -8,7 +8,6 @@ import FieldValue from "../field-value/field-value";
 import PropTypes from 'prop-types';
 import {dateFormatToString} from "../../util/transformFuncs";
 import {Formik} from "formik";
-import fields from "./fields";
 import {renderInput} from "../../util/util-renders";
 
 export default class Requirements extends React.Component {
@@ -58,7 +57,7 @@ export default class Requirements extends React.Component {
 
     renderRqsTable = (values) => {
         let valueColumnClasses = classNames(styles.value_col, styles.column_align_center);
-        const {rqsReload} = this.props;
+        const {rqsReload, fieldsToRender} = this.props;
         return (
             <HTMLTable
                 className={styles.req_table}
@@ -82,12 +81,12 @@ export default class Requirements extends React.Component {
                 </thead>
                 <tbody>
                 {
-                    Object.keys(fields).map((propName) => {
-                        const label = fields[propName].label;
+                    Object.keys(fieldsToRender).map((field) => {
+                        const label = fieldsToRender[field].label;
                         return (
-                            <tr key={propName}>
+                            <tr key={field}>
                                 <td><FieldName name={label}/></td>
-                                <td>{this.renderValueField(propName, values)}</td>
+                                <td>{this.renderValueField(field, values)}</td>
                             </tr>
                         )
                     })
@@ -116,6 +115,7 @@ export default class Requirements extends React.Component {
 
 Requirements.propTypes = {
     requirements: PropTypes.object.isRequired,
+    fieldsToRender: PropTypes.object.isRequired,
     rqsSubmit: PropTypes.func,
     rqsReload: PropTypes.func
 };

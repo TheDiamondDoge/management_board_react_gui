@@ -5,7 +5,7 @@ import styles from "./health-indicators.module.css";
 import StatusIndicator from "../status-indicator/status-indicator";
 import PropTypes from "prop-types";
 import EditSaveControls from "../edit-save-contols/edit-save-controls";
-import {dateFormatToString, nullToEmptyStr} from "../../util/transformFuncs";
+import {dateFormatToString} from "../../util/transformFuncs";
 import {Field, Formik} from "formik";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 
@@ -15,14 +15,6 @@ export default class HealthIndicators extends React.Component {
         this.state = {
             editStatusMode: false,
             editCommentMode: false,
-        };
-
-        this.labels = {
-            overall: 'Overall Project Status',
-            schedule: 'Schedule',
-            scope: 'Scope',
-            quality: 'Quality',
-            cost: 'Cost'
         };
     }
 
@@ -51,10 +43,8 @@ export default class HealthIndicators extends React.Component {
                 onSubmit={(values, formikActions) => {
                     formikActions.setSubmitting(false);
                     if (this.state.editStatusMode) {
-                        console.log("INDICATORS SUBMIT")
                         onIndicatorsSubmit(values);
                     } else if (this.state.editCommentMode) {
-                        console.log("COMMENTS SUBMIT")
                         onCommentsSubmit(values);
                     }
                 }}
@@ -73,7 +63,7 @@ export default class HealthIndicators extends React.Component {
 
     getHealthIndicatorsTable = (values, isSummaryMode) => {
         const {prevStatusSet, currentStatusSet} = values;
-        const {onCancel} = this.props;
+        const {onCancel, fieldsToRender} = this.props;
         return (
             <HTMLTable
                 className={styles.health_table}
@@ -131,31 +121,31 @@ export default class HealthIndicators extends React.Component {
                 </thead>
                 <tbody>
                 {
-                    Object.keys(this.labels).map((key) => {
-                        const label = this.labels[key];
+                    Object.keys(fieldsToRender).map((field) => {
+                        const label = fieldsToRender[field].label;
                         let prevValue = "", currentValue = "";
                         if (values.statuses.prev) {
-                            prevValue = values.statuses.prev[key];
+                            prevValue = values.statuses.prev[field];
                         }
 
                         if (values.statuses.current) {
-                            currentValue = values.statuses.current[key];
+                            currentValue = values.statuses.current[field];
                         }
 
-                        const comment = values.comments[key];
+                        const comment = values.comments[field];
                         return (
-                            <tr key={key}>
+                            <tr key={field}>
                                 <td>
                                     <FieldName name={label}/>
                                 </td>
 
-                                {this.getImmutableIndicatorTd(prevValue, "statuses.current." + key, styles)}
-                                {this.getIndicatorTd(currentValue, "statuses.current." + key, styles)}
+                                {this.getImmutableIndicatorTd(prevValue, "statuses.current." + field, styles)}
+                                {this.getIndicatorTd(currentValue, "statuses.current." + field, styles)}
 
                                 {
                                     isSummaryMode ||
                                     (
-                                        this.getCommentTd(comment, "comments." + key, styles)
+                                        this.getCommentTd(comment, "comments." + field, styles)
                                     )
                                 }
                             </tr>
@@ -234,6 +224,7 @@ export default class HealthIndicators extends React.Component {
 
 HealthIndicators.propTypes = {
     indicators: PropTypes.object.isRequired,
+    fieldsToRender: PropTypes.object.isRequired,
     isSummaryMode: PropTypes.bool,
     onIndicatorsSubmit: PropTypes.func,
     onCommentsSubmit: PropTypes.func,

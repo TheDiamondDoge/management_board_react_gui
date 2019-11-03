@@ -5,7 +5,7 @@ import StatusIndicator from "../status-indicator/status-indicator";
 import {Icon, Intent} from "@blueprintjs/core";
 import PropTypes from 'prop-types';
 import {FieldName} from "../field-name/field-name";
-import {dateFormatToString} from "../../util/transformFuncs";
+import {dateFormatToString, stringToUrlElem} from "../../util/transformFuncs";
 import {milestonesCompare} from "../../util/comparators";
 
 export default class Timeline extends React.Component {
@@ -31,9 +31,14 @@ export default class Timeline extends React.Component {
                     <tr>
                         <td>&nbsp;</td>
                         {
-                            milestones.map((milestone, key) => (
-                                this.createContentCell(milestone.label, key)
-                            ))
+                            milestones.map((milestone, key) => {
+                                const url = milestone.meetingMinutes;
+                                let content = stringToUrlElem(url, milestone.label);
+                                if (content === url) {
+                                    content = milestone.label;
+                                }
+                                return this.createContentCell(content, key)
+                            })
                         }
                     </tr>
 
