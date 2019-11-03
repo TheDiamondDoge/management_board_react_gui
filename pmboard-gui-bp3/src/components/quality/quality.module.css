@@ -20,7 +20,7 @@
 }
 
 .descr_col {
-    width: 260px;
+    width: 245px;
 }
 
 .controls_col {
@@ -28,5 +28,5 @@
 }
 
 .obj_col, .actual_col {
-    width: 105px;
+    width: 100px;
 }

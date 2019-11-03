@@ -1,11 +1,12 @@
 import React from 'react';
-import {HTMLTable, Icon, Button, Intent} from "@blueprintjs/core";
+import {HTMLTable, Icon, Button, Intent, Position, Tooltip} from "@blueprintjs/core";
 import EditSaveControls from "../edit-save-contols/edit-save-controls";
 import styles from "./quality.module.css";
 import {FieldName} from "../field-name/field-name";
 import PropTypes from "prop-types";
 import {FieldArray, Formik} from "formik";
 import {renderComment, renderInput} from "../../util/util-renders";
+import HelpIcon from "../help-icon/help-icon";
 
 export default class Quality extends React.Component {
     constructor(props) {
@@ -103,12 +104,14 @@ export default class Quality extends React.Component {
                     <colgroup>
                         <col className={styles.descr_col}/>
                         <col className={styles.controls_col}/>
+                        <col className={styles.controls_col}/>
                         <col className={styles.obj_col}/>
                         <col className={styles.actual_col}/>
                         <col/>
                     </colgroup>
                     <thead>
                     <tr>
+                        <th>&nbsp;</th>
                         <th>&nbsp;</th>
                         <th>&nbsp;</th>
                         <th className={styles.column_align_center}>Objective</th>
@@ -144,6 +147,7 @@ export default class Quality extends React.Component {
                 name={field}
                 render={(arrayHelpers) => {
                     const rowTitle = this.props.fieldsToRender[field].label;
+                    const help = this.props.fieldsToRender[field].help;
                     if (indicators && indicators.length === 0) {
                         indicators = [this.getEmptyRowObject("")];
                     }
@@ -153,17 +157,26 @@ export default class Quality extends React.Component {
                         <tr key={`${field}_${i}`}>
                             {
                                 i === 0
-                                    ? <td rowSpan={rowSpan}>
-                                        <FieldName name={rowTitle}/>
-                                        {
-                                            this.renderControls(
-                                                "add",
-                                                () => arrayHelpers.push(this.getEmptyRowObject(comment)),
-                                                this.state.editMode,
-                                                isControlled
-                                            )
-                                        }
-                                    </td>
+                                    ? <>
+                                        <td rowSpan={rowSpan}>
+                                            <FieldName name={rowTitle}/>
+                                            {
+                                                <Tooltip content={help} position={Position.TOP}>
+                                                    <HelpIcon/>
+                                                </Tooltip>
+                                            }
+                                        </td>
+                                        <td rowSpan={rowSpan}>
+                                            {
+                                                this.renderControls(
+                                                    "add",
+                                                    () => arrayHelpers.push(this.getEmptyRowObject(comment)),
+                                                    this.state.editMode,
+                                                    isControlled
+                                                )
+                                            }
+                                        </td>
+                                    </>
                                     : false
                             }
                             <td>

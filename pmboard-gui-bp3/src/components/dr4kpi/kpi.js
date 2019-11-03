@@ -1,10 +1,11 @@
 import React from 'react';
-import {HTMLTable} from "@blueprintjs/core";
+import {HTMLTable, Position, Tooltip} from "@blueprintjs/core";
 import styles from "./kpi.module.css";
 import classNames from "classnames";
 import {FieldName} from "../field-name/field-name";
 import PropTypes from "prop-types";
 import {nullToNA} from "../../util/transformFuncs";
+import HelpIcon from "../help-icon/help-icon";
 
 export default class Kpi extends React.Component {
     render() {
@@ -17,17 +18,18 @@ export default class Kpi extends React.Component {
             >
                 <colgroup>
                     <col className={styles.name_col}/>
+                    <col className={styles.help_col}/>
                     <col className={styles.value_col}/>
                 </colgroup>
                 <thead>
                 <tr>
-                    <td>
+                    <td colSpan={2}>
                         <FieldName name={fieldsToRender.year.label}/>
                     </td>
                     <td>{dr4Kpi.year}</td>
                 </tr>
                 <tr>
-                    <td colSpan={2} className={headerClasses}>COMMITTED vs ACTUAL</td>
+                    <td colSpan={3} className={headerClasses}>COMMITTED vs ACTUAL</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,10 +39,19 @@ export default class Kpi extends React.Component {
 
                         const label = fieldsToRender[field].label;
                         const value = dr4Kpi[field];
+                        const help = fieldsToRender[field].help;
                         return (
                             <tr key={field}>
                                 <td>
                                     <FieldName name={label}/>
+                                </td>
+                                <td>
+                                    <Tooltip
+                                        content={help}
+                                        position={Position.TOP}
+                                    >
+                                        <HelpIcon />
+                                    </Tooltip>
                                 </td>
                                 <td>{nullToNA(value)}</td>
                             </tr>

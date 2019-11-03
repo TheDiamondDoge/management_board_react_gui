@@ -1,17 +1,21 @@
 export default {
     year: {
-        label: "Year (based on DR1 date)"
+        label: "Year (based on DR1 date)",
     },
     scheduleAdherence: {
-        label: "Schedule Adherence"
+        label: "Schedule Adherence",
+        help: "Test help for schedule adherence",
     },
     contentAdherence: {
-        label: "Content Adherence"
+        label: "Content Adherence",
+        help: "Test help for content adherence",
     },
     rqsChange: {
-        label: "Requirements Change"
+        label: "Requirements Change",
+        help: "Test help for rqs change",
     },
     costAdherence: {
-        label: "Cost Adherence"
+        label: "Cost Adherence",
+        help: "Test help for cost adherence",
     }
 }

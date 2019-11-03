@@ -1,6 +1,6 @@
 import React from "react";
 import {FieldName} from "../field-name/field-name";
-import {HTMLTable} from "@blueprintjs/core";
+import {HTMLTable, Position, Tooltip} from "@blueprintjs/core";
 import styles from "./health-indicators.module.css";
 import StatusIndicator from "../status-indicator/status-indicator";
 import PropTypes from "prop-types";
@@ -8,6 +8,7 @@ import EditSaveControls from "../edit-save-contols/edit-save-controls";
 import {dateFormatToString} from "../../util/transformFuncs";
 import {Field, Formik} from "formik";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
+import HelpIcon from "../help-icon/help-icon";
 
 export default class HealthIndicators extends React.Component {
     constructor(props) {
@@ -79,6 +80,12 @@ export default class HealthIndicators extends React.Component {
                 <tr>
                     <th>
                         <FieldName name={"Status"}/>
+                        <Tooltip
+                            content={"Status"}
+                            position={Position.TOP}
+                        >
+                            <HelpIcon />
+                        </Tooltip>
                         {
                             !isSummaryMode && !this.state.editCommentMode &&
                             <EditSaveControls
