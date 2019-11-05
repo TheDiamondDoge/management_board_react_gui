@@ -53,7 +53,6 @@ export default class MilestoneTable extends React.Component {
     }
 
     renderValues = (milestoneData, editMode) => {
-        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAA",milestoneData);
         if (editMode) {
             let {onChange} = this.props;
             return milestoneData.map((milestone, key) => (

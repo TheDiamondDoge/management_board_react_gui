@@ -32,7 +32,6 @@ export function stringCompare(a, b){
         if (b.length - 1 >= i) {
             let tmp = a[i].toLowerCase().localeCompare(b[i].toLowerCase());
             if (tmp === -1 || tmp === 1) {
-                console.log("!", tmp);
                 return tmp;
             }
         } else {

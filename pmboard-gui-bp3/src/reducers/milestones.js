@@ -6,7 +6,7 @@ import {
 } from "../actions/milestones";
 
 const initState = {
-    payload: {},
+    payload: [],
     loading: true,
 };
 

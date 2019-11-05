@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 export default class EditSaveControls extends React.Component {
     render() {
-        console.log("RENDER EditSave");
         const {onSubmit, onCancel, onClick, editMode, smallSize} = this.props;
         return (
             this.renderElements(editMode, smallSize, onSubmit, onCancel, onClick)

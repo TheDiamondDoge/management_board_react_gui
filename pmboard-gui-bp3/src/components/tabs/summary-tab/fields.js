@@ -1,3 +1,4 @@
+//TODO: move to /src/constants/ ProjectType.PRODUCT .....
 const PRODUCT = "Product";
 const OFFER = "Offer";
 const OFFER_PRODUCT = "Offer & Product";

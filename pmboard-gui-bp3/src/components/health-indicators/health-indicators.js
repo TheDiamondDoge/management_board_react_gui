@@ -9,6 +9,9 @@ import {dateFormatToString} from "../../util/transformFuncs";
 import {Field, Formik} from "formik";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import HelpIcon from "../help-icon/help-icon";
+import {healthStatusHelp} from "../../util/global-helps";
+import TooltipContent from "../tooltip-content/tooltip-content";
+import {FieldsToRenderShape, HealthIndicatorsShape} from "../../util/customTypes";
 
 export default class HealthIndicators extends React.Component {
     constructor(props) {
@@ -81,7 +84,7 @@ export default class HealthIndicators extends React.Component {
                     <th>
                         <FieldName name={"Status"}/>
                         <Tooltip
-                            content={"Status"}
+                            content={<TooltipContent title={healthStatusHelp.title} content={healthStatusHelp.content} />}
                             position={Position.TOP}
                         >
                             <HelpIcon />
@@ -230,8 +233,8 @@ export default class HealthIndicators extends React.Component {
 
 
 HealthIndicators.propTypes = {
-    indicators: PropTypes.object.isRequired,
-    fieldsToRender: PropTypes.object.isRequired,
+    indicators: HealthIndicatorsShape.isRequired,
+    fieldsToRender: FieldsToRenderShape.isRequired,
     isSummaryMode: PropTypes.bool,
     onIndicatorsSubmit: PropTypes.func,
     onCommentsSubmit: PropTypes.func,

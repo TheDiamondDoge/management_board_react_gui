@@ -7,6 +7,8 @@ import PropTypes from "prop-types";
 import {FieldArray, Formik} from "formik";
 import {renderComment, renderInput} from "../../util/util-renders";
 import HelpIcon from "../help-icon/help-icon";
+import {dateFormatToString} from "../../util/transformFuncs";
+import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/customTypes";
 
 export default class Quality extends React.Component {
     constructor(props) {
@@ -87,7 +89,8 @@ export default class Quality extends React.Component {
                         >
                             <Icon icon={"refresh"}/>
                         </Button>
-                        Last synchro: {syncDate}
+                        Last synchro:
+                        <span className={styles.sync_date}>{dateFormatToString(new Date(syncDate))}</span>
                     </div>
                     <EditSaveControls
                         className={styles.float_right}
@@ -274,8 +277,8 @@ export default class Quality extends React.Component {
 }
 
 Quality.propTypes = {
-    fieldsToRender: PropTypes.object,
-    qualityKpi: PropTypes.object,
+    fieldsToRender: FieldsToRenderShape,
+    qualityKpi: QualityIndicatorsShape,
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
 };

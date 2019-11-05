@@ -1,12 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {TextArea, InputGroup} from "@blueprintjs/core";
 import {DateInput} from "@blueprintjs/datetime";
 import {dateFormatToString, stringToDateFormat} from "../../util/transformFuncs";
 import {digitsOnly} from "../../util/filters";
-import {Field} from "formik";
 
-//TODO rename to smthing like "FormikCustomField" (for formik forms only)
 export default class FormikCustomField extends React.Component {
     render() {
         if (!(this.props === undefined)) {
@@ -59,6 +56,3 @@ export default class FormikCustomField extends React.Component {
         }
     }
 }
-
-FormikCustomField
-    .propTypes = {};

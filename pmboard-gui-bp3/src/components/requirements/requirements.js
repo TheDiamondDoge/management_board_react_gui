@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import {dateFormatToString} from "../../util/transformFuncs";
 import {Formik} from "formik";
 import {renderInput} from "../../util/util-renders";
+import {FieldsToRenderShape, RequirementsShape} from "../../util/customTypes";
 
 export default class Requirements extends React.Component {
     constructor(props) {
@@ -114,8 +115,8 @@ export default class Requirements extends React.Component {
 }
 
 Requirements.propTypes = {
-    requirements: PropTypes.object.isRequired,
-    fieldsToRender: PropTypes.object.isRequired,
+    requirements: RequirementsShape.isRequired,
+    fieldsToRender: FieldsToRenderShape.isRequired,
     rqsSubmit: PropTypes.func,
     rqsReload: PropTypes.func
 };

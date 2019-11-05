@@ -3,7 +3,7 @@ import {
 } from "../actions/milestones-kpi";
 
 const initState = {
-    payload: {},
+    payload: [],
     loading: true,
 };
 

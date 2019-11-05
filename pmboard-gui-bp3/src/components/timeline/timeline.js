@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import {FieldName} from "../field-name/field-name";
 import {dateFormatToString, stringToUrlElem} from "../../util/transformFuncs";
 import {milestonesCompare} from "../../util/comparators";
+import {MilestoneShape} from "../../util/customTypes";
 
 export default class Timeline extends React.Component {
     constructor(props) {
@@ -16,8 +17,6 @@ export default class Timeline extends React.Component {
         };
     }
 
-    //TODO: br, timeline arrow, styling
-    //TODO: Milestone status pick
     render() {
         const milestones = this.filterMilestones(this.props.milestones);
         const containerClasses = classNames(this.props.className, styles.container);
@@ -224,10 +223,6 @@ export default class Timeline extends React.Component {
     };
 
     getMilestoneStatusIcon = (milestone) => {
-        // console.log("MILESTONE COMPLETION", milestone.completion);
-        // console.log("ACTUAL", milestone);
-        // console.log("CURRENT", this.state.currentDate);
-        // console.log("ACTUAL > CURRENT", new Date(milestone.actual) > this.state.currentDate);
         if(milestone.completion === 100) {
             return <Icon icon={"tick"} intent={Intent.SUCCESS}/>
         } else if (new Date(milestone.actualDate) < this.state.currentDate) {
@@ -286,5 +281,5 @@ export default class Timeline extends React.Component {
 }
 
 Timeline.propTypes = {
-    milestones: PropTypes.array.isRequired,
+    milestones: PropTypes.arrayOf(MilestoneShape).isRequired,
 };

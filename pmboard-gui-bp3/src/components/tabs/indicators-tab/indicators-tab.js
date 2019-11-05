@@ -13,6 +13,13 @@ import kpiFields from "../../dr4kpi/kpiFields";
 import Quality from "../../quality/quality";
 import qualityFields from "../../quality/qualityFields";
 import Loading from "../../loading-card/loading";
+import {
+    HealthIndicatorsShape,
+    MilestoneKpiShape,
+    MilestoneShape,
+    QualityIndicatorsShape,
+    RequirementsShape
+} from "../../../util/customTypes";
 
 export default class IndicatorsTab extends React.Component {
     componentDidMount() {
@@ -103,12 +110,30 @@ export default class IndicatorsTab extends React.Component {
 }
 
 IndicatorsTab.propTypes = {
-    milestones: PropTypes.object,
-    healthIndicators: PropTypes.object,
-    requirements: PropTypes.object,
-    milestonesKpi: PropTypes.object,
-    dr4Kpi: PropTypes.object,
-    qualityKpi: PropTypes.object,
+    milestones: PropTypes.shape({
+        loading: PropTypes.bool,
+        payload: PropTypes.arrayOf(MilestoneShape)
+    }),
+    healthIndicators: PropTypes.shape({
+        loading: PropTypes.bool,
+        payload: HealthIndicatorsShape
+    }),
+    requirements: PropTypes.shape({
+        loading: PropTypes.bool,
+        payload: RequirementsShape
+    }),
+    milestonesKpi: PropTypes.shape({
+        loading: PropTypes.bool,
+        payload: PropTypes.arrayOf(MilestoneKpiShape)
+    }),
+    dr4Kpi: PropTypes.shape({
+        loading: PropTypes.bool,
+        payload: PropTypes.object,
+    }),
+    qualityKpi: PropTypes.shape({
+        loading: PropTypes.bool,
+        payload: QualityIndicatorsShape
+    }),
     loadData: PropTypes.func,
     resetState: PropTypes.func,
     healthIndicatorsSubmit: PropTypes.func,

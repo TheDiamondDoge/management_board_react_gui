@@ -48,9 +48,7 @@ export function* loadInformationTab() {
 
 export function* loadHealthIndicators() {
     try {
-        console.log("BEFORE");
         const healthIndicators = yield call(api.getHealthIndicators, 1);
-        console.log("AFTER");
         yield put(loadHealthSuccess(healthIndicators));
     } catch (e) {
         yield put(loadHealthError(e));

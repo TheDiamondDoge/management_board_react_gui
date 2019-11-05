@@ -30,3 +30,8 @@
 .obj_col, .actual_col {
     width: 100px;
 }
+
+.sync_date {
+    color: red;
+    margin-left: 5px;
+}
