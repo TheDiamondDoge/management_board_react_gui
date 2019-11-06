@@ -82,3 +82,10 @@ export const FieldsToRenderShape = PropTypes.objectOf(
     }).isRequired
 );
 
+export const SummaryShape = PropTypes.shape({
+    general: PropTypes.object,
+    links: PropTypes.object,
+    pwsInfo: PropTypes.object,
+    status: PropTypes.object,
+    validationParams: PropTypes.object,
+});

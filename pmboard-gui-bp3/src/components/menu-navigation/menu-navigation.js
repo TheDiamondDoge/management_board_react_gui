@@ -3,7 +3,7 @@ import styles from './menu-navigation.module.css';
 import classNames from 'classnames';
 import {Button, Collapse, Alignment} from '@blueprintjs/core';
 import PropTypes from 'prop-types';
-import { NavigationMenuItemShape } from "../../util/customTypes";
+import { NavigationMenuItemShape } from "../../util/custom-types";
 
 export default class MenuNavigation extends React.Component {
     constructor(props){

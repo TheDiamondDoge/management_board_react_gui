@@ -1,12 +1,6 @@
-//TODO: move to /src/constants/ ProjectType.PRODUCT .....
-const PRODUCT = "Product";
-const OFFER = "Offer";
-const OFFER_PRODUCT = "Offer & Product";
-const OEM_PRODUCT = "OEM Product";
-const SUPPORT_PROGRAM = "Support Program";
-const ENABLED = "ENABLED";
+import {ProjectStates, ProjectTypes} from "../../../util/constants";
 
-const fieldsParam = {
+export default {
     projectName: {label: "Project Name"},
     projectDescription: {label: "Project Description"},
     projectManager: {label: "Project Manager"},
@@ -27,75 +21,44 @@ const fieldsParam = {
     projectType: {label: "Project Type"},
     oemPartner: {
         label: "OEM Partner",
-        notAllowedIn: {
-            projectType: [PRODUCT, OFFER, OFFER_PRODUCT, SUPPORT_PROGRAM],
+        notAllowedIf: {
+            projectType: [ProjectTypes.OEM_PRODUCT],
         }
     },
     disabledTime: {
         label: "Disabled Time",
-        notAllowedIn: {
-            workspaceState: [ENABLED],
-        }
+        allowedIf: {
+            workspaceState: [ProjectStates.DISABLED]
+        },
     },
     executiveSummary: {label: "Executive Status Summary"},
     executiveActions: {label: "Executive Action Needed"},
     collabSite: {label: "Project Collaboration Site"},
     epmPwaSite: {
         label: "EPM project PWA Site:",
-        notAllowedIn: {
+        notAllowedIf: {
             isEpm: [false],
         }
     },
     documentationRepo: {label: "Project Documentation Repository"},
     defectsReportSite: {
-        label: "Defect Report Site",
-        notAllowedIn: {
-            projectType: [OFFER],
+        label: "Defects Report Site",
+        notAllowedIf: {
+            projectType: [ProjectTypes.OFFER],
         }
     },
     activeRisks: {label: "Active Risks"},
     epmLastSavedDate: {
         label: "EPM Last Saved",
-        notAllowedIn: {
+        notAllowedIf: {
             isEpm: [false],
         }
     },
     pwsLastUpdatedDate: {
         label: "PWS Last Updated",
-        notAllowedIn: {
+        notAllowedIf: {
             isEpm: [false],
         }
     },
     pwsLastUpdatedBy: {label: "PWS Last Updated By"},
-};
-
-export const getLabelById = (id) => {
-    if (isLabelExists(id)) {
-        return fieldsParam[id].label;
-    }
-};
-
-const isLabelExists = (id) => {
-    return (id in fieldsParam);
-};
-
-//TODO: Need to add 'notAllowedExcept' situation
-//TODO: Also refactor this. This is a code duplicate (info tab)
-export const displayOrNot = (id, options) => {
-    if (!isLabelExists(id)) return false;
-
-    if (fieldsParam[id].hasOwnProperty("notAllowedIn")) {
-        let fieldProps = fieldsParam[id].notAllowedIn;
-        for (let prop in Object.keys(fieldProps)) {
-            if (options[prop] !== undefined) {
-                for (let i = 0; i < fieldProps[prop].length; i++) {
-                    if (fieldProps[prop][i] === options[prop]) {
-                        return false;
-                    }
-                }
-            }
-        }
-    }
-
-    return true;
 };

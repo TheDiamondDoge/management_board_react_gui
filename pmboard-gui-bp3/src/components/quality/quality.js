@@ -8,7 +8,7 @@ import {FieldArray, Formik} from "formik";
 import {renderComment, renderInput} from "../../util/util-renders";
 import HelpIcon from "../help-icon/help-icon";
 import {dateFormatToString} from "../../util/transformFuncs";
-import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/customTypes";
+import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/custom-types";
 
 export default class Quality extends React.Component {
     constructor(props) {

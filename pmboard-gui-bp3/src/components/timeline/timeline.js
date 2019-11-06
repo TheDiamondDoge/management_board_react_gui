@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import {FieldName} from "../field-name/field-name";
 import {dateFormatToString, stringToUrlElem} from "../../util/transformFuncs";
 import {milestonesCompare} from "../../util/comparators";
-import {MilestoneShape} from "../../util/customTypes";
+import {MilestoneShape} from "../../util/custom-types";
 
 export default class Timeline extends React.Component {
     constructor(props) {

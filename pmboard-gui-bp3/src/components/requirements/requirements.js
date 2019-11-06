@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import {dateFormatToString} from "../../util/transformFuncs";
 import {Formik} from "formik";
 import {renderInput} from "../../util/util-renders";
-import {FieldsToRenderShape, RequirementsShape} from "../../util/customTypes";
+import {FieldsToRenderShape, RequirementsShape} from "../../util/custom-types";
 
 export default class Requirements extends React.Component {
     constructor(props) {

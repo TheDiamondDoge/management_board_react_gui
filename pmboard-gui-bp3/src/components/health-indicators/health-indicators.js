@@ -11,7 +11,7 @@ import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import HelpIcon from "../help-icon/help-icon";
 import {healthStatusHelp} from "../../util/global-helps";
 import TooltipContent from "../tooltip-content/tooltip-content";
-import {FieldsToRenderShape, HealthIndicatorsShape} from "../../util/customTypes";
+import {FieldsToRenderShape, HealthIndicatorsShape} from "../../util/custom-types";
 
 export default class HealthIndicators extends React.Component {
     constructor(props) {

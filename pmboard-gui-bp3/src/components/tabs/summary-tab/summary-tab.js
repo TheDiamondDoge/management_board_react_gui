@@ -4,11 +4,14 @@ import {FieldName} from "../../field-name/field-name";
 import FieldValue from "../../field-value/field-value";
 import styles from './summary-tab.module.css';
 import classNames from 'classnames';
-import {getLabelById, displayOrNot} from "./fields";
+import summaryFieldsToRender from "./fields";
 import {CustomCard} from "../../card/custom-card.js";
 import HealthIndicators from "../../health-indicators/health-indicators";
+import fieldsToRender from "../../health-indicators/healthFields";
 import Loading from "../../loading-card/loading";
 import PropTypes from 'prop-types';
+import RenderFieldHelper from "../../../util/render-field-helper";
+import {HealthIndicatorsShape, MilestoneShape, SummaryShape} from "../../../util/custom-types";
 
 export default class SummaryTab extends React.Component {
     componentDidMount() {
@@ -21,7 +24,7 @@ export default class SummaryTab extends React.Component {
 
     render() {
         const {loading} = this.props.summaryData;
-
+        const renderHelper = new RenderFieldHelper(summaryFieldsToRender);
         if (loading) {
             return (<Loading />);
         } else {
@@ -45,9 +48,9 @@ export default class SummaryTab extends React.Component {
                         <div className="left_part">
                             {
                                 Object.keys(general).map((obj) => (
-                                    displayOrNot(obj, validationParams)
+                                    renderHelper.displayOrNot(obj, validationParams)
                                         ? <div key={obj} className={mainCardStyle}>
-                                                <FieldName name={getLabelById(obj)}/>
+                                                <FieldName name={renderHelper.getLabelById(obj)}/>
                                                 <FieldValue value={general[obj]}/>
                                             </div>
                                         : ""
@@ -59,6 +62,7 @@ export default class SummaryTab extends React.Component {
                                 ? <Loading />
                                 : <HealthIndicators
                                     indicators={healthIndicators.payload}
+                                    fieldsToRender={fieldsToRender}
                                     isSummaryMode={true}
                                   />
                             }
@@ -71,9 +75,9 @@ export default class SummaryTab extends React.Component {
                         <div className="left_part">
                             {
                                 Object.keys(status).map((obj) => (
-                                    displayOrNot(obj, validationParams)
+                                    renderHelper.displayOrNot(obj, validationParams)
                                         ? <div key={obj} className={styles.executive_block}>
-                                              <FieldName name={getLabelById(obj)}/>
+                                              <FieldName name={renderHelper.getLabelById(obj)}/>
                                               <FieldValue value={`${status[obj]}`}/>
                                           </div>
                                         : ""
@@ -83,9 +87,9 @@ export default class SummaryTab extends React.Component {
                         <div className="right_part">
                             {
                                 Object.keys(links).map((obj) => (
-                                    displayOrNot(obj, validationParams)
+                                    renderHelper.displayOrNot(obj, validationParams)
                                         ? <div key={obj} className={secondaryCardStyle}>
-                                             <FieldName name={getLabelById(obj)}/>
+                                             <FieldName name={renderHelper.getLabelById(obj)}/>
                                              <FieldValue value={`${links[obj]}`}/>
                                            </div>
                                         : ""
@@ -100,9 +104,9 @@ export default class SummaryTab extends React.Component {
                         <div>
                             {
                                 Object.keys(pwsInfo).map((obj) => (
-                                    displayOrNot(obj, validationParams)
+                                    renderHelper.displayOrNot(obj, validationParams)
                                         ? <div key={obj} className={styles.data_fields}>
-                                              <FieldName name={getLabelById(obj)}/>
+                                              <FieldName name={renderHelper.getLabelById(obj)}/>
                                               <FieldValue value={`${pwsInfo[obj]}`}/>
                                           </div>
                                         : ""
@@ -119,7 +123,10 @@ export default class SummaryTab extends React.Component {
 SummaryTab.propTypes = {
     loadData: PropTypes.func,
     resetData: PropTypes.func,
-    summaryData: PropTypes.object.isRequired,
-    milestones: PropTypes.object.isRequired,
-    healthIndicators: PropTypes.object.isRequired,
+    summaryData: SummaryShape.isRequired,
+    milestones: PropTypes.shape({
+        loading: PropTypes.bool,
+        payload: PropTypes.arrayOf(MilestoneShape)
+    }).isRequired,
+    healthIndicators: HealthIndicatorsShape.isRequired,
 };

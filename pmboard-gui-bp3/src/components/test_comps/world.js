@@ -3,8 +3,10 @@ import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
 import Loading from "../loading-card/loading";
 import {Formik, Field, Form, ErrorMessage} from "formik";
-import {InputGroup, TextArea, HTMLTable} from "@blueprintjs/core";
+import {TextArea, HTMLTable} from "@blueprintjs/core";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
+import RenderFieldHelper from "../../util/render-field-helper";
+import fieldsToRender from "../tabs/summary-tab/fields";
 
 export default class World extends React.Component {
     customInputComponent = ({field, form: {touched, errors}, ...props}) => (
@@ -16,6 +18,7 @@ export default class World extends React.Component {
     );
 
     render() {
+        let obj = new RenderFieldHelper(fieldsToRender);
         const {test, testPassed, onClick1, onClick2} = this.props;
         return (
             <>

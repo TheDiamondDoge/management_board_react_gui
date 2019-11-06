@@ -4,7 +4,7 @@ import {FieldName} from "../field-name/field-name";
 import styles from "./milestones.module.css";
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import {MilestoneKpiShape} from "../../util/customTypes";
+import {MilestoneKpiShape} from "../../util/custom-types";
 
 export default class MilestonesKpi extends React.Component {
     render() {

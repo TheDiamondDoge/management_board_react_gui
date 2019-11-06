@@ -6,7 +6,7 @@ import {FieldName} from "../field-name/field-name";
 import PropTypes from "prop-types";
 import {nullToNA} from "../../util/transformFuncs";
 import HelpIcon from "../help-icon/help-icon";
-import {FieldsToRenderShape, MilestoneKpiShape} from "../../util/customTypes";
+import {FieldsToRenderShape, MilestoneKpiShape} from "../../util/custom-types";
 
 export default class Kpi extends React.Component {
     render() {

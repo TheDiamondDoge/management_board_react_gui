@@ -19,7 +19,7 @@ import {
     MilestoneShape,
     QualityIndicatorsShape,
     RequirementsShape
-} from "../../../util/customTypes";
+} from "../../../util/custom-types";
 
 export default class IndicatorsTab extends React.Component {
     componentDidMount() {
