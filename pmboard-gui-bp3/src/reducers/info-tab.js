@@ -6,7 +6,7 @@ const initState = {
 };
 
 export default (state, action) => {
-    if (state === undefined){
+    if (state === undefined) {
         return initState;
     }
 
@@ -32,7 +32,7 @@ export default (state, action) => {
             return {
                 ...state
             };
-       case RESET_STATE:
+        case RESET_STATE:
             return initState;
         default:
             return state;

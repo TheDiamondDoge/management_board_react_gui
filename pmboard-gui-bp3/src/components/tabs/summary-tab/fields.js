@@ -21,7 +21,7 @@ export default {
     projectType: {label: "Project Type"},
     oemPartner: {
         label: "OEM Partner",
-        notAllowedIf: {
+        allowedIf: {
             projectType: [ProjectTypes.OEM_PRODUCT],
         }
     },

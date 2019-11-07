@@ -9,7 +9,6 @@ import {Provider} from "react-redux";
 import {routerMiddleware} from "react-router-redux";
 import {createLogger} from "redux-logger";
 import createSagaMiddleware from 'redux-saga';
-import infoTabSaga from './sagas/infoTab';
 import blcTabSaga from './sagas/blc-tab';
 import rootSaga from "./sagas";
 import reducer from "./reducers"
@@ -41,7 +40,6 @@ const store = createStore(
 sagas.run(rootSaga);
 
 //TODO: This must be refactored into 1 'PWS tab' saga!!!!!!
-sagas.run(infoTabSaga);
 sagas.run(blcTabSaga);
 
 ReactDOM.render(

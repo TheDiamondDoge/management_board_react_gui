@@ -9,7 +9,7 @@ export const loadInfo = () => ({
     }
 );
 
-export const loadInfoSuccess = (data) => ({
+export const loadInfoSuccess = ({data}) => ({
         type: LOAD_INFO_SUCCESS,
         data: data,
     }

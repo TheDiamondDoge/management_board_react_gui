@@ -8,12 +8,13 @@ import styles from './info-tab.module.css'
 import PropTypes from 'prop-types';
 import Loading from "../../loading-card/loading";
 import {displayOrNot, getLabelById} from "./fields";
+import {Formik} from "formik";
+import {renderInput} from "../../../util/util-renders";
 
 export default class InfoTab extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false,
             editMode: false,
         };
     }
@@ -26,6 +27,12 @@ export default class InfoTab extends React.Component {
         this.props.resetData();
     }
 
+    submitForm = null;
+
+    bindFormSubmission = (formikSubmitForm) => {
+        this.submitForm = formikSubmitForm;
+    };
+
     editClickHandle = () => {
         this.setState((prevState) => ({
             editMode: !prevState.editMode,
@@ -34,40 +41,68 @@ export default class InfoTab extends React.Component {
 
     render() {
         const {information, milestones} = this.props;
-        if (information.loading) {
+        if (information.loading || milestones.loading) {
             return (<Loading/>)
         } else {
             const {general, urls, validationParams} = information.payload;
+            const milestones = this.props.milestones.payload;
+            console.log("PROOOOOOOOOOOOPS", this.props);
+            console.log("PROOOOOOOOOOOOPS", milestones);
+
             return (
-                <div>
-                    <EditSaveControls onClick={this.editClickHandle} editMode={this.state.editMode}/>
-                    <CustomCard>
+                <Formik
+                    onSubmit={(values, formikActions) => {
+                        formikActions.setSubmitting(false);
+                        alert(JSON.stringify(values, null, 2));
+                    }}
+                    initialValues={
                         {
-                            mainRows(general, validationParams, this.state.editMode, "general")
+                            general,
+                            urls,
+                            milestones
                         }
-                    </CustomCard>
+                    }
+                    render={
+                        (formikProps) => {
+                            this.bindFormSubmission(formikProps.submitForm);
+                            return (
+                                <div>
+                                    <EditSaveControls
+                                        onClick={this.editClickHandle}
+                                        onSubmit={this.submitForm}
+                                        editMode={this.state.editMode}
+                                    />
+                                    <CustomCard>
+                                        {
+                                            mainRows(general, validationParams, this.state.editMode, "general")
+                                        }
+                                    </CustomCard>
 
-                    <br/>
+                                    <br/>
 
-                    <CustomCard>
-                        {
-                            milestones.loading
-                                ? <Loading />
-                                : <MilestoneTable
-                                    editMode={this.state.editMode}
-                                    milestonesData={milestones.payload}
-                                  />
+                                    <CustomCard>
+                                        {
+                                            milestones.loading
+                                                ? <Loading/>
+                                                : <MilestoneTable
+                                                    editMode={this.state.editMode}
+                                                    milestonesData={milestones}
+                                                />
+                                        }
+                                    </CustomCard>
+
+                                    <br/>
+
+                                    <CustomCard>
+                                        {
+                                            mainRows(urls, validationParams, this.state.editMode, "urls")
+                                        }
+                                    </CustomCard>
+                                </div>
+                            )
                         }
-                    </CustomCard>
-
-                    <br/>
-
-                    <CustomCard>
-                        {
-                            mainRows(urls, validationParams, this.state.editMode, "urls")
-                        }
-                    </CustomCard>
-                </div>
+                    }
+                />
             )
         }
     }
@@ -75,14 +110,12 @@ export default class InfoTab extends React.Component {
 
 let mainRows = (general, validationParams, editMode, stateBranch) => {
     const style = selectClass(stateBranch);
+    console.log(general);
     return (Object.keys(general).map((obj) => (
         displayOrNot(obj, validationParams)
             ? <div key={obj} className={style}>
                 <FieldName name={getLabelById(obj)}/>
-                <FieldValue
-                    value={general[obj]}
-                    editMode={editMode}
-                />
+                {renderInput(stateBranch + "." + obj, general[obj], editMode, "text")}
             </div>
             : ""
     )))

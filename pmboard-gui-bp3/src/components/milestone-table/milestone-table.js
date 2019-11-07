@@ -77,7 +77,7 @@ export default class MilestoneTable extends React.Component {
                             onChange={
                                 date => {
                                     console.log("DATE", date);
-                                    return onChange("actualDate", dateToDashedString(date), key)
+                                    return () => onChange("actualDate", dateToDashedString(date), key)
                                 }
                             }
                             value={new Date(milestone.actualDate)}
