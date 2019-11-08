@@ -40,14 +40,13 @@ export default class InfoTab extends React.Component {
     };
 
     render() {
+        console.log("RENDER INFO");
         const {information, milestones} = this.props;
         if (information.loading || milestones.loading) {
             return (<Loading/>)
         } else {
             const {general, urls, validationParams} = information.payload;
             const milestones = this.props.milestones.payload;
-            console.log("PROOOOOOOOOOOOPS", this.props);
-            console.log("PROOOOOOOOOOOOPS", milestones);
 
             return (
                 <Formik
@@ -74,7 +73,7 @@ export default class InfoTab extends React.Component {
                                     />
                                     <CustomCard>
                                         {
-                                            mainRows(general, validationParams, this.state.editMode, "general")
+                                            this.mainRows(general, validationParams, this.state.editMode, "general")
                                         }
                                     </CustomCard>
 
@@ -82,12 +81,11 @@ export default class InfoTab extends React.Component {
 
                                     <CustomCard>
                                         {
-                                            milestones.loading
-                                                ? <Loading/>
-                                                : <MilestoneTable
-                                                    editMode={this.state.editMode}
-                                                    milestonesData={milestones}
-                                                />
+                                            <MilestoneTable
+                                                editMode={this.state.editMode}
+                                                milestonesData={formikProps.values.milestones}
+                                                onDateChangeFactory={this.handleChangeOfDateFunc(formikProps)}
+                                            />
                                         }
                                     </CustomCard>
 
@@ -95,7 +93,7 @@ export default class InfoTab extends React.Component {
 
                                     <CustomCard>
                                         {
-                                            mainRows(urls, validationParams, this.state.editMode, "urls")
+                                            this.mainRows(urls, validationParams, this.state.editMode, "urls")
                                         }
                                     </CustomCard>
                                 </div>
@@ -106,30 +104,40 @@ export default class InfoTab extends React.Component {
             )
         }
     }
+
+    mainRows = (general, validationParams, editMode, stateBranch) => {
+        const style = this.selectClass(stateBranch);
+        return (Object.keys(general).map((obj, key) => {
+            return (
+            displayOrNot(obj, validationParams)
+                ? <div key={obj} className={style}>
+                    <FieldName name={getLabelById(obj)}/>
+                    {renderInput(`${stateBranch}.${obj}`, general[obj], editMode, "text")}
+                </div>
+                : ""
+        )}))
+    };
+
+    selectClass = (stateBranch) => {
+        switch (stateBranch) {
+            case "urls":
+                return styles.url_container;
+            case "general":
+            default:
+                return styles.data_container;
+        }
+    };
+
+    handleChangeOfDateFunc(form) {
+        return function (name) {
+            return function (value) {
+                form.setFieldValue(name, value);
+            }
+        }
+    }
 }
 
-let mainRows = (general, validationParams, editMode, stateBranch) => {
-    const style = selectClass(stateBranch);
-    console.log(general);
-    return (Object.keys(general).map((obj) => (
-        displayOrNot(obj, validationParams)
-            ? <div key={obj} className={style}>
-                <FieldName name={getLabelById(obj)}/>
-                {renderInput(stateBranch + "." + obj, general[obj], editMode, "text")}
-            </div>
-            : ""
-    )))
-};
 
-let selectClass = (stateBranch) => {
-    switch (stateBranch) {
-        case "urls":
-            return styles.url_container;
-        case "general":
-        default:
-            return styles.data_container;
-    }
-};
 
 //TODO: shape of milestones???
 InfoTab.propTypes = {

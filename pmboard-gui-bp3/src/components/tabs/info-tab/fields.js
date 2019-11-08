@@ -35,7 +35,12 @@ const fieldsParam = {
     metricsScope: {label: "Metrics Scope"},
     rqRelease: {label: "RQ Release Name (JIRA)"},
     ecmaBacklogTarget: {label: "ECMA Backlog Target"},
-    composite: {label: "Composite Project"},
+    composite: {
+        label: "Composite Project",
+        notAllowedIn: {
+            projectType: [OFFER]
+        }
+    },
     projectCollabUrl: {label: "Project Collaboration Site"},
     projectPWASiteUrl: {label: "Project PWA Site"},
     docRepositoryUrl: {label: "Project Documentation Repository"},

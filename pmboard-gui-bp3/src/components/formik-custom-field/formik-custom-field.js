@@ -1,5 +1,5 @@
 import React from 'react';
-import {TextArea, InputGroup} from "@blueprintjs/core";
+import {TextArea, InputGroup, Checkbox} from "@blueprintjs/core";
 import {DateInput} from "@blueprintjs/datetime";
 import {dateFormatToString, stringToDateFormat} from "../../util/transformFuncs";
 import {digitsOnly} from "../../util/filters";
@@ -30,8 +30,9 @@ export default class FormikCustomField extends React.Component {
             case "area":
                 return (<TextArea fill={true} {...field} {...props} />);
             case "date":
+                const date = this.transformDateForInput(field.value);
                 return (
-                    <DateInput {...field} {...props}
+                    <DateInput {...field} {...props} value={date}
                                formatDate={
                                    date => {
                                        return dateFormatToString(date)
@@ -42,17 +43,29 @@ export default class FormikCustomField extends React.Component {
                                        return stringToDateFormat(str.toString())
                                    }
                                }
-                               onChange={(e) => {
-                                   //Think about it (digitsOnly)
-                                   this.props.form.setFieldValue(field.name, e)
-                               }}
+                               maxDate={new Date("2040-01-01")}
+                               minDate={new Date("2000-01-01")}
+
+
                     />
                 );
             case "numeric":
                 return (<InputGroup {...field} {...props} onChange={(e) => digitsOnly(e, this.props.form.setFieldValue, field.name)} />);
+            case "checkbox":
+                return (<Checkbox {...field} {...props} defaultChecked={field.value} />);
             case "text":
             default:
                 return (<InputGroup {...field} {...props} />);
         }
+    };
+
+    transformDateForInput = (str) => {
+        if (!str) return null;
+        try {
+            return new Date(str);
+        } catch (e) {
+            return null;
+        }
     }
+
 }

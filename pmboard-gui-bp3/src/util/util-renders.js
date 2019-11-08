@@ -3,9 +3,13 @@ import FormikCustomField from "../components/formik-custom-field/formik-custom-f
 import FieldValue from "../components/field-value/field-value";
 import React from "react";
 
-export const renderInput = (name, value, isEditMode, type) => {
+export const renderInput = (name, value, isEditMode, type, onChange) => {
     if (isEditMode) {
-        return <Field type={type} name={name} component={FormikCustomField}/>
+        if (onChange) {
+            return <Field type={type} name={name} onChange={onChange} component={FormikCustomField}/>
+        } else {
+            return <Field type={type} name={name} component={FormikCustomField}/>
+        }
     } else {
         return <FieldValue value={value}/>
     }
