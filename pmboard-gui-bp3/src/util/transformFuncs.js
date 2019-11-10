@@ -35,7 +35,7 @@ export const dateFormatToString = (date) => {
 
     let day = date.getDate();
     let month = MONTHS_NAMES[date.getMonth()];
-    let year = date.getFullYear().toString().substr(-2);
+    let year = date.getFullYear().toString();
 
     return `${day}-${month}-${year}`;
 };
@@ -49,14 +49,14 @@ export const stringToDateFormat = (string) => {
     return new Date(year, MONTHS_NAMES.indexOf(month), day);
 };
 
-//TODO: This is huge UGLY workaround. TO REMOVE!!!!
-export const dateToDashedString = (date) => {
-    let day = date.getDate();
-    let month = date.getMonth();
-    let year = date.getFullYear();
-
-    return `${year}-${month}-${day}`;
-};
+// //TODO: This is huge UGLY workaround. TO REMOVE!!!!
+// export const dateToDashedString = (date) => {
+//     let day = date.getDate();
+//     let month = date.getMonth();
+//     let year = date.getFullYear();
+//
+//     return `${year}-${month}-${day}`;
+// };
 
 export const nullToEmptyStr = (str) => (
     str == "null" ? "" : str

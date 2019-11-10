@@ -9,7 +9,7 @@ export default class FormikCustomField extends React.Component {
 
         this.state = {
             dateRange: {
-                min: new Date("2000-01-01"),
+                min: new Date("1900-01-01"),
                 max: new Date("2040-01-01")
             }
         }
@@ -34,6 +34,7 @@ export default class FormikCustomField extends React.Component {
         }
     }
 
+    //TODO: area -> textarea
     fieldFactory = (type, field, props) => {
         type = type || "";
         switch (type.toLowerCase()) {
@@ -57,6 +58,7 @@ export default class FormikCustomField extends React.Component {
                                   buttonPosition="none"
                                   fill={true}
                                   {...field} {...props}
+
                     />
                 );
             case "checkbox":
@@ -67,6 +69,7 @@ export default class FormikCustomField extends React.Component {
         }
     };
 
+    //TODO: Move to utils
     transformDateForInput = (str) => {
         if (!str) return null;
         try {

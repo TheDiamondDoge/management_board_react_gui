@@ -4,7 +4,7 @@ import StatusIndicator from "../status-indicator/status-indicator";
 import classNames from "classnames";
 import style from "./blcRow.module.css";
 import {Button, TextArea} from "@blueprintjs/core";
-import {blcNumberToState, dateFormatToString, dateToDashedString} from "../../util/transformFuncs";
+import {blcNumberToState, dateFormatToString} from "../../util/transformFuncs";
 
 export default class BlcRow extends React.Component {
     render() {

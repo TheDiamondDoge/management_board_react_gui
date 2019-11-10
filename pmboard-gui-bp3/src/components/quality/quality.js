@@ -5,7 +5,7 @@ import styles from "./quality.module.css";
 import {FieldName} from "../field-name/field-name";
 import PropTypes from "prop-types";
 import {FieldArray, Formik} from "formik";
-import {renderComment, renderInput} from "../../util/util-renders";
+import {renderComment, renderControls, renderInput} from "../../util/util-renders";
 import HelpIcon from "../help-icon/help-icon";
 import {dateFormatToString} from "../../util/transformFuncs";
 import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/custom-types";
@@ -171,7 +171,7 @@ export default class Quality extends React.Component {
                                         </td>
                                         <td rowSpan={rowSpan}>
                                             {
-                                                this.renderControls(
+                                                renderControls(
                                                     "add",
                                                     () => arrayHelpers.push(this.getEmptyRowObject(comment)),
                                                     this.state.editMode,
@@ -184,7 +184,7 @@ export default class Quality extends React.Component {
                             }
                             <td>
                                 {
-                                    this.renderControls(
+                                    renderControls(
                                         "delete",
                                         () => this.removeRow(values[field], arrayHelpers, i),
                                         this.state.editMode,
@@ -218,29 +218,6 @@ export default class Quality extends React.Component {
         )
     };
 
-    renderControls = (type, onClick, isEditMode, isControlled) => {
-        const args = this.getControlProps(type);
-        return (
-            isEditMode && isControlled
-                ? this.getMiniButton(onClick, args.icon, args.intent)
-                : <>&nbsp;</>
-        )
-    };
-
-    getControlProps = (type) => {
-        if (type === "delete") {
-            return ({
-                icon: "delete",
-                intent: Intent.DANGER
-            })
-        } else {
-            return ({
-                icon: "add",
-                intent: Intent.SUCCESS
-            })
-        }
-    };
-
     isEditable = (field) => {
         if (field === "quality" || field === "defects" || field === "backlog") {
             return false;
@@ -255,16 +232,6 @@ export default class Quality extends React.Component {
         actual: "",
         comment: comment
     });
-
-    getMiniButton = (onClick, icon, intent) => (
-        <Button
-            style={{display: "inline-block"}}
-            onClick={onClick}
-            minimal
-            icon={icon}
-            intent={intent}
-        />
-    );
 
     removeRow = (values, arrayHelpers, i) => {
         if (values.length === 1) {

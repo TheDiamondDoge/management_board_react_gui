@@ -7,7 +7,6 @@
 
 .table {
     width: 100%;
-    /*table-layout: fixed;*/
 }
 
 .label {
@@ -32,6 +31,6 @@
     min-width: 90px;
 }
 
-.minutes {
-
+.align_center {
+    text-align: center !important;
 }
