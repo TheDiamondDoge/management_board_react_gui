@@ -60,6 +60,7 @@ let dataComposer = (data) => ({
         updatedBusinessPlan: data.updatedBusinessPlan,
         drChecklist: data.drChecklist,
         lessonsLearned: data.lessonsLearned,
+        projectPlan: data.projectPlan,
         metricsScope: data.metricsScope,
         rqRelease: data.rqRelease,
         ecmaBacklogTarget: data.ecmaBacklogTarget,

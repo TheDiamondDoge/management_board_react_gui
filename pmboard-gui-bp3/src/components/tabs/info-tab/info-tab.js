@@ -2,14 +2,15 @@ import React from 'react';
 import {CustomCard} from "../../card/custom-card";
 import MilestoneTable from "../../milestone-table/milestone-table";
 import {FieldName} from "../../field-name/field-name";
-import FieldValue from "../../field-value/field-value";
 import EditSaveControls from "../../edit-save-contols/edit-save-controls";
 import styles from './info-tab.module.css'
 import PropTypes from 'prop-types';
 import Loading from "../../loading-card/loading";
 import {displayOrNot, getLabelById} from "./fields";
-import {Formik} from "formik";
-import {renderInput} from "../../../util/util-renders";
+import {Field, Formik} from "formik";
+import FormikInput, {renderInput} from "../../../util/util-renders";
+import FieldValue from "../../field-value/field-value";
+import FormikCustomField from "../../formik-custom-field/formik-custom-field";
 
 export default class InfoTab extends React.Component {
     constructor(props) {
@@ -40,7 +41,6 @@ export default class InfoTab extends React.Component {
     };
 
     render() {
-        console.log("RENDER INFO");
         const {information, milestones} = this.props;
         if (information.loading || milestones.loading) {
             return (<Loading/>)
@@ -61,6 +61,7 @@ export default class InfoTab extends React.Component {
                             milestones
                         }
                     }
+
                     render={
                         (formikProps) => {
                             this.bindFormSubmission(formikProps.submitForm);
@@ -107,15 +108,23 @@ export default class InfoTab extends React.Component {
 
     mainRows = (general, validationParams, editMode, stateBranch) => {
         const style = this.selectClass(stateBranch);
-        return (Object.keys(general).map((obj, key) => {
+        return (Object.keys(general).map((obj) => {
             return (
-            displayOrNot(obj, validationParams)
-                ? <div key={obj} className={style}>
-                    <FieldName name={getLabelById(obj)}/>
-                    {renderInput(`${stateBranch}.${obj}`, general[obj], editMode, "text")}
-                </div>
-                : ""
-        )}))
+                displayOrNot(obj, validationParams)
+                    ? <div key={obj} className={style}>
+                        <FieldName name={getLabelById(obj)}/>
+                        {
+                            editMode
+                                ? <FormikInput
+                                    type="text"
+                                    name={`${stateBranch}.${obj}`}
+                                  />
+                                : <FieldValue value={general[obj]} />
+                        }
+                    </div>
+                    : ""
+            )
+        }))
     };
 
     selectClass = (stateBranch) => {
@@ -136,8 +145,6 @@ export default class InfoTab extends React.Component {
         }
     }
 }
-
-
 
 //TODO: shape of milestones???
 InfoTab.propTypes = {

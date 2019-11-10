@@ -1,10 +1,20 @@
 import React from 'react';
-import {TextArea, InputGroup, Checkbox} from "@blueprintjs/core";
+import {TextArea, InputGroup, Checkbox, NumericInput} from "@blueprintjs/core";
 import {DateInput} from "@blueprintjs/datetime";
 import {dateFormatToString, stringToDateFormat} from "../../util/transformFuncs";
-import {digitsOnly} from "../../util/filters";
 
 export default class FormikCustomField extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            dateRange: {
+                min: new Date("2000-01-01"),
+                max: new Date("2040-01-01")
+            }
+        }
+    }
+
     render() {
         if (!(this.props === undefined)) {
             const {field, form: {touched, errors}, type, ...props} = this.props;
@@ -31,28 +41,26 @@ export default class FormikCustomField extends React.Component {
                 return (<TextArea fill={true} {...field} {...props} />);
             case "date":
                 const date = this.transformDateForInput(field.value);
+                const {min, max} = this.state.dateRange;
                 return (
-                    <DateInput {...field} {...props} value={date}
-                               formatDate={
-                                   date => {
-                                       return dateFormatToString(date)
-                                   }
-                               }
-                               parseDate={
-                                   str => {
-                                       return stringToDateFormat(str.toString())
-                                   }
-                               }
-                               maxDate={new Date("2040-01-01")}
-                               minDate={new Date("2000-01-01")}
-
-
+                    <DateInput formatDate={date => dateFormatToString(date)}
+                               parseDate={str => stringToDateFormat(str.toString())}
+                               maxDate={max}
+                               minDate={min}
+                               {...field} {...props}
+                               value={date}
                     />
                 );
             case "numeric":
-                return (<InputGroup {...field} {...props} onChange={(e) => digitsOnly(e, this.props.form.setFieldValue, field.name)} />);
+                return (
+                    <NumericInput allowNumericCharactersOnly={true}
+                                  buttonPosition="none"
+                                  fill={true}
+                                  {...field} {...props}
+                    />
+                );
             case "checkbox":
-                return (<Checkbox {...field} {...props} defaultChecked={field.value} />);
+                return (<Checkbox defaultChecked={field.value} {...field} {...props} />);
             case "text":
             default:
                 return (<InputGroup {...field} {...props} />);

@@ -1,13 +1,11 @@
 import React from 'react';
-import {Checkbox, HTMLTable, NumericInput} from "@blueprintjs/core";
+import {HTMLTable} from "@blueprintjs/core";
 import {FieldName} from "../field-name/field-name";
 import FieldValue from "../field-value/field-value";
-import {DateInput} from "@blueprintjs/datetime";
 import styles from './milestone-table.module.css';
 import PropTypes from "prop-types";
-import {dateFormatToString, dateToDashedString, stringToDateFormat} from "../../util/transformFuncs";
 import {FieldArray} from "formik";
-import {renderDateInput, renderInput} from "../../util/util-renders";
+import FormikInput from "../../util/util-renders";
 
 export default class MilestoneTable extends React.Component {
     constructor(props) {
@@ -47,24 +45,43 @@ export default class MilestoneTable extends React.Component {
                     <FieldArray
                         name="milestones"
                         render={(arrayHelpers) => {
-                            return milestonesData.map((milestone, key) => (
+                            return milestonesData.map((milestone, key) => {
+                                const shownString = this.isChecked(milestone.shown);
+                                return(
                                 <tr key={key}>
                                     <td className={styles.label}>
                                         <FieldValue value={milestone.label}/>
                                     </td>
                                     <td className={styles.actual}>
                                         {
-                                            renderInput(`milestones[${key}].actualDate`, milestone.actualDate, editMode, "date", onDateChangeFactory(`milestones[${key}].actualDate`))
+                                            editMode
+                                                ? <FormikInput
+                                                    type="date"
+                                                    name={`milestones[${key}].actualDate`}
+                                                    onChange={onDateChangeFactory(`milestones[${key}].actualDate`)}
+                                                />
+                                                : <FieldValue value={milestone.actualDate} />
                                         }
                                     </td>
                                     <td className={styles.baseline}>
                                         {
-                                            renderInput(`milestones[${key}].baselineDate`, milestone.baselineDate, editMode, "date", onDateChangeFactory(`milestones[${key}].baselineDate`))
+                                            editMode
+                                                ? <FormikInput
+                                                    type="date"
+                                                    name={`milestones[${key}].baselineDate`}
+                                                    onChange={onDateChangeFactory(`milestones[${key}].baselineDate`)}
+                                                />
+                                                : <FieldValue value={milestone.baselineDate} />
                                         }
                                     </td>
                                     <td className={styles.completion}>
                                         {
-                                            renderInput(`milestones[${key}].completion`, milestone.completion, editMode, "numeric")
+                                            editMode
+                                                ? <FormikInput
+                                                    type="numeric"
+                                                    name={`milestones[${key}].completion`}
+                                                />
+                                                : <FieldValue value={milestone.completion} />
                                         }
 
                                         {/*TODO: Instead of input with 'digitsOnly'????*/}
@@ -81,121 +98,36 @@ export default class MilestoneTable extends React.Component {
                                     </td>
                                     <td className={styles.timeline}>
                                         {
-                                            renderInput(`milestones[${key}].shown`, milestone.shown, editMode, "checkbox")
+                                            editMode
+                                                ? <FormikInput
+                                                    type="checkbox"
+                                                    name={`milestones[${key}].shown`}
+                                                    value={milestone.shown}
+                                                />
+                                                : <FieldValue value={shownString} />
                                         }
-                                        {/*<Checkbox*/}
-                                        {/*    defaultChecked={milestone.shown}*/}
-                                        {/*    onChange={event => onChange("shown", event.target.checked, key)}*/}
-                                        {/*/>*/}
                                     </td>
                                     <td className={styles.minutes}>
                                         {
-                                            renderInput(`milestones[${key}].meetingMinutes`, milestone.meetingMinutes, editMode, "text")
+                                            editMode
+                                                ? <FormikInput
+                                                    type="text"
+                                                    name={`milestones[${key}].meetingMinutes`}
+                                                  />
+                                                : <FieldValue value={milestone.meetingMinutes} />
                                         }
-                                        {/*<FieldValue*/}
-                                        {/*    editMode={editMode}*/}
-                                        {/*    value={this.ifEmpty(milestone.meetingMinutes)}*/}
-                                        {/*    onChange={value => onChange("meetingMinutes", value, key)}*/}
-                                        {/*/>*/}
                                     </td>
                                 </tr>
-                            ))
+                            )})
                         }}
                     />
-                    {
-                        // this.renderValues(milestonesData, editMode)
-                    }
                     </tbody>
                 </HTMLTable>
             </div>
         )
     }
 
-    renderValues = (milestoneData, editMode) => {
-        if (editMode) {
-            let {onChange} = this.props;
-            return milestoneData.map((milestone, key) => (
-                <tr key={key}>
-                    <td className={styles.label}>
-                        <FieldValue value={milestone.label}/>
-                    </td>
-                    <td className={styles.actual}>
-                        <DateInput
-                            formatDate={
-                                date => {
-                                    console.log("FORMATDATE", typeof date, date)
-                                    return dateFormatToString(date)
-                                }
-                            }
-                            parseDate={
-                                str => {
-                                    console.log("PARSEDATE", typeof str, str);
-                                    return stringToDateFormat(str.toString())
-                                }
-                            }
-                            onChange={
-                                date => {
-                                    console.log("DATE", date);
-                                    return () => onChange("actualDate", dateToDashedString(date), key)
-                                }
-                            }
-                            value={new Date(milestone.actualDate)}
-                        />
-                    </td>
-                    <td className={styles.baseline}>
-                        <DateInput
-                            formatDate={date => dateFormatToString(date)}
-                            parseDate={str => stringToDateFormat(str.toString())}
-                            onChange={date => onChange("baselineDate", dateToDashedString(date), key)}
-                            value={new Date(milestone.baselineDate)}
-                        />
-                    </td>
-                    <td className={styles.completion}>
-                        <NumericInput
-                            style={{width: "50px", display: "inline-block"}}
-                            allowNumericCharactersOnly={true}
-                            min={0}
-                            max={100}
-                            minorStepSize={1}
-                            value={milestone.completion}
-                            buttonPosition="none"
-                            onValueChange={value => onChange("completion", value, key)}
-                        />
-                    </td>
-                    <td className={styles.timeline}>
-                        <Checkbox
-                            defaultChecked={milestone.shown}
-                            onChange={event => onChange("shown", event.target.checked, key)}
-                        />
-                    </td>
-                    <td className={styles.minutes}>
-                        <FieldValue
-                            editMode={editMode}
-                            value={this.ifEmpty(milestone.meetingMinutes)}
-                            onChange={value => onChange("meetingMinutes", value, key)}
-                        />
-                    </td>
-                </tr>
-            ))
-        } else {
-            return milestoneData.map((milestone, key) => (
-                <tr key={key}>
-                    <td className={styles.label}>{this.ifEmpty(milestone.label)}</td>
-                    <td className={styles.actual}>{dateFormatToString(milestone.actualDate ? new Date(milestone.actualDate) : "")}</td>
-                    <td className={styles.baseline}>{dateFormatToString(milestone.baselineDate ? new Date(milestone.baselineDate) : "")}</td>
-                    <td className={styles.completion}>{this.ifEmpty(milestone.completion)}</td>
-                    <td className={styles.timeline}>{this.ifChecked(milestone.shown)}</td>
-                    <td className={styles.minutes}><FieldValue value={this.ifEmpty(milestone.meetingMinutes)}/></td>
-                </tr>
-            ))
-        }
-    };
-
-    ifEmpty = (objProp) => (
-        objProp ? objProp : "-"
-    );
-
-    ifChecked = (checked) => (
+    isChecked = (checked) => (
         checked ? "Yes" : "No"
     );
 }
