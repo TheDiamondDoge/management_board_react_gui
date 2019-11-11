@@ -21,7 +21,7 @@ export const loadInfoError = (error) => ({
     }
 );
 
-export const saveInfoDate = (data) => ({
+export const saveInfoData = (data) => ({
     type: SAVE_INFO_DATA,
     data
 });

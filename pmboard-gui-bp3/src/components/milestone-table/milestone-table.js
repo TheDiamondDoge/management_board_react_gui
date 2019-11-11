@@ -20,7 +20,6 @@ export default class MilestoneTable extends React.Component {
     }
 
     render() {
-        const {editMode, milestonesData, onDateChangeFactory} = this.props;
         return (
             <div>
                 <HTMLTable striped={true} className={styles.table}>
@@ -47,108 +46,117 @@ export default class MilestoneTable extends React.Component {
                     </tr>
                     </thead>
                     <tbody>
-                    <FieldArray
-                        name="milestones"
-                        render={(arrayHelpers) => {
-                            return (
-                                <>
-                                    {
-                                        milestonesData.map((milestone, key) => {
-                                            const shownString = this.isChecked(milestone.shown);
-                                            return (
-                                                <tr key={key}>
-                                                    <td className={styles.label}>
-                                                        {
-                                                            editMode
-                                                                ? this.isMandatory(milestone.label)
-                                                                ? <FieldValue value={milestone.label}/>
-                                                                : <>
-                                                                    <FormikInput
-                                                                        type="text"
-                                                                        name={`milestones[${key}].label`}
-                                                                    />
-                                                                    {
-                                                                        this.rowRemoveControls( () => arrayHelpers.remove(key))
-                                                                    }
-                                                                </>
-                                                                : <FieldValue value={milestone.label}/>
-                                                        }
-                                                    </td>
-                                                    <td className={styles.actual}>
-                                                        {
-                                                            editMode
-                                                                ? <FormikInput
-                                                                    type="date"
-                                                                    name={`milestones[${key}].actualDate`}
-                                                                    onChange={onDateChangeFactory(`milestones[${key}].actualDate`)}
-                                                                />
-                                                                : <FieldValue
-                                                                    value={dateFormatToString(new Date(milestone.actualDate))}/>
-                                                        }
-                                                    </td>
-                                                    <td className={styles.baseline}>
-                                                        {
-                                                            editMode
-                                                                ? <FormikInput
-                                                                    type="date"
-                                                                    name={`milestones[${key}].baselineDate`}
-                                                                    onChange={onDateChangeFactory(`milestones[${key}].baselineDate`)}
-                                                                />
-                                                                : <FieldValue
-                                                                    value={dateFormatToString(new Date(milestone.baselineDate))}/>
-                                                        }
-                                                    </td>
-                                                    <td className={styles.completion}>
-                                                        {
-                                                            editMode
-                                                                ? <FormikInput
-                                                                    type="numeric"
-                                                                    name={`milestones[${key}].completion`}
-                                                                    onValueChange={onDateChangeFactory(`milestones[${key}].completion`)}
-                                                                />
-                                                                : <FieldValue value={milestone.completion}/>
-                                                        }
-                                                    </td>
-                                                    <td className={styles.timeline}>
-                                                        {
-                                                            editMode
-                                                                ? <FormikInput
-                                                                    type="checkbox"
-                                                                    name={`milestones[${key}].shown`}
-                                                                    value={milestone.shown}
-                                                                />
-                                                                : <FieldValue value={shownString}/>
-                                                        }
-                                                    </td>
-                                                    <td className={styles.minutes}>
-                                                        {
-                                                            editMode
-                                                                ? <FormikInput
-                                                                    type="text"
-                                                                    name={`milestones[${key}].meetingMinutes`}
-                                                                />
-                                                                : <FieldValue value={milestone.meetingMinutes}/>
-                                                        }
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                    {
-                                        editMode &&
-                                        <tr>
-                                            <td colSpan={6} className={styles.align_center}>
-                                                {this.rowAddControls(arrayHelpers.push)}
-                                            </td>
-                                        </tr>
-                                    }
-                                </>
-                            )
-                        }}
-                    />
+                    {
+                        this.renderBody()
+                    }
                     </tbody>
                 </HTMLTable>
             </div>
+        )
+    }
+
+    renderBody = () => {
+        const {milestonesData, onDateChangeFactory, editMode} = this.props;
+        return (
+            <FieldArray
+                name="milestones"
+                render={(arrayHelpers) => {
+                    return (
+                        <>
+                            {
+                                milestonesData.map((milestone, key) => {
+                                    const shownString = this.isChecked(milestone.shown);
+                                    return (
+                                        <tr key={key}>
+                                            <td className={styles.label}>
+                                                {
+                                                    editMode
+                                                        ? this.isMandatory(milestone.label)
+                                                        ? <FieldValue value={milestone.label}/>
+                                                        : <>
+                                                            <FormikInput
+                                                                type="text"
+                                                                name={`milestones[${key}].label`}
+                                                            />
+                                                            {
+                                                                this.rowRemoveControls(() => arrayHelpers.remove(key))
+                                                            }
+                                                        </>
+                                                        : <FieldValue value={milestone.label}/>
+                                                }
+                                            </td>
+                                            <td className={styles.actual}>
+                                                {
+                                                    editMode
+                                                        ? <FormikInput
+                                                            type="date"
+                                                            name={`milestones[${key}].actualDate`}
+                                                            onChange={onDateChangeFactory(`milestones[${key}].actualDate`)}
+                                                        />
+                                                        : <FieldValue
+                                                            value={dateFormatToString(new Date(milestone.actualDate))}/>
+                                                }
+                                            </td>
+                                            <td className={styles.baseline}>
+                                                {
+                                                    editMode
+                                                        ? <FormikInput
+                                                            type="date"
+                                                            name={`milestones[${key}].baselineDate`}
+                                                            onChange={onDateChangeFactory(`milestones[${key}].baselineDate`)}
+                                                        />
+                                                        : <FieldValue
+                                                            value={dateFormatToString(new Date(milestone.baselineDate))}/>
+                                                }
+                                            </td>
+                                            <td className={styles.completion}>
+                                                {
+                                                    editMode
+                                                        ? <FormikInput
+                                                            type="numeric"
+                                                            name={`milestones[${key}].completion`}
+                                                            onValueChange={onDateChangeFactory(`milestones[${key}].completion`)}
+                                                        />
+                                                        : <FieldValue value={milestone.completion}/>
+                                                }
+                                            </td>
+                                            <td className={styles.timeline}>
+                                                {
+                                                    editMode
+                                                        ? <FormikInput
+                                                            type="checkbox"
+                                                            name={`milestones[${key}].shown`}
+                                                            value={milestone.shown}
+                                                        />
+                                                        : <FieldValue value={shownString}/>
+                                                }
+                                            </td>
+                                            <td className={styles.minutes}>
+                                                {
+                                                    editMode
+                                                        ? <FormikInput
+                                                            type="text"
+                                                            name={`milestones[${key}].meetingMinutes`}
+                                                        />
+                                                        : <FieldValue value={milestone.meetingMinutes}/>
+                                                }
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                            {
+                                editMode &&
+                                <tr>
+                                    <td colSpan={6} className={styles.align_center}>
+                                        {this.rowAddControls(arrayHelpers.push)}
+                                    </td>
+                                </tr>
+                            }
+                        </>
+                    )
+                }}
+            />
         )
     }
 
@@ -157,11 +165,11 @@ export default class MilestoneTable extends React.Component {
     );
 
     rowRemoveControls = (remove) => (
-        <RenderControls type={"delete"} onClick={remove} />
+        <RenderControls type={"delete"} onClick={remove}/>
     );
 
     rowAddControls = (push) => (
-        <RenderControls type={"add"} onClick={() => push(this.getEmptyMilestone())} />
+        <RenderControls type={"add"} onClick={() => push(this.getEmptyMilestone())}/>
     );
 
     getEmptyMilestone = () => ({

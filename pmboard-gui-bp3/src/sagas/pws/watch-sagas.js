@@ -1,60 +1,65 @@
 import {takeEvery, takeLatest, fork} from 'redux-saga/effects';
-import {LOAD_SUMMARY} from "../../actions/summary-tab";
 import {
     loadIndicatorsTab, loadInformationTab, loadSummaryTab, saveHealthIndicators, saveIndicatorsQuality,
-    saveIndicatorsRqs, loadQualityKpi, loadIndicatorsRqs, loadHealthIndicators
+    saveIndicatorsRqs, loadQualityKpi, loadIndicatorsRqs, loadHealthIndicators, saveInformationTab
 } from "./worker-sagas";
-import {LOAD_INDICATORS} from "../../actions/indicators-tab";
-import {LOAD_INFO} from "../../actions/info-tab";
-import {LOAD_HEALTH, SAVE_COMMENTS, SAVE_HEALTH} from "../../actions/health-indicators";
-import {INDICATORS_RQS_SAVE, LOAD_INDICATORS_RQS} from "../../actions/indicators-rqs";
-import {LOAD_QUALITY_KPI, QUALITY_KPI_SAVE} from "../../actions/quality-kpi";
+import * as summaryTab from "../../actions/summary-tab";
+import * as indicatorsTab from "../../actions/indicators-tab";
+import * as informationTab from "../../actions/info-tab";
+import * as healthIndicators from "../../actions/health-indicators";
+import * as rqIndicators from "../../actions/indicators-rqs";
+import * as quality from "../../actions/quality-kpi";
 
 function* watchSummaryTabLoad() {
-    yield takeEvery(LOAD_SUMMARY, loadSummaryTab);
+    yield takeEvery(summaryTab.LOAD_SUMMARY, loadSummaryTab);
 }
 
 function* watchIndicatorsTabLoad() {
-    yield takeEvery(LOAD_INDICATORS, loadIndicatorsTab);
+    yield takeEvery(indicatorsTab.LOAD_INDICATORS, loadIndicatorsTab);
 }
 
 function* watchInformationTabLoad() {
-    yield takeEvery(LOAD_INFO, loadInformationTab);
+    yield takeEvery(informationTab.LOAD_INFO, loadInformationTab);
 }
 
 function* watchHealthIndicatorsLoad() {
     
-    yield takeEvery(LOAD_HEALTH, loadHealthIndicators)
+    yield takeEvery(healthIndicators.LOAD_HEALTH, loadHealthIndicators)
 }
 
 function* watchHealthIndicatorsSave() {
-    yield takeLatest(SAVE_HEALTH, saveHealthIndicators);
+    yield takeLatest(healthIndicators.SAVE_HEALTH, saveHealthIndicators);
 }
 
 function* watchHealthCommentsSave() {
-    yield takeLatest(SAVE_COMMENTS, saveHealthIndicators);
+    yield takeLatest(healthIndicators.SAVE_COMMENTS, saveHealthIndicators);
 }
 
 function* watchIndicatorsRqsSave() {
-    yield takeLatest(INDICATORS_RQS_SAVE, saveIndicatorsRqs);
+    yield takeLatest(rqIndicators.INDICATORS_RQS_SAVE, saveIndicatorsRqs);
 }
 
 function* watchIndicatorsRqsLoad() {
-    yield takeLatest(LOAD_INDICATORS_RQS, loadIndicatorsRqs)
+    yield takeLatest(rqIndicators.LOAD_INDICATORS_RQS, loadIndicatorsRqs)
 }
 
 function* watchIndicatorsQualityLoad() {
-    yield takeEvery(LOAD_QUALITY_KPI, loadQualityKpi)
+    yield takeEvery(quality.LOAD_QUALITY_KPI, loadQualityKpi)
 }
 
 function* watchIndicatorsQualitySave() {
-    yield takeLatest(QUALITY_KPI_SAVE, saveIndicatorsQuality);
+    yield takeLatest(quality.QUALITY_KPI_SAVE, saveIndicatorsQuality);
+}
+
+function* watchInformationTabSave() {
+    yield takeLatest(informationTab.SAVE_INFO_DATA, saveInformationTab);
 }
 
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
     fork(watchInformationTabLoad),
+    fork(watchInformationTabSave),
     fork(watchHealthIndicatorsLoad),
     fork(watchHealthIndicatorsSave),
     fork(watchHealthCommentsSave),

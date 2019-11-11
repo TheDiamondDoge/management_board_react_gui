@@ -1,24 +1,24 @@
 import * as api from '../../api/pws';
 import {call, put} from 'redux-saga/effects';
-import {loadSummaryError, loadSummarySuccess} from "../../actions/summary-tab";
-import {loadHealthError, loadHealthSuccess} from "../../actions/health-indicators";
-import {loadMilestonesFail, loadMilestonesSuccess} from "../../actions/milestones";
-import {loadIndicatorsError} from "../../actions/indicators-tab";
-import {indicatorsRqsFail, indicatorsRqsSuccess} from "../../actions/indicators-rqs";
-import {milestonesKpiFail, milestonesKpiSuccess} from "../../actions/milestones-kpi";
-import {dr4KpiFail, dr4KpiSuccess} from "../../actions/dr4-kpi";
-import {qualityKpiFail, qualityKpiSuccess} from "../../actions/quality-kpi";
-import {loadInfoError, loadInfoSuccess} from "../../actions/info-tab";
+import * as summaryTab from "../../actions/summary-tab";
+import * as healthIndicators from "../../actions/health-indicators";
+import * as milestones from "../../actions/milestones";
+import * as indicatorsTab from "../../actions/indicators-tab";
+import * as rqIndicators from "../../actions/indicators-rqs";
+import * as milestonesKpi from "../../actions/milestones-kpi";
+import * as dr4Kpi from "../../actions/dr4-kpi";
+import * as qualityKpi from "../../actions/quality-kpi";
+import * as infoTab from "../../actions/info-tab";
 
 export function* loadSummaryTab() {
     try {
         const summaryInfo = yield call(api.getSummaryInfo, 1);
-        yield put(loadSummarySuccess(summaryInfo));
+        yield put(summaryTab.loadSummarySuccess(summaryInfo));
 
         yield call(loadHealthIndicators);
         yield call(loadMilestones);
     } catch (e) {
-        yield put(loadSummaryError(e));
+        yield put(summaryTab.loadSummaryError(e));
     }
 }
 
@@ -31,72 +31,72 @@ export function* loadIndicatorsTab() {
         yield call(loadDr4Kpi);
         yield call(loadQualityKpi)
     } catch (e) {
-        yield put(loadIndicatorsError(e))
+        yield put(indicatorsTab.loadIndicatorsError(e))
     }
 }
 
 export function* loadInformationTab() {
     try {
-        const infoTab = yield call(api.getInformationTab, 1);
-        yield put(loadInfoSuccess(infoTab));
+        const info = yield call(api.getInformationTab, 1);
+        yield put(infoTab.loadInfoSuccess(info));
 
         yield call(loadMilestones);
     } catch (e) {
-        yield put(loadInfoError);
+        yield put(infoTab.loadInfoError);
     }
 }
 
 export function* loadHealthIndicators() {
     try {
-        const healthIndicators = yield call(api.getHealthIndicators, 1);
-        yield put(loadHealthSuccess(healthIndicators));
+        const indicators = yield call(api.getHealthIndicators, 1);
+        yield put(healthIndicators.loadHealthSuccess(indicators));
     } catch (e) {
-        yield put(loadHealthError(e));
+        yield put(healthIndicators.loadHealthError(e));
     }
 }
 
 export function* loadMilestones() {
     try {
-        const milestones = yield call(api.getMilestones, 1);
-        yield put(loadMilestonesSuccess(milestones));
+        const milestonesList = yield call(api.getMilestones, 1);
+        yield put(milestones.loadMilestonesSuccess(milestonesList));
     } catch (e) {
-        yield put(loadMilestonesFail(e));
+        yield put(milestones.loadMilestonesFail(e));
     }
 }
 
 export function* loadIndicatorsRqs() {
     try {
         const indicatorRqs = yield call(api.getIndicatorsRqs, 1);
-        yield put(indicatorsRqsSuccess(indicatorRqs));
+        yield put(rqIndicators.indicatorsRqsSuccess(indicatorRqs));
     } catch (e) {
-        yield put(indicatorsRqsFail(e));
+        yield put(rqIndicators.indicatorsRqsFail(e));
     }
 }
 
 export function* loadMilestonesKpi() {
     try {
-        const milestonesKpi = yield call(api.getMilestonesKpi, 1);
-        yield put(milestonesKpiSuccess(milestonesKpi));
+        const kpi = yield call(api.getMilestonesKpi, 1);
+        yield put(milestonesKpi.milestonesKpiSuccess(kpi));
     } catch (e) {
-        yield put(milestonesKpiFail(e))
+        yield put(milestonesKpi.milestonesKpiFail(e))
     }
 }
 
 export function* loadDr4Kpi() {
     try {
-        const dr4Kpi = yield call(api.getDr4Kpi, 1);
-        yield put(dr4KpiSuccess(dr4Kpi));
+        const kpi = yield call(api.getDr4Kpi, 1);
+        yield put(dr4Kpi.dr4KpiSuccess(kpi));
     } catch (e) {
-        yield put(dr4KpiFail(e))
+        yield put(dr4Kpi.dr4KpiFail(e))
     }
 }
 
 export function* loadQualityKpi() {
     try {
-        const qualityKpi = yield call(api.getQualityKpi, 1);
-        yield put(qualityKpiSuccess(qualityKpi))
+        const kpi = yield call(api.getQualityKpi, 1);
+        yield put(qualityKpi.qualityKpiSuccess(kpi))
     } catch (e) {
-        yield put(qualityKpiFail(e))
+        yield put(qualityKpi.qualityKpiFail(e))
     }
 }
 
@@ -105,7 +105,7 @@ export function* saveHealthIndicators(action) {
         yield call(api.saveHealthIndicatorsPost, 1, action.data);
         yield call(loadHealthIndicators);
     } catch (e) {
-        yield put(loadHealthError(e))
+        yield put(healthIndicators.loadHealthError(e))
     }
 }
 
@@ -115,7 +115,7 @@ export function* saveIndicatorsRqs(action) {
         yield call(loadIndicatorsRqs);
         yield call(loadDr4Kpi);
     } catch(e) {
-        yield put(indicatorsRqsFail(e));
+        yield put(rqIndicators.indicatorsRqsFail(e));
     }
 }
 
@@ -124,6 +124,16 @@ export function* saveIndicatorsQuality(action) {
         yield call(api.saveQualityKpi, 1, action.data);
         yield call(loadQualityKpi);
     } catch (e) {
-        yield put(qualityKpiFail(e));
+        yield put(qualityKpi.qualityKpiFail(e));
+    }
+}
+
+export function* saveInformationTab(action) {
+    try {
+        yield call(api.saveInformationTab, 1, action.data);
+        yield call(loadInformationTab);
+        yield call(loadMilestones);
+    } catch (e) {
+        yield put(infoTab.loadInfoError(e));
     }
 }

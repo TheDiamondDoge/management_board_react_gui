@@ -29,6 +29,7 @@ export default (state, action) => {
                 error: action.error
             };
         case SAVE_INFO_DATA:
+            action.data = getSaveDto(action.data);
             return {
                 ...state
             };
@@ -38,6 +39,11 @@ export default (state, action) => {
             return state;
     }
 }
+
+let getSaveDto = (data) => ({
+    ...data.general,
+    ...data.urls
+});
 
 let dataComposer = (data) => ({
     general: {
@@ -66,7 +72,6 @@ let dataComposer = (data) => ({
         ecmaBacklogTarget: data.ecmaBacklogTarget,
         composite: data.composite,
     },
-    milestones: data.milestones,
     urls: {
         projectCollabUrl: data.projectCollabUrl,
         projectPWASiteUrl: data.projectPWASiteUrl,

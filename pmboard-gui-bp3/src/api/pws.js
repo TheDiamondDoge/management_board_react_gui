@@ -43,3 +43,7 @@ export const saveQualityKpi = (projectID, payload) => (
 export const getInformationTab = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/information`)
 );
+
+export const saveInformationTab = (projectID, payload) => (
+    axios.post(`http://localhost:8080/api/projects/${projectID}/tabs/information`, payload)
+);

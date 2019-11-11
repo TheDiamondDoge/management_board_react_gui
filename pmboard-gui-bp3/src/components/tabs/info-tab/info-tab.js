@@ -46,13 +46,16 @@ export default class InfoTab extends React.Component {
         if (information.loading || milestones.loading) {
             return (<Loading/>)
         } else {
-            const {general, urls, validationParams} = information.payload;
+            const {general, urls} = information.payload;
+            const {saveData} = this.props;
             const milestones = this.props.milestones.payload;
 
             return (
                 <Formik
                     onSubmit={(values, formikActions) => {
                         formikActions.setSubmitting(false);
+                        const {milestones, ...infoDto} = values;
+                        saveData(infoDto);
                         alert(JSON.stringify(values, null, 2));
                     }}
                     initialValues={
@@ -74,9 +77,7 @@ export default class InfoTab extends React.Component {
                                         editMode={this.state.editMode}
                                     />
                                     <CustomCard>
-                                        {
-                                            this.mainRows(general, validationParams, this.state.editMode, "general")
-                                        }
+                                        {this.mainRows(general, "general")}
                                     </CustomCard>
 
                                     <br/>
@@ -94,9 +95,7 @@ export default class InfoTab extends React.Component {
                                     <br/>
 
                                     <CustomCard>
-                                        {
-                                            this.mainRows(urls, validationParams, this.state.editMode, "urls")
-                                        }
+                                        {this.mainRows(urls, "urls")}
                                     </CustomCard>
                                 </div>
                             )
@@ -107,7 +106,9 @@ export default class InfoTab extends React.Component {
         }
     }
 
-    mainRows = (general, validationParams, editMode, stateBranch) => {
+    mainRows = (general, stateBranch) => {
+        const {editMode} = this.state;
+        const {validationParams} = this.props.information.payload;
         const style = this.selectClass(stateBranch);
         return (Object.keys(general).map((obj) => {
             return (
@@ -119,8 +120,8 @@ export default class InfoTab extends React.Component {
                                 ? <FormikInput
                                     type="text"
                                     name={`${stateBranch}.${obj}`}
-                                  />
-                                : <FieldValue value={general[obj]} />
+                                />
+                                : <FieldValue value={general[obj]}/>
                         }
                     </div>
                     : ""
@@ -144,4 +145,5 @@ InfoTab.propTypes = {
     milestones: PropTypes.arrayOf(MilestoneShape),
     loadData: PropTypes.func,
     resetData: PropTypes.func,
+    saveData: PropTypes.func,
 };
