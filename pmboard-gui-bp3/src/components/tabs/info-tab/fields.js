@@ -59,7 +59,7 @@ const isLabelExists = (id) => {
     return (id in fieldsParam);
 };
 
-//TODO: Need to add 'notAllowedExcept' situation
+//TODO: Remove this. Use RenderHelperClass. Add prop-types to it.
 export const displayOrNot = (id, options) => {
     if (!isLabelExists(id)) return false;
 

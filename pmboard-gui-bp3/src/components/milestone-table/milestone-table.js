@@ -5,11 +5,12 @@ import FieldValue from "../field-value/field-value";
 import styles from './milestone-table.module.css';
 import PropTypes from "prop-types";
 import {FieldArray} from "formik";
-import FormikInput, {renderControls} from "../../util/util-renders";
+import FormikInput, {RenderControls} from "../mini-input-renderers/mini-input-renderers";
 import {dateFormatToString} from "../../util/transformFuncs";
 
 //TODO: Validation at least for dates
 //TODO: Block OR edition and DR0-DR1 baseline
+//TODO: if user will add new milestone with label of mandatory -> it will be blocked in UI (need to fix)
 export default class MilestoneTable extends React.Component {
     constructor(props) {
         super(props);
@@ -67,7 +68,7 @@ export default class MilestoneTable extends React.Component {
                                                                         name={`milestones[${key}].label`}
                                                                     />
                                                                     {
-                                                                        this.removeRowControls(milestone.label, () => arrayHelpers.remove(key))
+                                                                        this.rowRemoveControls( () => arrayHelpers.remove(key))
                                                                     }
                                                                 </>
                                                                 : <FieldValue value={milestone.label}/>
@@ -137,7 +138,7 @@ export default class MilestoneTable extends React.Component {
                                         editMode &&
                                         <tr>
                                             <td colSpan={6} className={styles.align_center}>
-                                                {this.addRowControls(arrayHelpers.push)}
+                                                {this.rowAddControls(arrayHelpers.push)}
                                             </td>
                                         </tr>
                                     }
@@ -155,12 +156,12 @@ export default class MilestoneTable extends React.Component {
         this.state.mandatoryMilesLabels.includes(label.toUpperCase())
     );
 
-    removeRowControls = (label, remove) => (
-        renderControls("delete", remove, true)
+    rowRemoveControls = (remove) => (
+        <RenderControls type={"delete"} onClick={remove} />
     );
 
-    addRowControls = (push) => (
-        renderControls("add", () => push(this.getEmptyMilestone()), true)
+    rowAddControls = (push) => (
+        <RenderControls type={"add"} onClick={() => push(this.getEmptyMilestone())} />
     );
 
     getEmptyMilestone = () => ({

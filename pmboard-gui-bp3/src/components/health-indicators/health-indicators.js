@@ -171,7 +171,7 @@ export default class HealthIndicators extends React.Component {
         if (this.state.editCommentMode) {
             return (
                 <td>
-                    <Field type="area" name={name} component={FormikCustomField}/>
+                    <Field type="textarea" name={name} component={FormikCustomField}/>
                 </td>
             )
         } else {

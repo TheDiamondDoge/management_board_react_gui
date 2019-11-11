@@ -5,10 +5,12 @@ import styles from "./quality.module.css";
 import {FieldName} from "../field-name/field-name";
 import PropTypes from "prop-types";
 import {FieldArray, Formik} from "formik";
-import {renderComment, renderControls, renderInput} from "../../util/util-renders";
+import FormikInput, {RenderControls} from "../mini-input-renderers/mini-input-renderers";
 import HelpIcon from "../help-icon/help-icon";
 import {dateFormatToString} from "../../util/transformFuncs";
 import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/custom-types";
+import FieldValue from "../field-value/field-value";
+import {formikFieldHandleChange} from "../../util/util";
 
 export default class Quality extends React.Component {
     constructor(props) {
@@ -19,6 +21,7 @@ export default class Quality extends React.Component {
     }
 
     onSubmitForm = null;
+    updateFieldHandler = null;
 
     bindFormSubmission = (formikSubmit) => {
         this.onSubmitForm = formikSubmit;
@@ -60,6 +63,7 @@ export default class Quality extends React.Component {
                 render={
                     (formikProps) => {
                         this.bindFormSubmission(formikProps.submitForm);
+                        this.updateFieldHandler = formikFieldHandleChange(formikProps);
                         return this.renderQualityForm(formikProps.values);
                     }
                 }
@@ -171,12 +175,11 @@ export default class Quality extends React.Component {
                                         </td>
                                         <td rowSpan={rowSpan}>
                                             {
-                                                renderControls(
-                                                    "add",
-                                                    () => arrayHelpers.push(this.getEmptyRowObject(comment)),
-                                                    this.state.editMode,
-                                                    isControlled
-                                                )
+                                                this.state.editMode && isControlled &&
+                                                <RenderControls
+                                                    type="add"
+                                                    onClick={() => arrayHelpers.push(this.getEmptyRowObject(comment))}
+                                                />
                                             }
                                         </td>
                                     </>
@@ -184,29 +187,45 @@ export default class Quality extends React.Component {
                             }
                             <td>
                                 {
-                                    renderControls(
-                                        "delete",
-                                        () => this.removeRow(values[field], arrayHelpers, i),
-                                        this.state.editMode,
-                                        isControlled
-                                    )
+                                    this.state.editMode && isControlled &&
+                                    <RenderControls
+                                        type="delete"
+                                        onClick={() => this.removeRow(values[field], arrayHelpers, i)}
+                                     />
                                 }
                             </td>
                             <td className={styles.column_align_center}>
                                 {
-                                    renderInput(`${field}[${i}].objective`, row.objective, isObjEditable, "numeric")
+                                    isObjEditable
+                                        ? <FormikInput
+                                            type="numeric"
+                                            name={`${field}[${i}].objective`}
+                                            onValueChange={this.updateFieldHandler(`${field}[${i}].objective`)}
+                                        />
+                                        : <FieldValue value={row.objective} />
                                 }
                             </td>
                             <td className={styles.column_align_center}>
                                 {
-                                    renderInput(`${field}[${i}].actual`, row.actual, this.state.editMode, "numeric")
+                                    this.state.editMode
+                                        ? <FormikInput
+                                            type="numeric"
+                                            name={`${field}[${i}].actual`}
+                                            onValueChange={this.updateFieldHandler(`${field}[${i}].actual`)}
+                                        />
+                                        : <FieldValue value={row.actual} />
                                 }
                             </td>
                             {
                                 i === 0
                                     ? <td rowSpan={rowSpan} className={styles.column_align_center}>
                                         {
-                                            renderComment(`${field}[${i}].comment`, comment, this.state.editMode)
+                                            this.state.editMode
+                                                ? <FormikInput
+                                                    type="textarea"
+                                                    name={`${field}[${i}].comment`}
+                                                />
+                                                : <FieldValue value={comment} />
                                         }
                                     </td>
                                     : false

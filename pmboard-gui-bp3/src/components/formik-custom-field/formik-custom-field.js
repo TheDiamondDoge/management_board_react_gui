@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextArea, InputGroup, Checkbox, NumericInput} from "@blueprintjs/core";
 import {DateInput} from "@blueprintjs/datetime";
-import {dateFormatToString, stringToDateFormat} from "../../util/transformFuncs";
+import {dateFormatToString, stringToDateFormat, transformDateForInput} from "../../util/transformFuncs";
 
 export default class FormikCustomField extends React.Component {
     constructor(props) {
@@ -34,14 +34,13 @@ export default class FormikCustomField extends React.Component {
         }
     }
 
-    //TODO: area -> textarea
     fieldFactory = (type, field, props) => {
         type = type || "";
         switch (type.toLowerCase()) {
-            case "area":
+            case "textarea":
                 return (<TextArea fill={true} {...field} {...props} />);
             case "date":
-                const date = this.transformDateForInput(field.value);
+                const date = transformDateForInput(field.value);
                 const {min, max} = this.state.dateRange;
                 return (
                     <DateInput formatDate={date => dateFormatToString(date)}
@@ -54,6 +53,7 @@ export default class FormikCustomField extends React.Component {
                 );
             case "numeric":
                 return (
+                    //onValueChange handler should be passed
                     <NumericInput allowNumericCharactersOnly={true}
                                   buttonPosition="none"
                                   fill={true}
@@ -68,15 +68,4 @@ export default class FormikCustomField extends React.Component {
                 return (<InputGroup {...field} {...props} />);
         }
     };
-
-    //TODO: Move to utils
-    transformDateForInput = (str) => {
-        if (!str) return null;
-        try {
-            return new Date(str);
-        } catch (e) {
-            return null;
-        }
-    }
-
 }

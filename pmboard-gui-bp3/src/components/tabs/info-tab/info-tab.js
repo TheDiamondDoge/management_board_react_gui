@@ -7,10 +7,11 @@ import styles from './info-tab.module.css'
 import PropTypes from 'prop-types';
 import Loading from "../../loading-card/loading";
 import {displayOrNot, getLabelById} from "./fields";
-import {Field, Formik} from "formik";
-import FormikInput, {renderInput} from "../../../util/util-renders";
+import {Formik} from "formik";
+import FormikInput from "../../mini-input-renderers/mini-input-renderers";
 import FieldValue from "../../field-value/field-value";
-import FormikCustomField from "../../formik-custom-field/formik-custom-field";
+import {MilestoneShape} from "../../../util/custom-types";
+import {formikFieldHandleChange} from "../../../util/util";
 
 export default class InfoTab extends React.Component {
     constructor(props) {
@@ -85,7 +86,7 @@ export default class InfoTab extends React.Component {
                                             <MilestoneTable
                                                 editMode={this.state.editMode}
                                                 milestonesData={formikProps.values.milestones}
-                                                onDateChangeFactory={this.handleChangeOfDateFunc(formikProps)}
+                                                onDateChangeFactory={formikFieldHandleChange(formikProps)}
                                             />
                                         }
                                     </CustomCard>
@@ -136,20 +137,11 @@ export default class InfoTab extends React.Component {
                 return styles.data_container;
         }
     };
-
-    handleChangeOfDateFunc(form) {
-        return function (name) {
-            return function (value) {
-                form.setFieldValue(name, value);
-            }
-        }
-    }
 }
 
-//TODO: shape of milestones???
 InfoTab.propTypes = {
     information: PropTypes.object.isRequired,
-    milestones: PropTypes.array.isRequired,
+    milestones: PropTypes.arrayOf(MilestoneShape),
     loadData: PropTypes.func,
     resetData: PropTypes.func,
 };

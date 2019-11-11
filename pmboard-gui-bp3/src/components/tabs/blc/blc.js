@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import BlcRow from "../../blc-rows/blcRow";
 import EditSaveControls from "../../edit-save-contols/edit-save-controls";
 import style from "../../blc-rows/blcRow.module.css";
-import {funcWithDelay} from "../../../util/wrappers";
 
 //TODO: Fetch is OK, need to populate
 export default class BlcDashboard extends React.Component {
@@ -57,7 +56,7 @@ export default class BlcDashboard extends React.Component {
         const thCommentClasses = classNames(styles.column_align_center);
         const {loaded} = this.props;
 
-        this.delayedOnChange = funcWithDelay(this.props.onRowValuesChange, 300);
+        this.delayedOnChange = null;//funcWithDelay(this.props.onRowValuesChange, 300);
 
         if (loaded) {
             const {pm, pmo, sales} = this.props;

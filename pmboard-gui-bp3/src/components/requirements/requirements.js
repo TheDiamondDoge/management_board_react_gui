@@ -8,8 +8,9 @@ import FieldValue from "../field-value/field-value";
 import PropTypes from 'prop-types';
 import {dateFormatToString} from "../../util/transformFuncs";
 import {Formik} from "formik";
-import {renderInput} from "../../util/util-renders";
+import FormikInput from "../mini-input-renderers/mini-input-renderers";
 import {FieldsToRenderShape, RequirementsShape} from "../../util/custom-types";
+import {formikFieldHandleChange} from "../../util/util";
 
 export default class Requirements extends React.Component {
     constructor(props) {
@@ -30,6 +31,7 @@ export default class Requirements extends React.Component {
     };
 
     onSubmit = null;
+    updateFieldHandler = null;
 
     render() {
         const {addedAfterDr1, committedAtDr1, modifiedAfterDr1, removedAfterDr1} = this.props.requirements;
@@ -49,6 +51,7 @@ export default class Requirements extends React.Component {
                 render={
                     (formikProps) => {
                         this.bindFormSubmission(formikProps.submitForm);
+                        this.updateFieldHandler = formikFieldHandleChange(formikProps);
                         return this.renderRqsTable(formikProps.values);
                     }
                 }
@@ -107,8 +110,13 @@ export default class Requirements extends React.Component {
                 return <FieldValue value={dateFormatToString(dr1)}/>;
             case "sum":
                 return <FieldValue value={sum}/>;
-            default:
-                return renderInput(propName, value, this.state.editMode, "numeric");
+            default: {
+                if (this.state.editMode) {
+                    return <FormikInput type="numeric" name={propName} onValueChange={this.updateFieldHandler(propName)}/>;
+                } else {
+                    return <FieldValue value={value} />
+                }
+            }
         }
     };
 

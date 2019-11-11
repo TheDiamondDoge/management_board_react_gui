@@ -49,15 +49,6 @@ export const stringToDateFormat = (string) => {
     return new Date(year, MONTHS_NAMES.indexOf(month), day);
 };
 
-// //TODO: This is huge UGLY workaround. TO REMOVE!!!!
-// export const dateToDashedString = (date) => {
-//     let day = date.getDate();
-//     let month = date.getMonth();
-//     let year = date.getFullYear();
-//
-//     return `${year}-${month}-${day}`;
-// };
-
 export const nullToEmptyStr = (str) => (
     str == "null" ? "" : str
 );
@@ -65,3 +56,12 @@ export const nullToEmptyStr = (str) => (
 export const nullToNA = (value) => (
     value === null ? "N/A" : value
 );
+
+export const transformDateForInput = (str) => {
+    if (!str) return null;
+    try {
+        return new Date(str);
+    } catch (e) {
+        return null;
+    }
+}
