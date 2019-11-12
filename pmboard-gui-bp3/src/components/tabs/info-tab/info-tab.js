@@ -47,15 +47,18 @@ export default class InfoTab extends React.Component {
             return (<Loading/>)
         } else {
             const {general, urls} = information.payload;
-            const {saveData} = this.props;
+            const {saveInfo, saveMilestones} = this.props;
             const milestones = this.props.milestones.payload;
 
             return (
                 <Formik
+                    enableReinitialize
                     onSubmit={(values, formikActions) => {
                         formikActions.setSubmitting(false);
                         const {milestones, ...infoDto} = values;
-                        saveData(infoDto);
+                        saveInfo(infoDto);
+                        saveMilestones(milestones);
+                        console.log(milestones);
                         alert(JSON.stringify(values, null, 2));
                     }}
                     initialValues={
@@ -145,5 +148,6 @@ InfoTab.propTypes = {
     milestones: PropTypes.arrayOf(MilestoneShape),
     loadData: PropTypes.func,
     resetData: PropTypes.func,
-    saveData: PropTypes.func,
+    saveInfo: PropTypes.func,
+    saveMilestones: PropTypes.func,
 };

@@ -1,7 +1,7 @@
 import {takeEvery, takeLatest, fork} from 'redux-saga/effects';
 import {
     loadIndicatorsTab, loadInformationTab, loadSummaryTab, saveHealthIndicators, saveIndicatorsQuality,
-    saveIndicatorsRqs, loadQualityKpi, loadIndicatorsRqs, loadHealthIndicators, saveInformationTab
+    saveIndicatorsRqs, loadQualityKpi, loadIndicatorsRqs, loadHealthIndicators, saveInformationTab, saveMilestones
 } from "./worker-sagas";
 import * as summaryTab from "../../actions/summary-tab";
 import * as indicatorsTab from "../../actions/indicators-tab";
@@ -9,6 +9,7 @@ import * as informationTab from "../../actions/info-tab";
 import * as healthIndicators from "../../actions/health-indicators";
 import * as rqIndicators from "../../actions/indicators-rqs";
 import * as quality from "../../actions/quality-kpi";
+import * as milestones from "../../actions/milestones";
 
 function* watchSummaryTabLoad() {
     yield takeEvery(summaryTab.LOAD_SUMMARY, loadSummaryTab);
@@ -55,11 +56,16 @@ function* watchInformationTabSave() {
     yield takeLatest(informationTab.SAVE_INFO_DATA, saveInformationTab);
 }
 
+function* watchMilestonesSave() {
+    yield takeLatest(milestones.SAVE_MILESTONES, saveMilestones)
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
     fork(watchInformationTabLoad),
     fork(watchInformationTabSave),
+    fork(watchMilestonesSave),
     fork(watchHealthIndicatorsLoad),
     fork(watchHealthIndicatorsSave),
     fork(watchHealthCommentsSave),

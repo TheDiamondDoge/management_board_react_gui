@@ -16,6 +16,10 @@ export const getMilestones = (projectID) => (
     axios.get(`http://localhost:8080/api/milestones/${projectID}`)
 );
 
+export const saveMilestones = (projectID, payload) => (
+    axios.post(`http://localhost:8080/api/milestones/${projectID}`, payload)
+);
+
 export const getIndicatorsRqs = (projectID) => (
     axios.get(`http://localhost:8080/api/indicators/requirements/${projectID}`)
 );

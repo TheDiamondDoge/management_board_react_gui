@@ -158,7 +158,7 @@ export default class MilestoneTable extends React.Component {
                 }}
             />
         )
-    }
+    };
 
     isMandatory = (label) => (
         this.state.mandatoryMilesLabels.includes(label.toUpperCase())

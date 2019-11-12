@@ -132,8 +132,16 @@ export function* saveInformationTab(action) {
     try {
         yield call(api.saveInformationTab, 1, action.data);
         yield call(loadInformationTab);
-        yield call(loadMilestones);
     } catch (e) {
         yield put(infoTab.loadInfoError(e));
+    }
+}
+
+export function* saveMilestones(action) {
+    try {
+        yield call(api.saveMilestones, 1, action.data);
+        yield call(loadMilestones);
+    } catch (e) {
+        yield put(milestones.loadMilestonesFail(e));
     }
 }

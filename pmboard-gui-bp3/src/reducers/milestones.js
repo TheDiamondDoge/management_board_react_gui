@@ -2,7 +2,7 @@ import {
     LOAD_MILESTONES,
     LOAD_MILESTONES_FAIL,
     LOAD_MILESTONES_SUCCESS,
-    RESET_MILESTONES_STATE
+    RESET_MILESTONES_STATE, SAVE_MILESTONES
 } from "../actions/milestones";
 
 const initState = {
@@ -20,6 +20,11 @@ export default (state, action) => {
             return {
                 ...state,
                 loading: false,
+            };
+        case SAVE_MILESTONES:
+            return {
+                ...state,
+                loading: true,
             };
         case LOAD_MILESTONES_SUCCESS:
             return {

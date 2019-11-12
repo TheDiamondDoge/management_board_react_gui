@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import InfoTab from './info-tab';
 import {loadInfo, resetState, saveInfoData} from "../../../actions/info-tab";
-import {resetMilestonesState} from "../../../actions/milestones";
+import {resetMilestonesState, saveMilestones} from "../../../actions/milestones";
 
 function mapStateToProps(state) {
     return {
@@ -12,7 +12,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        saveData: (data) => dispatch(saveInfoData(data)),
+        saveInfo: (data) => dispatch(saveInfoData(data)),
+        saveMilestones: (date) => dispatch(saveMilestones(date)),
         loadData: () => (dispatch(loadInfo())),
         resetData: () => {
             dispatch(resetState());

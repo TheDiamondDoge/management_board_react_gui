@@ -17,8 +17,6 @@ export const MilestoneShape = PropTypes.shape({
     completion: PropTypes.number,
     shown: PropTypes.bool,
     meetingMinutes: PropTypes.string,
-    //TODO: Do we really need this?
-    projectID: PropTypes.number
 });
 
 const HealthStatusSet = PropTypes.shape({
