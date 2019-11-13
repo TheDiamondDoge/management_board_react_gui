@@ -49,6 +49,7 @@ let dataComposer = (data) => ({
     general: {
         projectDescription: data.projectDescription,
         oemPartner: data.oemPartner,
+        keyCustomers: data.keyCustomers,
         productRelease: data.productRelease,
         projectType: data.projectType,
         projectRigor: data.projectRigor,

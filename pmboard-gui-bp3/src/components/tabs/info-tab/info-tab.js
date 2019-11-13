@@ -6,13 +6,16 @@ import EditSaveControls from "../../edit-save-contols/edit-save-controls";
 import styles from './info-tab.module.css'
 import PropTypes from 'prop-types';
 import Loading from "../../loading-card/loading";
-import {displayOrNot, getLabelById} from "./fields";
 import {Formik} from "formik";
 import FormikInput from "../../mini-input-renderers/mini-input-renderers";
 import FieldValue from "../../field-value/field-value";
 import {MilestoneShape} from "../../../util/custom-types";
 import {formikFieldHandleChange} from "../../../util/util";
+import {summaryFieldsToRender} from "./fields";
+import RenderFieldHelper from "../../../util/render-field-helper";
+import validationSchema from "./validationSchema";
 
+//TODO: too slow and laggy (sometimes). Try fastField
 export default class InfoTab extends React.Component {
     constructor(props) {
         super(props);
@@ -35,6 +38,18 @@ export default class InfoTab extends React.Component {
         this.submitForm = formikSubmitForm;
     };
 
+    sendData = (data) => {
+        const {saveInfo, saveMilestones} = this.props;
+        const {milestones, ...infoDto} = data;
+        saveInfo(infoDto);
+        saveMilestones(milestones);
+    };
+
+    cancelInput = () => {
+        this.props.loadData();
+        this.editClickHandle();
+    };
+
     editClickHandle = () => {
         this.setState((prevState) => ({
             editMode: !prevState.editMode,
@@ -47,7 +62,6 @@ export default class InfoTab extends React.Component {
             return (<Loading/>)
         } else {
             const {general, urls} = information.payload;
-            const {saveInfo, saveMilestones} = this.props;
             const milestones = this.props.milestones.payload;
 
             return (
@@ -55,11 +69,9 @@ export default class InfoTab extends React.Component {
                     enableReinitialize
                     onSubmit={(values, formikActions) => {
                         formikActions.setSubmitting(false);
-                        const {milestones, ...infoDto} = values;
-                        saveInfo(infoDto);
-                        saveMilestones(milestones);
-                        console.log(milestones);
-                        alert(JSON.stringify(values, null, 2));
+                        this.sendData(values);
+                        this.editClickHandle();
+                        // alert(JSON.stringify(values, null, 2));
                     }}
                     initialValues={
                         {
@@ -68,7 +80,9 @@ export default class InfoTab extends React.Component {
                             milestones
                         }
                     }
-
+                    validationSchema={
+                        validationSchema
+                    }
                     render={
                         (formikProps) => {
                             this.bindFormSubmission(formikProps.submitForm);
@@ -77,6 +91,7 @@ export default class InfoTab extends React.Component {
                                     <EditSaveControls
                                         onClick={this.editClickHandle}
                                         onSubmit={this.submitForm}
+                                        onCancel={this.cancelInput}
                                         editMode={this.state.editMode}
                                     />
                                     <CustomCard>
@@ -112,12 +127,13 @@ export default class InfoTab extends React.Component {
     mainRows = (general, stateBranch) => {
         const {editMode} = this.state;
         const {validationParams} = this.props.information.payload;
+        const renderHelper = new RenderFieldHelper(summaryFieldsToRender);
         const style = this.selectClass(stateBranch);
         return (Object.keys(general).map((obj) => {
             return (
-                displayOrNot(obj, validationParams)
+                renderHelper.displayOrNot(obj, validationParams)
                     ? <div key={obj} className={style}>
-                        <FieldName name={getLabelById(obj)}/>
+                        <FieldName name={renderHelper.getLabelById(obj)}/>
                         {
                             editMode
                                 ? <FormikInput

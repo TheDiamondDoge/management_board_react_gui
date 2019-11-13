@@ -11,3 +11,15 @@ export const ProjectStates = {
     ENABLED: "ENABLED",
     DISABLED: "DISABLED"
 };
+
+export const ValidationErrors = {
+    string: {
+        MAX: "String is too long",
+        MIN: "String is too short",
+    },
+    number: {
+        MAX: "Number is too big",
+        MIN: "Number is too small"
+    },
+    REQUIRED: "Value required"
+};

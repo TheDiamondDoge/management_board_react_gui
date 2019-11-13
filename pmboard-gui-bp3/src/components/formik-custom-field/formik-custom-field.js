@@ -2,6 +2,8 @@ import React from 'react';
 import {TextArea, InputGroup, Checkbox, NumericInput} from "@blueprintjs/core";
 import {DateInput} from "@blueprintjs/datetime";
 import {dateFormatToString, stringToDateFormat, transformDateForInput} from "../../util/transformFuncs";
+import {getPropFromStringPath} from "../../util/util";
+import styles from "./formik-custom-field.module.css";
 
 export default class FormikCustomField extends React.Component {
     constructor(props) {
@@ -18,11 +20,14 @@ export default class FormikCustomField extends React.Component {
     render() {
         if (!(this.props === undefined)) {
             const {field, form: {touched, errors}, type, ...props} = this.props;
+            const touchedValue = getPropFromStringPath(touched, field.name);
+            const errorsValue = getPropFromStringPath(errors, field.name);
+
             return (
                 <div>
                     {this.fieldFactory(type, field, props)}
-                    {touched[field.name] &&
-                    errors[field.name] && <div className="error">{errors[field.name]}</div>}
+                    {touchedValue &&
+                    errorsValue && <div className={styles.error}>{errorsValue}</div>}
                 </div>
             );
         } else {
@@ -53,7 +58,7 @@ export default class FormikCustomField extends React.Component {
                 );
             case "numeric":
                 return (
-                    //onValueChange handler should be passed
+                    //onValueChange handler should be passed instead of onChange
                     <NumericInput allowNumericCharactersOnly={true}
                                   buttonPosition="none"
                                   fill={true}

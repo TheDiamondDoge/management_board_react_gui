@@ -1,16 +1,11 @@
-const PRODUCT = "Product";
-const OFFER = "Offer";
-const OFFER_PRODUCT = "Offer & Product";
-const OEM_PRODUCT = "OEM Product";
-const SUPPORT_PROGRAM = "Support Program";
-const ENABLED = "ENABLED";
+import {ProjectTypes} from "../../../util/constants";
 
-const fieldsParam = {
+export const summaryFieldsToRender = {
     projectDescription: {label: "Project Description"},
     oemPartner: {
         label: "OEM Partner",
         notAllowedIn: {
-            projectType: [PRODUCT, OFFER, OFFER_PRODUCT, SUPPORT_PROGRAM],
+            projectType: [ProjectTypes.PRODUCT, ProjectTypes.OFFER, ProjectTypes.OFFER_PRODUCT, ProjectTypes.SUPPORT_PROGRAM],
         }
     },
     keyCustomers: {label: "Key Customers"},
@@ -38,7 +33,7 @@ const fieldsParam = {
     composite: {
         label: "Composite Project",
         notAllowedIn: {
-            projectType: [OFFER]
+            projectType: [ProjectTypes.PRODUCT]
         }
     },
     projectCollabUrl: {label: "Project Collaboration Site"},
@@ -47,36 +42,4 @@ const fieldsParam = {
     defectsUrl: {label: "Defects (JIRA)"},
     requirementsUrl: {label: "Requirements (JIRA)"},
     cisUrl: {label: "Continuous Integration Site"},
-};
-
-export const getLabelById = (id) => {
-    if (isLabelExists(id)) {
-        return fieldsParam[id].label;
-    }
-};
-
-const isLabelExists = (id) => {
-    return (id in fieldsParam);
-};
-
-//TODO: Remove this. Use RenderHelperClass. Add prop-types to it.
-export const displayOrNot = (id, options) => {
-    if (!isLabelExists(id)) return false;
-
-    if (fieldsParam[id].hasOwnProperty("notAllowedIn")) {
-        let fieldProps = fieldsParam[id].notAllowedIn;
-        for (let prop in fieldProps) {
-            if (fieldProps.hasOwnProperty(prop)) {
-                if (options[prop] !== undefined) {
-                    for (let i = 0; i < fieldProps[prop].length; i++) {
-                        if (fieldProps[prop][i] === options[prop]) {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    return true;
 };

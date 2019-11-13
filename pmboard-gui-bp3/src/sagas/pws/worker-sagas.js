@@ -39,8 +39,6 @@ export function* loadInformationTab() {
     try {
         const info = yield call(api.getInformationTab, 1);
         yield put(infoTab.loadInfoSuccess(info));
-
-        yield call(loadMilestones);
     } catch (e) {
         yield put(infoTab.loadInfoError);
     }
