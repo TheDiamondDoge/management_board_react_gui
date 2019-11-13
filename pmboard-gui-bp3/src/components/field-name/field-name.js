@@ -1,11 +1,10 @@
 import React from 'react';
 import styles from "./field-name.module.css";
-import PropTypes from 'prop-types';
+import classNames from "classnames";
 
-export const FieldName = ({name}) => {
-    return (<div className={styles.field}>{name}</div>)
+export const FieldName = (props) => {
+    const {className, name, ...other} = props;
+    const styleClass = classNames(className, styles.field);
+    return (<div className={styleClass} {...other}>{name}</div>)
 };
 
-FieldName.propTypes = {
-    name: PropTypes.string.isRequired,
-};

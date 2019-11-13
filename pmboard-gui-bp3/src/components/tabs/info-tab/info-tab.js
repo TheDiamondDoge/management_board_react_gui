@@ -14,6 +14,7 @@ import {formikFieldHandleChange} from "../../../util/util";
 import {summaryFieldsToRender} from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
 import validationSchema from "./validationSchema";
+import HelpIcon from "../../help-icon/help-icon";
 
 //TODO: too slow and laggy (sometimes). Try fastField
 export default class InfoTab extends React.Component {
@@ -125,27 +126,78 @@ export default class InfoTab extends React.Component {
     }
 
     mainRows = (general, stateBranch) => {
+        const renderHelper = new RenderFieldHelper(summaryFieldsToRender);
+        return (Object.keys(general).map((obj) => {
+            return this.renderRow(renderHelper, obj, stateBranch, general[obj]);
+        }))
+    };
+
+    renderRow = (renderHelper, obj, stateBranch, value) => {
+        switch (obj) {
+            case "orBusinessPlan":
+            case "updatedBusinessPlan":
+            case "drChecklist":
+                return this.renderRowWithComment(renderHelper, obj, stateBranch, value);
+            default:
+                return this.renderSimpleRow(renderHelper, obj, stateBranch, value);
+        }
+    };
+
+    renderSimpleRow = (renderHelper, obj, stateBranch, value) => {
         const {editMode} = this.state;
         const {validationParams} = this.props.information.payload;
-        const renderHelper = new RenderFieldHelper(summaryFieldsToRender);
         const style = this.selectClass(stateBranch);
-        return (Object.keys(general).map((obj) => {
-            return (
-                renderHelper.displayOrNot(obj, validationParams)
-                    ? <div key={obj} className={style}>
+        return (
+            renderHelper.displayOrNot(obj, validationParams)
+                ? <div key={obj} className={style}>
+                    <FieldName name={renderHelper.getLabelById(obj)}/>
+                    {
+                        editMode && renderHelper.isEditable(obj)
+                            ? <FormikInput
+                                type={renderHelper.getFieldType(obj)}
+                                name={`${stateBranch}.${obj}`}
+                            />
+                            : <FieldValue value={value} />
+                    }
+                </div>
+                : ""
+        )
+    };
+
+    renderRowWithComment = (renderHelper, obj, stateBranch, value) => {
+        const {editMode} = this.state;
+        const {validationParams} = this.props.information.payload;
+        return (
+            renderHelper.displayOrNot(obj, validationParams)
+                ? <div key={obj} className={styles.data_container_comment}>
+                    <div className={styles.comment_row_label}>
                         <FieldName name={renderHelper.getLabelById(obj)}/>
-                        {
-                            editMode
-                                ? <FormikInput
-                                    type="text"
-                                    name={`${stateBranch}.${obj}`}
-                                />
-                                : <FieldValue value={general[obj]}/>
-                        }
                     </div>
-                    : ""
-            )
-        }))
+                    {
+                        editMode && renderHelper.isEditable(obj)
+                            ? <FormikInput
+                                type={renderHelper.getFieldType(obj)}
+                                name={`${stateBranch}.${obj}`}
+                                className={styles.comment_row_value}
+                            />
+                            : <FieldValue value={value} className={styles.comment_row_value}/>
+                    }
+                    <div className={styles.comment_row_comment}>
+                        <FieldName name={"Comment"}/><HelpIcon className={styles.help_icon}/>
+                    </div>
+
+                    {
+                        editMode
+                            ? <FormikInput
+                                type="textarea"
+                                name={`${stateBranch}.${obj}`}
+                                className={styles.comment_row_comment_value}
+                            />
+                            : <FieldValue value={value} className={styles.comment_row_comment_value}/>
+                    }
+                </div>
+                : ""
+        )
     };
 
     selectClass = (stateBranch) => {

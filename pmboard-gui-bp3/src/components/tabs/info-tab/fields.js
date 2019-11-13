@@ -1,7 +1,7 @@
 import {ProjectTypes} from "../../../util/constants";
 
 export const summaryFieldsToRender = {
-    projectDescription: {label: "Project Description"},
+    projectDescription: {label: "Project Description", type: "textarea"},
     oemPartner: {
         label: "OEM Partner",
         notAllowedIn: {

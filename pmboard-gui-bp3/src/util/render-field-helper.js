@@ -18,9 +18,22 @@ export default class RenderFieldHelper {
         return true;
     };
 
+    isEditable(field) {
+        const editable = this._fieldsToRender[field].editable;
+        if (!(editable === undefined)) {
+            return this._fieldsToRender[field].editable;
+        } else {
+            return true;
+        }
+    }
+
     isLabelExists(id) {
         return (id in this._fieldsToRender);
     };
+
+    getFieldType(field) {
+        return this._fieldsToRender[field].type ? this._fieldsToRender[field].type : "text";
+    }
 
     _shouldRender(fieldOptions, options, id) {
         if (this._fieldsToRender[id].hasOwnProperty(fieldOptions)) {

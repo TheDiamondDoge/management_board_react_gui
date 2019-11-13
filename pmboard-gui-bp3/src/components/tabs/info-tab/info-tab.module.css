@@ -1,6 +1,15 @@
+/*TODO: What about media queries? (expand description more than 700px)*/
 .data_container {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 200px 700px;
+    grid-template-rows: auto 1em;
+}
+
+.data_container_comment {
+    display: grid;
+    grid-template-areas:
+        "name value comment comment_value";
+    grid-template-columns: 200px 300px 100px 300px;
     grid-template-rows: auto 1em;
 }
 
@@ -8,4 +17,27 @@
     display: grid;
     grid-template-columns: 230px 1fr;
     grid-template-rows: auto 1em;
+}
+
+.comment_row_label {
+    grid-area: name;
+}
+
+.comment_row_value {
+    grid-area: value;
+    word-wrap: break-word;
+}
+
+.comment_row_comment {
+    grid-area: comment;
+    margin-left: 10px;
+}
+
+.comment_row_comment_value {
+    grid-area: comment_value;
+    word-wrap: break-word;
+}
+
+.help_icon {
+    margin-left: -7px;
 }
