@@ -64,4 +64,10 @@ export const transformDateForInput = (str) => {
     } catch (e) {
         return null;
     }
-}
+};
+
+export const boolToYesNo = (val) => (
+    val === true ? "Yes" : "No"
+);
+
+

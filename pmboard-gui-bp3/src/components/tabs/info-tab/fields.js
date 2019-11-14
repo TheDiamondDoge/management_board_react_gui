@@ -34,7 +34,8 @@ export const summaryFieldsToRender = {
         label: "Composite Project",
         notAllowedIn: {
             projectType: [ProjectTypes.PRODUCT]
-        }
+        },
+        type: "checkbox"
     },
     projectCollabUrl: {label: "Project Collaboration Site"},
     projectPWASiteUrl: {label: "Project PWA Site"},

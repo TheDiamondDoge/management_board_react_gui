@@ -31,8 +31,18 @@ export default class RenderFieldHelper {
         return (id in this._fieldsToRender);
     };
 
-    getFieldType(field) {
-        return this._fieldsToRender[field].type ? this._fieldsToRender[field].type : "text";
+    getFieldProps(field, value) {
+        const fieldType = this._fieldsToRender[field].type ? this._fieldsToRender[field].type : "text";
+        if (field === "composite") {
+            return {
+                type: fieldType,
+                value
+            }
+        } else {
+            return {
+                type: fieldType
+            }
+        }
     }
 
     _shouldRender(fieldOptions, options, id) {

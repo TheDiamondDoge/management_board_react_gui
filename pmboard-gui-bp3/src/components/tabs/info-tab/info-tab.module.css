@@ -41,3 +41,55 @@
 .help_icon {
     margin-left: -7px;
 }
+
+.ecma_backlog_row {
+    display: grid;
+    grid-template-areas:
+        "label milestone milestone_value value_label value"
+        "label milestone_two milestone_value_two value_label_two value_two";
+    grid-template-columns: 200px 75px 75px 57px 75px;
+    grid-template-rows: auto 2em;
+    row-gap: 1em;
+}
+
+.ecma_label {
+    grid-area: label;
+}
+
+.milestone_1 {
+    grid-area: milestone;
+}
+
+.milestone_value_1 {
+    grid-area: milestone_value;
+}
+
+.value_label_1 {
+    grid-area: value_label;
+}
+
+.value_1 {
+    grid-area: value;
+}
+
+.milestone_2 {
+    grid-area: milestone_two;
+}
+
+.milestone_value_2 {
+    grid-area: milestone_value_two;
+}
+
+.value_label_2 {
+    grid-area: value_label_two;
+}
+
+.value_2 {
+    grid-area: value_two;
+}
+
+.value_label_1, .value_label_2 {
+    margin-left: 7px;
+}
+
+

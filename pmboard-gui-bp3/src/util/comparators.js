@@ -41,5 +41,8 @@ export function stringCompare(a, b){
     return 0;
 }
 
+export const isBoolean = (val) => (
+    val === true || val === false
+);
 
 
