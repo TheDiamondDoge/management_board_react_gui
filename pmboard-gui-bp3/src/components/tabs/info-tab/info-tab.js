@@ -11,12 +11,14 @@ import FormikInput from "../../mini-input-renderers/mini-input-renderers";
 import FieldValue from "../../field-value/field-value";
 import {MilestoneShape} from "../../../util/custom-types";
 import {formikFieldHandleChange} from "../../../util/util";
-import {summaryFieldsToRender} from "./fields";
+import {infoFieldsToRender} from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
 import validationSchema from "./validationSchema";
 import HelpIcon from "../../help-icon/help-icon";
 import {isBoolean} from "../../../util/comparators";
 import {boolToYesNo} from "../../../util/transformFuncs";
+import {MenuItem} from "@blueprintjs/core";
+import {MultiSelect} from "@blueprintjs/select";
 
 //TODO: too slow and laggy (sometimes). Try fastField
 export default class InfoTab extends React.Component {
@@ -98,7 +100,7 @@ export default class InfoTab extends React.Component {
                                         editMode={this.state.editMode}
                                     />
                                     <CustomCard>
-                                        {this.mainRows(general, "general")}
+                                        {this.mainRows(formikProps.values.general, "general")}
                                     </CustomCard>
 
                                     <br/>
@@ -116,7 +118,7 @@ export default class InfoTab extends React.Component {
                                     <br/>
 
                                     <CustomCard>
-                                        {this.mainRows(urls, "urls")}
+                                        {this.mainRows(formikProps.values.urls, "urls")}
                                     </CustomCard>
                                 </div>
                             )
@@ -127,14 +129,15 @@ export default class InfoTab extends React.Component {
         }
     }
 
-    mainRows = (general, stateBranch) => {
-        const renderHelper = new RenderFieldHelper(summaryFieldsToRender);
-        return (Object.keys(general).map((obj) => {
-            return this.renderRow(renderHelper, obj, stateBranch, general[obj]);
+    mainRows = (values, stateBranch) => {
+        const renderHelper = new RenderFieldHelper(infoFieldsToRender);
+        return (Object.keys(values).map((obj) => {
+            return this.renderRow(renderHelper, obj, stateBranch, values);
         }))
     };
 
-    renderRow = (renderHelper, obj, stateBranch, value) => {
+    renderRow = (renderHelper, obj, stateBranch, values) => {
+        const value = values[obj];
         switch (obj) {
             case "orBusinessPlan":
             case "updatedBusinessPlan":
@@ -142,6 +145,10 @@ export default class InfoTab extends React.Component {
                 return this.renderRowWithComment(renderHelper, obj, stateBranch, value);
             case "ecmaBacklogTarget":
                 return this.renderEcmaBacklogRow(renderHelper, obj, stateBranch, value);
+            case "contributingProjects": {
+                const isComposite = values.composite;
+                return this.renderContributingProjectsRow(renderHelper, obj, stateBranch, value, isComposite);
+            }
             default:
                 return this.renderSimpleRow(renderHelper, obj, stateBranch, value);
         }
@@ -242,6 +249,37 @@ export default class InfoTab extends React.Component {
                         }
                     </>
                 ))}
+            </div>
+        )
+    };
+
+    //TODO: connect with formik, do backend endpoint
+    renderContributingProjectsRow = (renderHelper, obj, stateBranch, value, isComposite) => {
+        const {editMode} = this.state;
+        const {validationParams} = this.props.information.payload;
+        const style = this.selectClass(stateBranch);
+        return (
+            renderHelper.displayOrNot(obj, validationParams) && isComposite &&
+            <div key={obj} className={style}>
+                <FieldName name={renderHelper.getLabelById(obj)}/>
+                {
+                    editMode && renderHelper.isEditable(obj) &&
+                        <MultiSelect
+                            items={["A", "B", "C"]}
+                            itemRenderer={(item, {modifiers, handleClick}) =>
+                                <MenuItem
+                                    key={item}
+                                    text={item}
+                                    onClick={handleClick}
+                                    active={modifiers.active}
+                                />
+                            }
+                            selectedItems={[]}
+                            onItemSelect={(elem) => {}}
+                            tagRenderer={item => item}
+                            tagInputProps={{onRemove: (item) => {}}}
+                        />
+                }
             </div>
         )
     };

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@blueprintjs/datetime": "^3.11.0",
+    "@blueprintjs/select": "^3.11.2",
     "@blueprintjs/table": "^3.6.0",
     "@material-ui/core": "^4.2.0",
     "@material-ui/icons": "^4.2.1",

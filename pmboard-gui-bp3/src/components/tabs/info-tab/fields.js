@@ -1,10 +1,12 @@
 import {ProjectTypes} from "../../../util/constants";
 
-export const summaryFieldsToRender = {
+//Props mandatory: label,
+//Props not mandatory: type, notAllowedIf, allowedIf, editable
+export const infoFieldsToRender = {
     projectDescription: {label: "Project Description", type: "textarea"},
     oemPartner: {
         label: "OEM Partner",
-        notAllowedIn: {
+        notAllowedIf: {
             projectType: [ProjectTypes.PRODUCT, ProjectTypes.OFFER, ProjectTypes.OFFER_PRODUCT, ProjectTypes.SUPPORT_PROGRAM],
         }
     },
@@ -32,11 +34,12 @@ export const summaryFieldsToRender = {
     ecmaBacklogTarget: {label: "ECMA Backlog Target"},
     composite: {
         label: "Composite Project",
-        notAllowedIn: {
+        notAllowedIf: {
             projectType: [ProjectTypes.PRODUCT]
         },
         type: "checkbox"
     },
+    contributingProjects: {label: "Contributing Projects"},
     projectCollabUrl: {label: "Project Collaboration Site"},
     projectPWASiteUrl: {label: "Project PWA Site"},
     docRepositoryUrl: {label: "Project Documentation Repository"},
