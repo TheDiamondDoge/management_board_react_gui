@@ -72,7 +72,7 @@ let dataComposer = (data) => ({
         rqRelease: data.rqRelease,
         ecmaBacklogTarget: data.ecmaBacklogTarget,
         composite: data.composite,
-        contributingProjects: ""
+        contributingProjects: data.contributingProjects
     },
     urls: {
         projectCollabUrl: data.projectCollabUrl,

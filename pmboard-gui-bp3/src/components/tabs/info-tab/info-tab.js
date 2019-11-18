@@ -19,6 +19,7 @@ import {isBoolean} from "../../../util/comparators";
 import {boolToYesNo} from "../../../util/transformFuncs";
 import {MenuItem} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
+import Multiselect from "../../multiselect/multiselect";
 
 //TODO: too slow and laggy (sometimes). Try fastField
 export default class InfoTab extends React.Component {
@@ -258,28 +259,34 @@ export default class InfoTab extends React.Component {
         const {editMode} = this.state;
         const {validationParams} = this.props.information.payload;
         const style = this.selectClass(stateBranch);
+        console.log("CONTRIB", value);
         return (
             renderHelper.displayOrNot(obj, validationParams) && isComposite &&
             <div key={obj} className={style}>
                 <FieldName name={renderHelper.getLabelById(obj)}/>
                 {
                     editMode && renderHelper.isEditable(obj) &&
-                        <MultiSelect
-                            items={["A", "B", "C"]}
-                            itemRenderer={(item, {modifiers, handleClick}) =>
-                                <MenuItem
-                                    key={item}
-                                    text={item}
-                                    onClick={handleClick}
-                                    active={modifiers.active}
-                                />
-                            }
-                            selectedItems={[]}
-                            onItemSelect={(elem) => {}}
-                            tagRenderer={item => item}
-                            tagInputProps={{onRemove: (item) => {}}}
-                        />
+                    <Multiselect
+                        itemList={value}
+                        // itemsSelected={value}
+                    />
                 }
+                        {/*<MultiSelect*/}
+                        {/*    items={["A", "B", "C"]}*/}
+                        {/*    itemRenderer={(item, {modifiers, handleClick}) =>*/}
+                        {/*        <MenuItem*/}
+                        {/*            key={item}*/}
+                        {/*            text={item}*/}
+                        {/*            onClick={handleClick}*/}
+                        {/*            active={modifiers.active}*/}
+                        {/*        />*/}
+                        {/*    }*/}
+                        {/*    selectedItems={[]}*/}
+                        {/*    onItemSelect={(elem) => {}}*/}
+                        {/*    tagRenderer={item => item}*/}
+                        {/*    tagInputProps={{onRemove: (item) => {}}}*/}
+                        {/*/>*/}
+                {/*}*/}
             </div>
         )
     };

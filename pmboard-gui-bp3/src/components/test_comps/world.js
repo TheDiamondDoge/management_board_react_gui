@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
 import Loading from "../loading-card/loading";
 import {Formik, Field, Form, ErrorMessage} from "formik";
-import {TextArea, HTMLTable, MenuItem} from "@blueprintjs/core";
+import {HTMLTable, MenuItem} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 
@@ -54,11 +54,11 @@ export default class World extends React.Component {
                 <br/>
 
                 <MultiSelect
-                    items={["A", "B", "C"]}
+                    items={[{name: "A", id: 1}, {name: "B", id: 2}, {name: "C", id: 3}]}
                     itemRenderer={(item, {modifiers, handleClick}) =>
                         <MenuItem
-                            key={item}
-                            text={item}
+                            key={item.id}
+                            text={item.name}
                             onClick={handleClick}
                             active={this.isSelected(item)}
                         />
