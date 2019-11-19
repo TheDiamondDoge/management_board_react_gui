@@ -9,6 +9,7 @@ import * as milestonesKpi from "../../actions/milestones-kpi";
 import * as dr4Kpi from "../../actions/dr4-kpi";
 import * as qualityKpi from "../../actions/quality-kpi";
 import * as infoTab from "../../actions/info-tab";
+import * as contrib from "../../actions/contrib-projects";
 
 export function* loadSummaryTab() {
     try {
@@ -41,6 +42,15 @@ export function* loadInformationTab() {
         yield put(infoTab.loadInfoSuccess(info));
     } catch (e) {
         yield put(infoTab.loadInfoError);
+    }
+}
+
+export function* loadContributableProjects() {
+    try {
+        const projects = yield call(api.getContributableProjects);
+        yield put(contrib.loadContribSuccess(projects));
+    } catch (e) {
+        yield put(contrib.loadContribFail(e))
     }
 }
 

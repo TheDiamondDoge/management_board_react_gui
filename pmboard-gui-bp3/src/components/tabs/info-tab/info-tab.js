@@ -19,14 +19,13 @@ import {isBoolean} from "../../../util/comparators";
 import {boolToYesNo} from "../../../util/transformFuncs";
 import {MenuItem} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
-import Multiselect from "../../multiselect/multiselect";
 
 //TODO: too slow and laggy (sometimes). Try fastField
 export default class InfoTab extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            editMode: false,
+            editMode: true,
         };
     }
 
@@ -62,6 +61,8 @@ export default class InfoTab extends React.Component {
         }))
     };
 
+    handleChange = null;
+
     render() {
         const {information, milestones} = this.props;
         if (information.loading || milestones.loading) {
@@ -92,6 +93,7 @@ export default class InfoTab extends React.Component {
                     render={
                         (formikProps) => {
                             this.bindFormSubmission(formikProps.submitForm);
+                            this.handleChange = formikFieldHandleChange(formikProps);
                             return (
                                 <div>
                                     <EditSaveControls
@@ -254,42 +256,68 @@ export default class InfoTab extends React.Component {
         )
     };
 
-    //TODO: connect with formik, do backend endpoint
+    //TODO: connect with formik, do backend save endpoint
+    //TODO: learn more about grid auto rows
+    //TODO: Refactor
     renderContributingProjectsRow = (renderHelper, obj, stateBranch, value, isComposite) => {
+        const {loading, payload} = this.props.contrib;
         const {editMode} = this.state;
         const {validationParams} = this.props.information.payload;
+        const valueStrings = value.map((val) => val.projectName);
+        const editProjectList = this.handleChange(`${stateBranch}.${obj}`);
         const style = this.selectClass(stateBranch);
-        console.log("CONTRIB", value);
         return (
             renderHelper.displayOrNot(obj, validationParams) && isComposite &&
             <div key={obj} className={style}>
                 <FieldName name={renderHelper.getLabelById(obj)}/>
                 {
-                    editMode && renderHelper.isEditable(obj) &&
-                    <Multiselect
-                        itemList={value}
-                        // itemsSelected={value}
+                    !loading && editMode && renderHelper.isEditable(obj) &&
+                    <MultiSelect
+                        items={payload}
+                        itemRenderer={(item, {modifiers, handleClick}) =>
+                            <MenuItem
+                                key={item.projectName}
+                                text={item.projectName}
+                                onClick={handleClick}
+                                active={modifiers.active}
+                            />
+                        }
+                        selectedItems={valueStrings}
+                        onItemSelect={(elem) => {
+                            editProjectList(this.addProject(elem, value))
+                        }}
+                        tagRenderer={item => item}
+                        tagInputProps={
+                            {
+                                onRemove: (item) => {
+                                    editProjectList(this.removeProject(item, value));
+                                }
+                            }
+                        }
                     />
                 }
-                        {/*<MultiSelect*/}
-                        {/*    items={["A", "B", "C"]}*/}
-                        {/*    itemRenderer={(item, {modifiers, handleClick}) =>*/}
-                        {/*        <MenuItem*/}
-                        {/*            key={item}*/}
-                        {/*            text={item}*/}
-                        {/*            onClick={handleClick}*/}
-                        {/*            active={modifiers.active}*/}
-                        {/*        />*/}
-                        {/*    }*/}
-                        {/*    selectedItems={[]}*/}
-                        {/*    onItemSelect={(elem) => {}}*/}
-                        {/*    tagRenderer={item => item}*/}
-                        {/*    tagInputProps={{onRemove: (item) => {}}}*/}
-                        {/*/>*/}
-                {/*}*/}
+                {
+                    editMode ||
+                    valueStrings.map((name) => (
+                        <><FieldValue value={name}/><br/></>
+                    ))
+                }
             </div>
         )
     };
+
+    addProject = (obj, projects) => {
+        const projectNames = projects.map(prj => prj.projectName);
+        if (!projectNames.includes(obj.projectName)) {
+            return [...projects, obj];
+        } else {
+            return projects;
+        }
+    };
+
+    removeProject = (projectName, projectsList) => (
+        projectsList.filter(project => project.projectName !== projectName)
+    );
 
     selectClass = (stateBranch) => {
         switch (stateBranch) {
@@ -305,6 +333,7 @@ export default class InfoTab extends React.Component {
 InfoTab.propTypes = {
     information: PropTypes.object.isRequired,
     milestones: PropTypes.arrayOf(MilestoneShape),
+    contrib: PropTypes.array,
     loadData: PropTypes.func,
     resetData: PropTypes.func,
     saveInfo: PropTypes.func,

@@ -11,7 +11,8 @@ import {
     loadHealthIndicators,
     saveInformationTab,
     saveMilestones,
-    loadMilestones
+    loadMilestones,
+    loadContributableProjects
 } from "./worker-sagas";
 import * as summaryTab from "../../actions/summary-tab";
 import * as indicatorsTab from "../../actions/indicators-tab";
@@ -20,6 +21,7 @@ import * as healthIndicators from "../../actions/health-indicators";
 import * as rqIndicators from "../../actions/indicators-rqs";
 import * as quality from "../../actions/quality-kpi";
 import * as milestones from "../../actions/milestones";
+import * as contrib from "../../actions/contrib-projects";
 
 function* watchSummaryTabLoad() {
     yield takeEvery(summaryTab.LOAD_SUMMARY, loadSummaryTab);
@@ -34,7 +36,6 @@ function* watchInformationTabLoad() {
 }
 
 function* watchHealthIndicatorsLoad() {
-    
     yield takeEvery(healthIndicators.LOAD_HEALTH, loadHealthIndicators)
 }
 
@@ -74,6 +75,10 @@ function* watchMilestonesSave() {
     yield takeLatest(milestones.SAVE_MILESTONES, saveMilestones)
 }
 
+function* watchContribLoad() {
+    yield takeEvery(contrib.LOAD_CONTRIB, loadContributableProjects)
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
@@ -87,7 +92,8 @@ const exportSagas = [
     fork(watchIndicatorsRqsSave),
     fork(watchIndicatorsRqsLoad),
     fork(watchIndicatorsQualitySave),
-    fork(watchIndicatorsQualityLoad)
+    fork(watchIndicatorsQualityLoad),
+    fork(watchContribLoad),
 ];
 
 export default exportSagas;

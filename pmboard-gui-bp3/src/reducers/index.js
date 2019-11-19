@@ -11,6 +11,7 @@ import indicatorsRqsReducer from "./indicators-rqs";
 import milestonesKpiReducer from "./milestones-kpi";
 import dr4KpiReducer from "./dr4-kpi";
 import qualityKpiReducer from "./quality-kpi";
+import contrib from "./contrib-projects";
 
 export default combineReducers({
     pws: pwsReducers()
@@ -30,5 +31,6 @@ function pwsReducers() {
         infoTab: infoTabReducer,
         costTab: costTabReducer,
         blcTab: blcTabReducer,
+        contrib: contrib,
     })
 }

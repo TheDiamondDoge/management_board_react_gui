@@ -13,7 +13,7 @@ export default class World extends React.Component {
         super(props);
 
         this.state = {
-            selectedItems: []
+            selectedItems: ["Hi", "I", "am", "Robert"]
         }
     }
 
