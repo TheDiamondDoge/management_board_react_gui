@@ -6,15 +6,35 @@ export const infoFieldsToRender = {
     projectDescription: {label: "Project Description", type: "textarea"},
     oemPartner: {
         label: "OEM Partner",
-        notAllowedIf: {
-            projectType: [ProjectTypes.PRODUCT, ProjectTypes.OFFER, ProjectTypes.OFFER_PRODUCT, ProjectTypes.SUPPORT_PROGRAM],
+        allowedIf: {
+            projectType: [ProjectTypes.OEM_PRODUCT]
         }
     },
     keyCustomers: {label: "Key Customers"},
-    productRelease: {label: "Product Release"},
-    projectType: {label: "Project Type"},
-    projectRigor: {label: "Project Rigor"},
-    projectState: {label: "Project State"},
+    productRelease: {
+        label: "Product Release",
+        allowedIf: {
+            epm: [false]
+        }
+    },
+    projectType: {
+        label: "Project Type",
+        allowedIf: {
+            epm: [false]
+        }
+    },
+    projectRigor: {
+        label: "Project Rigor",
+        allowedIf: {
+            epm: [false]
+        }
+    },
+    projectState: {
+        label: "Project State",
+        allowedIf: {
+            epm: [false]
+        }
+    },
     businessDivision: {label: "Business Division"},
     businessUnit: {label: "Business Unit"},
     productLine: {label: "Product Line"},
@@ -22,28 +42,89 @@ export const infoFieldsToRender = {
     sponsor: {label: "Sponsor"},
     businessLineManager: {label: "Business Line Manager"},
     productLineManager: {label: "Product Line Manager"},
-    projectManager: {label: "Project Manager"},
+    projectManager: {
+        label: "Project Manager",
+        allowedIf: {
+            epm: [false]
+        }
+    },
     charter: {label: "Charter"},
     orBusinessPlan: {label: "OR Business Plan"},
     updatedBusinessPlan: {label: "Updated Business Plan"},
     drChecklist: {label: "Tailored DR-checklist"},
     lessonsLearned: {label: "Lessons learned"},
     projectPlan: {label: "Project Plan"},
-    metricsScope: {label: "Metrics Scope"},
-    rqRelease: {label: "RQ Release Name (JIRA)"},
-    ecmaBacklogTarget: {label: "ECMA Backlog Target"},
-    composite: {
-        label: "Composite Project",
-        notAllowedIf: {
-            projectType: [ProjectTypes.PRODUCT]
-        },
+    launchingPlan: {
+        label: "Launching Plan",
+        allowedIf: {
+            projectType: [ProjectTypes.OFFER, ProjectTypes.OFFER_PRODUCT]
+        }
+    },
+    metricsScope: {
+        label: "Metrics Scope",
+        allowedIf: {
+            projectType: [ProjectTypes.OFFER]
+        }
+    },
+    rqRelease: {
+        label: "RQ Release Name (JIRA)",
+        allowedIf: {
+            projectType: [ProjectTypes.OFFER]
+        }
+    },
+    ecmaBacklogTarget: {
+        label: "ECMA Backlog Target",
+        allowedIf: {
+            projectType: [ProjectTypes.OFFER]
+        }
+    },
+    //TODO: this should be added
+    maintenance: {
+        label: "Maintenance Project",
         type: "checkbox"
     },
-    contributingProjects: {label: "Contributing Projects"},
+    composite: {
+        label: "Composite Project",
+        type: "checkbox"
+    },
+    contributingProjects: {
+        label: "Contributing Projects",
+        allowedIf: {
+            composite: [true]
+        },
+    },
     projectCollabUrl: {label: "Project Collaboration Site"},
-    projectPWASiteUrl: {label: "Project PWA Site"},
+
+    //TODO: this should be added
+    salesForce: {
+        label: "Sales Force",
+        allowedIf: {
+            projectState: [ProjectTypes.OFFER, ProjectTypes.OFFER_PRODUCT]
+        }
+    },
+    projectPWASiteUrl: {
+        label: "Project PWA Site",
+        allowedIf: {
+            epm: [true]
+        }
+    },
     docRepositoryUrl: {label: "Project Documentation Repository"},
-    defectsUrl: {label: "Defects (JIRA)"},
-    requirementsUrl: {label: "Requirements (JIRA)"},
-    cisUrl: {label: "Continuous Integration Site"},
+    defectsUrl: {
+        label: "Defects (JIRA)",
+        notAllowedIf: {
+            projectType: [ProjectTypes.OFFER]
+        }
+    },
+    requirementsUrl: {
+        label: "Requirements (JIRA)",
+        notAllowedIf: {
+            projectType: [ProjectTypes.OFFER]
+        }
+    },
+    cisUrl: {
+        label: "Continuous Integration Site",
+        notAllowedIf: {
+            projectType: [ProjectTypes.OFFER]
+        }
+    },
 };

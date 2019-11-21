@@ -21,11 +21,13 @@ import {MenuItem} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 
 //TODO: too slow and laggy (sometimes). Try fastField
+//TODO: key prop is missing
+//TODO: why not numeric inputs???
 export default class InfoTab extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            editMode: true,
+            editMode: false,
         };
     }
 
@@ -142,9 +144,11 @@ export default class InfoTab extends React.Component {
     renderRow = (renderHelper, obj, stateBranch, values) => {
         const value = values[obj];
         switch (obj) {
-            case "orBusinessPlan":
+            case "lessonsLearned":
             case "updatedBusinessPlan":
             case "drChecklist":
+            case "launchingPlan":
+            case "projectPlan":
                 return this.renderRowWithComment(renderHelper, obj, stateBranch, value);
             case "ecmaBacklogTarget":
                 return this.renderEcmaBacklogRow(renderHelper, obj, stateBranch, value);
@@ -193,10 +197,10 @@ export default class InfoTab extends React.Component {
                     editMode && renderHelper.isEditable(obj)
                         ? <FormikInput
                             {...formikProps}
-                            name={`${stateBranch}.${obj}`}
+                            name={`${stateBranch}.${obj}.value`}
                             className={styles.comment_row_value}
                         />
-                        : <FieldValue value={value} className={styles.comment_row_value}/>
+                        : <FieldValue value={value.value} className={styles.comment_row_value}/>
                 }
                 <div className={styles.comment_row_comment}>
                     <FieldName name={"Comment"}/><HelpIcon className={styles.help_icon}/>
@@ -206,10 +210,10 @@ export default class InfoTab extends React.Component {
                     editMode
                         ? <FormikInput
                             type="textarea"
-                            name={`${stateBranch}.${obj}`}
+                            name={`${stateBranch}.${obj}.comment`}
                             className={styles.comment_row_comment_value}
                         />
-                        : <FieldValue value={value} className={styles.comment_row_comment_value}/>
+                        : <FieldValue value={value.comment} className={styles.comment_row_comment_value}/>
                 }
             </div>
         )
@@ -220,44 +224,58 @@ export default class InfoTab extends React.Component {
         const {validationParams} = this.props.information.payload;
         return (
             renderHelper.displayOrNot(obj, validationParams) &&
-            <div key={obj} className={styles.ecma_backlog_row}>
-                <FieldName name={renderHelper.getLabelById(obj)} className={styles.ecma_label}/>
-                {Object.keys(value).map((key, i) => (
-                    <>
-                        <FieldName name={"Milestone"} className={styles[`milestone_${i + 1}`]}/>
-                        {
-                            editMode
-                                ? <Field component="select"
-                                         name={`${stateBranch}.${obj}.${key}.milestone`}
-                                         className={styles[`milestone_value_${i + 1}`]}
-                                >
-                                    <option value="">&nbsp;</option>
-                                    <option value="CI">CI</option>
-                                    <option value="TR">TR</option>
-                                    <option value="DR4">DR4</option>
-                                    <option value="DR5">DR5</option>
-                                </Field>
-                                : <FieldValue value={value[key]["milestone"]}
-                                              className={styles[`milestone_value_${i + 1}`]}
-                                />
-                        }
-                        <FieldName name={"Value"} className={styles[`value_label_${i + 1}`]}/>
-                        {
-                            editMode
-                                ? <FormikInput type="text"
-                                               name={`${stateBranch}.${obj}.${key}.value`}
-                                               className={styles[`value_${i + 1}`]}
-                                />
-                                : <FieldValue value={value[key]["value"]} className={styles[`value_${i + 1}`]}/>
-                        }
-                    </>
-                ))}
+            <div key={obj} className={styles.data_container}>
+                <FieldName name={renderHelper.getLabelById(obj)}/>
+                <div className={styles.ecma_backlog_row}>
+                    {
+                        Object.keys(value).map((key, i) => (
+                        <>
+                            <FieldName
+                                key={`milestone_${i}`}
+                                name={"Milestone"}
+                                className={styles[`milestone_${i + 1}`]}/>
+                            {
+                                editMode
+                                    ? <Field key={`mil_val_${i}`}
+                                             component="select"
+                                             name={`${stateBranch}.${obj}.${key}.milestone`}
+                                             className={styles[`milestone_value_${i + 1}`]}
+                                    >
+                                        <option value="">&nbsp;</option>
+                                        <option value="CI">CI</option>
+                                        <option value="TR">TR</option>
+                                        <option value="DR4">DR4</option>
+                                        <option value="DR5">DR5</option>
+                                    </Field>
+                                    : <FieldValue key={`mil_val_${i}`}
+                                                  value={value[key]["milestone"]}
+                                                  className={styles[`milestone_value_${i + 1}`]}
+                                    />
+                            }
+                            <FieldName key={`value_${i}`}
+                                       name={"Value"}
+                                       className={styles[`value_label_${i + 1}`]}
+                            />
+                            {
+                                editMode
+                                    ? <FormikInput key={`val_val_${i}`}
+                                                   type="text"
+                                                   name={`${stateBranch}.${obj}.${key}.value`}
+                                                   className={styles[`value_${i + 1}`]}
+                                    />
+                                    : <FieldValue key={`val_val_${i}`}
+                                                  value={value[key]["value"]}
+                                                  className={styles[`value_${i + 1}`]}
+                                    />
+                            }
+                        </>
+                    ))
+                    }
+                </div>
             </div>
         )
     };
 
-    //TODO: connect with formik, do backend save endpoint
-    //TODO: learn more about grid auto rows
     //TODO: Refactor
     renderContributingProjectsRow = (renderHelper, obj, stateBranch, value, isComposite) => {
         const {loading, payload} = this.props.contrib;
@@ -274,12 +292,12 @@ export default class InfoTab extends React.Component {
                     !loading && editMode && renderHelper.isEditable(obj) &&
                     <MultiSelect
                         items={payload}
-                        itemRenderer={(item, {modifiers, handleClick}) =>
+                        itemRenderer={(item, {handleClick}) =>
                             <MenuItem
                                 key={item.projectName}
                                 text={item.projectName}
                                 onClick={handleClick}
-                                active={modifiers.active}
+                                active={this.isActive(item.projectName, valueStrings)}
                             />
                         }
                         selectedItems={valueStrings}
@@ -298,9 +316,13 @@ export default class InfoTab extends React.Component {
                 }
                 {
                     editMode ||
-                    valueStrings.map((name) => (
-                        <><FieldValue value={name}/><br/></>
-                    ))
+                    <div>
+                        {
+                            valueStrings.map((name) => (
+                                <><FieldValue key={name} className={styles.prj_margin} value={name}/></>
+                            ))
+                        }
+                    </div>
                 }
             </div>
         )
@@ -319,6 +341,10 @@ export default class InfoTab extends React.Component {
         projectsList.filter(project => project.projectName !== projectName)
     );
 
+    isActive = (projectName, selectedProjects) => (
+        selectedProjects.includes(projectName)
+    );
+
     selectClass = (stateBranch) => {
         switch (stateBranch) {
             case "urls":
@@ -332,8 +358,14 @@ export default class InfoTab extends React.Component {
 
 InfoTab.propTypes = {
     information: PropTypes.object.isRequired,
-    milestones: PropTypes.arrayOf(MilestoneShape),
-    contrib: PropTypes.array,
+    milestones: PropTypes.shape({
+        loading: PropTypes.bool,
+        payload: PropTypes.arrayOf(MilestoneShape),
+    }),
+    contrib: PropTypes.shape({
+        loading: PropTypes.bool,
+        payload: PropTypes.array,
+    }),
     loadData: PropTypes.func,
     resetData: PropTypes.func,
     saveInfo: PropTypes.func,

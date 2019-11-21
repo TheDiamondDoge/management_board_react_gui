@@ -68,6 +68,7 @@ let dataComposer = (data) => ({
         drChecklist: data.drChecklist,
         lessonsLearned: data.lessonsLearned,
         projectPlan: data.projectPlan,
+        launchingPlan: data.launchingPlan,
         metricsScope: data.metricsScope,
         rqRelease: data.rqRelease,
         ecmaBacklogTarget: data.ecmaBacklogTarget,
@@ -84,6 +85,7 @@ let dataComposer = (data) => ({
     },
     validationParams: {
         projectType: data.projectType,
-        composite: data.composite
+        composite: data.composite,
+        epm: data.epm,
     }
 });

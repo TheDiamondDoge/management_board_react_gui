@@ -35,18 +35,37 @@ export default Yup.object().shape({
             .max(512, ValidationErrors.string.MAX),
         orBusinessPlan: Yup.string()
             .max(512, ValidationErrors.string.MAX),
-        updatedBusinessPlan: Yup.string()
-            .max(512, ValidationErrors.string.MAX),
-        drChecklist: Yup.string()
-            .max(512, ValidationErrors.string.MAX),
-        lessonsLearned: Yup.string()
-            .max(512, ValidationErrors.string.MAX),
-        projectPlan: Yup.string()
-            .max(512, ValidationErrors.string.MAX),
+        updatedBusinessPlan: Yup.object().shape({
+                value: Yup.string().max(512, ValidationErrors.string.MAX),
+                comment: Yup.string().max(255, ValidationErrors.string.MAX)
+        }),
+        drChecklist: Yup.object().shape({
+            value: Yup.string().max(512, ValidationErrors.string.MAX),
+            comment: Yup.string().max(255, ValidationErrors.string.MAX)
+        }),
+        lessonsLearned: Yup.object().shape({
+            value: Yup.string().max(512, ValidationErrors.string.MAX),
+            comment: Yup.string().max(255, ValidationErrors.string.MAX)
+        }),
+        projectPlan: Yup.object().shape({
+            value: Yup.string().max(512, ValidationErrors.string.MAX),
+            comment: Yup.string().max(255, ValidationErrors.string.MAX)
+        }),
+        launchingPlan: Yup.object().shape({
+            value: Yup.string().max(512, ValidationErrors.string.MAX),
+            comment: Yup.string().max(255, ValidationErrors.string.MAX)
+        }),
         metricsScope: Yup.string()
             .max(100, ValidationErrors.string.MAX),
         rqRelease: Yup.string()
             .max(100, ValidationErrors.string.MAX),
+        ecmaBacklogTarget: Yup.array().of(
+            Yup.object().shape({
+                value: Yup.number()
+                    .max(99999, ValidationErrors.number.MAX)
+                    .typeError(ValidationErrors.typeError.number)
+            })
+        ),
         projectCollabUrl: Yup.string()
             .max(512, ValidationErrors.string.MAX),
         projectPWASiteUrl: Yup.string()

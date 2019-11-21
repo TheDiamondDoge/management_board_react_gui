@@ -2,13 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {nullToEmptyStr, stringToUrlElem} from '../../util/transformFuncs';
 import styles from "./field-value.module.css";
+import classNames from 'classnames';
 
 
 export default class FieldValue extends React.Component {
     render() {
-        const {value, ...other} = this.props;
+        const {value, className, ...other} = this.props;
+        const classes = classNames(styles.word_wrap, className);
         return (
-            <div className={styles.word_wrap} {...other}>
+            <div className={classes} {...other}>
                 {stringToUrlElem(nullToEmptyStr(value))}
             </div>
         )

@@ -21,5 +21,8 @@ export const ValidationErrors = {
         MAX: "Number is too big",
         MIN: "Number is too small"
     },
+    typeError: {
+        number: "Must be a number"
+    },
     REQUIRED: "Value required"
 };
