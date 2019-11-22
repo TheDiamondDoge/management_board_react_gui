@@ -71,14 +71,16 @@ let dataComposer = (data) => ({
         launchingPlan: data.launchingPlan,
         metricsScope: data.metricsScope,
         rqRelease: data.rqRelease,
-        ecmaBacklogTarget: data.ecmaBacklogTarget,
+        ecmaBacklogTarget: [...getEcmaObject(data.ecmaBacklogTarget)],
+        maintenance: data.maintenance,
         composite: data.composite,
         contributingProjects: data.contributingProjects
     },
     urls: {
         projectCollabUrl: data.projectCollabUrl,
+        salesForce: data.salesForce,
         projectPWASiteUrl: data.projectPWASiteUrl,
-        docRepositoryUrl: data.projectPWASiteUrl,
+        docRepositoryUrl: data.docRepositoryUrl,
         defectsUrl: data.defectsUrl,
         requirementsUrl: data.requirementsUrl,
         cisUrl: data.cisUrl,
@@ -89,3 +91,18 @@ let dataComposer = (data) => ({
         epm: data.epm,
     }
 });
+
+let getEcmaObject = (obj) => {
+    if (obj === null) {
+        return [
+            {milestones: "", value: ""},
+            {milestones: "", value: ""},
+        ]
+    } else if (obj.length === 1) {
+        return [
+            {milestones: "", value: ""},
+        ]
+    } else {
+        return obj;
+    }
+};

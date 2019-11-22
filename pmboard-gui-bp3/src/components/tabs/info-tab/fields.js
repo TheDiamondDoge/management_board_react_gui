@@ -78,7 +78,6 @@ export const infoFieldsToRender = {
             projectType: [ProjectTypes.OFFER]
         }
     },
-    //TODO: this should be added
     maintenance: {
         label: "Maintenance Project",
         type: "checkbox"
@@ -89,23 +88,18 @@ export const infoFieldsToRender = {
     },
     contributingProjects: {
         label: "Contributing Projects",
-        allowedIf: {
-            composite: [true]
-        },
     },
     projectCollabUrl: {label: "Project Collaboration Site"},
-
-    //TODO: this should be added
     salesForce: {
         label: "Sales Force",
         allowedIf: {
-            projectState: [ProjectTypes.OFFER, ProjectTypes.OFFER_PRODUCT]
+            projectType: [ProjectTypes.OFFER, ProjectTypes.OFFER_PRODUCT]
         }
     },
     projectPWASiteUrl: {
         label: "Project PWA Site",
         allowedIf: {
-            epm: [true]
+            epm: [false]
         }
     },
     docRepositoryUrl: {label: "Project Documentation Repository"},

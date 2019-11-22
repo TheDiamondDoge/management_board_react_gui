@@ -27,8 +27,10 @@ export default class InfoTab extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            editMode: false,
+            editMode: true
         };
+
+        this.mandatoryMilestones = ["OR", "DR0", "DR1", "DR2", "DR3", "DR4", "OBR", "CI"];
     }
 
     componentDidMount() {
@@ -71,13 +73,19 @@ export default class InfoTab extends React.Component {
             return (<Loading/>)
         } else {
             const {general, urls} = information.payload;
-            const milestones = this.props.milestones.payload;
+            let milestones = this.props.milestones.payload;
+            if (milestones.length === 0) {
+                milestones = this.populateMandatoryMilestones();
+            }
 
             return (
                 <Formik
                     enableReinitialize
                     onSubmit={(values, formikActions) => {
                         formikActions.setSubmitting(false);
+                        console.log("VALUES", values);
+                        console.log("ACTIONS", formikActions);
+
                         this.sendData(values);
                         this.editClickHandle();
                         alert(JSON.stringify(values, null, 2));
@@ -116,6 +124,7 @@ export default class InfoTab extends React.Component {
                                                 editMode={this.state.editMode}
                                                 milestonesData={formikProps.values.milestones}
                                                 onDateChangeFactory={formikFieldHandleChange(formikProps)}
+                                                mandatoryMilestones={this.mandatoryMilestones}
                                             />
                                         }
                                     </CustomCard>
@@ -133,6 +142,19 @@ export default class InfoTab extends React.Component {
             )
         }
     }
+
+    populateMandatoryMilestones = () => {
+        return this.mandatoryMilestones.map(label => (
+            {
+                label: label,
+                actualDate: null,
+                baselineDate: null,
+                completion: 0,
+                shown: false,
+                meetingMinutes: ""
+            }
+        ))
+    };
 
     mainRows = (values, stateBranch) => {
         const renderHelper = new RenderFieldHelper(infoFieldsToRender);
@@ -229,47 +251,47 @@ export default class InfoTab extends React.Component {
                 <div className={styles.ecma_backlog_row}>
                     {
                         Object.keys(value).map((key, i) => (
-                        <>
-                            <FieldName
-                                key={`milestone_${i}`}
-                                name={"Milestone"}
-                                className={styles[`milestone_${i + 1}`]}/>
-                            {
-                                editMode
-                                    ? <Field key={`mil_val_${i}`}
-                                             component="select"
-                                             name={`${stateBranch}.${obj}.${key}.milestone`}
-                                             className={styles[`milestone_value_${i + 1}`]}
-                                    >
-                                        <option value="">&nbsp;</option>
-                                        <option value="CI">CI</option>
-                                        <option value="TR">TR</option>
-                                        <option value="DR4">DR4</option>
-                                        <option value="DR5">DR5</option>
-                                    </Field>
-                                    : <FieldValue key={`mil_val_${i}`}
-                                                  value={value[key]["milestone"]}
-                                                  className={styles[`milestone_value_${i + 1}`]}
-                                    />
-                            }
-                            <FieldName key={`value_${i}`}
-                                       name={"Value"}
-                                       className={styles[`value_label_${i + 1}`]}
-                            />
-                            {
-                                editMode
-                                    ? <FormikInput key={`val_val_${i}`}
-                                                   type="text"
-                                                   name={`${stateBranch}.${obj}.${key}.value`}
-                                                   className={styles[`value_${i + 1}`]}
-                                    />
-                                    : <FieldValue key={`val_val_${i}`}
-                                                  value={value[key]["value"]}
-                                                  className={styles[`value_${i + 1}`]}
-                                    />
-                            }
-                        </>
-                    ))
+                            <>
+                                <FieldName
+                                    key={`milestone_${i}`}
+                                    name={"Milestone"}
+                                    className={styles[`milestone_${i + 1}`]}/>
+                                {
+                                    editMode
+                                        ? <Field key={`mil_val_${i}`}
+                                                 component="select"
+                                                 name={`${stateBranch}.${obj}.${key}.milestone`}
+                                                 className={styles[`milestone_value_${i + 1}`]}
+                                        >
+                                            <option value="">&nbsp;</option>
+                                            <option value="CI">CI</option>
+                                            <option value="TR">TR</option>
+                                            <option value="DR4">DR4</option>
+                                            <option value="DR5">DR5</option>
+                                        </Field>
+                                        : <FieldValue key={`mil_val_${i}`}
+                                                      value={value[key]["milestone"]}
+                                                      className={styles[`milestone_value_${i + 1}`]}
+                                        />
+                                }
+                                <FieldName key={`value_${i}`}
+                                           name={"Value"}
+                                           className={styles[`value_label_${i + 1}`]}
+                                />
+                                {
+                                    editMode
+                                        ? <FormikInput key={`val_val_${i}`}
+                                                       type="text"
+                                                       name={`${stateBranch}.${obj}.${key}.value`}
+                                                       className={styles[`value_${i + 1}`]}
+                                        />
+                                        : <FieldValue key={`val_val_${i}`}
+                                                      value={value[key]["value"]}
+                                                      className={styles[`value_${i + 1}`]}
+                                        />
+                                }
+                            </>
+                        ))
                     }
                 </div>
             </div>

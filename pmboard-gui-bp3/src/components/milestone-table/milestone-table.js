@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import {FieldArray} from "formik";
 import FormikInput, {RenderControls} from "../mini-input-renderers/mini-input-renderers";
 import {dateFormatToString} from "../../util/transformFuncs";
+import {MilestoneShape} from "../../util/custom-types";
 
 //TODO: Validation at least for dates
 //TODO: Block OR edition and DR0-DR1 baseline
@@ -15,9 +16,19 @@ export default class MilestoneTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            mandatoryMilesLabels: ["OR", "DR0", "DR1", "DR2", "DR3", "DR4", "OBR", "CI"],
+            milestonesRendered: [],
         };
     }
+
+    addRendered = (label) => {
+        this.setState((prev => {
+            if (!prev.milestonesRendered.includes(label)) {
+                return {
+                    milestonesRendered: [...prev.milestonesRendered, label]
+                }
+            }
+        }))
+    };
 
     render() {
         return (
@@ -72,16 +83,16 @@ export default class MilestoneTable extends React.Component {
                                                 {
                                                     editMode
                                                         ? this.isMandatory(milestone.label)
-                                                        ? <FieldValue value={milestone.label}/>
-                                                        : <>
-                                                            <FormikInput
-                                                                type="text"
-                                                                name={`milestones[${key}].label`}
-                                                            />
-                                                            {
+                                                            ? <FieldValue value={milestone.label}/>
+                                                            : <>
+                                                                <FormikInput
+                                                                    type="text"
+                                                                    name={`milestones[${key}].label`}
+                                                                />
+                                                                {
                                                                 this.rowRemoveControls(() => arrayHelpers.remove(key))
-                                                            }
-                                                        </>
+                                                                }
+                                                                </>
                                                         : <FieldValue value={milestone.label}/>
                                                 }
                                             </td>
@@ -160,9 +171,9 @@ export default class MilestoneTable extends React.Component {
         )
     };
 
-    isMandatory = (label) => (
-        this.state.mandatoryMilesLabels.includes(label.toUpperCase())
-    );
+    isMandatory = (label) => {
+        return this.props.mandatoryMilestones.includes(label.toUpperCase())
+    };
 
     rowRemoveControls = (remove) => (
         <RenderControls type={"delete"} onClick={remove}/>
@@ -174,13 +185,14 @@ export default class MilestoneTable extends React.Component {
 
     getEmptyMilestone = () => ({
         label: "",
-        actualDate: "",
-        baselineDate: "",
-        completion: "",
+        actualDate: null,
+        baselineDate: null,
+        completion: 0,
         shown: false,
         meetingMinutes: ""
     });
 
+    //TODO: change to boolToYesNo
     isChecked = (checked) => (
         checked ? "Yes" : "No"
     );
@@ -188,6 +200,7 @@ export default class MilestoneTable extends React.Component {
 
 MilestoneTable.propTypes = {
     editMode: PropTypes.bool,
-    milestonesData: PropTypes.array,
+    milestonesData: PropTypes.arrayOf(MilestoneShape),
     onChange: PropTypes.func,
+    mandatoryMilestones: PropTypes.arrayOf(PropTypes.string)
 };
