@@ -100,6 +100,7 @@ let getEcmaObject = (obj) => {
         ]
     } else if (obj.length === 1) {
         return [
+            ...obj,
             {milestones: "", value: ""},
         ]
     } else {

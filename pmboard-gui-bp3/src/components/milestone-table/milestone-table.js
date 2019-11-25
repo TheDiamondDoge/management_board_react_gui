@@ -6,7 +6,7 @@ import styles from './milestone-table.module.css';
 import PropTypes from "prop-types";
 import {FieldArray} from "formik";
 import FormikInput, {RenderControls} from "../mini-input-renderers/mini-input-renderers";
-import {dateFormatToString} from "../../util/transformFuncs";
+import {boolToYesNo, dateFormatToString} from "../../util/transformFuncs";
 import {MilestoneShape} from "../../util/custom-types";
 
 //TODO: Validation at least for dates
@@ -72,27 +72,30 @@ export default class MilestoneTable extends React.Component {
             <FieldArray
                 name="milestones"
                 render={(arrayHelpers) => {
+                    let renderedMilestones = [];
                     return (
                         <>
                             {
                                 milestonesData.map((milestone, key) => {
-                                    const shownString = this.isChecked(milestone.shown);
+                                    const shownString = boolToYesNo(milestone.shown);
+                                    const labelEditable = ((editMode && !this.isMandatory(milestone.label))
+                                        || (editMode && renderedMilestones.includes(milestone.label.toUpperCase())));
+
+                                    renderedMilestones.push(milestone.label);
                                     return (
                                         <tr key={key}>
                                             <td className={styles.label}>
                                                 {
-                                                    editMode
-                                                        ? this.isMandatory(milestone.label)
-                                                            ? <FieldValue value={milestone.label}/>
-                                                            : <>
-                                                                <FormikInput
-                                                                    type="text"
-                                                                    name={`milestones[${key}].label`}
-                                                                />
-                                                                {
+                                                    labelEditable
+                                                        ? <>
+                                                            <FormikInput
+                                                                type="text"
+                                                                name={`milestones[${key}].label`}
+                                                            />
+                                                            {
                                                                 this.rowRemoveControls(() => arrayHelpers.remove(key))
-                                                                }
-                                                                </>
+                                                            }
+                                                        </>
                                                         : <FieldValue value={milestone.label}/>
                                                 }
                                             </td>
@@ -191,11 +194,6 @@ export default class MilestoneTable extends React.Component {
         shown: false,
         meetingMinutes: ""
     });
-
-    //TODO: change to boolToYesNo
-    isChecked = (checked) => (
-        checked ? "Yes" : "No"
-    );
 }
 
 MilestoneTable.propTypes = {

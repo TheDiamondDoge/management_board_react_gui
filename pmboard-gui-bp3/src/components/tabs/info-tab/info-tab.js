@@ -83,12 +83,10 @@ export default class InfoTab extends React.Component {
                     enableReinitialize
                     onSubmit={(values, formikActions) => {
                         formikActions.setSubmitting(false);
-                        console.log("VALUES", values);
-                        console.log("ACTIONS", formikActions);
 
                         this.sendData(values);
                         this.editClickHandle();
-                        alert(JSON.stringify(values, null, 2));
+                        // alert(JSON.stringify(values, null, 2));
                     }}
                     initialValues={
                         {
@@ -251,7 +249,7 @@ export default class InfoTab extends React.Component {
                 <div className={styles.ecma_backlog_row}>
                     {
                         Object.keys(value).map((key, i) => (
-                            <>
+                            <React.Fragment key={key}>
                                 <FieldName
                                     key={`milestone_${i}`}
                                     name={"Milestone"}
@@ -290,7 +288,7 @@ export default class InfoTab extends React.Component {
                                                       className={styles[`value_${i + 1}`]}
                                         />
                                 }
-                            </>
+                            </React.Fragment>
                         ))
                     }
                 </div>
@@ -341,7 +339,7 @@ export default class InfoTab extends React.Component {
                     <div>
                         {
                             valueStrings.map((name) => (
-                                <><FieldValue key={name} className={styles.prj_margin} value={name}/></>
+                                <React.Fragment key={name}><FieldValue className={styles.prj_margin} value={name}/></React.Fragment>
                             ))
                         }
                     </div>
