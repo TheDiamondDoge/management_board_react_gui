@@ -13,12 +13,14 @@ import {MilestoneShape} from "../../../util/custom-types";
 import {formikFieldHandleChange} from "../../../util/util";
 import {infoFieldsToRender} from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
-import validationSchema from "./validationSchema";
+import getValidationSchema from "./validationSchema";
 import HelpIcon from "../../help-icon/help-icon";
 import {isBoolean} from "../../../util/comparators";
 import {boolToYesNo} from "../../../util/transformFuncs";
 import {MenuItem} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
+import * as Yup from "yup";
+
 
 //TODO: too slow and laggy (sometimes). Try fastField
 //TODO: key prop is missing
@@ -68,6 +70,7 @@ export default class InfoTab extends React.Component {
     handleChange = null;
 
     render() {
+
         const {information, milestones} = this.props;
         if (information.loading || milestones.loading) {
             return (<Loading/>)
@@ -96,7 +99,7 @@ export default class InfoTab extends React.Component {
                         }
                     }
                     validationSchema={
-                        validationSchema
+                        getValidationSchema
                     }
                     render={
                         (formikProps) => {

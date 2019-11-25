@@ -7,3 +7,9 @@ export const nullableInteger = Yup.number()
     .max(99999, ValidationErrors.number.MAX)
     .nullable()
     .transform((value, originalValue) => (originalValue + "").trim() === "" ? null : value);
+
+export function unique(message, mapper = a => a) {
+    return this.test('unique', message, function (list) {
+        return list.length === new Set(list.map(mapper)).size;
+    });
+}
