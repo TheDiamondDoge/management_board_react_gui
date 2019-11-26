@@ -8,7 +8,7 @@ import FieldValue from "../field-value/field-value";
 import PropTypes from 'prop-types';
 import {dateFormatToString} from "../../util/transformFuncs";
 import {Formik} from "formik";
-import FormikInput from "../mini-input-renderers/mini-input-renderers";
+import FormikInput from "../util-renderers/util-renderers";
 import {FieldsToRenderShape, RequirementsShape} from "../../util/custom-types";
 import {formikFieldHandleChange} from "../../util/util";
 

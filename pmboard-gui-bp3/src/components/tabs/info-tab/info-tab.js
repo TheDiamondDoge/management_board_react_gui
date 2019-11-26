@@ -7,7 +7,7 @@ import styles from './info-tab.module.css'
 import PropTypes from 'prop-types';
 import Loading from "../../loading-card/loading";
 import {Field, Formik} from "formik";
-import FormikInput from "../../mini-input-renderers/mini-input-renderers";
+import FormikInput from "../../util-renderers/util-renderers";
 import FieldValue from "../../field-value/field-value";
 import {MilestoneShape} from "../../../util/custom-types";
 import {formikFieldHandleChange} from "../../../util/util";
@@ -252,19 +252,19 @@ export default class InfoTab extends React.Component {
                 <div className={styles.ecma_backlog_row}>
                     {
                         Object.keys(value).map((key, i) => {
+                            const milestoneSelectName = `${stateBranch}.${obj}.${key}.milestone`;
                             const valueInputName = `${stateBranch}.${obj}.${key}.value`;
                                 return (
                                     <React.Fragment key={key}>
                                         <FieldName
                                             key={`milestone_${i}`}
                                             name={"Milestone"}
-                                            className={styles[`milestone_${i + 1}`]}/>
+                                        />
                                         {
                                             editMode
                                                 ? <Field key={`mil_val_${i}`}
                                                          component="select"
-                                                         name={`${stateBranch}.${obj}.${key}.milestone`}
-                                                         className={styles[`milestone_value_${i + 1}`]}
+                                                         name={milestoneSelectName}
                                                 >
                                                     <option value="">&nbsp;</option>
                                                     <option value="CI">CI</option>
@@ -274,12 +274,11 @@ export default class InfoTab extends React.Component {
                                                 </Field>
                                                 : <FieldValue key={`mil_val_${i}`}
                                                               value={value[key]["milestone"]}
-                                                              className={styles[`milestone_value_${i + 1}`]}
                                                 />
                                         }
                                         <FieldName key={`value_${i}`}
                                                    name={"Value"}
-                                                   className={styles[`value_label_${i + 1}`]}
+                                                   className={styles.value_label}
                                         />
                                         {
                                             editMode
@@ -287,11 +286,9 @@ export default class InfoTab extends React.Component {
                                                                type="numeric"
                                                                onValueChange={this.handleChange(valueInputName)}
                                                                name={valueInputName}
-                                                               className={styles[`value_${i + 1}`]}
                                                 />
                                                 : <FieldValue key={`val_val_${i}`}
                                                               value={value[key]["value"]}
-                                                              className={styles[`value_${i + 1}`]}
                                                 />
                                         }
                                     </React.Fragment>
@@ -347,8 +344,9 @@ export default class InfoTab extends React.Component {
                     <div>
                         {
                             valueStrings.map((name) => (
-                                <React.Fragment key={name}><FieldValue className={styles.prj_margin}
-                                                                       value={name}/></React.Fragment>
+                                <React.Fragment key={name}>
+                                    <FieldValue className={styles.prj_margin} value={name}/>
+                                </React.Fragment>
                             ))
                         }
                     </div>

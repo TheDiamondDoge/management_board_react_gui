@@ -5,7 +5,7 @@ import styles from "./quality.module.css";
 import {FieldName} from "../field-name/field-name";
 import PropTypes from "prop-types";
 import {FieldArray, Formik} from "formik";
-import FormikInput, {RenderControls} from "../mini-input-renderers/mini-input-renderers";
+import FormikInput, {RenderControls} from "../util-renderers/util-renderers";
 import HelpIcon from "../help-icon/help-icon";
 import {dateFormatToString} from "../../util/transformFuncs";
 import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/custom-types";

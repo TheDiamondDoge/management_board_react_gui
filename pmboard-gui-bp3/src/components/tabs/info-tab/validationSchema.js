@@ -127,6 +127,6 @@ export default () => {
                     .max(512, ValidationErrors.string.MAX)
                     .nullable(),
             })
-        ).unique("Duplicated label", a => a.label)
+        ).unique("Duplicated label", a => a.label.toUpperCase())
     })
 }

@@ -34,3 +34,7 @@
 .align_center {
     text-align: center !important;
 }
+
+.error {
+    color: red;
+}

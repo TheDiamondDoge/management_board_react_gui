@@ -5,7 +5,7 @@ import FieldValue from "../field-value/field-value";
 import styles from './milestone-table.module.css';
 import PropTypes from "prop-types";
 import {FieldArray} from "formik";
-import FormikInput, {RenderControls} from "../mini-input-renderers/mini-input-renderers";
+import FormikInput, {ArrayErrors, RenderControls} from "../util-renderers/util-renderers";
 import {boolToYesNo, dateFormatToString} from "../../util/transformFuncs";
 import {MilestoneShape} from "../../util/custom-types";
 
@@ -19,16 +19,6 @@ export default class MilestoneTable extends React.Component {
             milestonesRendered: [],
         };
     }
-
-    addRendered = (label) => {
-        this.setState((prev => {
-            if (!prev.milestonesRendered.includes(label)) {
-                return {
-                    milestonesRendered: [...prev.milestonesRendered, label]
-                }
-            }
-        }))
-    };
 
     render() {
         return (
@@ -159,6 +149,11 @@ export default class MilestoneTable extends React.Component {
                                     )
                                 })
                             }
+                            <tr>
+                                <td colSpan={6}>
+                                    <ArrayErrors errors={arrayHelpers.form.errors} name={"milestones"} />
+                                </td>
+                            </tr>
                             {
                                 editMode &&
                                 <tr>
