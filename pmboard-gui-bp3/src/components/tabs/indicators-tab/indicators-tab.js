@@ -29,7 +29,8 @@ export default class IndicatorsTab extends React.Component {
     componentWillUnmount() {
         this.props.resetState();
     }
-
+    //TODO: validation
+    //TODO: use render-helper class
     render() {
         const {milestones, healthIndicators, requirements, milestonesKpi, dr4Kpi, qualityKpi} = this.props;
         const {

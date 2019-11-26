@@ -148,18 +148,21 @@ export default class MilestoneTable extends React.Component {
                                     )
                                 })
                             }
-                            <tr>
-                                <td colSpan={6}>
-                                    <ArrayErrors errors={arrayHelpers.form.errors} name={"milestones"} />
-                                </td>
-                            </tr>
+
                             {
                                 editMode &&
-                                <tr>
-                                    <td colSpan={6} className={styles.align_center}>
-                                        {this.rowAddControls(arrayHelpers.push)}
-                                    </td>
-                                </tr>
+                                <>
+                                    <tr>
+                                        <td colSpan={6}>
+                                            <ArrayErrors errors={arrayHelpers.form.errors} name={"milestones"}/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan={6} className={styles.align_center}>
+                                            {this.rowAddControls(arrayHelpers.push)}
+                                        </td>
+                                    </tr>
+                                </>
                             }
                         </>
                     )

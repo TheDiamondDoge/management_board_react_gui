@@ -43,13 +43,11 @@
     margin-left: -7px;
 }
 
-/* TODO: What about to refactor this??? (if more than 2 rows?) */
 .ecma_backlog_row {
     display: grid;
     grid-template-areas:
         "milestone milestone_value value_label value";
     grid-template-columns: 75px 75px 57px 75px;
-    /*grid-template-rows: auto;*/
     grid-auto-rows: auto;
     row-gap: 1em;
 }
