@@ -251,48 +251,53 @@ export default class InfoTab extends React.Component {
                 <FieldName name={renderHelper.getLabelById(obj)}/>
                 <div className={styles.ecma_backlog_row}>
                     {
-                        Object.keys(value).map((key, i) => (
-                            <React.Fragment key={key}>
-                                <FieldName
-                                    key={`milestone_${i}`}
-                                    name={"Milestone"}
-                                    className={styles[`milestone_${i + 1}`]}/>
-                                {
-                                    editMode
-                                        ? <Field key={`mil_val_${i}`}
-                                                 component="select"
-                                                 name={`${stateBranch}.${obj}.${key}.milestone`}
-                                                 className={styles[`milestone_value_${i + 1}`]}
-                                        >
-                                            <option value="">&nbsp;</option>
-                                            <option value="CI">CI</option>
-                                            <option value="TR">TR</option>
-                                            <option value="DR4">DR4</option>
-                                            <option value="DR5">DR5</option>
-                                        </Field>
-                                        : <FieldValue key={`mil_val_${i}`}
-                                                      value={value[key]["milestone"]}
-                                                      className={styles[`milestone_value_${i + 1}`]}
+                        Object.keys(value).map((key, i) => {
+                            const valueInputName = `${stateBranch}.${obj}.${key}.value`;
+                                return (
+                                    <React.Fragment key={key}>
+                                        <FieldName
+                                            key={`milestone_${i}`}
+                                            name={"Milestone"}
+                                            className={styles[`milestone_${i + 1}`]}/>
+                                        {
+                                            editMode
+                                                ? <Field key={`mil_val_${i}`}
+                                                         component="select"
+                                                         name={`${stateBranch}.${obj}.${key}.milestone`}
+                                                         className={styles[`milestone_value_${i + 1}`]}
+                                                >
+                                                    <option value="">&nbsp;</option>
+                                                    <option value="CI">CI</option>
+                                                    <option value="TR">TR</option>
+                                                    <option value="DR4">DR4</option>
+                                                    <option value="DR5">DR5</option>
+                                                </Field>
+                                                : <FieldValue key={`mil_val_${i}`}
+                                                              value={value[key]["milestone"]}
+                                                              className={styles[`milestone_value_${i + 1}`]}
+                                                />
+                                        }
+                                        <FieldName key={`value_${i}`}
+                                                   name={"Value"}
+                                                   className={styles[`value_label_${i + 1}`]}
                                         />
-                                }
-                                <FieldName key={`value_${i}`}
-                                           name={"Value"}
-                                           className={styles[`value_label_${i + 1}`]}
-                                />
-                                {
-                                    editMode
-                                        ? <FormikInput key={`val_val_${i}`}
-                                                       type="text"
-                                                       name={`${stateBranch}.${obj}.${key}.value`}
-                                                       className={styles[`value_${i + 1}`]}
-                                        />
-                                        : <FieldValue key={`val_val_${i}`}
-                                                      value={value[key]["value"]}
-                                                      className={styles[`value_${i + 1}`]}
-                                        />
-                                }
-                            </React.Fragment>
-                        ))
+                                        {
+                                            editMode
+                                                ? <FormikInput key={`val_val_${i}`}
+                                                               type="numeric"
+                                                               onValueChange={this.handleChange(valueInputName)}
+                                                               name={valueInputName}
+                                                               className={styles[`value_${i + 1}`]}
+                                                />
+                                                : <FieldValue key={`val_val_${i}`}
+                                                              value={value[key]["value"]}
+                                                              className={styles[`value_${i + 1}`]}
+                                                />
+                                        }
+                                    </React.Fragment>
+                                )
+                            }
+                        )
                     }
                 </div>
             </div>
@@ -342,7 +347,8 @@ export default class InfoTab extends React.Component {
                     <div>
                         {
                             valueStrings.map((name) => (
-                                <React.Fragment key={name}><FieldValue className={styles.prj_margin} value={name}/></React.Fragment>
+                                <React.Fragment key={name}><FieldValue className={styles.prj_margin}
+                                                                       value={name}/></React.Fragment>
                             ))
                         }
                     </div>
