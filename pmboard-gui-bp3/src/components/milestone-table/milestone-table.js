@@ -9,14 +9,12 @@ import FormikInput, {ArrayErrors, RenderControls} from "../util-renderers/util-r
 import {boolToYesNo, dateFormatToString} from "../../util/transformFuncs";
 import {MilestoneShape} from "../../util/custom-types";
 
-//TODO: Validation at least for dates
-//TODO: Block OR edition and DR0-DR1 baseline
-//TODO: if user will add new milestone with label of mandatory -> it will be blocked in UI (need to fix)
 export default class MilestoneTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             milestonesRendered: [],
+            withoutBaselineDate: ["OR", "DR0", "DR1"]
         };
     }
 
@@ -68,6 +66,7 @@ export default class MilestoneTable extends React.Component {
                             {
                                 milestonesData.map((milestone, key) => {
                                     const shownString = boolToYesNo(milestone.shown);
+                                    const hasBaseline = !this.state.withoutBaselineDate.includes(milestone.label.toUpperCase());
                                     const labelEditable = ((editMode && !this.isMandatory(milestone.label))
                                         || (editMode && renderedMilestones.includes(milestone.label.toUpperCase())));
 
@@ -103,7 +102,7 @@ export default class MilestoneTable extends React.Component {
                                             </td>
                                             <td className={styles.baseline}>
                                                 {
-                                                    editMode
+                                                    editMode && hasBaseline
                                                         ? <FormikInput
                                                             type="date"
                                                             name={`milestones[${key}].baselineDate`}

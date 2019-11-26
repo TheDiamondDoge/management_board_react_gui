@@ -19,17 +19,13 @@ import {isBoolean} from "../../../util/comparators";
 import {boolToYesNo} from "../../../util/transformFuncs";
 import {MenuItem} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
-import * as Yup from "yup";
 
 
-//TODO: too slow and laggy (sometimes). Try fastField
-//TODO: key prop is missing
-//TODO: why not numeric inputs???
 export default class InfoTab extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            editMode: true
+            editMode: false
         };
 
         this.mandatoryMilestones = ["OR", "DR0", "DR1", "DR2", "DR3", "DR4", "OBR", "CI"];
@@ -89,7 +85,6 @@ export default class InfoTab extends React.Component {
 
                         this.sendData(values);
                         this.editClickHandle();
-                        // alert(JSON.stringify(values, null, 2));
                     }}
                     initialValues={
                         {
@@ -301,7 +296,6 @@ export default class InfoTab extends React.Component {
         )
     };
 
-    //TODO: Refactor
     renderContributingProjectsRow = (renderHelper, obj, stateBranch, value, isComposite) => {
         const {loading, payload} = this.props.contrib;
         const {editMode} = this.state;
