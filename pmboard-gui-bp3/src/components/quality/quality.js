@@ -11,6 +11,7 @@ import {dateFormatToString} from "../../util/transformFuncs";
 import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/custom-types";
 import FieldValue from "../field-value/field-value";
 import {formikFieldHandleChange} from "../../util/util";
+import getValidationSchema from "./validationSchema";
 
 export default class Quality extends React.Component {
     constructor(props) {
@@ -60,8 +61,12 @@ export default class Quality extends React.Component {
                         this.onClickEdit();
                     }
                 }
+                validationSchema={
+                    getValidationSchema()
+                }
                 render={
                     (formikProps) => {
+                        console.log("VALUES", formikProps.values)
                         this.bindFormSubmission(formikProps.submitForm);
                         this.updateFieldHandler = formikFieldHandleChange(formikProps);
                         return this.renderQualityForm(formikProps.values);
@@ -246,9 +251,9 @@ export default class Quality extends React.Component {
     };
 
     getEmptyRowObject = (comment) => ({
-        rowNumber: "",
-        objective: "",
-        actual: "",
+        rowNumber: 0,
+        objective: 0,
+        actual: 0,
         comment: comment
     });
 

@@ -11,6 +11,7 @@ import {Formik} from "formik";
 import FormikInput from "../util-renderers/util-renderers";
 import {FieldsToRenderShape, RequirementsShape} from "../../util/custom-types";
 import {formikFieldHandleChange} from "../../util/util";
+import getValidationSchema from "./validationSchema";
 
 export default class Requirements extends React.Component {
     constructor(props) {
@@ -48,6 +49,9 @@ export default class Requirements extends React.Component {
                     removedAfterDr1,
                     modifiedAfterDr1
                 }}
+                validationSchema={
+                    getValidationSchema()
+                }
                 render={
                     (formikProps) => {
                         this.bindFormSubmission(formikProps.submitForm);

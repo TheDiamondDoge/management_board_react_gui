@@ -14,7 +14,6 @@ import RenderFieldHelper from "../../../util/render-field-helper";
 import {HealthIndicatorsShape, MilestoneShape, SummaryShape} from "../../../util/custom-types";
 
 
-//TODO: use render-helper class
 export default class SummaryTab extends React.Component {
     componentDidMount() {
         this.props.loadData();

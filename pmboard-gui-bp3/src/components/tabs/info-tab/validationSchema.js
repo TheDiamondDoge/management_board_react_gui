@@ -93,7 +93,7 @@ export default () => {
                 .nullable(),
             ecmaBacklogTarget: Yup.array().of(
                 Yup.object().shape({
-                    value: nullableInteger
+                    value: nullableInteger(9999)
                 })
             ),
             projectCollabUrl: Yup.string()
