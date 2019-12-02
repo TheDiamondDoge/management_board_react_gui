@@ -12,7 +12,7 @@ export default class PWS extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedId: 'inf'
+            selectedId: 'blc'
         };
     }
 
@@ -35,11 +35,11 @@ export default class PWS extends React.Component {
                     <Tab id="sum" title="Summary" panel={<SummaryTab />} />
                     <Tab id="ind" title="Indicators"  panel={<IndicatorsTab/>}/>
                     <Tab id="inf" title="Information" panel={<InfoTab />}/>
-                    <Tab id="risks" title="Risks" disabled={true}/>
+                    <Tab id="risks" title="Risks" disabled/>
                     <Tab id="cost" title="Cost" panel={<CostTab />} />
-                    <Tab id="rep" title="Report" panel={<Hello/>}/>
-                    <Tab id="req" title="Requirements" disabled={true}/>
-                    <Tab id="back" title="Backlog" disabled={true}/>
+                    <Tab id="rep" title="Report" disabled panel={<Hello/>}/>
+                    <Tab id="req" title="Requirements" disabled/>
+                    <Tab id="back" title="Backlog" disabled/>
                     <Tab id="blc" title="BLC Dashboard" panel={<BlcDashboard />}/>
                 </Tabs>
             </div>

@@ -55,3 +55,15 @@ export const saveInformationTab = (projectID, payload) => (
 export const getContributableProjects = () => (
     axios.get(`http://localhost:8080/api/projects/contrib`)
 );
+
+export const getBlcTabData = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/blc`)
+);
+
+//TODO: post + get params will not work together
+export const saveBlcTabData = (projectID, payload, typeUrlParam) => {
+    console.log(payload);
+    return(
+    axios.post(`http://localhost:8080/api/projects/${projectID}/tabs/blc?type=${typeUrlParam}`, payload)
+)
+};

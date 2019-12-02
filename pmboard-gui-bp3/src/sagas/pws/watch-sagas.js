@@ -12,7 +12,9 @@ import {
     saveInformationTab,
     saveMilestones,
     loadMilestones,
-    loadContributableProjects
+    loadContributableProjects,
+    loadBlcTab,
+    saveBlcTab,
 } from "./worker-sagas";
 import * as summaryTab from "../../actions/summary-tab";
 import * as indicatorsTab from "../../actions/indicators-tab";
@@ -22,6 +24,7 @@ import * as rqIndicators from "../../actions/indicators-rqs";
 import * as quality from "../../actions/quality-kpi";
 import * as milestones from "../../actions/milestones";
 import * as contrib from "../../actions/contrib-projects";
+import * as blc from "../../actions/blc-tab";
 
 function* watchSummaryTabLoad() {
     yield takeEvery(summaryTab.LOAD_SUMMARY, loadSummaryTab);
@@ -33,6 +36,14 @@ function* watchIndicatorsTabLoad() {
 
 function* watchInformationTabLoad() {
     yield takeEvery(informationTab.LOAD_INFO, loadInformationTab);
+}
+
+function* watchBlcTabLoad() {
+    yield takeEvery(blc.LOAD_BLC, loadBlcTab);
+}
+
+function* watchBlcTabSave() {
+    yield takeLatest(blc.SAVE_BLC, saveBlcTab);
 }
 
 function* watchHealthIndicatorsLoad() {
@@ -83,6 +94,8 @@ const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
     fork(watchInformationTabLoad),
+    fork(watchBlcTabLoad),
+    fork(watchBlcTabSave),
     fork(watchInformationTabSave),
     fork(watchMilestonesLoad),
     fork(watchMilestonesSave),

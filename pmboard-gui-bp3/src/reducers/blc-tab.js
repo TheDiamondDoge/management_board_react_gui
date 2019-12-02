@@ -1,11 +1,15 @@
-import {EDIT_ROW_VALUE, LOAD_BLC, LOAD_BLC_FAILURE, LOAD_BLC_SUCCESS, RESET_STATE} from "../actions/blc-tab";
+import {
+    LOAD_BLC,
+    LOAD_BLC_FAILURE,
+    LOAD_BLC_SUCCESS,
+    RESET_STATE,
+    SAVE_BLC,
+} from "../actions/blc-tab";
 
 const initState = {
-    loaded: false,
-    pm: {},
-    pmo: {},
-    sales: {},
-    error: "",
+    loading: true,
+    payload: {},
+    error: ""
 };
 
 export default (state, action) => {
@@ -17,24 +21,24 @@ export default (state, action) => {
         case LOAD_BLC:
             return {
                 ...state,
-                loaded: false,
+                loading: true,
             };
         case LOAD_BLC_SUCCESS:
             return {
                 ...state,
-                ...action.data,
-                loaded: true,
+                payload: {...action.data},
+                loading: false,
             };
         case LOAD_BLC_FAILURE:
             return {
                 ...state,
-                loaded: false,
+                loading: false,
                 error: action.error,
             };
-        case EDIT_ROW_VALUE:
+        case SAVE_BLC:
             return {
                 ...state,
-                [action.fieldData.propKey]: {...editRowData(state, action)}
+                loading: true,
             };
         case RESET_STATE:
             return initState;
@@ -42,15 +46,3 @@ export default (state, action) => {
             return state;
     }
 }
-
-let editRowData = (state, action) => {
-    let rowObject = {...state[action.fieldData.propKey]};
-
-    if (action.fieldData.key === "comment") {
-        rowObject.comment = action.fieldData.value;
-    } else {
-        rowObject.indicators[action.fieldData.key] = action.fieldData.value;
-    }
-
-    return rowObject;
-};

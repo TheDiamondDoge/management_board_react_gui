@@ -10,6 +10,7 @@ import * as dr4Kpi from "../../actions/dr4-kpi";
 import * as qualityKpi from "../../actions/quality-kpi";
 import * as infoTab from "../../actions/info-tab";
 import * as contrib from "../../actions/contrib-projects";
+import * as blc from "../../actions/blc-tab";
 
 export function* loadSummaryTab() {
     try {
@@ -108,6 +109,15 @@ export function* loadQualityKpi() {
     }
 }
 
+export function* loadBlcTab() {
+    try {
+        const blcData = yield call(api.getBlcTabData, 1);
+        yield put(blc.loadSuccess(blcData.data))
+    } catch(e) {
+        yield put(blc.loadFailure(e))
+    }
+}
+
 export function* saveHealthIndicators(action) {
     try {
         yield call(api.saveHealthIndicatorsPost, 1, action.data);
@@ -151,5 +161,14 @@ export function* saveMilestones(action) {
         yield call(loadMilestones);
     } catch (e) {
         yield put(milestones.loadMilestonesFail(e));
+    }
+}
+
+export function* saveBlcTab(action) {
+    try {
+        yield call(api.saveBlcTabData, 1, action.data, action.saveType);
+        yield call(loadBlcTab);
+    } catch (e) {
+        yield put(blc.loadFailure(e))
     }
 }

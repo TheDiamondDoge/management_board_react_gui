@@ -5,12 +5,16 @@ import classNames from "classnames";
 import style from "./blcRow.module.css";
 import {Button, TextArea} from "@blueprintjs/core";
 import {blcNumberToState, dateFormatToString} from "../../util/transformFuncs";
+import {FastField} from "formik";
+import FormikCustomField from "../formik-custom-field/formik-custom-field";
+import FormikInput from "../util-renderers/util-renderers";
 
 export default class BlcRow extends React.Component {
     render() {
         console.log("RENDER BLC ROW");
         const {
-            roleName, lastUpdatedBy, updatedOn, rowValues, comment,
+            roleName, lastUpdatedBy, updatedOn,
+            rowValues, comment,
             onClickEdit, isValuesEdit, isCommentsEdit, isControlsHidden
         } = this.props;
         const tdClasses = classNames(style.column_align_center, style.word_break);
@@ -50,26 +54,35 @@ export default class BlcRow extends React.Component {
                 ))}
 
                 <td className={tdClasses}>
-                    {isCommentsEdit ? <TextArea fill={true} onChange={(e) => this.props.onChange("comment", e.target.value)} defaultValue={comment}/> : comment}
+                    {isCommentsEdit
+                        ? <FormikInput type="textarea"
+                                       fill={true}
+                                       name={`${this.props.rowName}.comment`}
+                        />
+                        : comment}
                 </td>
             </tr>
         )
     }
 
     selectElement = (num, key) => {
-        num = num || "";
+        const name = `${this.props.rowName}.indicators.${key}`;
         return (
-            <select onChange={(e) => this.props.onChange(key, e.target.value)} defaultValue={num}>
+            <FastField
+                component="select"
+                name={name}
+            >
                 <option value="">&nbsp;</option>
                 <option value="1">1</option>
-                <option value="3">3</option>
-                <option value="6">6</option>
-            </select>
+                <option value="5">5</option>
+                <option value="8">8</option>
+            </FastField>
         )
     };
 }
 
 BlcRow.propTypes = {
+    rowName: PropTypes.string.isRequired,
     roleName: PropTypes.string.isRequired,
     lastUpdatedBy: PropTypes.string,
     updatedOn: PropTypes.string,

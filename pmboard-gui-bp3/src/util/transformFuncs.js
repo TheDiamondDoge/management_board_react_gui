@@ -20,9 +20,9 @@ export const blcNumberToState = (num) => {
     switch (num) {
         case 1:
             return "red";
-        case 3:
+        case 5:
             return "yellow";
-        case 6:
+        case 8:
             return "green";
         default:
             return "blank"
