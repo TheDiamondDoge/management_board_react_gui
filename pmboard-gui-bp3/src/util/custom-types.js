@@ -87,3 +87,32 @@ export const SummaryShape = PropTypes.shape({
     status: PropTypes.object,
     validationParams: PropTypes.object,
 });
+
+const BlcIndicators = PropTypes.shape({
+    or: PropTypes.number,
+    charter: PropTypes.number,
+    prjPlan: PropTypes.number,
+    tailoring: PropTypes.number,
+    accPrgMgr: PropTypes.number,
+    accCoreTeam: PropTypes.number,
+    bpPlan: PropTypes.number,
+    bpSales: PropTypes.number,
+    launchPlan: PropTypes.number,
+    launchSales: PropTypes.number,
+    lessons: PropTypes.number,
+    risks: PropTypes.number
+});
+
+export const BlcRow = PropTypes.shape({
+    comment: PropTypes.string,
+    csl: PropTypes.string,
+    role: PropTypes.string,
+    updatedOn: PropTypes.string,
+    indicators: BlcIndicators.isRequired
+});
+
+export const BlcTab = PropTypes.shape({
+    pm: BlcRow,
+    pmo: BlcRow,
+    sales: BlcRow,
+});

@@ -164,9 +164,18 @@ export function* saveMilestones(action) {
     }
 }
 
-export function* saveBlcTab(action) {
+export function* saveBlcTabIndicators(action) {
     try {
-        yield call(api.saveBlcTabData, 1, action.data, action.saveType);
+        yield call(api.saveBlcIndicators, 1, action.data);
+        yield call(loadBlcTab);
+    } catch (e) {
+        yield put(blc.loadFailure(e))
+    }
+}
+
+export function* saveBlcTabComments(action) {
+    try {
+        yield call(api.saveBlcComments, 1, action.data);
         yield call(loadBlcTab);
     } catch (e) {
         yield put(blc.loadFailure(e))

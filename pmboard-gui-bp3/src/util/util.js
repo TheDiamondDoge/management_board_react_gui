@@ -8,7 +8,7 @@ export function formikFieldHandleChange(form) {
 
 export function getPropFromStringPath(obj, path) {
     let editedPath = path.replace(/]/g, "");
-    let arr = editedPath.split(/[.\[]/);
+    let arr = editedPath.split(/[.[]/);
     try {
         let tmpVal = obj;
         for (let i = 0; i < arr.length; i++) {

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import blcTab from "./blc";
-import {loadBlc, resetState, saveBlc} from "../../../actions/blc-tab";
+import {loadBlc, resetState, saveBlcComments, saveBlcIndicators} from "../../../actions/blc-tab";
 
 function mapStateToProps(state) {
     return {
@@ -12,7 +12,8 @@ function mapDispatchToProps(dispatch) {
     return {
         loadData: () => dispatch(loadBlc()),
         resetData: () => dispatch(resetState()),
-        saveData: (data, saveType) => dispatch(saveBlc(data, saveType))
+        saveIndicators: (data) => dispatch(saveBlcIndicators(data)),
+        saveComments: (data) => dispatch(saveBlcComments(data)),
     }
 }
 

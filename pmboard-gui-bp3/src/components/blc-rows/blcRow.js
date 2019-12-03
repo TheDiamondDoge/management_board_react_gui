@@ -3,21 +3,20 @@ import PropTypes from "prop-types";
 import StatusIndicator from "../status-indicator/status-indicator";
 import classNames from "classnames";
 import style from "./blcRow.module.css";
-import {Button, TextArea} from "@blueprintjs/core";
+import {Button} from "@blueprintjs/core";
 import {blcNumberToState, dateFormatToString} from "../../util/transformFuncs";
 import {FastField} from "formik";
-import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import FormikInput from "../util-renderers/util-renderers";
 
 export default class BlcRow extends React.Component {
     render() {
-        console.log("RENDER BLC ROW");
         const {
             roleName, lastUpdatedBy, updatedOn,
             rowValues, comment,
             onClickEdit, isValuesEdit, isCommentsEdit, isControlsHidden
         } = this.props;
         const tdClasses = classNames(style.column_align_center, style.word_break);
+        const commentName = `${this.props.rowName}.comment`;
         return (
             <tr>
                 <td>
@@ -38,9 +37,7 @@ export default class BlcRow extends React.Component {
                         </div>
                     </div>
                 </td>
-
                 <td className={tdClasses}>{lastUpdatedBy}</td>
-
                 <td className={tdClasses}>{dateFormatToString(new Date(updatedOn))}</td>
 
                 {Object.keys(rowValues).map((key) => (
@@ -57,7 +54,7 @@ export default class BlcRow extends React.Component {
                     {isCommentsEdit
                         ? <FormikInput type="textarea"
                                        fill={true}
-                                       name={`${this.props.rowName}.comment`}
+                                       name={commentName}
                         />
                         : comment}
                 </td>

@@ -10,6 +10,7 @@ import style from "../../blc-rows/blcRow.module.css";
 import Loading from "../../loading-card/loading";
 import {Formik} from "formik";
 import {formikFieldHandleChange} from "../../../util/util";
+import {BlcTab} from "../../../util/custom-types";
 
 //TODO: Fetch is OK, need to populate
 export default class BlcDashboard extends React.Component {
@@ -31,7 +32,6 @@ export default class BlcDashboard extends React.Component {
     };
 
     componentDidMount() {
-        console.log("mounted");
         this.props.loadData();
     }
 
@@ -62,13 +62,12 @@ export default class BlcDashboard extends React.Component {
     };
 
     render() {
-        console.log("RENDER BLC", this.props);
         const {loading} = this.props.blcTab;
 
         if (loading) {
             return <Loading/>
         } else {
-            const {pm, pmo, sales} = this.props.blcTab.payload;
+            const {pm, pmo, sales, rowToSave} = this.props.blcTab.payload;
             return (
                 <>
                     <CustomCard>
@@ -83,20 +82,18 @@ export default class BlcDashboard extends React.Component {
                         <Formik
                             onSubmit={(values, formikActions) => {
                                 formikActions.setSubmitting(false);
-                                alert(JSON.stringify(values, null, 2));
-                                const save = this.props.saveData;
+                                values.rowToSave = this.getRowToSaveValue();
+                                const {saveComments, saveIndicators} = this.props;
                                 if (this.state.isCommentsEdit) {
-                                    save(values, "comments");
+                                    saveComments(values);
                                 } else {
-                                    save(values, "indicators");
+                                    saveIndicators(values);
                                 }
 
                                 this.cancelEdit();
                             }}
                             initialValues={{
-                                pm: pm,
-                                pmo: pmo,
-                                sales: sales
+                                pm, pmo, sales, rowToSave
                             }}
                             render={
                                 (formikProps) => {
@@ -123,6 +120,20 @@ export default class BlcDashboard extends React.Component {
             )
         }
     }
+
+    getRowToSaveValue = () => {
+        if (this.state.isPmRow) {
+            return "pm";
+        }
+
+        if (this.state.isPmoRow) {
+            return "pmo";
+        }
+
+        if (this.state.isSalesRow) {
+            return "sales";
+        }
+    };
 
     renderBlcTab = (formikProps) => {
         const thClasses = classNames(styles.column_align_center, styles.border_right);
@@ -251,17 +262,12 @@ export default class BlcDashboard extends React.Component {
     isInEditMode = () => {
         return (this.state.isPmRow || this.state.isPmoRow || this.state.isSalesRow || this.state.isCommentsEdit)
     };
-
-    onChange = (propKey) => {
-        return (val, key) => {
-            this.delayedOnChange(propKey, val, key);
-        }
-    };
 }
 
 BlcDashboard.propTypes = {
     loadData: PropTypes.func,
     resetData: PropTypes.func,
-    saveData: PropTypes.func,
-    blcTab: PropTypes.object.isRequired,
+    saveIndicators: PropTypes.func,
+    saveComments: PropTypes.func,
+    blcTab: BlcTab.isRequired,
 };

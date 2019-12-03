@@ -1,7 +1,8 @@
 export const LOAD_BLC = "LOAD_BLC";
 export const LOAD_BLC_SUCCESS = "LOAD_BLC_SUCCESS";
 export const LOAD_BLC_FAILURE = "LOAD_BLC_FAILURE";
-export const SAVE_BLC = "SAVE_BLC";
+export const SAVE_BLC_INDICATORS = "SAVE_BLC_INDICATORS";
+export const SAVE_BLC_COMMENTS = "SAVE_BLC_COMMENTS";
 export const RESET_STATE = "RESET_STATE";
 
 export const loadBlc = () => ({
@@ -18,9 +19,13 @@ export const loadFailure = (error) => ({
     error
 });
 
-export const saveBlc = (data, saveType) => ({
-    type: SAVE_BLC,
-    saveType,
+export const saveBlcIndicators = (data) => ({
+    type: SAVE_BLC_INDICATORS,
+    data
+});
+
+export const saveBlcComments = (data) => ({
+    type: SAVE_BLC_COMMENTS,
     data
 });
 

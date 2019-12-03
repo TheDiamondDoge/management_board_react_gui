@@ -3,7 +3,7 @@ import {
     LOAD_BLC_FAILURE,
     LOAD_BLC_SUCCESS,
     RESET_STATE,
-    SAVE_BLC,
+    SAVE_BLC_COMMENTS, SAVE_BLC_INDICATORS,
 } from "../actions/blc-tab";
 
 const initState = {
@@ -35,7 +35,8 @@ export default (state, action) => {
                 loading: false,
                 error: action.error,
             };
-        case SAVE_BLC:
+        case SAVE_BLC_INDICATORS:
+        case SAVE_BLC_COMMENTS:
             return {
                 ...state,
                 loading: true,
