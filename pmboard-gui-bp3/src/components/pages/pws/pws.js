@@ -7,12 +7,13 @@ import InfoTab from "../../tabs/info-tab/info-tab.container";
 import IndicatorsTab from "../../tabs/indicators-tab/indicators-tab.container";
 import CostTab from "../../tabs/cost-tab/cost-tab";
 import BlcDashboard from "../../tabs/blc/blc.container";
+import Risks from "../../tabs/risks/risks";
 
 export default class PWS extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedId: 'blc'
+            selectedId: 'risks'
         };
     }
 
@@ -35,7 +36,7 @@ export default class PWS extends React.Component {
                     <Tab id="sum" title="Summary" panel={<SummaryTab />} />
                     <Tab id="ind" title="Indicators"  panel={<IndicatorsTab/>}/>
                     <Tab id="inf" title="Information" panel={<InfoTab />}/>
-                    <Tab id="risks" title="Risks" disabled/>
+                    <Tab id="risks" title="Risks" panel={<Risks />}/>
                     <Tab id="cost" title="Cost" panel={<CostTab />} />
                     <Tab id="rep" title="Report" disabled panel={<Hello/>}/>
                     <Tab id="req" title="Requirements" disabled/>
