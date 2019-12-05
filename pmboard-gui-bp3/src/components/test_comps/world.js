@@ -6,6 +6,8 @@ import {Formik, Field, Form, ErrorMessage} from "formik";
 import {HTMLTable, MenuItem} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
+import ColumnResizer from "react-column-resizer";
+import {Column, Table} from "@blueprintjs/table";
 
 
 export default class World extends React.Component {
@@ -106,7 +108,26 @@ export default class World extends React.Component {
                         )
                     }
                 />
-            </>
+                <div>
+                    <table style={{width: "100%"}}>
+                        <thead>
+                        <tr>
+                            <td>1</td>
+                            <ColumnResizer className="columnResizer" />
+                            <td>2</td>
+                        </tr>
+
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>3</td>
+                            <td />
+                            <td>4</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+             </>
         );
     }
 };

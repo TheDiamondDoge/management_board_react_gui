@@ -6,46 +6,69 @@ export default class EnchantedTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            filters: {}
+            filters: {},
+            width: {}
         };
     }
+
     //TODO: overflow of the viewport size
     render() {
-        const {headers, data, ...others} = this.props;
+        const {data, columns, ...others} = this.props;
 
-        const filterNames = this.getFilterNames(data);
         const filteredData = this.filter(data);
-        return(
-            <HTMLTable {...others}>
-                <thead>
-                <tr>
-                    {headers.map((field, i) => (
-                        <th key={`header_${i}`}>{field}</th>
-                    ))}
-                </tr>
-                <tr>
-                    {filterNames.map((field, i) => (
-                        <td key={`filter_${i}`}>
-                            <InputGroup
-                                small
-                                round
-                                onChange={this.handleFilters(field)}
-                            />
-                        </td>
-                    ))}
-                </tr>
-                </thead>
-                <tbody>
-                {filteredData.map((row, i) => (
-                    <tr key={`row_${i}`}>
-                        {Object.keys(row).map((field) => (
-                            <td key={field}>{row[field]}</td>
+        return (
+            <div style={{overflowX: "auto"}}>
+                <HTMLTable {...others} style={{width: "100%"}}>
+                    <thead>
+                    <tr>
+                        {columns.map((field) => {
+                            const style = this.getTdStyle(field, "header");
+                            return(
+                            <th
+                                key={`${field.id}_header`}
+                                className={`${field.id}_header`}
+                                style={style}
+                            >
+                                {
+                                    field.headerName
+                                }
+                            </th>
+                        )})}
+                    </tr>
+                    <tr>
+                        {columns.map((field) => (
+                            <td key={`${field.id}_filter`}>
+                                <InputGroup
+                                    small
+                                    round
+                                    onChange={this.handleFilters(field.id)}
+                                />
+                            </td>
                         ))}
                     </tr>
-                ))}
-                </tbody>
-            </HTMLTable>
+                    </thead>
+                    <tbody>
+                    {filteredData.map((row, i) => (
+                        <tr key={`row_${i}`}>
+                            {columns.map((col) => (
+                                <td key={col.id}>{row[col.id]}</td>
+                            ))}
+                        </tr>
+                    ))}
+                    </tbody>
+                </HTMLTable>
+            </div>
         )
+    }
+
+    getTdStyle(obj, type) {
+        if (obj.hasOwnProperty("styles")){
+            if (obj.styles.hasOwnProperty(type)) {
+                return obj.styles[type];
+            }
+        }
+
+        return {};
     }
 
     handleFilters(id) {
@@ -57,10 +80,6 @@ export default class EnchantedTable extends React.Component {
             }));
         }
     };
-
-    getFilterNames = (data) => (
-        data.length > 0 ? Object.keys(data[0]) : []
-    );
 
     filter = (data) => {
         const {filters} = this.state;
@@ -80,6 +99,7 @@ export default class EnchantedTable extends React.Component {
 }
 
 EnchantedTable.propTypes = {
-    headers: PropTypes.arrayOf(PropTypes.string).isRequired,
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    //TODO: Shape of this
+    columns: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

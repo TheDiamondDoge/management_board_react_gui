@@ -1,6 +1,6 @@
 import React from "react";
 import CostTable from "../../cost-table/costTable";
-import {CustomCard} from "../../card/custom-card";
+import CustomCard from "../../card/custom-card";
 import styles from "./cost-tab.module.css";
 import UploadFileControls from "../../upload-file-controls/upload-file-controls";
 

@@ -19,3 +19,8 @@ export function getPropFromStringPath(obj, path) {
         return undefined;
     }
 }
+
+export function getWorkingAreaWidth(viewportSizePx) {
+    const sidebarWidth = 230;
+    return (viewportSizePx - sidebarWidth);
+}

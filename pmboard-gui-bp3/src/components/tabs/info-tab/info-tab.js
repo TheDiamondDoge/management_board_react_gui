@@ -1,5 +1,5 @@
 import React from 'react';
-import {CustomCard} from "../../card/custom-card";
+import CustomCard from "../../card/custom-card";
 import MilestoneTable from "../../milestone-table/milestone-table";
 import {FieldName} from "../../field-name/field-name";
 import EditSaveControls from "../../edit-save-contols/edit-save-controls";

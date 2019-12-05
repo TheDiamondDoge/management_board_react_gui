@@ -1,3 +1,7 @@
 .stretched {
     width: 100%
 }
+
+[class$="header"] {
+    color: red;
+}

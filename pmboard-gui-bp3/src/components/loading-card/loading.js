@@ -1,5 +1,5 @@
 import React from 'react';
-import {CustomCard} from "../card/custom-card";
+import CustomCard from "../card/custom-card";
 import {Spinner} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 

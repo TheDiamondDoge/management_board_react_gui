@@ -5,7 +5,7 @@ import FieldValue from "../../field-value/field-value";
 import styles from './summary-tab.module.css';
 import classNames from 'classnames';
 import summaryFieldsToRender from "./fields";
-import {CustomCard} from "../../card/custom-card.js";
+import CustomCard from "../../card/custom-card.js";
 import HealthIndicators from "../../health-indicators/health-indicators";
 import fieldsToRender from "../../health-indicators/healthFields";
 import Loading from "../../loading-card/loading";
