@@ -1,6 +1,7 @@
 import React from "react";
 import {HTMLTable, InputGroup} from "@blueprintjs/core";
 import PropTypes from "prop-types";
+import {Rnd} from "react-rnd";
 
 export default class EnchantedTable extends React.Component {
     constructor(props) {
@@ -23,36 +24,58 @@ export default class EnchantedTable extends React.Component {
                     <tr>
                         {columns.map((field) => {
                             const style = this.getTdStyle(field, "header");
-                            return(
-                            <th
-                                key={`${field.id}_header`}
-                                className={`${field.id}_header`}
-                                style={style}
-                            >
-                                {
-                                    field.headerName
-                                }
-                            </th>
-                        )})}
+                            const defaultObj = {width: style.width || ""};
+                            return (
+                                <th
+                                    key={`${field.id}_header`}
+                                    className={`${field.id}_header`}
+                                    style={style}
+                                >
+                                    <Rnd
+                                        style={{
+                                            position: "relative",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center"
+                                        }}
+                                        default={defaultObj}
+                                        disableDragging
+                                        enableResizing={{right: true}}
+                                    >
+                                        {
+                                            field.headerName
+                                        }
+                                    </Rnd>
+                                </th>
+                            )
+                        })}
                     </tr>
                     <tr>
-                        {columns.map((field) => (
-                            <td key={`${field.id}_filter`}>
-                                <InputGroup
-                                    small
-                                    round
-                                    onChange={this.handleFilters(field.id)}
-                                />
-                            </td>
-                        ))}
+                        {columns.map((field) => {
+                            return (
+                                <th key={`${field.id}_filter`}>
+                                    <InputGroup
+                                        small
+                                        round
+                                        leftIcon={"search-text"}
+                                        onChange={this.handleFilters(field.id)}
+                                    />
+                                </th>
+                            )
+                        })}
                     </tr>
                     </thead>
                     <tbody>
                     {filteredData.map((row, i) => (
                         <tr key={`row_${i}`}>
-                            {columns.map((col) => (
-                                <td key={col.id}>{row[col.id]}</td>
-                            ))}
+                            {columns.map((col) => {
+                                const styles = this.getTdStyle(col, "column");
+                                return (
+                                    <td key={col.id} style={styles}>
+                                        {this.renderValue(row[col.id], col.decorator)}
+                                    </td>
+                                )
+                            })}
                         </tr>
                     ))}
                     </tbody>
@@ -62,8 +85,9 @@ export default class EnchantedTable extends React.Component {
     }
 
     getTdStyle(obj, type) {
-        if (obj.hasOwnProperty("styles")){
+        if (obj.hasOwnProperty("styles")) {
             if (obj.styles.hasOwnProperty(type)) {
+                console.log(obj.styles[type])
                 return obj.styles[type];
             }
         }
@@ -96,6 +120,10 @@ export default class EnchantedTable extends React.Component {
 
         return result;
     };
+
+    renderValue(value, decorator) {
+        return decorator ? decorator(value) : value;
+    }
 }
 
 EnchantedTable.propTypes = {
