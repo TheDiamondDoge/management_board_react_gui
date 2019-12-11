@@ -9,7 +9,6 @@ import {Provider} from "react-redux";
 import {routerMiddleware} from "react-router-redux";
 import {createLogger} from "redux-logger";
 import createSagaMiddleware from 'redux-saga';
-import blcTabSaga from './sagas/blc-tab';
 import rootSaga from "./sagas";
 import reducer from "./reducers"
 import * as serviceWorker from './serviceWorker';
@@ -36,11 +35,7 @@ const store = createStore(
     )
 );
 
-//The ONE and ONLY
 sagas.run(rootSaga);
-
-//TODO: This must be refactored into 1 'PWS tab' saga!!!!!!
-sagas.run(blcTabSaga);
 
 ReactDOM.render(
     <Provider store={store}>

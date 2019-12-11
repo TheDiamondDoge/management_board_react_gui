@@ -3,7 +3,7 @@ export default [
         id: "impact", headerName: "Impact",
         styles: {
             header: {
-                width: "50px"
+                width: "70px"
             },
             column: {
                 color: "blue", textAlign: "center"
@@ -17,7 +17,7 @@ export default [
         id: "prob", headerName: "Probability",
         styles: {
             header: {
-                width: "65px"
+                width: "90px"
             },
             column: {
                 textAlign: "center"
@@ -39,7 +39,7 @@ export default [
         id: "prev", headerName: "Previous",
         styles: {
             header: {
-                width: "70px"
+                width: "80px"
             },
             column: {
                 textAlign: "center"
@@ -61,7 +61,7 @@ export default [
         id: "riskId", headerName: "Risk ID",
         styles: {
             header: {
-                width: "70px"
+                width: "80px"
             },
             column: {
                 textAlign: "center"
@@ -132,7 +132,7 @@ export default [
         id: "budget", headerName: "Estimated Cost",
         styles: {
             header: {
-                width: "120px"
+                width: "125px"
             },
             column: {
                 textAlign: "center"
@@ -187,7 +187,7 @@ export default [
         id: "result", headerName: "Result (Check, Act)",
         styles: {
             header: {
-                width: "90px"
+                width: "110px"
             },
             column: {
                 textAlign: "center"

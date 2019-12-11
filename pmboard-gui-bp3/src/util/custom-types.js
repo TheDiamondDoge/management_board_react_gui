@@ -116,3 +116,13 @@ export const BlcTab = PropTypes.shape({
     pmo: BlcRow,
     sales: BlcRow,
 });
+
+export const EnchantedTableColsConfig = PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    headerName: PropTypes.string.isRequired,
+    decorator: PropTypes.func,
+    styles: PropTypes.shape({
+        header: PropTypes.object,
+        column: PropTypes.object,
+    }),
+});

@@ -1,24 +1,10 @@
 import React from 'react';
 import CustomCard from "../../card/custom-card";
-import {Icon, Intent, Button} from "@blueprintjs/core";
+import {Intent, Button} from "@blueprintjs/core";
 import EnchantedTable from "../../enchanted-table/enchanted-table";
-import styles from "./risk.module.css";
 import colSettings from "./tableConfig";
 
 export default class Risks extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            filters: {}
-        };
-    }
-
-    data = [
-        {id: 10, name: "Sasha", surname: "Iksanov"},
-        {id: 20, name: "Vova", surname: "Ivanov"},
-        {id: 30, name: "Valera", surname: "Petrov"},
-    ];
-
     risks = [
         {
             impact: 1,
@@ -211,6 +197,8 @@ export default class Risks extends React.Component {
                         data={this.risks}
                         columns={colSettings}
                         striped
+                        interactive
+                        bordered
                     />
                 </CustomCard>
 

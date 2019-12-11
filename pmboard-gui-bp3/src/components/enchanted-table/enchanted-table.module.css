@@ -1,0 +1,27 @@
+.table_container {
+    overflow: auto;
+    height: 100%;
+}
+
+.table_style {
+    width: 100%;
+    position: relative;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    background: white;
+}
+
+.header_label_container {
+    display: block;
+    padding-bottom: 25px;
+}
+
+.header_search_container {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 80%;
+}

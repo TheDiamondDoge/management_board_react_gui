@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
 import Loading from "../loading-card/loading";
 import {Formik, Field, Form, ErrorMessage} from "formik";
-import {HTMLTable, MenuItem} from "@blueprintjs/core";
+import {HTMLTable, MenuItem, Popover, Position, Button, Menu} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import {Rnd} from "react-rnd";
@@ -38,6 +38,12 @@ export default class World extends React.Component {
 
     render() {
         const {test, testPassed, onClick1, onClick2} = this.props;
+        const menu = (
+            <Menu>
+                <MenuItem text={"Sort by Asc"} icon={"sort-asc"}/>
+                <MenuItem text={"Sort by Desc"} icon={"sort-desc"}/>
+            </Menu>
+        );
         return (
             <>
                 <Loading/>
@@ -132,6 +138,9 @@ export default class World extends React.Component {
                     </tr>
                     </tbody>
                 </HTMLTable>
+                <Popover content={menu} position={Position.RIGHT_BOTTOM}>
+                    <Button icon={"sort"} minimal/>
+                </Popover>
             </>
         );
     }
