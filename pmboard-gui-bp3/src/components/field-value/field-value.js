@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {nullToEmptyStr, stringToUrlElem} from '../../util/transformFuncs';
+import {nullToEmptyStr, stringToUrlElem} from '../../util/transform-funcs';
 import styles from "./field-value.module.css";
 import classNames from 'classnames';
 

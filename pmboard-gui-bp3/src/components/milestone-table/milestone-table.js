@@ -6,7 +6,7 @@ import styles from './milestone-table.module.css';
 import PropTypes from "prop-types";
 import {FieldArray} from "formik";
 import FormikInput, {ArrayErrors, RenderControls} from "../util-renderers/util-renderers";
-import {boolToYesNo, dateFormatToString} from "../../util/transformFuncs";
+import {boolToYesNo, dateFormatToString} from "../../util/transform-funcs";
 import {MilestoneShape} from "../../util/custom-types";
 
 export default class MilestoneTable extends React.Component {

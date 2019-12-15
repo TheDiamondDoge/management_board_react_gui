@@ -11,6 +11,7 @@ import * as qualityKpi from "../../actions/quality-kpi";
 import * as infoTab from "../../actions/info-tab";
 import * as contrib from "../../actions/contrib-projects";
 import * as blc from "../../actions/blc-tab";
+import * as risks from "../../actions/risks-tab";
 
 export function* loadSummaryTab() {
     try {
@@ -115,6 +116,15 @@ export function* loadBlcTab() {
         yield put(blc.loadSuccess(blcData.data))
     } catch(e) {
         yield put(blc.loadFailure(e))
+    }
+}
+
+export function* loadRisks() {
+    try {
+        const data = yield call(api.getRisks, 1);
+        yield put(risks.loadSuccess(data));
+    } catch (e) {
+        yield put(risks.riskFail(e));
     }
 }
 

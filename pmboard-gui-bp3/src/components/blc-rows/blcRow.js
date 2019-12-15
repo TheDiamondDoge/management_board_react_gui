@@ -4,7 +4,7 @@ import StatusIndicator from "../status-indicator/status-indicator";
 import classNames from "classnames";
 import style from "./blcRow.module.css";
 import {Button} from "@blueprintjs/core";
-import {blcNumberToState, dateFormatToString} from "../../util/transformFuncs";
+import {blcNumberToState, dateFormatToString} from "../../util/transform-funcs";
 import {FastField} from "formik";
 import FormikInput from "../util-renderers/util-renderers";
 

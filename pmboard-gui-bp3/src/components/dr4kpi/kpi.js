@@ -4,7 +4,7 @@ import styles from "./kpi.module.css";
 import classNames from "classnames";
 import {FieldName} from "../field-name/field-name";
 import PropTypes from "prop-types";
-import {nullToNA} from "../../util/transformFuncs";
+import {nullToNA} from "../../util/transform-funcs";
 import HelpIcon from "../help-icon/help-icon";
 
 export default class Kpi extends React.Component {

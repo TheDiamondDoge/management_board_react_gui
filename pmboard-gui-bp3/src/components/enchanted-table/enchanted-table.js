@@ -5,9 +5,10 @@ import SortButton from "../controls/sort-button";
 import {EnchantedTableColsConfig} from "../../util/custom-types";
 import styles from "./enchanted-table.module.css";
 import classNames from 'classnames';
-import {ResizableContainer} from "./comp/ResizableContainer";
+import {ResizableContainer} from "./comp/resizable-container";
 import {SearchInput} from "../controls/search-input";
 
+//TODO: add search type -> picklist
 export default class EnchantedTable extends React.Component {
     constructor(props) {
         super(props);

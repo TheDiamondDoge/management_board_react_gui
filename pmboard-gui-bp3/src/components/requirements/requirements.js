@@ -6,12 +6,12 @@ import classNames from "classnames";
 import {FieldName} from "../field-name/field-name";
 import FieldValue from "../field-value/field-value";
 import PropTypes from 'prop-types';
-import {dateFormatToString} from "../../util/transformFuncs";
+import {dateFormatToString} from "../../util/transform-funcs";
 import {Formik} from "formik";
 import FormikInput from "../util-renderers/util-renderers";
 import {FieldsToRenderShape, RequirementsShape} from "../../util/custom-types";
 import {formikFieldHandleChange} from "../../util/util";
-import getValidationSchema from "./validationSchema";
+import getValidationSchema from "./validation-schema";
 
 export default class Requirements extends React.Component {
     constructor(props) {

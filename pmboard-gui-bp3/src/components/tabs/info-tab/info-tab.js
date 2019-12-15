@@ -13,10 +13,10 @@ import {MilestoneShape} from "../../../util/custom-types";
 import {formikFieldHandleChange} from "../../../util/util";
 import {infoFieldsToRender} from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
-import getValidationSchema from "./validationSchema";
+import getValidationSchema from "./validation-schema";
 import HelpIcon from "../../help-icon/help-icon";
 import {isBoolean} from "../../../util/comparators";
-import {boolToYesNo} from "../../../util/transformFuncs";
+import {boolToYesNo} from "../../../util/transform-funcs";
 import {MenuItem} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 

@@ -7,11 +7,11 @@ import PropTypes from "prop-types";
 import {FieldArray, Formik} from "formik";
 import FormikInput, {RenderControls} from "../util-renderers/util-renderers";
 import HelpIcon from "../help-icon/help-icon";
-import {dateFormatToString} from "../../util/transformFuncs";
+import {dateFormatToString} from "../../util/transform-funcs";
 import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/custom-types";
 import FieldValue from "../field-value/field-value";
 import {formikFieldHandleChange} from "../../util/util";
-import getValidationSchema from "./validationSchema";
+import getValidationSchema from "./validation-schema";
 
 export default class Quality extends React.Component {
     constructor(props) {
@@ -66,7 +66,6 @@ export default class Quality extends React.Component {
                 }
                 render={
                     (formikProps) => {
-                        console.log("VALUES", formikProps.values)
                         this.bindFormSubmission(formikProps.submitForm);
                         this.updateFieldHandler = formikFieldHandleChange(formikProps);
                         return this.renderQualityForm(formikProps.values);

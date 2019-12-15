@@ -5,7 +5,7 @@ import styles from "./health-indicators.module.css";
 import StatusIndicator from "../status-indicator/status-indicator";
 import PropTypes from "prop-types";
 import EditSaveControls from "../edit-save-contols/edit-save-controls";
-import {dateFormatToString} from "../../util/transformFuncs";
+import {dateFormatToString} from "../../util/transform-funcs";
 import {Field, Formik} from "formik";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import HelpIcon from "../help-icon/help-icon";

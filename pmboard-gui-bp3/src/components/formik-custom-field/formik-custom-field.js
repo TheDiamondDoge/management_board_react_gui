@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextArea, InputGroup, Checkbox, NumericInput} from "@blueprintjs/core";
 import {DateInput} from "@blueprintjs/datetime";
-import {dateFormatToString, stringToDateFormat, transformDateForInput} from "../../util/transformFuncs";
+import {dateFormatToString, stringToDateFormat, transformDateForInput} from "../../util/transform-funcs";
 import {getPropFromStringPath} from "../../util/util";
 import styles from "./formik-custom-field.module.css";
 

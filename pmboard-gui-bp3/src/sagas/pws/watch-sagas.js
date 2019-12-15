@@ -1,22 +1,5 @@
 import {takeEvery, takeLatest, fork} from 'redux-saga/effects';
-import {
-    loadIndicatorsTab,
-    loadInformationTab,
-    loadSummaryTab,
-    saveHealthIndicators,
-    saveIndicatorsQuality,
-    saveIndicatorsRqs,
-    loadQualityKpi,
-    loadIndicatorsRqs,
-    loadHealthIndicators,
-    saveInformationTab,
-    saveMilestones,
-    loadMilestones,
-    loadContributableProjects,
-    loadBlcTab,
-    saveBlcTabIndicators,
-    saveBlcTabComments,
-} from "./worker-sagas";
+import * as sagas from "./worker-sagas";
 import * as summaryTab from "../../actions/summary-tab";
 import * as indicatorsTab from "../../actions/indicators-tab";
 import * as informationTab from "../../actions/info-tab";
@@ -26,73 +9,78 @@ import * as quality from "../../actions/quality-kpi";
 import * as milestones from "../../actions/milestones";
 import * as contrib from "../../actions/contrib-projects";
 import * as blc from "../../actions/blc-tab";
+import * as risks from "../../actions/risks-tab";
 
 function* watchSummaryTabLoad() {
-    yield takeEvery(summaryTab.LOAD_SUMMARY, loadSummaryTab);
+    yield takeEvery(summaryTab.LOAD_SUMMARY, sagas.loadSummaryTab);
 }
 
 function* watchIndicatorsTabLoad() {
-    yield takeEvery(indicatorsTab.LOAD_INDICATORS, loadIndicatorsTab);
+    yield takeEvery(indicatorsTab.LOAD_INDICATORS, sagas.loadIndicatorsTab);
 }
 
 function* watchInformationTabLoad() {
-    yield takeEvery(informationTab.LOAD_INFO, loadInformationTab);
+    yield takeEvery(informationTab.LOAD_INFO, sagas.loadInformationTab);
 }
 
 function* watchBlcTabLoad() {
-    yield takeEvery(blc.LOAD_BLC, loadBlcTab);
+    yield takeEvery(blc.LOAD_BLC, sagas.loadBlcTab);
 }
 
 function* watchBlcTabSaveIndicators() {
-    yield takeLatest(blc.SAVE_BLC_INDICATORS, saveBlcTabIndicators);
+    yield takeLatest(blc.SAVE_BLC_INDICATORS, sagas.saveBlcTabIndicators);
 }
 
 function* watchBlcTabSaveComments() {
-    yield takeLatest(blc.SAVE_BLC_COMMENTS, saveBlcTabComments);
+    yield takeLatest(blc.SAVE_BLC_COMMENTS, sagas.saveBlcTabComments);
 }
 
 function* watchHealthIndicatorsLoad() {
-    yield takeEvery(healthIndicators.LOAD_HEALTH, loadHealthIndicators)
+    yield takeEvery(healthIndicators.LOAD_HEALTH, sagas.loadHealthIndicators)
 }
 
 function* watchHealthIndicatorsSave() {
-    yield takeLatest(healthIndicators.SAVE_HEALTH, saveHealthIndicators);
+    yield takeLatest(healthIndicators.SAVE_HEALTH, sagas.saveHealthIndicators);
 }
 
 function* watchHealthCommentsSave() {
-    yield takeLatest(healthIndicators.SAVE_COMMENTS, saveHealthIndicators);
+    yield takeLatest(healthIndicators.SAVE_COMMENTS, sagas.saveHealthIndicators);
 }
 
 function* watchIndicatorsRqsSave() {
-    yield takeLatest(rqIndicators.INDICATORS_RQS_SAVE, saveIndicatorsRqs);
+    yield takeLatest(rqIndicators.INDICATORS_RQS_SAVE, sagas.saveIndicatorsRqs);
 }
 
 function* watchIndicatorsRqsLoad() {
-    yield takeLatest(rqIndicators.LOAD_INDICATORS_RQS, loadIndicatorsRqs)
+    yield takeLatest(rqIndicators.LOAD_INDICATORS_RQS, sagas.loadIndicatorsRqs)
 }
 
 function* watchIndicatorsQualityLoad() {
-    yield takeEvery(quality.LOAD_QUALITY_KPI, loadQualityKpi)
+    yield takeEvery(quality.LOAD_QUALITY_KPI, sagas.loadQualityKpi)
 }
 
 function* watchIndicatorsQualitySave() {
-    yield takeLatest(quality.QUALITY_KPI_SAVE, saveIndicatorsQuality);
+    yield takeLatest(quality.QUALITY_KPI_SAVE, sagas.saveIndicatorsQuality);
 }
 
 function* watchInformationTabSave() {
-    yield takeLatest(informationTab.SAVE_INFO_DATA, saveInformationTab);
+    yield takeLatest(informationTab.SAVE_INFO_DATA, sagas.saveInformationTab);
 }
 
 function* watchMilestonesLoad() {
-    yield takeEvery(milestones.LOAD_MILESTONES, loadMilestones);
+    yield takeEvery(milestones.LOAD_MILESTONES, sagas.loadMilestones);
 }
 
 function* watchMilestonesSave() {
-    yield takeLatest(milestones.SAVE_MILESTONES, saveMilestones)
+    yield takeLatest(milestones.SAVE_MILESTONES, sagas.saveMilestones)
 }
 
 function* watchContribLoad() {
-    yield takeEvery(contrib.LOAD_CONTRIB, loadContributableProjects)
+    yield takeEvery(contrib.LOAD_CONTRIB, sagas.loadContributableProjects)
+}
+
+function* watchRisksLoad() {
+    yield takeEvery(risks.LOAD_RISKS, sagas.loadRisks)
 }
 
 const exportSagas = [
@@ -102,6 +90,7 @@ const exportSagas = [
     fork(watchBlcTabLoad),
     fork(watchBlcTabSaveIndicators),
     fork(watchBlcTabSaveComments),
+    fork(watchRisksLoad),
     fork(watchInformationTabSave),
     fork(watchMilestonesLoad),
     fork(watchMilestonesSave),

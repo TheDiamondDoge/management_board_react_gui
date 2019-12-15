@@ -67,3 +67,7 @@ export const saveBlcComments = (projectID, payload) => (
 export const saveBlcIndicators = (projectID, payload) => (
     axios.post(`http://localhost:8080/api/projects/${projectID}/tabs/blc/indicators`, payload)
 );
+
+export const getRisks = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/risks`)
+);

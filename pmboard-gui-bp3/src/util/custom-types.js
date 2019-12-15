@@ -126,3 +126,25 @@ export const EnchantedTableColsConfig = PropTypes.shape({
         column: PropTypes.object,
     }),
 });
+
+export const RisksTabRisk = PropTypes.shape({
+    riskId: PropTypes.number,
+    impact: PropTypes.number,
+    probability: PropTypes.string,
+    rating: PropTypes.number,
+    previous: PropTypes.number,
+    initial: PropTypes.number,
+    riskDescription: PropTypes.string,
+    impactDescription: PropTypes.string,
+    businessImpact: PropTypes.string,
+    riskResponse: PropTypes.string,
+    mitigation: PropTypes.string,
+    estimatedCost: PropTypes.string,
+    provisionBudget: PropTypes.string,
+    responsible: PropTypes.string,
+    relatedAction: PropTypes.string,
+    target: PropTypes.string,
+    done: PropTypes.string,
+    result: PropTypes.string,
+    report: PropTypes.bool
+});

@@ -3,15 +3,15 @@ import PropTypes from 'prop-types';
 import Timeline from "../../timeline/timeline";
 import CustomCard from "../../card/custom-card";
 import HealthIndicators from "../../health-indicators/health-indicators";
-import healthFields from "../../health-indicators/healthFields";
+import healthFields from "../../health-indicators/health-fields";
 import styles from "./indicators-tab.module.css";
 import Requirements from "../../requirements/requirements";
-import fieldsRequirements from "../../requirements/fieldsRequirements";
+import fieldsRequirements from "../../requirements/fields-requirements";
 import MilestonesKpi from "../../milestones-kpi/milestones-kpi";
 import Kpi from "../../dr4kpi/kpi";
-import kpiFields from "../../dr4kpi/kpiFields";
+import kpiFields from "../../dr4kpi/kpi-fields";
 import Quality from "../../quality/quality";
-import qualityFields from "../../quality/qualityFields";
+import qualityFields from "../../quality/quality-fields";
 import Loading from "../../loading-card/loading";
 import {
     HealthIndicatorsShape,

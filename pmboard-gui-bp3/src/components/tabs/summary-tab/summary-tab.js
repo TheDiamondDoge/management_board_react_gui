@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import summaryFieldsToRender from "./fields";
 import CustomCard from "../../card/custom-card.js";
 import HealthIndicators from "../../health-indicators/health-indicators";
-import fieldsToRender from "../../health-indicators/healthFields";
+import fieldsToRender from "../../health-indicators/health-fields";
 import Loading from "../../loading-card/loading";
 import PropTypes from 'prop-types';
 import RenderFieldHelper from "../../../util/render-field-helper";

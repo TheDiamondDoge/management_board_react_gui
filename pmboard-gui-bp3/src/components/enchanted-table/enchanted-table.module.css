@@ -25,3 +25,7 @@ th {
     bottom: 0;
     width: 80%;
 }
+
+td {
+    /*white-space: pre;*/
+}

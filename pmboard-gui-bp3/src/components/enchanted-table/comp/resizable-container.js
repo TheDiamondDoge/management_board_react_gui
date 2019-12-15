@@ -1,5 +1,6 @@
 import React from 'react';
 import {Rnd} from "react-rnd";
+import "./resizable-container.module.css";
 
 
 export const ResizableContainer = (props) => {
