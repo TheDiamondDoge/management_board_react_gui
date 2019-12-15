@@ -9,6 +9,7 @@ import {ResizableContainer} from "./comp/resizable-container";
 import {SearchInput} from "../controls/search-input";
 
 //TODO: add search type -> picklist
+//TODO: Resize sensor (blueprint.js)
 export default class EnchantedTable extends React.Component {
     constructor(props) {
         super(props);

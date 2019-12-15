@@ -8,12 +8,13 @@ import IndicatorsTab from "../../tabs/indicators-tab/indicators-tab.container";
 import CostTab from "../../tabs/cost-tab/cost-tab";
 import BlcDashboard from "../../tabs/blc/blc.container";
 import Risks from "../../tabs/risks/risks.container";
+import ErrorBoundary from "../../../error-boundary/error-boundary";
 
 export default class PWS extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedId: 'risks'
+            selectedId: 'sum'
         };
     }
 
@@ -33,15 +34,15 @@ export default class PWS extends React.Component {
                     renderActiveTabPanelOnly={true}
                     large={true}
                 >
-                    <Tab id="sum" title="Summary" panel={<SummaryTab />} />
-                    <Tab id="ind" title="Indicators"  panel={<IndicatorsTab/>}/>
-                    <Tab id="inf" title="Information" panel={<InfoTab />}/>
-                    <Tab id="risks" title="Risks" panel={<Risks />}/>
-                    <Tab id="cost" title="Cost" panel={<CostTab />} />
-                    <Tab id="rep" title="Report" disabled panel={<Hello/>}/>
+                    <Tab id="sum" title="Summary" panel={<ErrorBoundary><SummaryTab/></ErrorBoundary>}/>
+                    <Tab id="ind" title="Indicators" panel={<ErrorBoundary><IndicatorsTab/></ErrorBoundary>}/>
+                    <Tab id="inf" title="Information" panel={<ErrorBoundary><InfoTab/></ErrorBoundary>}/>
+                    <Tab id="risks" title="Risks" panel={<ErrorBoundary><Risks/></ErrorBoundary>}/>
+                    <Tab id="cost" title="Cost" panel={<ErrorBoundary><CostTab/></ErrorBoundary>}/>
+                    <Tab id="rep" title="Report" disabled panel={<ErrorBoundary><Hello/></ErrorBoundary>}/>
                     <Tab id="req" title="Requirements" disabled/>
                     <Tab id="back" title="Backlog" disabled/>
-                    <Tab id="blc" title="BLC Dashboard" panel={<BlcDashboard />}/>
+                    <Tab id="blc" title="BLC Dashboard" panel={<ErrorBoundary><BlcDashboard/></ErrorBoundary>}/>
                 </Tabs>
             </div>
         );
