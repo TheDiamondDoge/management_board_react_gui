@@ -1,6 +1,7 @@
 import React from 'react';
+import ErrorStatus from "../components/global-statuses/error-status";
+import StatusContainer from "../components/status-container/status-container";
 
-//TODO: create error UI
 export default class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);
@@ -9,8 +10,7 @@ export default class ErrorBoundary extends React.Component {
         }
     }
 
-    static getDerivedStateFromError(error) {
-        console.log("ERRR", error);
+    static getDerivedStateFromError() {
         return {hasError: true};
     }
 
@@ -20,9 +20,13 @@ export default class ErrorBoundary extends React.Component {
     }
 
     render() {
-        const {children, ...props} = this.props;
-        if(this.state.hasError)
-            return <div {...props}>Error!</div>;
+        const {children} = this.props;
+        if (this.state.hasError)
+            return (
+                <StatusContainer>
+                    <ErrorStatus/>
+                </StatusContainer>
+            );
 
         return children;
     }

@@ -4,7 +4,7 @@ import CustomCard from "../../card/custom-card";
 import {Intent, Button} from "@blueprintjs/core";
 import EnchantedTable from "../../enchanted-table/enchanted-table";
 import colSettings from "./table-config";
-import Loading from "../../loading-card/loading";
+import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {RisksTabRisk} from "../../../util/custom-types";
 
 export default class Risks extends React.Component {
@@ -19,7 +19,7 @@ export default class Risks extends React.Component {
     render() {
         const {loading} = this.props.risks;
         if (loading) {
-            return <Loading/>
+            return <LoadingSpinner/>
         } else {
             const {payload} = this.props.risks;
             return (

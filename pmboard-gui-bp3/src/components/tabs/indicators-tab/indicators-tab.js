@@ -12,7 +12,7 @@ import Kpi from "../../dr4kpi/kpi";
 import kpiFields from "../../dr4kpi/kpi-fields";
 import Quality from "../../quality/quality";
 import qualityFields from "../../quality/quality-fields";
-import Loading from "../../loading-card/loading";
+import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {
     HealthIndicatorsShape,
     MilestoneKpiShape,
@@ -20,6 +20,7 @@ import {
     QualityIndicatorsShape,
     RequirementsShape
 } from "../../../util/custom-types";
+import ErrorBoundary from "../../../error-boundary/error-boundary";
 
 export default class IndicatorsTab extends React.Component {
     componentDidMount() {
@@ -29,6 +30,7 @@ export default class IndicatorsTab extends React.Component {
     componentWillUnmount() {
         this.props.resetState();
     }
+
     //TODO: validation
     //TODO: use render-helper class
     render() {
@@ -41,68 +43,92 @@ export default class IndicatorsTab extends React.Component {
                 <CustomCard className={styles.timeline}>
                     {
                         milestones.loading
-                            ? <Loading />
-                            : <Timeline milestones={milestones.payload}/>
+                            ? <LoadingSpinner/>
+                            : (
+                                <ErrorBoundary>
+                                    <Timeline milestones={milestones.payload}/>
+                                </ErrorBoundary>
+                            )
                     }
                 </CustomCard>
                 <CustomCard className={styles.health}>
                     <h3>Health</h3>
                     {
                         healthIndicators.loading
-                            ? <Loading />
-                            : <HealthIndicators
-                                indicators={healthIndicators.payload}
-                                isSummaryMode={false}
-                                fieldsToRender={healthFields}
-                                onIndicatorsSubmit={healthIndicatorsSubmit}
-                                onCommentsSubmit={healthCommentsSubmit}
-                                onCancel={healthReload}
-                              />
+                            ? <LoadingSpinner/>
+                            : (
+                                <ErrorBoundary>
+                                    <HealthIndicators
+                                        indicators={healthIndicators.payload}
+                                        isSummaryMode={false}
+                                        fieldsToRender={healthFields}
+                                        onIndicatorsSubmit={healthIndicatorsSubmit}
+                                        onCommentsSubmit={healthCommentsSubmit}
+                                        onCancel={healthReload}
+                                    />
+                                </ErrorBoundary>
+                            )
                     }
                 </CustomCard>
                 <CustomCard className={styles.req}>
                     <h3>Requirements</h3>
                     {
                         requirements.loading
-                            ? <Loading />
-                            : <Requirements
-                                requirements={requirements.payload}
-                                fieldsToRender={fieldsRequirements}
-                                rqsSubmit={rqsSubmit}
-                                rqsReload={rqsReload}
-                              />
+                            ? <LoadingSpinner/>
+                            : (
+                                <ErrorBoundary>
+                                    <Requirements
+                                        requirements={requirements.payload}
+                                        fieldsToRender={fieldsRequirements}
+                                        rqsSubmit={rqsSubmit}
+                                        rqsReload={rqsReload}
+                                    />
+                                </ErrorBoundary>
+                            )
                     }
                 </CustomCard>
                 <CustomCard className={styles.milestones}>
                     <h3>Milestones</h3>
                     {
                         milestonesKpi.loading
-                            ? <Loading />
-                            : <MilestonesKpi milestonesKpi={milestonesKpi.payload} />
+                            ? <LoadingSpinner/>
+                            : (
+                                <ErrorBoundary>
+                                    <MilestonesKpi milestonesKpi={milestonesKpi.payload}/>
+                                </ErrorBoundary>
+                            )
                     }
                 </CustomCard>
                 <CustomCard className={styles.dr4_kpi}>
                     <h3>Project DR4 KPI</h3>
                     {
                         dr4Kpi.loading
-                            ? <Loading />
-                            : <Kpi
-                                dr4Kpi={dr4Kpi.payload}
-                                fieldsToRender={kpiFields}
-                            />
+                            ? <LoadingSpinner/>
+                            : (
+                                <ErrorBoundary>
+                                    <Kpi
+                                        dr4Kpi={dr4Kpi.payload}
+                                        fieldsToRender={kpiFields}
+                                    />
+                                </ErrorBoundary>
+                            )
                     }
                 </CustomCard>
                 <CustomCard className={styles.quality}>
                     <h3>Quality</h3>
                     {
                         qualityKpi.loading
-                            ? <Loading />
-                            : <Quality
-                                qualityKpi={qualityKpi.payload}
-                                fieldsToRender={qualityFields}
-                                onSubmit={qualitySubmit}
-                                onCancel={qualityReload}
-                              />
+                            ? <LoadingSpinner/>
+                            : (
+                                <ErrorBoundary>
+                                    <Quality
+                                        qualityKpi={qualityKpi.payload}
+                                        fieldsToRender={qualityFields}
+                                        onSubmit={qualitySubmit}
+                                        onCancel={qualityReload}
+                                    />
+                                </ErrorBoundary>
+                            )
                     }
                 </CustomCard>
             </div>

@@ -8,7 +8,7 @@ import summaryFieldsToRender from "./fields";
 import CustomCard from "../../card/custom-card.js";
 import HealthIndicators from "../../health-indicators/health-indicators";
 import fieldsToRender from "../../health-indicators/health-fields";
-import Loading from "../../loading-card/loading";
+import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import PropTypes from 'prop-types';
 import RenderFieldHelper from "../../../util/render-field-helper";
 import {HealthIndicatorsShape, MilestoneShape, SummaryShape} from "../../../util/custom-types";
@@ -28,7 +28,7 @@ export default class SummaryTab extends React.Component {
         const {loading} = this.props.summaryData;
         const renderHelper = new RenderFieldHelper(summaryFieldsToRender);
         if (loading) {
-            return (<Loading/>);
+            return (<LoadingSpinner/>);
         } else {
             const {general, status, links, pwsInfo, validationParams} = this.props.summaryData.payload;
             const milestones = this.props.milestones;
@@ -41,8 +41,12 @@ export default class SummaryTab extends React.Component {
                     <CustomCard>
                         {
                             milestones.loading
-                                ? <Loading/>
-                                : <Timeline milestones={milestones.payload}/>
+                                ? <LoadingSpinner/>
+                                : (
+                                    <ErrorBoundary>
+                                        <Timeline milestones={milestones.payload}/>
+                                    </ErrorBoundary>
+                                )
                         }
                     </CustomCard>
                     <br/>
@@ -61,12 +65,16 @@ export default class SummaryTab extends React.Component {
                         </div>
                         <div className={styles.right_part}>
                             {healthIndicators.loading
-                                ? <Loading/>
-                                : <HealthIndicators
-                                    indicators={healthIndicators.payload}
-                                    fieldsToRender={fieldsToRender}
-                                    isSummaryMode={true}
-                                />
+                                ? <LoadingSpinner/>
+                                : (
+                                    <ErrorBoundary>
+                                        <HealthIndicators
+                                            indicators={healthIndicators.payload}
+                                            fieldsToRender={fieldsToRender}
+                                            isSummaryMode={true}
+                                        />
+                                    </ErrorBoundary>
+                                )
                             }
                         </div>
                     </CustomCard>

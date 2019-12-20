@@ -1,12 +1,14 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
-import Loading from "../loading-card/loading";
 import {Formik, Field, Form, ErrorMessage} from "formik";
 import {HTMLTable, MenuItem, Popover, Position, Button, Menu} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import {Rnd} from "react-rnd";
+import LoadingSpinner from "../loading-spinner/loading-spinner";
+import ErrorStatus from "../global-statuses/error-status";
+import StatusContainer from "../status-container/status-container";
 
 
 export default class World extends React.Component {
@@ -46,7 +48,7 @@ export default class World extends React.Component {
         );
         return (
             <>
-                <Loading/>
+                <LoadingSpinner/>
                 <NavLink exact to="/pws">
                     <button>PWS</button>
                 </NavLink>
@@ -141,6 +143,9 @@ export default class World extends React.Component {
                 <Popover content={menu} position={Position.RIGHT_BOTTOM}>
                     <Button icon={"sort"} minimal/>
                 </Popover>
+                <StatusContainer>
+                    <ErrorStatus/>
+                </StatusContainer>
             </>
         );
     }

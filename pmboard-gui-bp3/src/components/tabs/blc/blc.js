@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import BlcRow from "../../blc-rows/blcRow";
 import EditSaveControls from "../../edit-save-contols/edit-save-controls";
 import style from "../../blc-rows/blcRow.module.css";
-import Loading from "../../loading-card/loading";
+import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {Formik} from "formik";
 import {formikFieldHandleChange} from "../../../util/util";
 import {BlcTab} from "../../../util/custom-types";
@@ -65,7 +65,7 @@ export default class BlcDashboard extends React.Component {
         const {loading} = this.props.blcTab;
 
         if (loading) {
-            return <Loading/>
+            return <LoadingSpinner/>
         } else {
             const {pm, pmo, sales, rowToSave} = this.props.blcTab.payload;
             return (

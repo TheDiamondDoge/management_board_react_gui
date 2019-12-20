@@ -5,7 +5,7 @@ import {FieldName} from "../../field-name/field-name";
 import EditSaveControls from "../../edit-save-contols/edit-save-controls";
 import styles from './info-tab.module.css'
 import PropTypes from 'prop-types';
-import Loading from "../../loading-card/loading";
+import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {Field, Formik} from "formik";
 import FormikInput from "../../util-renderers/util-renderers";
 import FieldValue from "../../field-value/field-value";
@@ -69,7 +69,7 @@ export default class InfoTab extends React.Component {
 
         const {information, milestones} = this.props;
         if (information.loading || milestones.loading) {
-            return (<Loading/>)
+            return (<LoadingSpinner/>)
         } else {
             const {general, urls} = information.payload;
             let milestones = this.props.milestones.payload;
