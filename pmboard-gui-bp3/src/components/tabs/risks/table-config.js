@@ -14,7 +14,7 @@ export default [
         }
     },
     {
-        id: "prob", headerName: "Probability",
+        id: "probability", headerName: "Probability",
         styles: {
             header: {
                 width: "90px"
@@ -36,7 +36,7 @@ export default [
         }
     },
     {
-        id: "prev", headerName: "Previous",
+        id: "previous", headerName: "Previous",
         styles: {
             header: {
                 width: "80px"
@@ -47,7 +47,7 @@ export default [
         }
     },
     {
-        id: "init", headerName: "Initial",
+        id: "initial", headerName: "Initial",
         styles: {
             header: {
                 width: "70px"
@@ -69,7 +69,7 @@ export default [
         }
     },
     {
-        id: "descr", headerName: "Risk Description",
+        id: "riskDescription", headerName: "Risk Description",
         styles: {
             header: {
                 width: "300px"
@@ -80,7 +80,7 @@ export default [
         }
     },
     {
-        id: "impactDescr", headerName: "Impact Description",
+        id: "impactDescription", headerName: "Impact Description",
         styles: {
             header: {
                 width: "300px"
@@ -91,7 +91,7 @@ export default [
         }
     },
     {
-        id: "business", headerName: "Business Impact",
+        id: "businessImpact", headerName: "Business Impact",
         styles: {
             header: {
                 width: "300px"
@@ -102,7 +102,7 @@ export default [
         }
     },
     {
-        id: "response", headerName: "Risk Response",
+        id: "riskResponse", headerName: "Risk Response",
         styles: {
             header: {
                 width: "100px"
@@ -118,7 +118,7 @@ export default [
         }
     },
     {
-        id: "decision", headerName: "Decision Date",
+        id: "decisionDate", headerName: "Decision Date",
         styles: {
             header: {
                 width: "120px"
@@ -129,7 +129,7 @@ export default [
         }
     },
     {
-        id: "budget", headerName: "Estimated Cost",
+        id: "estimatedCost", headerName: "Estimated Cost",
         styles: {
             header: {
                 width: "125px"
@@ -140,7 +140,7 @@ export default [
         }
     },
     {
-        id: "pfb", headerName: "Provision for budget",
+        id: "provisionBudget", headerName: "Provision for budget",
         styles: {
             header: {
                 width: "130px"

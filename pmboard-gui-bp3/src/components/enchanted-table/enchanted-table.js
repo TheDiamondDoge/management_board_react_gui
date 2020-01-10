@@ -5,11 +5,12 @@ import SortButton from "../controls/sort-button";
 import {EnchantedTableColsConfig} from "../../util/custom-types";
 import styles from "./enchanted-table.module.css";
 import classNames from 'classnames';
-import {ResizableContainer} from "./comp/resizable-container";
-import {SearchInput} from "../controls/search-input";
+import {ResizableContainer} from "./comp/container/resizable-container";
+import SelectList from "./comp/select-list";
 
 //TODO: add search type -> picklist
 //TODO: Resize sensor (blueprint.js)
+//TODO: Header proper enlarge when multiple values selected
 export default class EnchantedTable extends React.Component {
     constructor(props) {
         super(props);
@@ -21,10 +22,13 @@ export default class EnchantedTable extends React.Component {
     }
 
     render() {
-        const {data, columns, className, ...others} = this.props;
+        const {data, columns, className, filterValues, ...others} = this.props;
         const tableClasses = classNames(className, styles.table_style);
         let filteredData = this.filter(data);
         filteredData = this.sortData(filteredData);
+
+        console.log("FILTERS", this.state.filters);
+
         return (
             <div className={styles.table_container}>
                 <HTMLTable {...others} className={tableClasses}>
@@ -49,7 +53,14 @@ export default class EnchantedTable extends React.Component {
                                         </ResizableContainer>
                                     </div>
                                     <div className={styles.header_search_container}>
-                                        <SearchInput onChange={this.handleFilters(field.id)}/>
+                                        <SelectList
+                                            fill
+                                            items={filterValues[field.id]}
+                                            onItemSelect={this.handleFilters(field.id, "select")}
+                                            selectedItems={this.state.filters[field.id]}
+                                            onRemove={this.onFilterRemove(field.id)}
+                                        />
+                                        {/*<SearchInput onChange={this.handleFilters(field.id, "input")}/>*/}
                                     </div>
                                 </th>
                             )
@@ -88,17 +99,42 @@ export default class EnchantedTable extends React.Component {
         }
     }
 
-
-    handleFilters(id) {
+    handleFilters(id, filterType) {
         const self = this;
-        return function (event) {
-            const val = event.target.value;
-            self.setState((prev) => ({
-                filters: {...prev.filters, [id]: val}
-            }));
+        return function (obj) {
+            if (filterType === "select") {
+                const val = obj;
+                self.setState((prev) => {
+                    let prevFilters = prev.filters[id] ? [...prev.filters[id]] : [];
+                    if (val && !prevFilters.includes(val)) {
+                        const filtersArr = [...prevFilters, val];
+                        return {
+                            filters: {...prev.filters, [id]: filtersArr}
+                        }
+                    }
+                });
+            } else {
+                const val = obj.target.value;
+                self.setState((prev) => ({
+                    filters: {...prev.filters, [id]: val}
+                }));
+            }
         }
-    }
-    ;
+    };
+
+    onFilterRemove(id) {
+        const self = this;
+        return function (value) {
+            let filtersArr = self.state.filters[id];
+            const index = filtersArr.indexOf(value);
+            if (index !== -1) {
+                filtersArr.splice(index, 1);
+                self.setState((prev) => ({
+                    filters: {...prev.filters, [id]: filtersArr}
+                }));
+            }
+        }
+    };
 
     handleSortClick(id) {
         const self = this;
@@ -120,9 +156,17 @@ export default class EnchantedTable extends React.Component {
 
         let result = data;
         keys.forEach((id) => {
-            result = result.filter((row) => (
-                String(row[id]).toLowerCase().includes(String(filters[id]).toLowerCase())
-            ))
+            let filter = filters[id];
+            //TODO: if empty => just skip
+            if (Array.isArray(filter)) {
+                result = result.filter((row) => (
+                    String(row[id]).toLowerCase().includesWithMultiple(filter)
+                ));
+            } else {
+                result = result.filter((row) => (
+                    String(row[id]).toLowerCase().includes(String(filters[id]).toLowerCase())
+                ));
+            }
         });
 
         return result;
@@ -149,4 +193,5 @@ export default class EnchantedTable extends React.Component {
 EnchantedTable.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
     columns: PropTypes.arrayOf(EnchantedTableColsConfig).isRequired,
+    filterValues: PropTypes.object,
 };

@@ -16,7 +16,7 @@ export default class ErrorBoundary extends React.Component {
 
     componentDidCatch(error, errorInfo) {
         //TODO: logger
-        console.log(error, errorInfo);
+        // console.log(error, errorInfo);
     }
 
     render() {
