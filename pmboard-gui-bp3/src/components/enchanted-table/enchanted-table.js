@@ -7,10 +7,11 @@ import styles from "./enchanted-table.module.css";
 import classNames from 'classnames';
 import {ResizableContainer} from "./comp/container/resizable-container";
 import SelectList from "./comp/select-list";
+import {SearchInput} from "../controls/search-input";
 
-//TODO: add search type -> picklist
 //TODO: Resize sensor (blueprint.js)
 //TODO: Header proper enlarge when multiple values selected
+//TODO: need small delay on typing in search field?
 export default class EnchantedTable extends React.Component {
     constructor(props) {
         super(props);
@@ -37,7 +38,9 @@ export default class EnchantedTable extends React.Component {
                         {columns.map((field) => {
                             const style = this.getTdStyle(field, "header");
                             const defaultStyle = {width: style.width || ""};
-                            const headerName = `${field.id}_header`;
+                            const id = field.id;
+                            const filterType = field.searchType ? field.searchType : "";
+                            const headerName = `${id}_header`;
                             return (
                                 <th
                                     key={headerName}
@@ -53,14 +56,7 @@ export default class EnchantedTable extends React.Component {
                                         </ResizableContainer>
                                     </div>
                                     <div className={styles.header_search_container}>
-                                        <SelectList
-                                            fill
-                                            items={filterValues[field.id]}
-                                            onItemSelect={this.handleFilters(field.id, "select")}
-                                            selectedItems={this.state.filters[field.id]}
-                                            onRemove={this.onFilterRemove(field.id)}
-                                        />
-                                        {/*<SearchInput onChange={this.handleFilters(field.id, "input")}/>*/}
+                                        {this.getFilterBar(filterType, id)}
                                     </div>
                                 </th>
                             )
@@ -96,6 +92,24 @@ export default class EnchantedTable extends React.Component {
             if (obj.styles.hasOwnProperty(type)) {
                 return obj.styles[type];
             }
+        }
+    }
+
+    getFilterBar(type, id) {
+        const {filterValues} =  this.props;
+        const {filters} = this.state;
+        if (type.toLowerCase() === "input") {
+            return <SearchInput onChange={this.handleFilters(id, "input")}/>
+        } else if (type.toLowerCase() === "multiselect") {
+            return (
+                <SelectList
+                    fill
+                    items={filterValues[id]}
+                    onItemSelect={this.handleFilters(id, "select")}
+                    selectedItems={filters[id]}
+                    onRemove={this.onFilterRemove(id)}
+                />
+            )
         }
     }
 
@@ -157,8 +171,9 @@ export default class EnchantedTable extends React.Component {
         let result = data;
         keys.forEach((id) => {
             let filter = filters[id];
-            //TODO: if empty => just skip
             if (Array.isArray(filter)) {
+                if (filter.length === 0) return result;
+
                 result = result.filter((row) => (
                     String(row[id]).toLowerCase().includesWithMultiple(filter)
                 ));

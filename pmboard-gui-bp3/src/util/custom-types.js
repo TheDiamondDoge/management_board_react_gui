@@ -121,6 +121,7 @@ export const EnchantedTableColsConfig = PropTypes.shape({
     id: PropTypes.string.isRequired,
     headerName: PropTypes.string.isRequired,
     decorator: PropTypes.func,
+    searchType: PropTypes.string,
     styles: PropTypes.shape({
         header: PropTypes.object,
         column: PropTypes.object,

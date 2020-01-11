@@ -33,7 +33,8 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "input"
     },
     {
         id: "previous", headerName: "Previous",
@@ -66,7 +67,8 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "multiselect"
     },
     {
         id: "riskDescription", headerName: "Risk Description",

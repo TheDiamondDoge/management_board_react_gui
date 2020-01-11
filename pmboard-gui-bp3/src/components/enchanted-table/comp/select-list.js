@@ -4,24 +4,21 @@ import {MultiSelect} from "@blueprintjs/select";
 import PropTypes from "prop-types";
 
 export default function SelectList(props) {
-    const {isItemActive, selectedItems, onItemSelect, onRemove, ...other} = props;
-    let {items, ...otherProps} = other;
-    if (!items) {
-        items = [];
-    }
+    const {isItemActive,onItemSelect, onRemove, ...other} = props;
+    let {items, selectedItems, ...otherProps} = other;
+    items = items ? items : [];
+    selectedItems = selectedItems ? selectedItems : [];
 
-    // console.log("PROPS", props);
     return (
         <MultiSelect
             {...otherProps}
             items={items}
-            itemRenderer={(item, {modifiers, handleClick}) =>
+            itemRenderer={(item, {handleClick}) =>
                 <MenuItem
                     key={item}
                     text={item}
                     onClick={handleClick}
-                    active={isItemActive}
-                    // active={this.isSelected(item)}
+                    active={selectedItems.includes(item)}
                 />
             }
             selectedItems={selectedItems}
@@ -29,9 +26,6 @@ export default function SelectList(props) {
             tagRenderer={item => item}
             tagInputProps={{
                 onRemove: onRemove
-                // onRemove: (item) => {
-                //     this.deleteElement(item)
-                // }
             }}
         />
     );
@@ -39,7 +33,7 @@ export default function SelectList(props) {
 
 SelectList.propTypes = {
     items: PropTypes.arrayOf(PropTypes.any),
-    active: PropTypes.bool,
+    isItemActive: PropTypes.bool,
     selectedItems: PropTypes.arrayOf(PropTypes.any),
     onItemSelect: PropTypes.func,
     onRemove: PropTypes.func
