@@ -9,8 +9,7 @@ import {ResizableContainer} from "./comp/container/resizable-container";
 import SelectList from "./comp/select-list";
 import {SearchInput} from "../controls/search-input";
 
-//TODO: Resize sensor (blueprint.js)
-//TODO: Header proper enlarge when multiple values selected
+//TODO: think about shape of multiselect picklist values {id: ... , name: ...}
 //TODO: need small delay on typing in search field?
 export default class EnchantedTable extends React.Component {
     constructor(props) {
@@ -27,8 +26,6 @@ export default class EnchantedTable extends React.Component {
         const tableClasses = classNames(className, styles.table_style);
         let filteredData = this.filter(data);
         filteredData = this.sortData(filteredData);
-
-        console.log("FILTERS", this.state.filters);
 
         return (
             <div className={styles.table_container}>
@@ -47,16 +44,18 @@ export default class EnchantedTable extends React.Component {
                                     className={headerName}
                                     style={style}
                                 >
-                                    <div className={styles.header_label_container}>
-                                        <ResizableContainer defaultStyle={defaultStyle}>
-                                            {
-                                                field.headerName
-                                            }
-                                            <SortButton onClick={this.handleSortClick(field.id)}/>
-                                        </ResizableContainer>
-                                    </div>
-                                    <div className={styles.header_search_container}>
-                                        {this.getFilterBar(filterType, id)}
+                                    <div className={styles.header_container}>
+                                        <div>
+                                            <ResizableContainer defaultStyle={defaultStyle}>
+                                                {
+                                                    field.headerName
+                                                }
+                                                <SortButton onClick={this.handleSortClick(field.id)}/>
+                                            </ResizableContainer>
+                                        </div>
+                                        <div>
+                                            {this.getFilterBar(filterType, id)}
+                                        </div>
                                     </div>
                                 </th>
                             )
@@ -96,7 +95,7 @@ export default class EnchantedTable extends React.Component {
     }
 
     getFilterBar(type, id) {
-        const {filterValues} =  this.props;
+        const {filterValues} = this.props;
         const {filters} = this.state;
         if (type.toLowerCase() === "input") {
             return <SearchInput onChange={this.handleFilters(id, "input")}/>

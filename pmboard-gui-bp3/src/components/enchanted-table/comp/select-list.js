@@ -3,6 +3,7 @@ import {MenuItem} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 import PropTypes from "prop-types";
 
+//TODO: Idea => If more than 2-3 elems selected - change them on "# selected". Add x button to each elem in list
 export default function SelectList(props) {
     const {isItemActive,onItemSelect, onRemove, ...other} = props;
     let {items, selectedItems, ...otherProps} = other;
