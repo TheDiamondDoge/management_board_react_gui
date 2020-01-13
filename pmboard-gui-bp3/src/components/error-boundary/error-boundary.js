@@ -1,6 +1,6 @@
 import React from 'react';
-import ErrorStatus from "../components/global-statuses/error-status";
-import StatusContainer from "../components/status-container/status-container";
+import ErrorStatus from "../global-statuses/error-status";
+import StatusContainer from "../status-container/status-container";
 
 export default class ErrorBoundary extends React.Component {
     constructor(props) {

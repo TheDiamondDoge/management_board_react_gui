@@ -2,13 +2,11 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
 import {Formik, Field, Form, ErrorMessage} from "formik";
-import {HTMLTable, MenuItem, Popover, Position, Button, Menu} from "@blueprintjs/core";
+import {HTMLTable, MenuItem, Popover, Position, Button, Menu, Dialog} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import {Rnd} from "react-rnd";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
-import ErrorStatus from "../global-statuses/error-status";
-import StatusContainer from "../status-container/status-container";
 
 
 export default class World extends React.Component {
@@ -16,7 +14,8 @@ export default class World extends React.Component {
         super(props);
 
         this.state = {
-            selectedItems: ["Hi", "I", "am", "Robert"]
+            selectedItems: ["Hi", "I", "am", "Robert"],
+            isDialog: false
         }
     }
 
@@ -48,6 +47,14 @@ export default class World extends React.Component {
         );
         return (
             <>
+                <div style={{width: 100, height: 100, border: "1px solid black"}}>
+                    <Dialog
+                        isOpen={this.state.isDialog}
+                        title="Test"
+                    >
+                        Yo!
+                    </Dialog>
+                </div>
                 <LoadingSpinner/>
                 <NavLink exact to="/pws">
                     <button>PWS</button>
@@ -143,9 +150,15 @@ export default class World extends React.Component {
                 <Popover content={menu} position={Position.RIGHT_BOTTOM}>
                     <Button icon={"sort"} minimal/>
                 </Popover>
-                <StatusContainer>
-                    <ErrorStatus/>
-                </StatusContainer>
+                {/*<StatusContainer>*/}
+                {/*    <ErrorStatus/>*/}
+                {/*</StatusContainer>*/}
+                <Button
+                    onClick={() => {
+                        console.log(this.state.isDialog);
+                        this.setState((prev) => ({isDialog: !prev.isDialog}))
+                    }
+                    }/>
             </>
         );
     }

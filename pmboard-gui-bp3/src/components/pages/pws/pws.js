@@ -8,7 +8,7 @@ import IndicatorsTab from "../../tabs/indicators-tab/indicators-tab.container";
 import CostTab from "../../tabs/cost-tab/cost-tab";
 import BlcDashboard from "../../tabs/blc/blc.container";
 import Risks from "../../tabs/risks/risks.container";
-import ErrorBoundary from "../../../error-boundary/error-boundary";
+import ErrorBoundary from "../../error-boundary/error-boundary";
 
 export default class PWS extends React.Component {
     constructor(props) {

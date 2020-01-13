@@ -20,7 +20,7 @@ import {
     QualityIndicatorsShape,
     RequirementsShape
 } from "../../../util/custom-types";
-import ErrorBoundary from "../../../error-boundary/error-boundary";
+import ErrorBoundary from "../../error-boundary/error-boundary";
 
 export default class IndicatorsTab extends React.Component {
     componentDidMount() {

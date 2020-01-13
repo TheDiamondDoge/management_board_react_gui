@@ -12,7 +12,7 @@ import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import PropTypes from 'prop-types';
 import RenderFieldHelper from "../../../util/render-field-helper";
 import {HealthIndicatorsShape, MilestoneShape, SummaryShape} from "../../../util/custom-types";
-import ErrorBoundary from "../../../error-boundary/error-boundary";
+import ErrorBoundary from "../../error-boundary/error-boundary";
 
 
 export default class SummaryTab extends React.Component {
