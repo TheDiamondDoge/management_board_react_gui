@@ -1,6 +1,11 @@
-.table_container {
-    overflow: auto;
+.container {
     height: 100%;
+}
+
+.table_container {
+    position: relative;
+    overflow: auto;
+    height: 95%;
 }
 
 .table_style {
@@ -18,4 +23,8 @@ th {
     display: flex;
     flex-direction: column;
     width: 100%;
+}
+
+.footer {
+   /*padding-top: 1.5%;*/
 }

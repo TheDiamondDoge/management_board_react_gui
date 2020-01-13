@@ -1,5 +1,5 @@
 import React from "react";
-import {HTMLTable} from "@blueprintjs/core";
+import {HTMLTable, Dialog, Button, Intent, Classes} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import SortButton from "../controls/sort-button";
 import {EnchantedTableColsConfig} from "../../util/custom-types";
@@ -17,7 +17,10 @@ export default class EnchantedTable extends React.Component {
         this.state = {
             filters: {},
             width: {},
-            sort: {}
+            sort: {},
+            editDialog: {
+                isEditActive: false,
+            }
         };
     }
 
@@ -28,60 +31,88 @@ export default class EnchantedTable extends React.Component {
         filteredData = this.sortData(filteredData);
 
         return (
-            <div className={styles.table_container}>
-                <HTMLTable {...others} className={tableClasses}>
-                    <thead>
-                    <tr>
-                        {columns.map((field) => {
-                            const style = this.getTdStyle(field, "header");
-                            const defaultStyle = {width: style.width || ""};
-                            const id = field.id;
-                            const filterType = field.searchType ? field.searchType : "";
-                            const headerName = `${id}_header`;
+            <div className={styles.container}>
+                <Dialog
+                    isOpen={this.state.editDialog.isEditActive}
+                    onClose={() => this.setState((prev) => ({
+                        editDialog: {
+                            isEditActive: false
+                        }
+                    }))}
+                    title="Edit table row"
+                >
+                    <div className={Classes.DIALOG_BODY}>
+                        Hello my friend!
+                    </div>
+                </Dialog>
+                <div className={styles.table_container}>
+                    <HTMLTable {...others} className={tableClasses}>
+                        <thead>
+                        <tr>
+                            {columns.map((field) => {
+                                const style = this.getTdStyle(field, "header");
+                                const defaultStyle = {width: style.width || ""};
+                                const id = field.id;
+                                const filterType = field.searchType ? field.searchType : "";
+                                const headerName = `${id}_header`;
+                                return (
+                                    <th
+                                        key={headerName}
+                                        className={headerName}
+                                        style={style}
+                                    >
+                                        <div className={styles.header_container}>
+                                            <div>
+                                                <ResizableContainer defaultStyle={defaultStyle}>
+                                                    {
+                                                        field.headerName
+                                                    }
+                                                    <SortButton onClick={this.handleSortClick(field.id)}/>
+                                                </ResizableContainer>
+                                            </div>
+                                            <div>
+                                                {this.getFilterBar(filterType, id)}
+                                            </div>
+                                        </div>
+                                    </th>
+                                )
+                            })}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {filteredData.map((row, i) => {
+                            const rowKey = `row_${i}`;
                             return (
-                                <th
-                                    key={headerName}
-                                    className={headerName}
-                                    style={style}
-                                >
-                                    <div className={styles.header_container}>
-                                        <div>
-                                            <ResizableContainer defaultStyle={defaultStyle}>
-                                                {
-                                                    field.headerName
-                                                }
-                                                <SortButton onClick={this.handleSortClick(field.id)}/>
-                                            </ResizableContainer>
-                                        </div>
-                                        <div>
-                                            {this.getFilterBar(filterType, id)}
-                                        </div>
-                                    </div>
-                                </th>
+                                <tr key={rowKey}>
+                                    {columns.map((col) => {
+                                        const styles = this.getTdStyle(col, "column");
+                                        const colId = col.id || "";
+                                        const decorator = col.decorator;
+                                        return (
+                                            <td key={colId} style={styles}>
+                                                {this.renderValue(row[colId], decorator)}
+                                            </td>
+                                        )
+                                    })}
+                                </tr>
                             )
                         })}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {filteredData.map((row, i) => {
-                        const rowKey = `row_${i}`;
-                        return (
-                            <tr key={rowKey}>
-                                {columns.map((col) => {
-                                    const styles = this.getTdStyle(col, "column");
-                                    const colId = col.id || "";
-                                    const decorator = col.decorator;
-                                    return (
-                                        <td key={colId} style={styles}>
-                                            {this.renderValue(row[colId], decorator)}
-                                        </td>
-                                    )
-                                })}
-                            </tr>
-                        )
-                    })}
-                    </tbody>
-                </HTMLTable>
+                        </tbody>
+                    </HTMLTable>
+                </div>
+                <div className={styles.footer}>
+                    <Button
+                        minimal
+                        large
+                        icon={"add"}
+                        intent={Intent.PRIMARY}
+                        onClick={() => this.setState((prev) => ({
+                            editDialog: {
+                                isEditActive: true
+                            }
+                        }))}
+                    />
+                </div>
             </div>
         )
     }
