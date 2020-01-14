@@ -11,7 +11,9 @@ export default [
         },
         decorator: function (value) {
             return `${value} => decorated by decorator`;
-        }
+        },
+        editable: true,
+        inputType: "textarea"
     },
     {
         id: "probability", headerName: "Probability",
@@ -22,7 +24,8 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        editable: true,
     },
     {
         id: "rating", headerName: "Rating",
@@ -34,7 +37,8 @@ export default [
                 textAlign: "center"
             }
         },
-        searchType: "input"
+        searchType: "input",
+        editable: true,
     },
     {
         id: "previous", headerName: "Previous",
@@ -79,7 +83,8 @@ export default [
             column: {
                 wordBreak: "break-word"
             }
-        }
+        },
+        editable: true,
     },
     {
         id: "impactDescription", headerName: "Impact Description",

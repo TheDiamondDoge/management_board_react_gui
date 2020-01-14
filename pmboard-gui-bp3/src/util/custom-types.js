@@ -126,6 +126,8 @@ export const EnchantedTableColsConfig = PropTypes.shape({
         header: PropTypes.object,
         column: PropTypes.object,
     }),
+    editable: PropTypes.bool,
+    inputType: PropTypes.string,
 });
 
 export const RisksTabRisk = PropTypes.shape({

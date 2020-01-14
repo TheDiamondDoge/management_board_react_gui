@@ -25,6 +25,8 @@ th {
     width: 100%;
 }
 
-.footer {
-   /*padding-top: 1.5%;*/
+.dialog {
+   width: unset;
 }
+
+.footer {}

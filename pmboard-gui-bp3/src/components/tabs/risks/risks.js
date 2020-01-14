@@ -31,9 +31,11 @@ export default class Risks extends React.Component {
                             data={payload}
                             columns={colSettings}
                             filterValues={picklists}
+                            onSubmit={(values) => alert(JSON.stringify(values))}
                             striped
                             interactive
                             bordered
+                            editable
                         />
                     </CustomCard>
 

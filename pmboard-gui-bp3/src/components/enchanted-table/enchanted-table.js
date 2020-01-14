@@ -6,8 +6,9 @@ import {EnchantedTableColsConfig} from "../../util/custom-types";
 import styles from "./enchanted-table.module.css";
 import classNames from 'classnames';
 import {ResizableContainer} from "./comp/container/resizable-container";
-import SelectList from "./comp/select-list";
+import SelectList from "../controls/select-list";
 import {SearchInput} from "../controls/search-input";
+import AddEditDialog from "./comp/add-edit-dialog/add-edit-dialog";
 
 //TODO: think about shape of multiselect picklist values {id: ... , name: ...}
 //TODO: need small delay on typing in search field?
@@ -19,30 +20,33 @@ export default class EnchantedTable extends React.Component {
             width: {},
             sort: {},
             editDialog: {
-                isEditActive: false,
+                isOpen: false,
             }
         };
     }
 
     render() {
-        const {data, columns, className, filterValues, ...others} = this.props;
+        const {data, columns, className, filterValues, editable, validationSchema, onSubmit, ...others} = this.props;
         const tableClasses = classNames(className, styles.table_style);
+        const isDialogOpen = this.state.editDialog.isOpen;
         let filteredData = this.filter(data);
         filteredData = this.sortData(filteredData);
-
         return (
             <div className={styles.container}>
                 <Dialog
-                    isOpen={this.state.editDialog.isEditActive}
-                    onClose={() => this.setState((prev) => ({
-                        editDialog: {
-                            isEditActive: false
-                        }
-                    }))}
+                    isOpen={isDialogOpen && editable}
+                    onClose={this.onDialogClose}
                     title="Edit table row"
+                    className={styles.dialog}
                 >
                     <div className={Classes.DIALOG_BODY}>
-                        Hello my friend!
+                        <AddEditDialog
+                            editable
+                            columns={columns}
+                            validationSchema={validationSchema}
+                            onSubmit={onSubmit}
+                            onCancel={this.onDialogClose}
+                        />
                     </div>
                 </Dialog>
                 <div className={styles.table_container}>
@@ -79,6 +83,7 @@ export default class EnchantedTable extends React.Component {
                             })}
                         </tr>
                         </thead>
+
                         <tbody>
                         {filteredData.map((row, i) => {
                             const rowKey = `row_${i}`;
@@ -106,11 +111,7 @@ export default class EnchantedTable extends React.Component {
                         large
                         icon={"add"}
                         intent={Intent.PRIMARY}
-                        onClick={() => this.setState((prev) => ({
-                            editDialog: {
-                                isEditActive: true
-                            }
-                        }))}
+                        onClick={this.onDialogOpen}
                     />
                 </div>
             </div>
@@ -149,7 +150,7 @@ export default class EnchantedTable extends React.Component {
             if (filterType === "select") {
                 const val = obj;
                 self.setState((prev) => {
-                    let prevFilters = prev.filters[id] ? [...prev.filters[id]] : [];
+                    let prevFilters = prev.filters[id] ? prev.filters[id] : [];
                     if (val && !prevFilters.includes(val)) {
                         const filtersArr = [...prevFilters, val];
                         return {
@@ -192,7 +193,7 @@ export default class EnchantedTable extends React.Component {
         }
     }
 
-    filter = (data) => {
+    filter(data) {
         const {filters} = this.state;
         const keys = Object.keys(filters);
 
@@ -233,10 +234,29 @@ export default class EnchantedTable extends React.Component {
     renderValue(value, decorator) {
         return decorator ? decorator(value) : value;
     }
+
+    onDialogOpen = () => {
+        this.setState({
+            editDialog: {
+                isOpen: true
+            }
+        })
+    };
+
+    onDialogClose = () => {
+        this.setState({
+            editDialog: {
+                isOpen: false
+            }
+        })
+    };
 }
 
 EnchantedTable.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
     columns: PropTypes.arrayOf(EnchantedTableColsConfig).isRequired,
     filterValues: PropTypes.object,
+    editable: PropTypes.bool,
+    validationSchema: PropTypes.object,
+    onSubmit: PropTypes.func
 };
