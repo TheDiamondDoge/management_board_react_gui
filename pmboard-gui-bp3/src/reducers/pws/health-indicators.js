@@ -4,7 +4,7 @@ import {
     LOAD_HEALTH_SUCCESS,
     RESET_HEALTH_STATE, SAVE_COMMENTS,
     SAVE_HEALTH
-} from "../actions/health-indicators";
+} from "../../actions/pws/health-indicators";
 
 const initState = {
     payload: {},

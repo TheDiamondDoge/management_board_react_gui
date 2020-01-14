@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {loadRisks, resetState} from "../../../actions/risks-tab";
+import {loadRisks, resetState} from "../../../actions/pws/risks-tab";
 import Risks from "./risks";
 
 function mapStateToProps(state) {

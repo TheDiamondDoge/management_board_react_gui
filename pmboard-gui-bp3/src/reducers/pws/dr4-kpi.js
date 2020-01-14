@@ -1,10 +1,7 @@
-import {
-    LOAD_QUALITY_KPI,
-    QUALITY_KPI_FAIL,
-    QUALITY_KPI_RESET_STATE, QUALITY_KPI_SAVE,
-    QUALITY_KPI_SUCCESS,
-    QUALITY_KPI_SYNC
-} from "../actions/quality-kpi";
+import {LOAD_DR4_KPI} from "../../actions/pws/dr4-kpi";
+import {DR4_KPI_SUCCESS} from "../../actions/pws/dr4-kpi";
+import {DR4_KPI_FAIL} from "../../actions/pws/dr4-kpi";
+import {DR4_KPI_RESET_STATE} from "../../actions/pws/dr4-kpi";
 
 const initState = {
     payload: {},
@@ -17,32 +14,23 @@ export default (state, action) => {
     }
 
     switch (action.type) {
-        case LOAD_QUALITY_KPI:
+        case LOAD_DR4_KPI:
             return {
                 ...state,
                 loading: true,
             };
-        case QUALITY_KPI_SUCCESS:
+        case DR4_KPI_SUCCESS:
             return {
                 ...state,
                 payload: action.data,
                 loading: false,
             };
-        case QUALITY_KPI_SYNC:
-            return {
-                ...state,
-            };
-        case QUALITY_KPI_SAVE:
-            return {
-                ...state,
-                loading: true,
-            };
-        case QUALITY_KPI_FAIL:
+        case DR4_KPI_FAIL:
             return {
                 ...state,
                 loading: false,
             };
-        case QUALITY_KPI_RESET_STATE:
+        case DR4_KPI_RESET_STATE:
             return initState;
         default:
             return state;

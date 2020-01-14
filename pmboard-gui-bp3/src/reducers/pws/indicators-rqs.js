@@ -3,7 +3,7 @@ import {
     INDICATORS_RQS_FAIL, INDICATORS_RQS_SAVE,
     INDICATORS_RQS_SUCCESS,
     LOAD_INDICATORS_RQS
-} from "../actions/indicators-rqs";
+} from "../../actions/pws/indicators-rqs";
 
 const initState = {
     payload: {},

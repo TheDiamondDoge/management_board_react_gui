@@ -1,4 +1,4 @@
-import {LOAD_SUMMARY, LOAD_SUMMARY_FAIL, LOAD_SUMMARY_SUCCESS, RESET_STATE} from "../actions/summary-tab";
+import {LOAD_SUMMARY, LOAD_SUMMARY_FAIL, LOAD_SUMMARY_SUCCESS, RESET_STATE} from "../../actions/pws/summary-tab";
 
 const initState = {
     payload: {},

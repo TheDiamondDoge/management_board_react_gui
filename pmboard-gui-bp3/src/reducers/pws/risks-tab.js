@@ -1,4 +1,4 @@
-import * as Types from "../actions/risks-tab";
+import * as Types from "../../actions/pws/risks-tab";
 
 const initState = {
     loading: true,

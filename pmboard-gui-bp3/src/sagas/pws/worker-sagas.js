@@ -1,17 +1,17 @@
 import * as api from '../../api/pws';
 import {call, put} from 'redux-saga/effects';
-import * as summaryTab from "../../actions/summary-tab";
-import * as healthIndicators from "../../actions/health-indicators";
-import * as milestones from "../../actions/milestones";
-import * as indicatorsTab from "../../actions/indicators-tab";
-import * as rqIndicators from "../../actions/indicators-rqs";
-import * as milestonesKpi from "../../actions/milestones-kpi";
-import * as dr4Kpi from "../../actions/dr4-kpi";
-import * as qualityKpi from "../../actions/quality-kpi";
-import * as infoTab from "../../actions/info-tab";
-import * as contrib from "../../actions/contrib-projects";
-import * as blc from "../../actions/blc-tab";
-import * as risks from "../../actions/risks-tab";
+import * as summaryTab from "../../actions/pws/summary-tab";
+import * as healthIndicators from "../../actions/pws/health-indicators";
+import * as milestones from "../../actions/pws/milestones";
+import * as indicatorsTab from "../../actions/pws/indicators-tab";
+import * as rqIndicators from "../../actions/pws/indicators-rqs";
+import * as milestonesKpi from "../../actions/pws/milestones-kpi";
+import * as dr4Kpi from "../../actions/pws/dr4-kpi";
+import * as qualityKpi from "../../actions/pws/quality-kpi";
+import * as infoTab from "../../actions/pws/info-tab";
+import * as contrib from "../../actions/pws/contrib-projects";
+import * as blc from "../../actions/pws/blc-tab";
+import * as risks from "../../actions/pws/risks-tab";
 
 export function* loadSummaryTab() {
     try {

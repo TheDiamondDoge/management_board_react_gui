@@ -1,15 +1,15 @@
 import {takeEvery, takeLatest, fork} from 'redux-saga/effects';
 import * as sagas from "./worker-sagas";
-import * as summaryTab from "../../actions/summary-tab";
-import * as indicatorsTab from "../../actions/indicators-tab";
-import * as informationTab from "../../actions/info-tab";
-import * as healthIndicators from "../../actions/health-indicators";
-import * as rqIndicators from "../../actions/indicators-rqs";
-import * as quality from "../../actions/quality-kpi";
-import * as milestones from "../../actions/milestones";
-import * as contrib from "../../actions/contrib-projects";
-import * as blc from "../../actions/blc-tab";
-import * as risks from "../../actions/risks-tab";
+import * as summaryTab from "../../actions/pws/summary-tab";
+import * as indicatorsTab from "../../actions/pws/indicators-tab";
+import * as informationTab from "../../actions/pws/info-tab";
+import * as healthIndicators from "../../actions/pws/health-indicators";
+import * as rqIndicators from "../../actions/pws/indicators-rqs";
+import * as quality from "../../actions/pws/quality-kpi";
+import * as milestones from "../../actions/pws/milestones";
+import * as contrib from "../../actions/pws/contrib-projects";
+import * as blc from "../../actions/pws/blc-tab";
+import * as risks from "../../actions/pws/risks-tab";
 
 function* watchSummaryTabLoad() {
     yield takeEvery(summaryTab.LOAD_SUMMARY, sagas.loadSummaryTab);

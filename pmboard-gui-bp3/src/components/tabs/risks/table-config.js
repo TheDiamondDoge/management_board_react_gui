@@ -1,7 +1,7 @@
 export default [
     {
         id: "impact", headerName: "Impact",
-        styles: {
+        style: {
             header: {
                 width: "70px"
             },
@@ -17,7 +17,7 @@ export default [
     },
     {
         id: "probability", headerName: "Probability",
-        styles: {
+        style: {
             header: {
                 width: "90px"
             },
@@ -29,7 +29,7 @@ export default [
     },
     {
         id: "rating", headerName: "Rating",
-        styles: {
+        style: {
             header: {
                 width: "90px"
             },
@@ -42,7 +42,7 @@ export default [
     },
     {
         id: "previous", headerName: "Previous",
-        styles: {
+        style: {
             header: {
                 width: "80px"
             },
@@ -53,7 +53,7 @@ export default [
     },
     {
         id: "initial", headerName: "Initial",
-        styles: {
+        style: {
             header: {
                 width: "70px"
             },
@@ -64,7 +64,7 @@ export default [
     },
     {
         id: "riskId", headerName: "Risk ID",
-        styles: {
+        style: {
             header: {
                 width: "80px"
             },
@@ -76,7 +76,7 @@ export default [
     },
     {
         id: "riskDescription", headerName: "Risk Description",
-        styles: {
+        style: {
             header: {
                 width: "300px"
             },
@@ -88,7 +88,7 @@ export default [
     },
     {
         id: "impactDescription", headerName: "Impact Description",
-        styles: {
+        style: {
             header: {
                 width: "300px"
             },
@@ -99,7 +99,7 @@ export default [
     },
     {
         id: "businessImpact", headerName: "Business Impact",
-        styles: {
+        style: {
             header: {
                 width: "300px"
             },
@@ -110,7 +110,7 @@ export default [
     },
     {
         id: "riskResponse", headerName: "Risk Response",
-        styles: {
+        style: {
             header: {
                 width: "100px"
             },
@@ -118,7 +118,7 @@ export default [
     },
     {
         id: "mitigation", headerName: "Mitigation Plan Description",
-        styles: {
+        style: {
             header: {
                 width: "300px"
             },
@@ -126,7 +126,7 @@ export default [
     },
     {
         id: "decisionDate", headerName: "Decision Date",
-        styles: {
+        style: {
             header: {
                 width: "120px"
             },
@@ -137,7 +137,7 @@ export default [
     },
     {
         id: "estimatedCost", headerName: "Estimated Cost",
-        styles: {
+        style: {
             header: {
                 width: "125px"
             },
@@ -148,7 +148,7 @@ export default [
     },
     {
         id: "provisionBudget", headerName: "Provision for budget",
-        styles: {
+        style: {
             header: {
                 width: "130px"
             },
@@ -159,7 +159,7 @@ export default [
     },
     {
         id: "responsible", headerName: "Responsible",
-        styles: {
+        style: {
             header: {
                 width: "120px"
             },
@@ -170,7 +170,7 @@ export default [
     },
     {
         id: "target", headerName: "Target (Plan)",
-        styles: {
+        style: {
             header: {
                 width: "90px"
             },
@@ -181,7 +181,7 @@ export default [
     },
     {
         id: "done", headerName: "Done (Do)",
-        styles: {
+        style: {
             header: {
                 width: "90px"
             },
@@ -192,7 +192,7 @@ export default [
     },
     {
         id: "result", headerName: "Result (Check, Act)",
-        styles: {
+        style: {
             header: {
                 width: "110px"
             },
@@ -203,7 +203,7 @@ export default [
     },
     {
         id: "imported", headerName: "Imported On",
-        styles: {
+        style: {
             header: {
                 width: "90px"
             },
@@ -214,7 +214,7 @@ export default [
     },
     {
         id: "by", headerName: "Imported by",
-        styles: {
+        style: {
             header: {
                 width: "90px"
             },
@@ -225,7 +225,7 @@ export default [
     },
     {
         id: "report", headerName: "Report",
-        styles: {
+        style: {
             header: {
                 width: "90px"
             },

@@ -1,18 +1,18 @@
 import {combineReducers} from 'redux';
 import testReducer from './test'
-import summaryTabReducer from './summaryTab';
-import indicatorsTabReducer from "./indicators-tab";
-import infoTabReducer from "./info-tab";
-import costTabReducer from "./costTab";
-import blcTabReducer from "./blc-tab";
-import healthIndicatorsReducer from "./health-indicators";
-import milestonesReducer from "./milestones";
-import indicatorsRqsReducer from "./indicators-rqs";
-import milestonesKpiReducer from "./milestones-kpi";
-import dr4KpiReducer from "./dr4-kpi";
-import qualityKpiReducer from "./quality-kpi";
-import contrib from "./contrib-projects";
-import risks from "./risks-tab";
+import summaryTabReducer from './pws/summary-tab';
+import indicatorsTabReducer from "./pws/indicators-tab";
+import infoTabReducer from "./pws/info-tab";
+import costTabReducer from "./pws/cost-tab";
+import blcTabReducer from "./pws/blc-tab";
+import healthIndicatorsReducer from "./pws/health-indicators";
+import milestonesReducer from "./pws/milestones";
+import indicatorsRqsReducer from "./pws/indicators-rqs";
+import milestonesKpiReducer from "./pws/milestones-kpi";
+import dr4KpiReducer from "./pws/dr4-kpi";
+import qualityKpiReducer from "./pws/quality-kpi";
+import contrib from "./pws/contrib-projects";
+import risks from "./pws/risks-tab";
 
 export default combineReducers({
     pws: pwsReducers()

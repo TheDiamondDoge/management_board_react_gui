@@ -20,34 +20,28 @@ export default class Risks extends React.Component {
     render() {
         const {loading} = this.props.risks;
         if (loading) {
-            return <LoadingSpinner/>
+            return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             const {payload} = this.props.risks;
             const picklists = getDistinctValsPerRow(payload);
             return (
-                <>
-                    <CustomCard autosize>
-                        <EnchantedTable
-                            data={payload}
-                            columns={colSettings}
-                            filterValues={picklists}
-                            onSubmit={(values) => alert(JSON.stringify(values))}
-                            striped
-                            interactive
-                            bordered
-                            editable
-                            renderFooter={(tableFuncs) => (
-                                <>
-                                    <Button minimal large icon={"add"} intent={Intent.PRIMARY} onClick={tableFuncs.onDialogOpen}/>
-                                    <Button text={"Export to Excel"} icon={"export"} intent={Intent.PRIMARY} minimal />
-                                    <Button text={"Import Excel"} icon={"import"} intent={Intent.PRIMARY} minimal />
-                                </>
-                            )}
-                        />
-                    </CustomCard>
-
-
-                </>
+                <CustomCard autosize>
+                    <EnchantedTable
+                        data={payload}
+                        columns={colSettings}
+                        filterValues={picklists}
+                        striped
+                        interactive
+                        bordered
+                        editable
+                        renderFooter={() => (
+                            <>
+                                <Button text={"Export to Excel"} icon={"export"} intent={Intent.PRIMARY} minimal/>
+                                <Button text={"Import Excel"} icon={"import"} intent={Intent.PRIMARY} minimal/>
+                            </>
+                        )}
+                    />
+                </CustomCard>
             );
         }
     }

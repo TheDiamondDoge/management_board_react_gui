@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import InfoTab from './info-tab';
-import {loadInfo, resetState, saveInfoData} from "../../../actions/info-tab";
-import {loadMilestones, resetMilestonesState, saveMilestones} from "../../../actions/milestones";
-import {loadContrib, resetContrib} from "../../../actions/contrib-projects";
+import {loadInfo, resetState, saveInfoData} from "../../../actions/pws/info-tab";
+import {loadMilestones, resetMilestonesState, saveMilestones} from "../../../actions/pws/milestones";
+import {loadContrib, resetContrib} from "../../../actions/pws/contrib-projects";
 
 function mapStateToProps(state) {
     return {

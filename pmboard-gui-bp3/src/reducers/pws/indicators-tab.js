@@ -1,7 +1,7 @@
 import {
     LOAD_INDICATORS,
     LOAD_INDICATORS_FAIL,
-} from '../actions/indicators-tab';
+} from '../../actions/pws/indicators-tab';
 
 const initState = {
     payload: {},

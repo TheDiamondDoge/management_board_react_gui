@@ -1,45 +1,36 @@
-import {
-    LOAD_BLC,
-    LOAD_BLC_FAILURE,
-    LOAD_BLC_SUCCESS,
-    RESET_STATE,
-    SAVE_BLC_COMMENTS, SAVE_BLC_INDICATORS,
-} from "../actions/blc-tab";
+import {ACTIONS_LOAD, ACTIONS_LOAD_SUCCESS, ACTIONS_FAILURE, ACTIONS_SAVE, RESET_STATE} from "../../actions/pws/actions";
 
 const initState = {
     loading: true,
-    payload: {},
-    error: ""
+    payload: {}
 };
 
 export default (state, action) => {
-    if (state === undefined){
+    if (state === undefined) {
         return initState;
     }
 
     switch (action.type) {
-        case LOAD_BLC:
+        case ACTIONS_LOAD:
             return {
                 ...state,
                 loading: true,
             };
-        case LOAD_BLC_SUCCESS:
-            return {
-                ...state,
-                payload: {...action.data},
-                loading: false,
-            };
-        case LOAD_BLC_FAILURE:
+        case ACTIONS_LOAD_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                error: action.error,
+                payload: action.data
             };
-        case SAVE_BLC_INDICATORS:
-        case SAVE_BLC_COMMENTS:
+        case ACTIONS_FAILURE:
             return {
                 ...state,
-                loading: true,
+                loading: false,
+                error: action.error
+            };
+        case ACTIONS_SAVE:
+            return {
+                ...state
             };
         case RESET_STATE:
             return initState;

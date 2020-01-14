@@ -1,4 +1,4 @@
-import {LOAD_COST, LOAD_COST_FAIL, LOAD_COST_SUCCESS, UPLOAD_COST, UPLOAD_COST_FAIL, RESET_STATE} from '../actions/cost-tab';
+import {LOAD_COST, LOAD_COST_FAIL, LOAD_COST_SUCCESS, UPLOAD_COST, UPLOAD_COST_FAIL, RESET_STATE} from '../../actions/pws/cost-tab';
 
 const initState = {
     loaded: false,

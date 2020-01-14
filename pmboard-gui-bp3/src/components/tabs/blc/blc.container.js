@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import blcTab from "./blc";
-import {loadBlc, resetState, saveBlcComments, saveBlcIndicators} from "../../../actions/blc-tab";
+import {loadBlc, resetState, saveBlcComments, saveBlcIndicators} from "../../../actions/pws/blc-tab";
 
 function mapStateToProps(state) {
     return {

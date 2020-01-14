@@ -1,6 +1,9 @@
 import {
-    LOAD_MILESTONES_KPI, MILESTONES_KPI_FAIL, MILESTONES_KPI_RESET_STATE, MILESTONES_KPI_SUCCESS
-} from "../actions/milestones-kpi";
+    LOAD_MILESTONES,
+    LOAD_MILESTONES_FAIL,
+    LOAD_MILESTONES_SUCCESS,
+    RESET_MILESTONES_STATE, SAVE_MILESTONES
+} from "../../actions/pws/milestones";
 
 const initState = {
     payload: [],
@@ -8,28 +11,33 @@ const initState = {
 };
 
 export default (state, action) => {
-    if (state === undefined) {
+    if (state === undefined){
         return initState;
     }
 
     switch (action.type) {
-        case LOAD_MILESTONES_KPI:
+        case LOAD_MILESTONES:
+            return {
+                ...state,
+                loading: false,
+            };
+        case SAVE_MILESTONES:
             return {
                 ...state,
                 loading: true,
             };
-        case MILESTONES_KPI_SUCCESS:
+        case LOAD_MILESTONES_SUCCESS:
             return {
                 ...state,
-                payload: action.data,
+                payload: [...action.data],
                 loading: false,
             };
-        case MILESTONES_KPI_FAIL:
+        case LOAD_MILESTONES_FAIL:
             return {
                 ...state,
                 loading: false,
             };
-        case MILESTONES_KPI_RESET_STATE:
+        case RESET_MILESTONES_STATE:
             return initState;
         default:
             return state;

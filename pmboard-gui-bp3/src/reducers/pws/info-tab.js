@@ -1,4 +1,4 @@
-import {LOAD_INFO, LOAD_INFO_FAIL, LOAD_INFO_SUCCESS, RESET_STATE, SAVE_INFO_DATA} from '../actions/info-tab';
+import {LOAD_INFO, LOAD_INFO_FAIL, LOAD_INFO_SUCCESS, RESET_STATE, SAVE_INFO_DATA} from '../../actions/pws/info-tab';
 
 const initState = {
     loading: true,

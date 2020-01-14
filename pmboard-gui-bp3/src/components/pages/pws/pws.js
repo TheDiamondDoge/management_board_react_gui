@@ -9,16 +9,17 @@ import CostTab from "../../tabs/cost-tab/cost-tab";
 import BlcDashboard from "../../tabs/blc/blc.container";
 import Risks from "../../tabs/risks/risks.container";
 import ErrorBoundary from "../../error-boundary/error-boundary";
+import Actions from "../../tabs/actions/actions";
 
 export default class PWS extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedId: 'risks'
+            selectedId: 'actions'
         };
     }
 
-    handleTabsOnChange = (tabId) => (
+    onChange = (tabId) => (
         this.setState({selectedId: tabId})
     );
 
@@ -30,13 +31,14 @@ export default class PWS extends React.Component {
                     id="pws_tabs"
                     selectedTabId={this.state.selectedId}
                     className={styles.center}
-                    onChange={this.handleTabsOnChange}
+                    onChange={this.onChange}
                     renderActiveTabPanelOnly={true}
                     large={true}
                 >
                     <Tab id="sum" title="Summary" panel={<ErrorBoundary><SummaryTab/></ErrorBoundary>}/>
                     <Tab id="ind" title="Indicators" panel={<ErrorBoundary><IndicatorsTab/></ErrorBoundary>}/>
                     <Tab id="inf" title="Information" panel={<ErrorBoundary><InfoTab/></ErrorBoundary>}/>
+                    <Tab id="actions" title="Actions" panel={<ErrorBoundary><Actions/></ErrorBoundary>}/>
                     <Tab id="risks" title="Risks" panel={<ErrorBoundary><Risks/></ErrorBoundary>}/>
                     <Tab id="cost" title="Cost" panel={<ErrorBoundary><CostTab/></ErrorBoundary>}/>
                     <Tab id="rep" title="Report" disabled panel={<ErrorBoundary><Hello/></ErrorBoundary>}/>
