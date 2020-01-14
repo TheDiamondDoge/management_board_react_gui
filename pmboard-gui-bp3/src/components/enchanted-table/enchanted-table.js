@@ -1,5 +1,5 @@
 import React from "react";
-import {HTMLTable, Dialog, Button, Intent, Classes} from "@blueprintjs/core";
+import {HTMLTable, Dialog, Classes} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import SortButton from "../controls/sort-button";
 import {EnchantedTableColsConfig} from "../../util/custom-types";
@@ -26,29 +26,16 @@ export default class EnchantedTable extends React.Component {
     }
 
     render() {
-        const {data, columns, className, filterValues, editable, validationSchema, onSubmit, ...others} = this.props;
+        const {data, columns, className, filterValues, editable, validationSchema, onSubmit, ...otherProps} = this.props;
+        let {renderFooter, ...others} = otherProps;
         const tableClasses = classNames(className, styles.table_style);
         const isDialogOpen = this.state.editDialog.isOpen;
         let filteredData = this.filter(data);
         filteredData = this.sortData(filteredData);
+        const footer = renderFooter ? renderFooter({onDialogOpen: this.onDialogOpen}) : null;
+
         return (
             <div className={styles.container}>
-                <Dialog
-                    isOpen={isDialogOpen && editable}
-                    onClose={this.onDialogClose}
-                    title="Edit table row"
-                    className={styles.dialog}
-                >
-                    <div className={Classes.DIALOG_BODY}>
-                        <AddEditDialog
-                            editable
-                            columns={columns}
-                            validationSchema={validationSchema}
-                            onSubmit={onSubmit}
-                            onCancel={this.onDialogClose}
-                        />
-                    </div>
-                </Dialog>
                 <div className={styles.table_container}>
                     <HTMLTable {...others} className={tableClasses}>
                         <thead>
@@ -106,14 +93,25 @@ export default class EnchantedTable extends React.Component {
                     </HTMLTable>
                 </div>
                 <div className={styles.footer}>
-                    <Button
-                        minimal
-                        large
-                        icon={"add"}
-                        intent={Intent.PRIMARY}
-                        onClick={this.onDialogOpen}
-                    />
+                    {footer}
                 </div>
+
+                <Dialog
+                    isOpen={isDialogOpen && editable}
+                    onClose={this.onDialogClose}
+                    title="Edit table row"
+                    className={styles.dialog}
+                >
+                    <div className={Classes.DIALOG_BODY}>
+                        <AddEditDialog
+                            editable
+                            columns={columns}
+                            validationSchema={validationSchema}
+                            onSubmit={onSubmit}
+                            onCancel={this.onDialogClose}
+                        />
+                    </div>
+                </Dialog>
             </div>
         )
     }
@@ -258,5 +256,6 @@ EnchantedTable.propTypes = {
     filterValues: PropTypes.object,
     editable: PropTypes.bool,
     validationSchema: PropTypes.object,
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    renderFooter: PropTypes.func
 };

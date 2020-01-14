@@ -36,11 +36,17 @@ export default class Risks extends React.Component {
                             interactive
                             bordered
                             editable
+                            renderFooter={(tableFuncs) => (
+                                <>
+                                    <Button minimal large icon={"add"} intent={Intent.PRIMARY} onClick={tableFuncs.onDialogOpen}/>
+                                    <Button text={"Export to Excel"} icon={"export"} intent={Intent.PRIMARY} minimal />
+                                    <Button text={"Import Excel"} icon={"import"} intent={Intent.PRIMARY} minimal />
+                                </>
+                            )}
                         />
                     </CustomCard>
 
-                    <Button text={"Export to Excel"} icon={"export"} intent={Intent.PRIMARY} minimal large/>
-                    <Button text={"Import Excel"} icon={"import"} intent={Intent.PRIMARY} minimal large/>
+
                 </>
             );
         }
