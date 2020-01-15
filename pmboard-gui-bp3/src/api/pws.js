@@ -71,3 +71,7 @@ export const saveBlcIndicators = (projectID, payload) => (
 export const getRisks = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/risks`)
 );
+
+export const getActions = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/actions`)
+);

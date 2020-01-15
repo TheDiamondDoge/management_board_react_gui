@@ -13,6 +13,7 @@ import dr4KpiReducer from "./pws/dr4-kpi";
 import qualityKpiReducer from "./pws/quality-kpi";
 import contrib from "./pws/contrib-projects";
 import risks from "./pws/risks-tab";
+import actions from "./pws/actions";
 
 export default combineReducers({
     pws: pwsReducers()
@@ -33,6 +34,7 @@ function pwsReducers() {
         costTab: costTabReducer,
         blcTab: blcTabReducer,
         contrib: contrib,
-        risks: risks
+        risks: risks,
+        actions: actions
     })
 }

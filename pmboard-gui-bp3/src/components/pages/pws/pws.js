@@ -9,7 +9,7 @@ import CostTab from "../../tabs/cost-tab/cost-tab";
 import BlcDashboard from "../../tabs/blc/blc.container";
 import Risks from "../../tabs/risks/risks.container";
 import ErrorBoundary from "../../error-boundary/error-boundary";
-import Actions from "../../tabs/actions/actions";
+import Actions from "../../tabs/actions/actions.container";
 
 export default class PWS extends React.Component {
     constructor(props) {

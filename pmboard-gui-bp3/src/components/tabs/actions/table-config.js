@@ -7,8 +7,8 @@ export default [
             header: {
                 width: 80
             }
-        }
-        // inputType: "select"
+        },
+        searchType: "multiselect"
     },
     {
         id: "uid",
@@ -17,7 +17,8 @@ export default [
             header: {
                 width: 80
             }
-        }
+        },
+        searchType: "multiselect"
     },
     {
         id: "title",
@@ -28,7 +29,8 @@ export default [
             header: {
                 width: 150
             }
-        }
+        },
+        searchType: "multiselect"
     },
     {
         id: "state",
@@ -38,7 +40,8 @@ export default [
             header: {
                 width: 80
             }
-        }
+        },
+        searchType: "multiselect"
         // inputType: "select"
     },
     {
@@ -49,7 +52,8 @@ export default [
             header: {
                 width: 80
             }
-        }
+        },
+        searchType: "multiselect"
         // inputType: "select"
     },
     {
@@ -60,7 +64,8 @@ export default [
             header: {
                 width: 150
             }
-        }
+        },
+        searchType: "multiselect"
     },
     {
         id: "optionalInfo",
@@ -82,6 +87,7 @@ export default [
                 width: 90
             }
         },
+        searchType: "multiselect"
         // inputType: "datepicker"
     },
     {
@@ -114,6 +120,7 @@ export default [
                 width: 90
             }
         },
+        searchType: "multiselect"
     },
     {
         id: "closedDate",
@@ -123,6 +130,7 @@ export default [
                 width: 90
             }
         },
+        searchType: "multiselect"
     },
     {
         id: "relatedRisks",
@@ -133,6 +141,7 @@ export default [
                 width: 80
             }
         },
+        searchType: "multiselect"
         // inputType: "multiselect"
     },
 ];

@@ -207,7 +207,7 @@ export default class EnchantedTable extends React.Component {
                 if (filter.length === 0) return result;
 
                 result = result.filter((row) => (
-                    String(row[id]).toLowerCase().includesWithMultiple(filter)
+                    String(row[id]).includesWithMultiple(filter)
                 ));
             } else {
                 result = result.filter((row) => (
