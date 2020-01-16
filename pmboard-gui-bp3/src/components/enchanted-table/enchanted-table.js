@@ -96,7 +96,7 @@ export default class EnchantedTable extends React.Component {
                 <div className={styles.footer}>
                     {footer}
                 </div>
-
+                {/*TODO: fix dialog resizing*/}
                 <Dialog
                     isOpen={isDialogOpen && editable}
                     onClose={this.onDialogClose}

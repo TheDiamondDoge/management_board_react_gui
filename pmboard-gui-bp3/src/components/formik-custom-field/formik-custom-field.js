@@ -4,6 +4,8 @@ import {DateInput} from "@blueprintjs/datetime";
 import {dateFormatToString, stringToDateFormat, transformDateForInput} from "../../util/transform-funcs";
 import {getPropFromStringPath} from "../../util/util";
 import styles from "./formik-custom-field.module.css";
+import {FastField} from "formik";
+import PropTypes from "prop-types";
 
 export default class FormikCustomField extends React.Component {
     constructor(props) {
@@ -19,13 +21,13 @@ export default class FormikCustomField extends React.Component {
 
     render() {
         if (!(this.props === undefined)) {
-            const {field, form: {touched, errors}, type, ...props} = this.props;
+            const {field, form: {touched, errors}, type, values, ...props} = this.props;
             const touchedValue = getPropFromStringPath(touched, field.name);
             const errorsValue = getPropFromStringPath(errors, field.name);
 
             return (
                 <div>
-                    {this.fieldFactory(type, field, props)}
+                    {this.fieldFactory(type, field, props, values)}
                     {touchedValue &&
                     errorsValue && <div className={styles.error}>{errorsValue}</div>}
                 </div>
@@ -39,7 +41,7 @@ export default class FormikCustomField extends React.Component {
         }
     }
 
-    fieldFactory = (type, field, props) => {
+    fieldFactory = (type, field, props, values = []) => {
         type = type || "";
         switch (type.toLowerCase()) {
             case "textarea":
@@ -68,9 +70,29 @@ export default class FormikCustomField extends React.Component {
                 );
             case "checkbox":
                 return (<Checkbox defaultChecked={field.value} {...field} {...props} />);
+            case "select":
+                return (
+                    <FastField component="select" {...field} {...props}>
+                        {values.map((obj) => (
+                            <option value={obj.value}>{obj.label}</option>
+                        ))}
+                    </FastField>
+                );
             case "text":
             default:
                 return (<InputGroup {...field} {...props} />);
         }
     };
 }
+
+FormikCustomField.propTypes = {
+    values: PropTypes.shape({
+        value: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.number,
+            PropTypes.bool
+        ]).isRequired,
+        label: PropTypes.string.isRequired
+    }),
+    type: PropTypes.string
+};

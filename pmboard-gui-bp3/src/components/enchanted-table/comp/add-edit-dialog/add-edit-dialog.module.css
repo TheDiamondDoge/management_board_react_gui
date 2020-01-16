@@ -1,0 +1,11 @@
+.col_name {
+    width: 150px;
+}
+
+.col_value {
+    width: 450px;
+}
+
+.table_container {
+    overflow-y: auto;
+}

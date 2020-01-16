@@ -30,6 +30,7 @@ export default class Actions extends React.Component {
                         data={payload}
                         columns={tableConfig}
                         filterValues={filters}
+                        onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
                         editable
                         striped
                         interactive

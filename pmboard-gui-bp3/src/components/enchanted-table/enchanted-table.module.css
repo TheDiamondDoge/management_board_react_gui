@@ -36,7 +36,9 @@ th {
 }
 
 .dialog {
-   width: unset;
+    width: unset;
+    max-height: 10%;
 }
 
-.footer {}
+.footer {
+}

@@ -8,7 +8,14 @@ export default [
                 width: 80
             }
         },
-        searchType: "multiselect"
+        searchType: "multiselect",
+        inputType: "select",
+        selectValues: [
+            {value: "", label: ""},
+            {value: "Action", label: "Action"},
+            {value: "Informational", label: "Informational"},
+            {value: "Decision", label: "Decision"},
+        ]
     },
     {
         id: "uid",
@@ -24,13 +31,13 @@ export default [
         id: "title",
         headerName: "Title",
         editable: true,
-        inputType: "textarea",
+        inputType: "text",
         style: {
             header: {
                 width: 150
             }
         },
-        searchType: "multiselect"
+        searchType: "multiselect",
     },
     {
         id: "state",
@@ -41,8 +48,15 @@ export default [
                 width: 80
             }
         },
-        searchType: "multiselect"
-        // inputType: "select"
+        searchType: "multiselect",
+        inputType: "select",
+        selectValues: [
+            {value: "", label: ""},
+            {value: "Active", label: "Active"},
+            {value: "Postponed", label: "Postponed"},
+            {value: "Closed", label: "Closed"},
+            {value: "Did not occur", label: "Did not occur"},
+        ],
     },
     {
         id: "priority",
@@ -53,8 +67,14 @@ export default [
                 width: 80
             }
         },
-        searchType: "multiselect"
-        // inputType: "select"
+        searchType: "multiselect",
+        inputType: "select",
+        selectValues: [
+            {value: "", label: ""},
+            {value: "High", label: "High"},
+            {value: "Medium", label: "Medium"},
+            {value: "Low", label: "Low"},
+        ]
     },
     {
         id: "owner",
@@ -65,7 +85,8 @@ export default [
                 width: 150
             }
         },
-        searchType: "multiselect"
+        searchType: "multiselect",
+        inputType: "text"
     },
     {
         id: "optionalInfo",
@@ -87,8 +108,8 @@ export default [
                 width: 90
             }
         },
-        searchType: "multiselect"
-        // inputType: "datepicker"
+        searchType: "multiselect",
+        inputType: "date"
     },
     {
         id: "description",

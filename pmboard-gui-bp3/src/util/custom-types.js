@@ -128,6 +128,14 @@ export const EnchantedTableColsConfig = PropTypes.shape({
     }),
     editable: PropTypes.bool,
     inputType: PropTypes.string,
+    selectValues: PropTypes.arrayOf(
+        PropTypes.shape({
+            value: PropTypes.oneOfType([
+                PropTypes.string, PropTypes.number, PropTypes.bool
+            ]).isRequired,
+            label: PropTypes.string.isRequired
+        })
+    )
 });
 
 export const RisksTabRisk = PropTypes.shape({
