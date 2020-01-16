@@ -54,7 +54,7 @@ export default class EnchantedTable extends React.Component {
                                         style={style}
                                     >
                                         <div className={styles.header_container}>
-                                            <div>
+                                            <div className={styles.header_container_name}>
                                                 <ResizableContainer defaultStyle={defaultStyle}>
                                                     {
                                                         field.headerName
@@ -62,7 +62,7 @@ export default class EnchantedTable extends React.Component {
                                                     <SortButton onClick={this.handleSortClick(field.id)}/>
                                                 </ResizableContainer>
                                             </div>
-                                            <div>
+                                            <div className={styles.header_container_search}>
                                                 {this.getFilterBar(filterType, id)}
                                             </div>
                                         </div>
@@ -131,7 +131,7 @@ export default class EnchantedTable extends React.Component {
         const {filterValues} = this.props;
         const {filters} = this.state;
         if (type.toLowerCase() === "input") {
-            return <SearchInput onChange={this.handleFilters(id, "input")}/>
+            return <SearchInput placeholder={"Search..."} onChange={this.handleFilters(id, "input")}/>
         } else if (type.toLowerCase() === "multiselect") {
             return (
                 <SelectList
