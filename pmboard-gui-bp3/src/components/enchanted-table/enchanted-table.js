@@ -10,7 +10,6 @@ import SelectList from "../controls/select-list";
 import {SearchInput} from "../controls/search-input";
 import AddEditDialog from "./comp/add-edit-dialog/add-edit-dialog";
 
-//TODO: replate modal table by horizontal rows for each value
 //TODO: think about shape of multiselect picklist values {id: ... , name: ...}
 //TODO: need small delay on typing in search field?
 export default class EnchantedTable extends React.Component {

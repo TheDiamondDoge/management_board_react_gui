@@ -6,6 +6,7 @@ import {Formik} from "formik";
 import FormikInput from "../../../util-renderers/util-renderers";
 import {FieldName} from "../../../field-name/field-name";
 import styles from "./add-edit-dialog.module.css";
+import {formikFieldHandleChange} from "../../../../util/util";
 
 export default class AddEditDialog extends React.Component {
     submitForm = null;
@@ -41,13 +42,16 @@ export default class AddEditDialog extends React.Component {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {/*TODO: add formic custom input handler for type = "date"*/}
                                         {/*TODO: multiselect + dynamic select population ???*/}
                                         {columns.map((col) => {
                                             const columnId = col.id;
                                             const columnName = col.headerName;
                                             const input = col.inputType;
                                             const selectValues = col.selectValues ? col.selectValues : [];
+                                            let optionalProps = {};
+                                            if (input === "date") {
+                                                optionalProps.onChange = formikFieldHandleChange(formikProps)(columnId);
+                                            }
                                             return (
                                                 col.editable && (
                                                     <tr key={columnId}>
@@ -59,6 +63,7 @@ export default class AddEditDialog extends React.Component {
                                                                 type={input}
                                                                 name={columnId}
                                                                 values={selectValues}
+                                                                {...optionalProps}
                                                             />
                                                         </td>
                                                     </tr>
