@@ -26,6 +26,7 @@ export function getWorkingAreaWidth(viewportSizePx) {
     return (viewportSizePx - sidebarWidth - rightMargin);
 }
 
+//TODO: fix skip of empty strings
 export function getDistinctValsPerRow(data) {
     if (!data.length) {
         return {};
@@ -38,7 +39,7 @@ export function getDistinctValsPerRow(data) {
         columnNames.forEach((colId) => {
             result[colId] = result[colId] ? result[colId] : [];
             const value = dataRow[colId];
-            if (value && !~result[colId].indexOf(value)) {
+            if (!~result[colId].indexOf(value)) {
                 result[colId].push(value);
             }
         });

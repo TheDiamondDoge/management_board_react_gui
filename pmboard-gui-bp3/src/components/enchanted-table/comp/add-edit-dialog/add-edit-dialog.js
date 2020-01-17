@@ -52,6 +52,12 @@ export default class AddEditDialog extends React.Component {
                                             if (input === "date") {
                                                 optionalProps.onChange = formikFieldHandleChange(formikProps)(columnId);
                                             }
+
+                                            //TODO: end it
+                                            if (input === "multiselect") {
+                                                optionalProps.items=["q","w","e","r"];
+                                            }
+
                                             return (
                                                 col.editable && (
                                                     <tr key={columnId}>

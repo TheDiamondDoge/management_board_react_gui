@@ -6,6 +6,7 @@ import {getPropFromStringPath} from "../../util/util";
 import styles from "./formik-custom-field.module.css";
 import {FastField} from "formik";
 import PropTypes from "prop-types";
+import FormikSelectList from "../formik-select-list";
 
 export default class FormikCustomField extends React.Component {
     constructor(props) {
@@ -77,6 +78,10 @@ export default class FormikCustomField extends React.Component {
                             <option value={obj.value}>{obj.label}</option>
                         ))}
                     </FastField>
+                );
+            case "multiselect":
+                return (
+                    <FormikSelectList {...props} {...field}/>
                 );
             case "text":
             default:

@@ -70,6 +70,7 @@ export default class World extends React.Component {
                 <br/>
 
                 <MultiSelect
+
                     items={[{name: "A", id: 1}, {name: "B", id: 2}, {name: "C", id: 3}]}
                     itemRenderer={(item, {modifiers, handleClick}) =>
                         <MenuItem
