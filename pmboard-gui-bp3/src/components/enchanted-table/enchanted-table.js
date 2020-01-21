@@ -10,7 +10,6 @@ import SelectList from "../controls/select-list";
 import {SearchInput} from "../controls/search-input";
 import AddEditDialog from "./comp/add-edit-dialog/add-edit-dialog";
 
-//TODO: think about shape of multiselect picklist values {id: ... , name: ...}
 //TODO: need small delay on typing in search field?
 export default class EnchantedTable extends React.Component {
     constructor(props) {
@@ -32,7 +31,7 @@ export default class EnchantedTable extends React.Component {
         const isDialogOpen = this.state.editDialog.isOpen;
         let filteredData = this.filter(data);
         filteredData = this.sortData(filteredData);
-        const footer = renderFooter ? renderFooter({onDialogOpen: this.onDialogOpen}) : null;
+        const footer = renderFooter ? renderFooter({dialogOpen: this.dialogOpen}) : null;
 
         return (
             <div className={styles.container}>
@@ -104,7 +103,6 @@ export default class EnchantedTable extends React.Component {
                 >
                     <div className={Classes.DIALOG_BODY}>
                         <AddEditDialog
-                            editable
                             columns={columns}
                             validationSchema={validationSchema}
                             onSubmit={onSubmit}
@@ -170,8 +168,15 @@ export default class EnchantedTable extends React.Component {
     onFilterRemove(id) {
         const self = this;
         return function (value) {
+            console.log(value);
             let filtersArr = self.state.filters[id];
-            const index = filtersArr.indexOf(value);
+            let index = -1;
+            filtersArr.forEach((obj, i) => {
+                if (obj.value === value.value) {
+                    index = i;
+                }
+            });
+
             if (index !== -1) {
                 filtersArr.splice(index, 1);
                 self.setState((prev) => ({
@@ -205,9 +210,10 @@ export default class EnchantedTable extends React.Component {
             if (Array.isArray(filter)) {
                 if (filter.length === 0) return result;
 
-                result = result.filter((row) => (
-                    String(row[id]).includesWithMultiple(filter)
-                ));
+                let filterValues = filter.map(obj => obj.value);
+                result = result.filter((row) => {
+                    return String(row[id]).includesWithMultiple(filterValues);
+                });
             } else {
                 result = result.filter((row) => (
                     String(row[id]).toLowerCase().includes(String(filters[id]).toLowerCase())
@@ -235,7 +241,7 @@ export default class EnchantedTable extends React.Component {
         return decorator ? decorator(value) : value;
     }
 
-    onDialogOpen = () => {
+    dialogOpen = () => {
         this.setState({
             editDialog: {
                 isOpen: true

@@ -5,7 +5,7 @@ import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import EnchantedTable from "../../enchanted-table/enchanted-table";
 import tableConfig from "./table-config";
 import {Intent, Button} from "@blueprintjs/core";
-import {getDistinctValsPerRow} from "../../../util/util";
+import {createEnchantedTableFilters} from "../../../util/util";
 
 export default class Actions extends React.Component {
     componentDidMount() {
@@ -22,8 +22,7 @@ export default class Actions extends React.Component {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             const {payload} = this.props.actions;
-            const filters = getDistinctValsPerRow(payload);
-            console.log(filters);
+            const filters = createEnchantedTableFilters(payload);
             return (
                 <CustomCard autosize>
                     <EnchantedTable
@@ -37,7 +36,7 @@ export default class Actions extends React.Component {
                         bordered
                         renderFooter={
                             (tableFuncs) =>
-                                <Button icon={"add"} intent={Intent.PRIMARY} minimal large onClick={tableFuncs.onDialogOpen} />
+                                <Button icon={"add"} intent={Intent.PRIMARY} minimal large onClick={tableFuncs.dialogOpen} />
                         }
                     />
                 </CustomCard>

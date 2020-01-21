@@ -4,36 +4,70 @@ import {MultiSelect} from "@blueprintjs/select";
 import PropTypes from "prop-types";
 
 //TODO: Idea => If more than 2-3 elems selected - change them on "# selected". Add x button to each elem in list
-export default function SelectList(props) {
-    const {isItemActive,onItemSelect, onRemove, ...other} = props;
-    let {items, selectedItems, ...otherProps} = other;
-    items = items ? items : [];
-    selectedItems = selectedItems ? selectedItems : [];
+export default class SelectList extends React.Component {
+    constructor(props) {
+        super(props);
 
-    return (
-        <MultiSelect
-            {...otherProps}
-            items={items}
-            itemRenderer={(item, {handleClick}) =>
-                <MenuItem
-                    key={item}
-                    text={item}
-                    onClick={handleClick}
-                    active={selectedItems.includes(item)}
-                />
+        this.state = {
+            label: {
+                empty: "(none)"
             }
-            selectedItems={selectedItems}
-            onItemSelect={onItemSelect}
-            tagRenderer={item => item}
-            tagInputProps={{
-                onRemove: onRemove
-            }}
-        />
-    );
+        }
+    }
+    render() {
+        const {isItemActive, onItemSelect, onRemove, ...other} = this.props;
+        let {items, selectedItems, ...otherProps} = other;
+        items = items ? items : [];
+        selectedItems = selectedItems ? selectedItems : [];
+        const {empty} = this.state.label;
+
+        return (
+            <MultiSelect
+                {...otherProps}
+                items={items}
+                itemRenderer={(item, {handleClick}) =>
+                    <MenuItem
+                        key={item.value}
+                        text={this.emptyToNone(item.label)}
+                        onClick={handleClick}
+                        active={selectedItems.includes(item)}
+                    />
+                }
+                selectedItems={selectedItems}
+                onItemSelect={onItemSelect}
+                tagRenderer={item => item.label ? item.label : empty}
+                tagInputProps={{
+                    onRemove: (label) => (onRemove(this.getObjByLabel(label)))
+                }}
+            />
+        );
+    }
+
+    getObjByLabel(label) {
+        const {empty} = this.state.label;
+        label = label === empty ? "" : label;
+        const {selectedItems} = this.props;
+        for(let i = 0; i < selectedItems.length; i++) {
+            if (selectedItems[i].label === label) {
+                return selectedItems[i];
+            }
+        }
+    }
+
+    emptyToNone(label) {
+        const {empty} = this.state.label;
+        return label ? label : empty;
+    }
 }
 
+
 SelectList.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.any),
+    items: PropTypes.arrayOf(PropTypes.shape({
+        value: PropTypes.oneOfType([
+            PropTypes.string, PropTypes.bool, PropTypes.number
+        ]).isRequired,
+        label: PropTypes.element
+    })),
     isItemActive: PropTypes.bool,
     selectedItems: PropTypes.arrayOf(PropTypes.any),
     onItemSelect: PropTypes.func,

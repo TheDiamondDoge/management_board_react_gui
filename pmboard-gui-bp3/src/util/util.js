@@ -27,7 +27,7 @@ export function getWorkingAreaWidth(viewportSizePx) {
 }
 
 //TODO: fix skip of empty strings
-export function getDistinctValsPerRow(data) {
+export function createEnchantedTableFilters(data) {
     if (!data.length) {
         return {};
     }
@@ -40,7 +40,7 @@ export function getDistinctValsPerRow(data) {
             result[colId] = result[colId] ? result[colId] : [];
             const value = dataRow[colId];
             if (!~result[colId].indexOf(value)) {
-                result[colId].push(value);
+                result[colId].push({value: value, label: value});
             }
         });
     });
