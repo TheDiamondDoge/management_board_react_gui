@@ -75,7 +75,12 @@ export default class FormikCustomField extends React.Component {
                 return (
                     <FastField component="select" {...field} {...props}>
                         {values.map((obj) => (
-                            <option value={obj.value}>{obj.label}</option>
+                            <option
+                                key={obj.label}
+                                value={obj.value}
+                            >
+                                {obj.label}
+                            </option>
                         ))}
                     </FastField>
                 );
@@ -91,13 +96,14 @@ export default class FormikCustomField extends React.Component {
 }
 
 FormikCustomField.propTypes = {
-    values: PropTypes.shape({
-        value: PropTypes.oneOfType([
-            PropTypes.string,
-            PropTypes.number,
-            PropTypes.bool
-        ]).isRequired,
-        label: PropTypes.string.isRequired
-    }),
+    values: PropTypes.arrayOf(
+        PropTypes.shape({
+            value: PropTypes.oneOfType([
+                PropTypes.string,
+                PropTypes.number,
+                PropTypes.bool
+            ]).isRequired,
+            label: PropTypes.string.isRequired
+        })),
     type: PropTypes.string
 };

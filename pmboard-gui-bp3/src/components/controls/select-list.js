@@ -65,8 +65,10 @@ SelectList.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({
         value: PropTypes.oneOfType([
             PropTypes.string, PropTypes.bool, PropTypes.number
-        ]).isRequired,
-        label: PropTypes.element
+        ]),
+        label: PropTypes.oneOfType([
+            PropTypes.string, PropTypes.bool, PropTypes.number
+        ])
     })),
     isItemActive: PropTypes.bool,
     selectedItems: PropTypes.arrayOf(PropTypes.any),

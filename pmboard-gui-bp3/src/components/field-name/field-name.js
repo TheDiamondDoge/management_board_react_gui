@@ -10,5 +10,5 @@ export function FieldName(props) {
 }
 
 FieldName.propTypes = {
-    name: PropTypes.oneOf(PropTypes.string, PropTypes.number, PropTypes.bool).isRequired
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]).isRequired
 };

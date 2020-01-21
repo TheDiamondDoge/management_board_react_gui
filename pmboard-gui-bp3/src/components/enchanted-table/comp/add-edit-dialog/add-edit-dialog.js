@@ -55,7 +55,12 @@ export default class AddEditDialog extends React.Component {
 
                                             //TODO: end it
                                             if (input === "multiselect") {
-                                                optionalProps.items=["q","w","e","r"];
+                                                optionalProps.items=[
+                                                    {value: "1", label: "test1"},
+                                                    {value: "2", label: "test2"},
+                                                    {value: "3", label: "test3"},
+                                                ];
+                                                optionalProps.formikFuncs = formikProps;
                                             }
 
                                             return (

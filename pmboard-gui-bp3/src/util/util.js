@@ -26,7 +26,6 @@ export function getWorkingAreaWidth(viewportSizePx) {
     return (viewportSizePx - sidebarWidth - rightMargin);
 }
 
-//TODO: fix skip of empty strings
 export function createEnchantedTableFilters(data) {
     if (!data.length) {
         return {};

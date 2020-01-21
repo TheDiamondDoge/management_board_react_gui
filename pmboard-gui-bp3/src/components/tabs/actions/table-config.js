@@ -162,7 +162,7 @@ export default [
                 width: 80
             }
         },
-        searchType: "multiselect"
-        // inputType: "multiselect"
+        searchType: "multiselect",
+        inputType: "multiselect"
     },
 ];
