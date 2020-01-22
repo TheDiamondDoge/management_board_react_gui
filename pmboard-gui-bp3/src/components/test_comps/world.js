@@ -72,7 +72,7 @@ export default class World extends React.Component {
                 <MultiSelect
 
                     items={[{name: "A", id: 1}, {name: "B", id: 2}, {name: "C", id: 3}]}
-                    itemRenderer={(item, {modifiers, handleClick}) =>
+                    itemRenderer={(item, {handleClick}) =>
                         <MenuItem
                             key={item.id}
                             text={item.name}
@@ -112,6 +112,31 @@ export default class World extends React.Component {
                                         <td>
                                             <Field type="email" name="semail.test"/>
                                             <ErrorMessage name="semail.test" component="div"/>
+                                        </td>
+                                        <td>
+
+                                            <MultiSelect
+                                                name={"selector"}
+                                                items={[{name: "A", id: 1}, {name: "B", id: 2}, {name: "C", id: 3}]}
+                                                itemRenderer={(item, {modifiers, handleClick}) =>
+                                                    <MenuItem
+                                                        key={item.id}
+                                                        text={item.name}
+                                                        onClick={handleClick}
+                                                        active={this.isSelected(item)}
+                                                    />
+                                                }
+                                                selectedItems={this.state.selectedItems}
+                                                onItemSelect={(elem) => {
+                                                    this.addElement(elem)
+                                                }}
+                                                tagRenderer={item => item}
+                                                tagInputProps={{
+                                                    onRemove: (item) => {
+                                                        this.deleteElement(item)
+                                                    }
+                                                }}
+                                            />
                                         </td>
                                         <td>
                                             <button type="submit">Submit</button>

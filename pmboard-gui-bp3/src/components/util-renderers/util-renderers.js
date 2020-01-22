@@ -1,10 +1,10 @@
-import {FastField} from "formik";
+import {Field} from "formik";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import React from "react";
 import {Button, Intent} from "@blueprintjs/core";
 
 export default function FormikInput(props) {
-    return <FastField {...props} component={FormikCustomField}/>;
+    return <Field {...props} component={FormikCustomField}/>;
 };
 
 export const RenderControls = (props) => {

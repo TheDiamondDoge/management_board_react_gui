@@ -17,7 +17,7 @@ th {
     position: sticky;
     top: 0;
     background: white;
-    height: 100px;
+    /*height: 100px;*/
 }
 
 .header_container {
@@ -28,7 +28,7 @@ th {
 }
 
 .header_container_name {
-    height: 50%;
+    height: 50px;
 }
 
 .header_container_search {

@@ -4,7 +4,7 @@ import {DateInput} from "@blueprintjs/datetime";
 import {dateFormatToString, stringToDateFormat, transformDateForInput} from "../../util/transform-funcs";
 import {getPropFromStringPath} from "../../util/util";
 import styles from "./formik-custom-field.module.css";
-import {FastField} from "formik";
+import {Field} from "formik";
 import PropTypes from "prop-types";
 import FormikSelectList from "../formik-select-list";
 
@@ -73,7 +73,7 @@ export default class FormikCustomField extends React.Component {
                 return (<Checkbox defaultChecked={field.value} {...field} {...props} />);
             case "select":
                 return (
-                    <FastField component="select" {...field} {...props}>
+                    <Field component="select" {...field} {...props}>
                         {values.map((obj) => (
                             <option
                                 key={obj.label}
@@ -82,7 +82,7 @@ export default class FormikCustomField extends React.Component {
                                 {obj.label}
                             </option>
                         ))}
-                    </FastField>
+                    </Field>
                 );
             case "multiselect":
                 return (
@@ -96,6 +96,21 @@ export default class FormikCustomField extends React.Component {
 }
 
 FormikCustomField.propTypes = {
+    //Main props
+    field: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        value: PropTypes.any
+    }),
+    form: PropTypes.shape({
+        touched: PropTypes.object.isRequired,
+        errors: PropTypes.object.isRequired,
+    }),
+    type: PropTypes.string,
+
+    //numeric specific props
+    onValueChange: PropTypes.func,
+
+    //select specific props
     values: PropTypes.arrayOf(
         PropTypes.shape({
             value: PropTypes.oneOfType([
@@ -104,6 +119,19 @@ FormikCustomField.propTypes = {
                 PropTypes.bool
             ]).isRequired,
             label: PropTypes.string.isRequired
-        })),
-    type: PropTypes.string
+        })
+    ),
+
+    //multiselect specific props
+    items: PropTypes.arrayOf(PropTypes.shape({
+        value: PropTypes.oneOfType([
+            PropTypes.string, PropTypes.bool, PropTypes.number
+        ]).isRequired,
+        label: PropTypes.oneOfType([
+            PropTypes.string, PropTypes.bool, PropTypes.number
+        ]).isRequired
+    })),
+    selectedItems: PropTypes.arrayOf(PropTypes.any),
+    onItemSelect: PropTypes.func,
+    onRemove: PropTypes.func
 };

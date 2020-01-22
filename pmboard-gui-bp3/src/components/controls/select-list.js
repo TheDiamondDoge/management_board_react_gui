@@ -14,24 +14,30 @@ export default class SelectList extends React.Component {
             }
         }
     }
+
     render() {
-        const {isItemActive, onItemSelect, onRemove, ...other} = this.props;
+        const {onItemSelect, onRemove, ...other} = this.props;
         let {items, selectedItems, ...otherProps} = other;
         items = items ? items : [];
         selectedItems = selectedItems ? selectedItems : [];
         const {empty} = this.state.label;
 
+
         return (
             <MultiSelect
                 {...otherProps}
                 items={items}
-                itemRenderer={(item, {handleClick}) =>
-                    <MenuItem
-                        key={item.value}
-                        text={this.emptyToNone(item.label)}
-                        onClick={handleClick}
-                        active={selectedItems.includes(item)}
-                    />
+                itemRenderer={(item, {handleClick}) => {
+                    const isActive = this.getObjByLabel(item.label) || false;
+                    return (
+                        <MenuItem
+                            key={item.value}
+                            text={this.emptyToNone(item.label)}
+                            onClick={handleClick}
+                            active={isActive}
+                        />
+                    )
+                }
                 }
                 selectedItems={selectedItems}
                 onItemSelect={onItemSelect}
@@ -44,11 +50,13 @@ export default class SelectList extends React.Component {
     }
 
     getObjByLabel(label) {
+        console.log("LABEL", label);
         const {empty} = this.state.label;
         label = label === empty ? "" : label;
-        const {selectedItems} = this.props;
-        for(let i = 0; i < selectedItems.length; i++) {
+        const selectedItems = this.props.selectedItems || [];
+        for (let i = 0; i < selectedItems.length; i++) {
             if (selectedItems[i].label === label) {
+                console.log("OBJECT", selectedItems[i]);
                 return selectedItems[i];
             }
         }
@@ -70,7 +78,6 @@ SelectList.propTypes = {
             PropTypes.string, PropTypes.bool, PropTypes.number
         ])
     })),
-    isItemActive: PropTypes.bool,
     selectedItems: PropTypes.arrayOf(PropTypes.any),
     onItemSelect: PropTypes.func,
     onRemove: PropTypes.func

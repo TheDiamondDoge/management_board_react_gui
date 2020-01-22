@@ -128,7 +128,12 @@ export default class EnchantedTable extends React.Component {
         const {filterValues} = this.props;
         const {filters} = this.state;
         if (type.toLowerCase() === "input") {
-            return <SearchInput placeholder={"Search..."} onChange={this.handleFilters(id, "input")}/>
+            return (
+                <SearchInput
+                    placeholder={"Search..."}
+                    onChange={this.handleFilters(id, "input")}
+                />
+            )
         } else if (type.toLowerCase() === "multiselect") {
             return (
                 <SelectList
@@ -168,7 +173,6 @@ export default class EnchantedTable extends React.Component {
     onFilterRemove(id) {
         const self = this;
         return function (value) {
-            console.log(value);
             let filtersArr = self.state.filters[id];
             let index = -1;
             filtersArr.forEach((obj, i) => {
