@@ -7,6 +7,7 @@ import FormikInput from "../../../util-renderers/util-renderers";
 import {FieldName} from "../../../field-name/field-name";
 import styles from "./add-edit-dialog.module.css";
 import {formikFieldHandleChange} from "../../../../util/util";
+import {getObjByLabel, removeSelectedObjByLabel} from "../../util";
 
 export default class AddEditDialog extends React.Component {
     constructor(props) {
@@ -20,7 +21,7 @@ export default class AddEditDialog extends React.Component {
     submitForm = null;
 
     render() {
-        const {columns, data, validationSchema, onSubmit, onCancel} = this.props;
+        const {columns, data, validationSchema, editDynamicInputVals, onSubmit, onCancel} = this.props;
         return (
             <Formik
                 onSubmit={
@@ -49,31 +50,17 @@ export default class AddEditDialog extends React.Component {
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        {/*TODO: multiselect + dynamic select population ???*/}
                                         {columns.map((col) => {
                                             const columnId = col.id;
                                             const columnName = col.headerName;
-                                            const input = col.inputType;
-                                            let optionalProps = {};
-                                            if (input === "date") {
-                                                optionalProps.onChange = formikFieldHandleChange(formikProps)(columnId);
-                                            }
-
-                                            if (input === "select") {
-                                                optionalProps.values = col.selectValues ? col.selectValues : [];
-                                            }
-                                            //TODO: end it
-                                            if (input === "multiselect") {
-                                                optionalProps.items = [
-                                                    {value: "1", label: "1"},
-                                                    {value: "2", label: "2"},
-                                                    {value: "3", label: "3"},
-                                                ];
-                                                optionalProps.selectedItems = this.state.multiselect[columnId] || [];
-                                                optionalProps.onItemSelect = this.onItemSelect(columnId, formikProps);
-                                                optionalProps.onRemove = this.onRemove(columnId, formikProps);
-                                            }
-
+                                            const inputType = col.inputType;
+                                            const itemsToSelectFrom = col.selectValues || editDynamicInputVals[columnId];
+                                            let optionalProps = this.getSpecificProps(inputType, {
+                                                formikProps,
+                                                columnId,
+                                                items: itemsToSelectFrom,
+                                                selected: this.state.multiselect[columnId],
+                                            });
                                             return (
                                                 col.editable && (
                                                     <tr key={columnId}>
@@ -82,7 +69,7 @@ export default class AddEditDialog extends React.Component {
                                                         </td>
                                                         <td className={styles.col_value}>
                                                             <FormikInput
-                                                                type={input}
+                                                                type={inputType}
                                                                 name={columnId}
                                                                 {...optionalProps}
                                                             />
@@ -115,65 +102,60 @@ export default class AddEditDialog extends React.Component {
         );
     }
 
-    //TODO: refactor this
     onItemSelect(id, formikProps) {
         const self = this;
         return function (val) {
-            console.log(val);
             self.setState((prev) => {
                 let prevFilters = prev.multiselect[id] ? prev.multiselect[id] : [];
-                const isExist = self.getObjByLabel(val.label, prevFilters) || false;
+                const isExist = getObjByLabel(val.label, prevFilters) || false;
                 if (val && !isExist) {
                     const filtersArr = [...prevFilters, val];
-                    self.updateForm(id, filtersArr.map((obj) => obj.value), formikProps);
+                    const values = filtersArr.map((obj) => obj.value);
+                    formikFieldHandleChange(formikProps)(id)(values);
                     return {
-                        multiselect: {...prev.multiselect, [id]: filtersArr}
+                        multiselect: {
+                            [id]: filtersArr
+                        }
                     }
                 }
             });
         }
     };
 
-    //TODO: refactor this
-    getObjByLabel(label, selectedItems) {
-        console.log("LABEL", label);
-        const {empty} = "(none)";
-        label = label === empty ? "" : label;
-        selectedItems = selectedItems || [];
-        console.log("SELEEECTEEED", selectedItems);
-        for (let i = 0; i < selectedItems.length; i++) {
-            if (selectedItems[i].label == label) {
-                console.log("OBJECT", selectedItems[i]);
-                return selectedItems[i];
-            }
-        }
-    }
-
-    //TODO: refactor this
-    updateForm(id, value, formikProps) {
-        formikProps.setFieldValue(id, value);
-    }
-
-    //TODO: refactor this
-    onRemove(id, formikProps) {
+    onRemove(id, selectedValues, formikProps) {
         const self = this;
-        return function (value) {
-            let filtersArr = self.state.multiselect[id];
-            let index = -1;
-            filtersArr.forEach((obj, i) => {
-                if (obj.value === value.value) {
-                    index = i;
+        return function (obj) {
+            let newArr = removeSelectedObjByLabel(obj, selectedValues);
+            const values = newArr.map((elem) => elem.value);
+            formikFieldHandleChange(formikProps)(id)(values);
+            self.setState({
+                multiselect: {
+                    [id]: newArr
                 }
             });
-
-            if (index !== -1) {
-                filtersArr.splice(index, 1);
-                self.updateForm(id, filtersArr.map((obj) => obj.value), formikProps);
-                self.setState((prev) => ({
-                    multiselect: {...prev.multiselect, [id]: filtersArr}
-                }));
-            }
         }
+    }
+
+    getSpecificProps(type, {formikProps, columnId, selected, items}) {
+        let optionalProps = {};
+        switch (type) {
+            case "date":
+                optionalProps.onChange = formikFieldHandleChange(formikProps)(columnId);
+                break;
+            case "select":
+                optionalProps.values = items ? items : [];
+                break;
+            case "multiselect":
+                optionalProps.items = items;
+                optionalProps.selectedItems = this.state.multiselect[columnId] || [];
+                optionalProps.onItemSelect = this.onItemSelect(columnId, formikProps);
+                optionalProps.onRemove = this.onRemove(columnId, selected, formikProps);
+                break;
+            default:
+                return optionalProps;
+        }
+
+        return optionalProps;
     }
 }
 
@@ -181,6 +163,7 @@ AddEditDialog.propTypes = {
     columns: PropTypes.arrayOf(EnchantedTableColsConfig).isRequired,
     data: PropTypes.arrayOf(PropTypes.object),
     validationSchema: PropTypes.object,
+    editDynamicInputVals: PropTypes.object,
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func
 };

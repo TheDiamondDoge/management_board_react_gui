@@ -3,6 +3,7 @@ import * as Types from "../../actions/pws/risks-tab";
 const initState = {
     loading: true,
     payload: [],
+    riskIDs: [],
     error: "",
 };
 
@@ -21,6 +22,15 @@ export default (state, action) => {
                 ...state,
                 loading: false,
                 payload: action.data,
+            };
+        case Types.LOAD_RISKS_IDS:
+            return {
+                ...state,
+            };
+        case Types.LOAD_RISKS_IDS_SUCCESS:
+            return {
+                ...state,
+                riskIDs: [...action.data],
             };
         case Types.RISKS_FAIL:
             return {

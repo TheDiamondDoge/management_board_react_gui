@@ -97,10 +97,11 @@ export default [
                 width: 260
             }
         },
-        inputType: "textarea"
+        inputType: "textarea",
+        searchType: "input"
     },
     {
-        id: "due",
+        id: "dueDate",
         headerName: "Due Date",
         editable: true,
         style: {
@@ -120,7 +121,8 @@ export default [
                 width: 250
             }
         },
-        inputType: "textarea"
+        inputType: "textarea",
+        searchType: "input"
     },
     {
         id: "status",
@@ -131,7 +133,8 @@ export default [
                 width: 250
             }
         },
-        inputType: "textarea"
+        inputType: "textarea",
+        searchType: "input"
     },
     {
         id: "createdDate",
@@ -163,6 +166,6 @@ export default [
             }
         },
         searchType: "multiselect",
-        inputType: "multiselect"
+        inputType: "multiselect",
     },
 ];

@@ -129,6 +129,15 @@ export function* loadRisks() {
     }
 }
 
+export function* loadRelatedRisksIds() {
+    try {
+        const data = yield call(api.getRelatedRisksIds, 1);
+        yield put(risks.loadRisksSuccess(data));
+    } catch (e) {
+        yield put(risks.riskFail(e))
+    }
+}
+
 export function* loadActions() {
     try {
         const data = yield call(api.getActions, 1);

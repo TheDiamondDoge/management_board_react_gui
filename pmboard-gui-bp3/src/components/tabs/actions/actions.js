@@ -9,6 +9,7 @@ import {createEnchantedTableFilters} from "../../../util/util";
 
 export default class Actions extends React.Component {
     componentDidMount() {
+        this.props.loadFilters();
         this.props.loadData();
     }
 
@@ -23,12 +24,20 @@ export default class Actions extends React.Component {
         } else {
             const {payload} = this.props.actions;
             const filters = createEnchantedTableFilters(payload);
+            console.log(payload);
+            let relatedRisks = this.props.relatedRisks;
+            if (relatedRisks !== undefined) {
+                relatedRisks = relatedRisks.map((number) => ({value: number, label: `${number}`}))
+            }
+            let editDynamicInputVals = {relatedRisks: relatedRisks};
+
             return (
                 <CustomCard autosize>
                     <EnchantedTable
                         data={payload}
                         columns={tableConfig}
                         filterValues={filters}
+                        editDynamicInputVals={editDynamicInputVals}
                         onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
                         editable
                         striped
@@ -50,6 +59,8 @@ Actions.propTypes = {
         loading: PropTypes.bool,
         payload: PropTypes.arrayOf(PropTypes.object),
     }),
+    relatedRisks: PropTypes.arrayOf(PropTypes.number),
     loadData: PropTypes.func,
+    loadFilters: PropTypes.func,
     resetData: PropTypes.func,
 };

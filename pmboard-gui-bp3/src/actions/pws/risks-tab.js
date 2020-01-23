@@ -1,5 +1,7 @@
 export const LOAD_RISKS = "LOAD_RISKS";
 export const LOAD_RISKS_SUCCESS = "LOAD_RISKS_SUCCESS";
+export const LOAD_RISKS_IDS = "LOAD_RISKS_IDS";
+export const LOAD_RISKS_IDS_SUCCESS = "LOAD_RISKS_IDS_SUCCESS";
 export const RISKS_FAIL = "RISKS_FAIL";
 export const SAVE_RISK = "SAVE_RISK";
 export const RESET_STATE = "RESET_STATE";
@@ -10,6 +12,15 @@ export const loadRisks = () => ({
 
 export const loadSuccess = ({data}) => ({
     type: LOAD_RISKS_SUCCESS,
+    data
+});
+
+export const loadRiskIds = () => ({
+    type: LOAD_RISKS_IDS
+});
+
+export const loadRisksSuccess = ({data}) => ({
+    type: LOAD_RISKS_IDS_SUCCESS,
     data
 });
 

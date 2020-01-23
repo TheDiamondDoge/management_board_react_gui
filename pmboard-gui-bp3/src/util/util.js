@@ -36,9 +36,11 @@ export function createEnchantedTableFilters(data) {
 
     data.forEach((dataRow) => {
         columnNames.forEach((colId) => {
+            if (null == dataRow[colId]) return true;
+
             result[colId] = result[colId] ? result[colId] : [];
             const value = dataRow[colId];
-            if (!~result[colId].indexOf(value)) {
+            if (!~result[colId].findIndex((obj) => obj.value === value)) {
                 result[colId].push({value: value, label: value});
             }
         });

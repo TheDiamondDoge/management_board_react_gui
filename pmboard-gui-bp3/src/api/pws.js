@@ -72,6 +72,10 @@ export const getRisks = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/risks`)
 );
 
+export const getRelatedRisksIds = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/risks/id`)
+);
+
 export const getActions = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/actions`)
 );

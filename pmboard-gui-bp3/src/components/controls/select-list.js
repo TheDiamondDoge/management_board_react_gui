@@ -50,13 +50,11 @@ export default class SelectList extends React.Component {
     }
 
     getObjByLabel(label) {
-        console.log("LABEL", label);
         const {empty} = this.state.label;
         label = label === empty ? "" : label;
         const selectedItems = this.props.selectedItems || [];
         for (let i = 0; i < selectedItems.length; i++) {
             if (selectedItems[i].label === label) {
-                console.log("OBJECT", selectedItems[i]);
                 return selectedItems[i];
             }
         }

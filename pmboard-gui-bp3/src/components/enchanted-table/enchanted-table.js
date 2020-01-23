@@ -9,8 +9,10 @@ import {ResizableContainer} from "./comp/container/resizable-container";
 import SelectList from "../controls/select-list";
 import {SearchInput} from "../controls/search-input";
 import AddEditDialog from "./comp/add-edit-dialog/add-edit-dialog";
+import {removeSelectedObjByLabel, renderValue} from "./util";
 
 //TODO: need small delay on typing in search field?
+//TODO: sort selects should be sorted???
 export default class EnchantedTable extends React.Component {
     constructor(props) {
         super(props);
@@ -25,14 +27,13 @@ export default class EnchantedTable extends React.Component {
     }
 
     render() {
-        const {data, columns, className, filterValues, editable, validationSchema, onSubmit, ...otherProps} = this.props;
+        const {data, columns, className, filterValues, editable, validationSchema, editDynamicInputVals, onSubmit, ...otherProps} = this.props;
         let {renderFooter, ...others} = otherProps;
         const tableClasses = classNames(className, styles.table_style);
         const isDialogOpen = this.state.editDialog.isOpen;
         let filteredData = this.filter(data);
         filteredData = this.sortData(filteredData);
         const footer = renderFooter ? renderFooter({dialogOpen: this.dialogOpen}) : null;
-
         return (
             <div className={styles.container}>
                 <div className={styles.table_container}>
@@ -81,7 +82,7 @@ export default class EnchantedTable extends React.Component {
                                         const decorator = col.decorator;
                                         return (
                                             <td key={colId} style={styles}>
-                                                {this.renderValue(row[colId], decorator)}
+                                                {renderValue(row[colId], decorator)}
                                             </td>
                                         )
                                     })}
@@ -107,6 +108,7 @@ export default class EnchantedTable extends React.Component {
                             validationSchema={validationSchema}
                             onSubmit={onSubmit}
                             onCancel={this.onDialogClose}
+                            editDynamicInputVals={editDynamicInputVals}
                         />
                     </div>
                 </Dialog>
@@ -131,7 +133,7 @@ export default class EnchantedTable extends React.Component {
             return (
                 <SearchInput
                     placeholder={"Search..."}
-                    onChange={this.handleFilters(id, "input")}
+                    onChange={this.handleInputFilters(id, "input")}
                 />
             )
         } else if (type.toLowerCase() === "multiselect") {
@@ -139,7 +141,7 @@ export default class EnchantedTable extends React.Component {
                 <SelectList
                     fill
                     items={filterValues[id]}
-                    onItemSelect={this.handleFilters(id, "select")}
+                    onItemSelect={this.handleSelectFilters(id, "select")}
                     selectedItems={filters[id]}
                     onRemove={this.onFilterRemove(id)}
                 />
@@ -147,48 +149,42 @@ export default class EnchantedTable extends React.Component {
         }
     }
 
-    handleFilters(id, filterType) {
+    handleInputFilters(id) {
         const self = this;
-        return function (obj) {
-            if (filterType === "select") {
-                const val = obj;
-                self.setState((prev) => {
-                    let prevFilters = prev.filters[id] ? prev.filters[id] : [];
-                    if (val && !prevFilters.includes(val)) {
-                        const filtersArr = [...prevFilters, val];
-                        return {
-                            filters: {...prev.filters, [id]: filtersArr}
-                        }
-                    }
-                });
-            } else {
-                const val = obj.target.value;
-                self.setState((prev) => ({
-                    filters: {...prev.filters, [id]: val}
-                }));
-            }
+        return function (e) {
+            const val = e.target.value;
+            self.setState({
+                filters: {[id]: val}
+            });
         }
-    };
+    }
+
+    handleSelectFilters(id) {
+        const self = this;
+        return function (val) {
+            self.setState((prev) => {
+                let prevFilters = prev.filters[id] ? prev.filters[id] : [];
+                if (val && !prevFilters.includes(val)) {
+                    const filtersArr = [...prevFilters, val];
+                    return {
+                        filters: {[id]: filtersArr}
+                    }
+                }
+            });
+        }
+    }
 
     onFilterRemove(id) {
         const self = this;
-        return function (value) {
+        return function (obj) {
             let filtersArr = self.state.filters[id];
-            let index = -1;
-            filtersArr.forEach((obj, i) => {
-                if (obj.value === value.value) {
-                    index = i;
-                }
+            let newArr = removeSelectedObjByLabel(obj, filtersArr);
+            self.setState({
+                filters: {[id]: newArr}
             });
-
-            if (index !== -1) {
-                filtersArr.splice(index, 1);
-                self.setState((prev) => ({
-                    filters: {...prev.filters, [id]: filtersArr}
-                }));
-            }
         }
-    };
+    }
+
 
     handleSortClick(id) {
         const self = this;
@@ -241,10 +237,6 @@ export default class EnchantedTable extends React.Component {
         return data;
     }
 
-    renderValue(value, decorator) {
-        return decorator ? decorator(value) : value;
-    }
-
     dialogOpen = () => {
         this.setState({
             editDialog: {
@@ -269,5 +261,6 @@ EnchantedTable.propTypes = {
     editable: PropTypes.bool,
     validationSchema: PropTypes.object,
     onSubmit: PropTypes.func,
-    renderFooter: PropTypes.func
+    renderFooter: PropTypes.func,
+    editDynamicInputVals: PropTypes.object
 };
