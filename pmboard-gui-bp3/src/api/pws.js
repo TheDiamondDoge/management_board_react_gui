@@ -79,3 +79,7 @@ export const getRelatedRisksIds = (projectID) => (
 export const getActions = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/actions`)
 );
+
+export const saveAction = (projectID, payload) => (
+    axios.post(`http://localhost:8080/api/projects/${projectID}/tabs/actions`, payload)
+);

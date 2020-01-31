@@ -92,6 +92,10 @@ function* watchActionsLoad() {
     yield takeEvery(actions.ACTIONS_LOAD, sagas.loadActions)
 }
 
+function* watchActionsSave() {
+    yield takeLatest(actions.ACTIONS_SAVE, sagas.saveAction);
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
@@ -102,6 +106,7 @@ const exportSagas = [
     fork(watchRisksLoad),
     fork(watchRelatedRisksLoad),
     fork(watchActionsLoad),
+    fork(watchActionsSave),
     fork(watchInformationTabSave),
     fork(watchMilestonesLoad),
     fork(watchMilestonesSave),

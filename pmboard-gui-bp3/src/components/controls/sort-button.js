@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {Button, Menu, MenuItem, Popover, Position} from "@blueprintjs/core";
 
 export default function SortButton(props) {
@@ -16,3 +17,7 @@ export default function SortButton(props) {
         </Popover>
     )
 }
+
+SortButton.propTypes = {
+    onClick: PropTypes.func
+};

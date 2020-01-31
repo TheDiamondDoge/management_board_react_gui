@@ -66,14 +66,16 @@ export default class SelectList extends React.Component {
     }
 }
 
+/*TODO: ???? */
 
+// PropTypes.any in order to handle nulls
 SelectList.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({
         value: PropTypes.oneOfType([
-            PropTypes.string, PropTypes.bool, PropTypes.number
+            PropTypes.string, PropTypes.bool, PropTypes.number, PropTypes.any
         ]),
         label: PropTypes.oneOfType([
-            PropTypes.string, PropTypes.bool, PropTypes.number
+            PropTypes.string, PropTypes.bool, PropTypes.number, PropTypes.any
         ])
     })),
     selectedItems: PropTypes.arrayOf(PropTypes.any),

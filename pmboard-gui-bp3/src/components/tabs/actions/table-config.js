@@ -1,3 +1,5 @@
+import {dateDecorator, printArray} from "../../../util/common-decorators";
+
 export default [
     {
         id: "registry",
@@ -110,7 +112,8 @@ export default [
             }
         },
         searchType: "multiselect",
-        inputType: "date"
+        inputType: "date",
+        decorator: dateDecorator
     },
     {
         id: "description",
@@ -144,7 +147,8 @@ export default [
                 width: 90
             }
         },
-        searchType: "multiselect"
+        searchType: "multiselect",
+        decorator: dateDecorator
     },
     {
         id: "closedDate",
@@ -154,7 +158,8 @@ export default [
                 width: 90
             }
         },
-        searchType: "multiselect"
+        searchType: "multiselect",
+        decorator: dateDecorator
     },
     {
         id: "relatedRisks",
@@ -167,5 +172,6 @@ export default [
         },
         searchType: "multiselect",
         inputType: "multiselect",
+        decorator: printArray
     },
 ];

@@ -147,6 +147,15 @@ export function* loadActions() {
     }
 }
 
+export function* saveAction(action) {
+    try {
+         yield call(api.saveAction, 1, action.data);
+         yield call(loadActions);
+    } catch (e) {
+        yield put(actions.actionsFailure(e));
+    }
+}
+
 export function* saveHealthIndicators(action) {
     try {
         yield call(api.saveHealthIndicatorsPost, 1, action.data);

@@ -106,7 +106,10 @@ export default class EnchantedTable extends React.Component {
                         <AddEditDialog
                             columns={columns}
                             validationSchema={validationSchema}
-                            onSubmit={onSubmit}
+                            onSubmit={(data) => {
+                                onSubmit(data);
+                                this.onDialogClose()
+                            }}
                             onCancel={this.onDialogClose}
                             editDynamicInputVals={editDynamicInputVals}
                         />

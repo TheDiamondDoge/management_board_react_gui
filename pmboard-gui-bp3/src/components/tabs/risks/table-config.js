@@ -63,7 +63,7 @@ export default [
         }
     },
     {
-        id: "riskId", headerName: "Risk ID",
+        id: "riskDisplayId", headerName: "Risk ID",
         style: {
             header: {
                 width: "80px"

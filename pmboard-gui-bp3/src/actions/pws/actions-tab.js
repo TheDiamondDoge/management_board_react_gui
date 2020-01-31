@@ -18,7 +18,7 @@ export const actionsFailure = (error) => ({
     error
 });
 
-export const saveActions = (data) => ({
+export const saveAction = (data) => ({
     type: ACTIONS_SAVE,
     data
 });

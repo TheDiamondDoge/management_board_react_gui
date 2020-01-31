@@ -23,8 +23,8 @@ export default class Actions extends React.Component {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             const {payload} = this.props.actions;
+            const {saveAction} = this.props;
             const filters = createEnchantedTableFilters(payload);
-            console.log(payload);
             let relatedRisks = this.props.relatedRisks;
             if (relatedRisks !== undefined) {
                 relatedRisks = relatedRisks.map((number) => ({value: number, label: `${number}`}))
@@ -38,7 +38,8 @@ export default class Actions extends React.Component {
                         columns={tableConfig}
                         filterValues={filters}
                         editDynamicInputVals={editDynamicInputVals}
-                        onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
+                        // onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
+                        onSubmit={saveAction}
                         editable
                         striped
                         interactive
@@ -60,6 +61,7 @@ Actions.propTypes = {
         payload: PropTypes.arrayOf(PropTypes.object),
     }),
     relatedRisks: PropTypes.arrayOf(PropTypes.number),
+    saveAction: PropTypes.func,
     loadData: PropTypes.func,
     loadFilters: PropTypes.func,
     resetData: PropTypes.func,
