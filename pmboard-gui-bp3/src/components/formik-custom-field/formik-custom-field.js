@@ -85,6 +85,7 @@ export default class FormikCustomField extends React.Component {
                     </Field>
                 );
             case "multiselect":
+                console.log("ITEMS TUT", props.items, field.items)
                 return (
                     <FormikSelectList {...props} {...field}/>
                 );

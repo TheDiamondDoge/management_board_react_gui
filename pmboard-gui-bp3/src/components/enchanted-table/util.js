@@ -7,12 +7,7 @@ export function getObjByLabel(label, selectedItems) {
 }
 
 export function removeSelectedObjByLabel(obj, arr) {
-    const index = arr.findIndex((elem) => obj.label === elem.label);
-    const tmp = arr;
-    if (index !== -1) {
-        tmp.splice(index, 1);
-    }
-    return tmp;
+    return  arr.filter(elem => obj.label !== elem.label);
 }
 
 export function renderValue(value, decorator) {

@@ -59,7 +59,7 @@ export default class AddEditDialog extends React.Component {
                                                 formikProps,
                                                 columnId,
                                                 items: itemsToSelectFrom,
-                                                selected: this.state.multiselect[columnId],
+                                                selected: this.mapSelectedToObject(this.state.multiselect[columnId]),
                                             });
                                             return (
                                                 col.editable && (
@@ -102,6 +102,13 @@ export default class AddEditDialog extends React.Component {
         );
     }
 
+    mapSelectedToObject(selected) {
+        console.log(selected);
+        return Array.isArray(selected)
+            ? selected.map(item => ({value: item, label: item}))
+            : selected;
+    }
+
     onItemSelect(id, formikProps) {
         const self = this;
         return function (val) {
@@ -112,6 +119,7 @@ export default class AddEditDialog extends React.Component {
                     const filtersArr = [...prevFilters, val];
                     const values = filtersArr.map((obj) => obj.value);
                     formikFieldHandleChange(formikProps)(id)(values);
+                    console.log(formikProps.values);
                     return {
                         multiselect: {
                             [id]: filtersArr
@@ -137,6 +145,7 @@ export default class AddEditDialog extends React.Component {
     }
 
     getSpecificProps(type, {formikProps, columnId, selected, items}) {
+        console.log("ITEMS", items);
         let optionalProps = {};
         switch (type) {
             case "date":
@@ -147,7 +156,7 @@ export default class AddEditDialog extends React.Component {
                 break;
             case "multiselect":
                 optionalProps.items = items;
-                optionalProps.selectedItems = this.state.multiselect[columnId] || [];
+                optionalProps.selectedItems = this.mapSelectedToObject(formikProps.values[columnId]) || [];
                 optionalProps.onItemSelect = this.onItemSelect(columnId, formikProps);
                 optionalProps.onRemove = this.onRemove(columnId, selected, formikProps);
                 break;
