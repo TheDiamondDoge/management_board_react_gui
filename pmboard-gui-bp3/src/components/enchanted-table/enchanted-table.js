@@ -10,6 +10,7 @@ import SelectList from "../controls/select-list";
 import {SearchInput} from "../controls/search-input";
 import AddEditDialog from "./comp/add-edit-dialog/add-edit-dialog";
 import {removeSelectedObjByLabel, renderValue} from "./util";
+import {default as EnchantedRow} from "./comp/enchanted-row/enchanted-row";
 
 //TODO: need small delay on typing in search field?
 //TODO: sort selects should be sorted???
@@ -22,18 +23,20 @@ export default class EnchantedTable extends React.Component {
             sort: {},
             editDialog: {
                 isOpen: false,
-            }
+            },
+            rowData: {}
         };
     }
 
     render() {
-        const {data, columns, className, filterValues, editable, validationSchema, editDynamicInputVals, onSubmit, ...otherProps} = this.props;
-        let {renderFooter, ...others} = otherProps;
+        const {data, columns, className, filterValues, editable, validationSchema, editDynamicInputVals, onReload, onSubmit, ...otherProps} = this.props;
+        let {renderFooter, contextMenu, ...others} = otherProps;
         const tableClasses = classNames(className, styles.table_style);
         const isDialogOpen = this.state.editDialog.isOpen;
         let filteredData = this.filter(data);
         filteredData = this.sortData(filteredData);
         const footer = renderFooter ? renderFooter({dialogOpen: this.dialogOpen}) : null;
+
         return (
             <div className={styles.container}>
                 <div className={styles.table_container}>
@@ -74,8 +77,20 @@ export default class EnchantedTable extends React.Component {
                         <tbody>
                         {filteredData.map((row, i) => {
                             const rowKey = `row_${i}`;
+                            const menu = contextMenu
+                                ? contextMenu({
+                                    onClick: () => {
+                                        this.dialogOpen();
+                                        this.setState({rowData: filteredData[i]})
+                                    }
+                                })
+                                : null;
+
                             return (
-                                <tr key={rowKey}>
+                                <EnchantedRow
+                                    key={rowKey}
+                                    contextMenu={menu}
+                                >
                                     {columns.map((col) => {
                                         const styles = this.getTdStyle(col, "column");
                                         const colId = col.id || "";
@@ -86,9 +101,10 @@ export default class EnchantedTable extends React.Component {
                                             </td>
                                         )
                                     })}
-                                </tr>
+                                </EnchantedRow>
                             )
                         })}
+
                         </tbody>
                     </HTMLTable>
                 </div>
@@ -104,7 +120,7 @@ export default class EnchantedTable extends React.Component {
                 >
                     <div className={Classes.DIALOG_BODY}>
                         <AddEditDialog
-                            data={filteredData[0]}
+                            data={this.state.rowData}
                             columns={columns}
                             validationSchema={validationSchema}
                             onSubmit={(data) => {
@@ -253,7 +269,8 @@ export default class EnchantedTable extends React.Component {
         this.setState({
             editDialog: {
                 isOpen: false
-            }
+            },
+            rowData: {}
         })
     };
 }
@@ -266,5 +283,6 @@ EnchantedTable.propTypes = {
     validationSchema: PropTypes.object,
     onSubmit: PropTypes.func,
     renderFooter: PropTypes.func,
+    contextMenu: PropTypes.func,
     editDynamicInputVals: PropTypes.object
 };
