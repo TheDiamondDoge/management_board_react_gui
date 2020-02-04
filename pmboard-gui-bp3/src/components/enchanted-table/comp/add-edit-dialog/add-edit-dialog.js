@@ -10,14 +10,6 @@ import {formikFieldHandleChange} from "../../../../util/util";
 import {getObjByLabel, removeSelectedObjByLabel} from "../../util";
 
 export default class AddEditDialog extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            multiselect: {}
-        };
-    }
-
     submitForm = null;
 
     render() {
@@ -59,7 +51,7 @@ export default class AddEditDialog extends React.Component {
                                                 formikProps,
                                                 columnId,
                                                 items: itemsToSelectFrom,
-                                                selected: this.mapSelectedToObject(this.state.multiselect[columnId]),
+                                                selected: this.mapSelectedToObject(formikProps.values[columnId]),
                                             });
                                             return (
                                                 col.editable && (
@@ -103,49 +95,31 @@ export default class AddEditDialog extends React.Component {
     }
 
     mapSelectedToObject(selected) {
-        console.log(selected);
         return Array.isArray(selected)
             ? selected.map(item => ({value: item, label: item}))
             : selected;
     }
 
     onItemSelect(id, formikProps) {
-        const self = this;
         return function (val) {
-            self.setState((prev) => {
-                let prevFilters = prev.multiselect[id] ? prev.multiselect[id] : [];
-                const isExist = getObjByLabel(val.label, prevFilters) || false;
-                if (val && !isExist) {
-                    const filtersArr = [...prevFilters, val];
-                    const values = filtersArr.map((obj) => obj.value);
-                    formikFieldHandleChange(formikProps)(id)(values);
-                    console.log(formikProps.values);
-                    return {
-                        multiselect: {
-                            [id]: filtersArr
-                        }
-                    }
-                }
-            });
+            let prevFilters = formikProps.values[id] ? formikProps.values[id] : [];
+            const isExist = getObjByLabel(val.label, prevFilters) || false;
+            if (val && !isExist) {
+                const filtersArr = [...prevFilters, val.label];
+                formikFieldHandleChange(formikProps)(id)(filtersArr);
+            }
         }
     };
 
     onRemove(id, selectedValues, formikProps) {
-        const self = this;
         return function (obj) {
             let newArr = removeSelectedObjByLabel(obj, selectedValues);
             const values = newArr.map((elem) => elem.value);
             formikFieldHandleChange(formikProps)(id)(values);
-            self.setState({
-                multiselect: {
-                    [id]: newArr
-                }
-            });
         }
     }
 
     getSpecificProps(type, {formikProps, columnId, selected, items}) {
-        console.log("ITEMS", items);
         let optionalProps = {};
         switch (type) {
             case "date":

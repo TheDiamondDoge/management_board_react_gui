@@ -16,7 +16,6 @@ export default class SelectList extends React.Component {
     }
 
     render() {
-        console.log("HMMMM", this.props.items);
         const {onItemSelect, onRemove, ...other} = this.props;
         let {items, selectedItems, ...otherProps} = other;
         items = items ? items : [];

@@ -30,7 +30,8 @@ export default (state, action) => {
             };
         case ACTIONS_SAVE:
             return {
-                ...state
+                ...state,
+                loading: true,
             };
         case RESET_STATE:
             return initState;

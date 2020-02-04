@@ -38,7 +38,6 @@ export default class Actions extends React.Component {
                         columns={tableConfig}
                         filterValues={filters}
                         editDynamicInputVals={editDynamicInputVals}
-                        // onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
                         onSubmit={saveAction}
                         editable
                         striped
