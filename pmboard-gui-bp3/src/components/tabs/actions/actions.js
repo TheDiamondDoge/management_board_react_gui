@@ -4,8 +4,9 @@ import PropTypes from "prop-types";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import EnchantedTable from "../../enchanted-table/enchanted-table";
 import tableConfig from "./table-config";
-import {Intent, Button} from "@blueprintjs/core";
+import {Intent, Button, Menu, MenuItem} from "@blueprintjs/core";
 import {createEnchantedTableFilters} from "../../../util/util";
+import style from "./actions.module.css";
 
 export default class Actions extends React.Component {
     componentDidMount() {
@@ -43,9 +44,19 @@ export default class Actions extends React.Component {
                         striped
                         interactive
                         bordered
+                        contextMenu={
+                            (menuFuncs) => (
+                                <Menu>
+                                    <MenuItem icon={"edit"} text="Edit row" onClick={menuFuncs.onClick}/>
+                                </Menu>
+                            )
+                        }
                         renderFooter={
                             (tableFuncs) =>
-                                <Button icon={"add"} intent={Intent.PRIMARY} minimal large onClick={tableFuncs.dialogOpen} />
+                                <>
+                                    <Button icon={"refresh"} intent={Intent.PRIMARY} minimal large onClick={() => this.props.loadData()} />
+                                    <Button icon={"add"} intent={Intent.PRIMARY} minimal large onClick={tableFuncs.dialogOpen}/>
+                                </>
                         }
                     />
                 </CustomCard>
