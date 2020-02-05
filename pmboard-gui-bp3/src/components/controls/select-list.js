@@ -22,7 +22,6 @@ export default class SelectList extends React.Component {
         selectedItems = selectedItems ? selectedItems : [];
         const {empty} = this.state.label;
 
-
         return (
             <MultiSelect
                 {...otherProps}

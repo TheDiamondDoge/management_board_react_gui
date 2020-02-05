@@ -11,10 +11,12 @@ export default class Kpi extends React.Component {
     render() {
         let headerClasses = classNames(styles.column_align_center, styles.border_top);
         const {dr4Kpi, fieldsToRender} = this.props;
+        const {label} = fieldsToRender.year;
+        const {year} = dr4Kpi;
         return (
             <HTMLTable
+                striped
                 className={styles.kpi_table}
-                striped={true}
             >
                 <colgroup>
                     <col className={styles.name_col}/>
@@ -24,9 +26,9 @@ export default class Kpi extends React.Component {
                 <thead>
                 <tr>
                     <td colSpan={2}>
-                        <FieldName name={fieldsToRender.year.label}/>
+                        <FieldName name={label}/>
                     </td>
-                    <td>{dr4Kpi.year}</td>
+                    <td>{year}</td>
                 </tr>
                 <tr>
                     <td colSpan={3} className={headerClasses}>COMMITTED vs ACTUAL</td>
@@ -34,11 +36,12 @@ export default class Kpi extends React.Component {
                 </thead>
                 <tbody>
                 {
+                    //TODO: re-write with render-helper class
                     Object.keys(fieldsToRender).map((field) => {
                         if (field === "year") return true;
 
                         const label = fieldsToRender[field].label;
-                        const value = dr4Kpi[field];
+                        const value = nullToNA(dr4Kpi[field]);
                         const help = fieldsToRender[field].help;
                         return (
                             <tr key={field}>
@@ -53,7 +56,7 @@ export default class Kpi extends React.Component {
                                         <HelpIcon />
                                     </Tooltip>
                                 </td>
-                                <td>{nullToNA(value)}</td>
+                                <td>{value}</td>
                             </tr>
                         )
                     })

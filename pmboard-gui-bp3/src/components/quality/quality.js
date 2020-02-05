@@ -1,6 +1,6 @@
 import React from 'react';
 import {HTMLTable, Icon, Button, Position, Tooltip} from "@blueprintjs/core";
-import EditSaveControls from "../edit-save-contols/edit-save-controls";
+import EditSaveControls from "../controls/edit-save-controls";
 import styles from "./quality.module.css";
 import {FieldName} from "../field-name/field-name";
 import PropTypes from "prop-types";

@@ -5,7 +5,7 @@ import styles from "./blc.module.css";
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import BlcRow from "../../blc-rows/blcRow";
-import EditSaveControls from "../../edit-save-contols/edit-save-controls";
+import EditSaveControls from "../../controls/edit-save-controls";
 import style from "../../blc-rows/blcRow.module.css";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {Formik} from "formik";

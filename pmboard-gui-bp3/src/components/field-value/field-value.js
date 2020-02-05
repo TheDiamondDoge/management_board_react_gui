@@ -7,11 +7,12 @@ import classNames from 'classnames';
 
 export default class FieldValue extends React.Component {
     render() {
-        const {value, className, ...other} = this.props;
+        let {value, className, ...other} = this.props;
         const classes = classNames(styles.word_wrap, className);
+        value = stringToUrlElem(nullToEmptyStr(value));
         return (
             <div className={classes} {...other}>
-                {stringToUrlElem(nullToEmptyStr(value))}
+                {value}
             </div>
         )
     }

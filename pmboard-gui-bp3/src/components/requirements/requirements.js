@@ -1,6 +1,6 @@
 import React from 'react';
 import {HTMLTable} from "@blueprintjs/core";
-import EditSaveControls from "../edit-save-contols/edit-save-controls";
+import EditSaveControls from "../controls/edit-save-controls";
 import styles from "./requirements.module.css";
 import classNames from "classnames";
 import {FieldName} from "../field-name/field-name";

@@ -45,17 +45,19 @@ export default class BlcRow extends React.Component {
                         {
                             isValuesEdit
                                 ? this.selectElement(rowValues[key], key)
-                                : <StatusIndicator className={style.inline_block} status={blcNumberToState(rowValues[key])}/>
+                                : (<StatusIndicator className={style.inline_block}
+                                                    status={blcNumberToState(rowValues[key])}
+                                />)
                         }
                     </td>
                 ))}
 
                 <td className={tdClasses}>
                     {isCommentsEdit
-                        ? <FormikInput type="textarea"
-                                       fill={true}
-                                       name={commentName}
-                        />
+                        ? (<FormikInput type="textarea"
+                                        fill={true}
+                                        name={commentName}
+                        />)
                         : comment}
                 </td>
             </tr>

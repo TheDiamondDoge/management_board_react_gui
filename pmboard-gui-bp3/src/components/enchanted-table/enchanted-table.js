@@ -10,7 +10,7 @@ import SelectList from "../controls/select-list";
 import {SearchInput} from "../controls/search-input";
 import AddEditDialog from "./comp/add-edit-dialog/add-edit-dialog";
 import {removeSelectedObjByLabel, renderValue} from "./util";
-import {default as EnchantedRow} from "./comp/enchanted-row/enchanted-row";
+import EnchantedRow from "./comp/enchanted-row/enchanted-row";
 
 //TODO: need small delay on typing in search field?
 //TODO: sort selects should be sorted???
@@ -35,7 +35,11 @@ export default class EnchantedTable extends React.Component {
         const isDialogOpen = this.state.editDialog.isOpen;
         let filteredData = this.filter(data);
         filteredData = this.sortData(filteredData);
-        const footer = renderFooter ? renderFooter({dialogOpen: this.dialogOpen}) : null;
+
+        const renderFooterParam = {
+            dialogOpen: this.dialogOpen
+        };
+        const footer = renderFooter ? renderFooter(renderFooterParam) : null;
 
         return (
             <div className={styles.container}>
@@ -111,6 +115,7 @@ export default class EnchantedTable extends React.Component {
                 <div className={styles.footer}>
                     {footer}
                 </div>
+
                 {/*TODO: fix dialog resizing*/}
                 <Dialog
                     isOpen={isDialogOpen && editable}

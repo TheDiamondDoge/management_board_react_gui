@@ -9,6 +9,7 @@ import FormikInput, {ArrayErrors, RenderControls} from "../util-renderers/util-r
 import {boolToYesNo, dateFormatToString} from "../../util/transform-funcs";
 import {MilestoneShape} from "../../util/custom-types";
 
+//TODO: continue here
 export default class MilestoneTable extends React.Component {
     constructor(props) {
         super(props);
@@ -21,7 +22,7 @@ export default class MilestoneTable extends React.Component {
     render() {
         return (
             <div>
-                <HTMLTable striped={true} className={styles.table}>
+                <HTMLTable striped className={styles.table}>
                     <thead>
                     <tr>
                         <th className={styles.label}>
@@ -71,6 +72,7 @@ export default class MilestoneTable extends React.Component {
                                         || (editMode && renderedMilestones.includes(milestone.label.toUpperCase())));
 
                                     renderedMilestones.push(milestone.label);
+                                    const name = `milestones[${key}].label`;
                                     return (
                                         <tr key={key}>
                                             <td className={styles.label}>
@@ -79,7 +81,7 @@ export default class MilestoneTable extends React.Component {
                                                         ? <>
                                                             <FormikInput
                                                                 type="text"
-                                                                name={`milestones[${key}].label`}
+                                                                name={name}
                                                             />
                                                             {
                                                                 this.rowRemoveControls(() => arrayHelpers.remove(key))

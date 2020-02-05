@@ -12,9 +12,10 @@ export default class EditSaveControls extends React.Component {
 
     renderElements = (editMode, smallSize, onSubmit, onCancel, onClick) => {
         let condProps = this.getButtonProps(smallSize);
+        let {className} = this.props;
         if (editMode) {
             return (
-                <div className={this.props.className}>
+                <div className={className}>
                     <Button
                         text={"Save"}
                         minimal={true}
@@ -34,9 +35,11 @@ export default class EditSaveControls extends React.Component {
                 </div>
             )
         } else {
-            if (!smallSize) condProps.text = "Edit";
+            if (!smallSize) {
+                condProps.text = "Edit";
+            }
             return (
-                <div className={this.props.className}>
+                <div className={className}>
                     <Button
                         minimal={true}
                         icon={"edit"}
