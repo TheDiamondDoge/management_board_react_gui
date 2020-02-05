@@ -1,4 +1,12 @@
-import * as Types from "../../actions/pws/risks-tab";
+import {
+    RISKS_LOAD,
+    RISKS_LOAD_SUCCESS,
+    RISKS_IDS_LOAD,
+    RISKS_IDS_LOAD_SUCCESS,
+    RISKS_ERROR,
+    RISK_RESET,
+    RISK_SAVE
+} from "../../actions/pws/risks-tab";
 
 const initState = {
     loading: true,
@@ -12,37 +20,37 @@ export default (state, action) => {
         return initState;
 
     switch (action.type) {
-        case Types.LOAD_RISKS:
+        case RISKS_LOAD:
             return {
                 ...state,
                 loading: true,
             };
-        case Types.LOAD_RISKS_SUCCESS:
+        case RISKS_LOAD_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 payload: action.data,
             };
-        case Types.LOAD_RISKS_IDS:
+        case RISKS_IDS_LOAD:
             return {
                 ...state,
             };
-        case Types.LOAD_RISKS_IDS_SUCCESS:
+        case RISKS_IDS_LOAD_SUCCESS:
             return {
                 ...state,
                 riskIDs: [...action.data],
             };
-        case Types.RISKS_FAIL:
+        case RISKS_ERROR:
             return {
                 ...state,
                 loading: false,
                 error: action.error,
             };
-        case Types.SAVE_RISK:
+        case RISK_SAVE:
             return {
                 ...state,
             };
-        case Types.RESET_STATE:
+        case RISK_RESET:
             return initState;
         default:
             return state;

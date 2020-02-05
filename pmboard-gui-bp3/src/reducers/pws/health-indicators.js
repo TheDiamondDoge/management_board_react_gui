@@ -1,9 +1,9 @@
 import {
-    LOAD_HEALTH,
-    LOAD_HEALTH_FAIL,
-    LOAD_HEALTH_SUCCESS,
-    RESET_HEALTH_STATE, SAVE_COMMENTS,
-    SAVE_HEALTH
+    HEALTH_LOAD,
+    HEALTH_ERROR,
+    HEALTH_LOAD_SUCCESS,
+    HEALTH_RESET, HEALTH_COMMENTS_SAVE,
+    HEALTH_INDICATORS_SAVE
 } from "../../actions/pws/health-indicators";
 
 const initState = {
@@ -17,33 +17,33 @@ export default (state, action) => {
     }
 
     switch (action.type) {
-        case LOAD_HEALTH:
+        case HEALTH_LOAD:
             return {
                 ...state,
                 loading: true,
             };
-        case LOAD_HEALTH_SUCCESS:
+        case HEALTH_LOAD_SUCCESS:
             return {
                 ...state,
                 payload: action.healthIndicators,
                 loading: false,
             };
-        case SAVE_HEALTH:
+        case HEALTH_INDICATORS_SAVE:
             return {
                 ...state,
                 loading: true,
             };
-        case SAVE_COMMENTS:
+        case HEALTH_COMMENTS_SAVE:
             return {
                 ...state,
                 loading: true,
             };
-        case LOAD_HEALTH_FAIL:
+        case HEALTH_ERROR:
             return {
                 ...state,
                 loading: false
             };
-        case RESET_HEALTH_STATE:
+        case HEALTH_RESET:
             return initState;
         default:
             return state;

@@ -13,39 +13,39 @@ import * as risks from "../../actions/pws/risks-tab";
 import * as actions from "../../actions/pws/actions-tab";
 
 function* watchSummaryTabLoad() {
-    yield takeEvery(summaryTab.LOAD_SUMMARY, sagas.loadSummaryTab);
+    yield takeEvery(summaryTab.SUMMARY_LOAD, sagas.loadSummaryTab);
 }
 
 function* watchIndicatorsTabLoad() {
-    yield takeEvery(indicatorsTab.LOAD_INDICATORS, sagas.loadIndicatorsTab);
+    yield takeEvery(indicatorsTab.INDICATORS_LOAD, sagas.loadIndicatorsTab);
 }
 
 function* watchInformationTabLoad() {
-    yield takeEvery(informationTab.LOAD_INFO, sagas.loadInformationTab);
+    yield takeEvery(informationTab.INFO_LOAD, sagas.loadInformationTab);
 }
 
 function* watchBlcTabLoad() {
-    yield takeEvery(blc.LOAD_BLC, sagas.loadBlcTab);
+    yield takeEvery(blc.BLC_LOAD, sagas.loadBlcTab);
 }
 
 function* watchBlcTabSaveIndicators() {
-    yield takeLatest(blc.SAVE_BLC_INDICATORS, sagas.saveBlcTabIndicators);
+    yield takeLatest(blc.BLC_INDICATORS_SAVE, sagas.saveBlcTabIndicators);
 }
 
 function* watchBlcTabSaveComments() {
-    yield takeLatest(blc.SAVE_BLC_COMMENTS, sagas.saveBlcTabComments);
+    yield takeLatest(blc.BLC_COMMENTS_SAVE, sagas.saveBlcTabComments);
 }
 
 function* watchHealthIndicatorsLoad() {
-    yield takeEvery(healthIndicators.LOAD_HEALTH, sagas.loadHealthIndicators)
+    yield takeEvery(healthIndicators.HEALTH_LOAD, sagas.loadHealthIndicators)
 }
 
 function* watchHealthIndicatorsSave() {
-    yield takeLatest(healthIndicators.SAVE_HEALTH, sagas.saveHealthIndicators);
+    yield takeLatest(healthIndicators.HEALTH_INDICATORS_SAVE, sagas.saveHealthIndicators);
 }
 
 function* watchHealthCommentsSave() {
-    yield takeLatest(healthIndicators.SAVE_COMMENTS, sagas.saveHealthIndicators);
+    yield takeLatest(healthIndicators.HEALTH_COMMENTS_SAVE, sagas.saveHealthIndicators);
 }
 
 function* watchIndicatorsRqsSave() {
@@ -53,11 +53,11 @@ function* watchIndicatorsRqsSave() {
 }
 
 function* watchIndicatorsRqsLoad() {
-    yield takeLatest(rqIndicators.LOAD_INDICATORS_RQS, sagas.loadIndicatorsRqs)
+    yield takeLatest(rqIndicators.INDICATORS_RQS_LOAD, sagas.loadIndicatorsRqs)
 }
 
 function* watchIndicatorsQualityLoad() {
-    yield takeEvery(quality.LOAD_QUALITY_KPI, sagas.loadQualityKpi)
+    yield takeEvery(quality.QUALITY_KPI_LOAD, sagas.loadQualityKpi)
 }
 
 function* watchIndicatorsQualitySave() {
@@ -65,27 +65,27 @@ function* watchIndicatorsQualitySave() {
 }
 
 function* watchInformationTabSave() {
-    yield takeLatest(informationTab.SAVE_INFO_DATA, sagas.saveInformationTab);
+    yield takeLatest(informationTab.INFO_SAVE_DATA, sagas.saveInformationTab);
 }
 
 function* watchMilestonesLoad() {
-    yield takeEvery(milestones.LOAD_MILESTONES, sagas.loadMilestones);
+    yield takeEvery(milestones.MILESTONES_LOAD, sagas.loadMilestones);
 }
 
 function* watchMilestonesSave() {
-    yield takeLatest(milestones.SAVE_MILESTONES, sagas.saveMilestones)
+    yield takeLatest(milestones.MILESTONES_SAVE, sagas.saveMilestones)
 }
 
 function* watchContribLoad() {
-    yield takeEvery(contrib.LOAD_CONTRIB, sagas.loadContributableProjects)
+    yield takeEvery(contrib.CONTRIB_LOAD, sagas.loadContributableProjects)
 }
 
 function* watchRisksLoad() {
-    yield takeEvery(risks.LOAD_RISKS, sagas.loadRisks)
+    yield takeEvery(risks.RISKS_LOAD, sagas.loadRisks)
 }
 
 function* watchRelatedRisksLoad() {
-    yield takeEvery(risks.LOAD_RISKS_IDS, sagas.loadRelatedRisksIds)
+    yield takeEvery(risks.RISKS_IDS_LOAD, sagas.loadRelatedRisksIds)
 }
 
 function* watchActionsLoad() {

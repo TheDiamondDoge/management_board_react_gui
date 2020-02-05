@@ -1,7 +1,7 @@
 import {
-    LOAD_QUALITY_KPI,
-    QUALITY_KPI_FAIL,
-    QUALITY_KPI_RESET_STATE, QUALITY_KPI_SAVE,
+    QUALITY_KPI_LOAD,
+    QUALITY_KPI_ERROR,
+    QUALITY_KPI_RESET, QUALITY_KPI_SAVE,
     QUALITY_KPI_SUCCESS,
     QUALITY_KPI_SYNC
 } from "../../actions/pws/quality-kpi";
@@ -17,7 +17,7 @@ export default (state, action) => {
     }
 
     switch (action.type) {
-        case LOAD_QUALITY_KPI:
+        case QUALITY_KPI_LOAD:
             return {
                 ...state,
                 loading: true,
@@ -37,12 +37,12 @@ export default (state, action) => {
                 ...state,
                 loading: true,
             };
-        case QUALITY_KPI_FAIL:
+        case QUALITY_KPI_ERROR:
             return {
                 ...state,
                 loading: false,
             };
-        case QUALITY_KPI_RESET_STATE:
+        case QUALITY_KPI_RESET:
             return initState;
         default:
             return state;

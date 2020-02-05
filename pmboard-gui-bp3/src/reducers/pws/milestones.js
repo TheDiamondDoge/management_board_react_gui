@@ -1,8 +1,8 @@
 import {
-    LOAD_MILESTONES,
-    LOAD_MILESTONES_FAIL,
-    LOAD_MILESTONES_SUCCESS,
-    RESET_MILESTONES_STATE, SAVE_MILESTONES
+    MILESTONES_LOAD,
+    MILESTONES_ERROR,
+    MILESTONES_LOAD_SUCCESS,
+    MILESTONES_RESET, MILESTONES_SAVE
 } from "../../actions/pws/milestones";
 
 const initState = {
@@ -16,28 +16,28 @@ export default (state, action) => {
     }
 
     switch (action.type) {
-        case LOAD_MILESTONES:
+        case MILESTONES_LOAD:
             return {
                 ...state,
                 loading: false,
             };
-        case SAVE_MILESTONES:
+        case MILESTONES_SAVE:
             return {
                 ...state,
                 loading: true,
             };
-        case LOAD_MILESTONES_SUCCESS:
+        case MILESTONES_LOAD_SUCCESS:
             return {
                 ...state,
                 payload: [...action.data],
                 loading: false,
             };
-        case LOAD_MILESTONES_FAIL:
+        case MILESTONES_ERROR:
             return {
                 ...state,
                 loading: false,
             };
-        case RESET_MILESTONES_STATE:
+        case MILESTONES_RESET:
             return initState;
         default:
             return state;

@@ -1,7 +1,4 @@
-import {LOAD_DR4_KPI} from "../../actions/pws/dr4-kpi";
-import {DR4_KPI_SUCCESS} from "../../actions/pws/dr4-kpi";
-import {DR4_KPI_FAIL} from "../../actions/pws/dr4-kpi";
-import {DR4_KPI_RESET_STATE} from "../../actions/pws/dr4-kpi";
+import {DR4_KPI_LOAD, DR4_KPI_SUCCESS, DR4_KPI_ERROR, DR4_KPI_RESET} from "../../actions/pws/dr4-kpi";
 
 const initState = {
     payload: {},
@@ -14,7 +11,7 @@ export default (state, action) => {
     }
 
     switch (action.type) {
-        case LOAD_DR4_KPI:
+        case DR4_KPI_LOAD:
             return {
                 ...state,
                 loading: true,
@@ -25,12 +22,12 @@ export default (state, action) => {
                 payload: action.data,
                 loading: false,
             };
-        case DR4_KPI_FAIL:
+        case DR4_KPI_ERROR:
             return {
                 ...state,
                 loading: false,
             };
-        case DR4_KPI_RESET_STATE:
+        case DR4_KPI_RESET:
             return initState;
         default:
             return state;

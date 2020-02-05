@@ -16,13 +16,13 @@ import * as actions from "../../actions/pws/actions-tab";
 
 export function* loadSummaryTab() {
     try {
-        const summaryInfo = yield call(api.getSummaryInfo, 1);
-        yield put(summaryTab.loadSummarySuccess(summaryInfo));
+        const data = yield call(api.getSummaryInfo, 1);
+        yield put(summaryTab.summaryLoadSuccess(data));
 
         yield call(loadHealthIndicators);
         yield call(loadMilestones);
     } catch (e) {
-        yield put(summaryTab.loadSummaryError(e));
+        yield put(summaryTab.summaryError(e));
     }
 }
 
@@ -35,88 +35,88 @@ export function* loadIndicatorsTab() {
         yield call(loadDr4Kpi);
         yield call(loadQualityKpi)
     } catch (e) {
-        yield put(indicatorsTab.loadIndicatorsError(e))
+        yield put(indicatorsTab.indicatorsError(e))
     }
 }
 
 export function* loadInformationTab() {
     try {
-        const info = yield call(api.getInformationTab, 1);
-        yield put(infoTab.loadInfoSuccess(info));
+        const data = yield call(api.getInformationTab, 1);
+        yield put(infoTab.infoLoadSuccess(data));
     } catch (e) {
-        yield put(infoTab.loadInfoError);
+        yield put(infoTab.infoError);
     }
 }
 
 export function* loadContributableProjects() {
     try {
-        const projects = yield call(api.getContributableProjects);
-        yield put(contrib.loadContribSuccess(projects));
+        const data = yield call(api.getContributableProjects);
+        yield put(contrib.contribLoadSuccess(data));
     } catch (e) {
-        yield put(contrib.loadContribFail(e))
+        yield put(contrib.contribLoadFail(e))
     }
 }
 
 export function* loadHealthIndicators() {
     try {
-        const indicators = yield call(api.getHealthIndicators, 1);
-        yield put(healthIndicators.loadHealthSuccess(indicators));
+        const data = yield call(api.getHealthIndicators, 1);
+        yield put(healthIndicators.healthLoadSuccess(data));
     } catch (e) {
-        yield put(healthIndicators.loadHealthError(e));
+        yield put(healthIndicators.healthError(e));
     }
 }
 
 export function* loadMilestones() {
     try {
-        const milestonesList = yield call(api.getMilestones, 1);
-        yield put(milestones.loadMilestonesSuccess(milestonesList));
+        const data = yield call(api.getMilestones, 1);
+        yield put(milestones.milestonesLoadSuccess(data));
     } catch (e) {
-        yield put(milestones.loadMilestonesFail(e));
+        yield put(milestones.milestonesError(e));
     }
 }
 
 export function* loadIndicatorsRqs() {
     try {
-        const indicatorRqs = yield call(api.getIndicatorsRqs, 1);
-        yield put(rqIndicators.indicatorsRqsSuccess(indicatorRqs));
+        const data = yield call(api.getIndicatorsRqs, 1);
+        yield put(rqIndicators.indicatorsRqsSuccess(data));
     } catch (e) {
-        yield put(rqIndicators.indicatorsRqsFail(e));
+        yield put(rqIndicators.indicatorsRqsError(e));
     }
 }
 
 export function* loadMilestonesKpi() {
     try {
-        const kpi = yield call(api.getMilestonesKpi, 1);
-        yield put(milestonesKpi.milestonesKpiSuccess(kpi));
+        const data = yield call(api.getMilestonesKpi, 1);
+        yield put(milestonesKpi.milestonesKpiSuccess(data));
     } catch (e) {
-        yield put(milestonesKpi.milestonesKpiFail(e))
+        yield put(milestonesKpi.milestonesKpiError(e))
     }
 }
 
 export function* loadDr4Kpi() {
     try {
-        const kpi = yield call(api.getDr4Kpi, 1);
-        yield put(dr4Kpi.dr4KpiSuccess(kpi));
+        const data = yield call(api.getDr4Kpi, 1);
+        yield put(dr4Kpi.dr4KpiSuccess(data));
     } catch (e) {
-        yield put(dr4Kpi.dr4KpiFail(e))
+        yield put(dr4Kpi.dr4KpiError(e))
     }
 }
 
 export function* loadQualityKpi() {
     try {
-        const kpi = yield call(api.getQualityKpi, 1);
-        yield put(qualityKpi.qualityKpiSuccess(kpi))
+        const data = yield call(api.getQualityKpi, 1);
+        yield put(qualityKpi.qualityKpiSuccess(data))
     } catch (e) {
-        yield put(qualityKpi.qualityKpiFail(e))
+        yield put(qualityKpi.qualityKpiError(e))
     }
 }
 
 export function* loadBlcTab() {
     try {
-        const blcData = yield call(api.getBlcTabData, 1);
-        yield put(blc.loadSuccess(blcData.data))
+        const data = yield call(api.getBlcTabData, 1);
+        yield put(blc.blcLoadSuccess(data.data))
     } catch(e) {
-        yield put(blc.loadFailure(e))
+        yield put(blc.blcError(e))
     }
 }
 
@@ -141,9 +141,9 @@ export function* loadRelatedRisksIds() {
 export function* loadActions() {
     try {
         const data = yield call(api.getActions, 1);
-        yield put(actions.loadActionsSuccess(data))
+        yield put(actions.actionsLoadSuccess(data))
     } catch (e) {
-        yield put(actions.actionsFailure(e))
+        yield put(actions.actionsError(e))
     }
 }
 
@@ -152,7 +152,7 @@ export function* saveAction(action) {
          yield call(api.saveAction, 1, action.data);
          yield call(loadActions);
     } catch (e) {
-        yield put(actions.actionsFailure(e));
+        yield put(actions.actionsError(e));
     }
 }
 
@@ -161,7 +161,7 @@ export function* saveHealthIndicators(action) {
         yield call(api.saveHealthIndicatorsPost, 1, action.data);
         yield call(loadHealthIndicators);
     } catch (e) {
-        yield put(healthIndicators.loadHealthError(e))
+        yield put(healthIndicators.healthError(e))
     }
 }
 
@@ -171,7 +171,7 @@ export function* saveIndicatorsRqs(action) {
         yield call(loadIndicatorsRqs);
         yield call(loadDr4Kpi);
     } catch(e) {
-        yield put(rqIndicators.indicatorsRqsFail(e));
+        yield put(rqIndicators.indicatorsRqsError(e));
     }
 }
 
@@ -180,7 +180,7 @@ export function* saveIndicatorsQuality(action) {
         yield call(api.saveQualityKpi, 1, action.data);
         yield call(loadQualityKpi);
     } catch (e) {
-        yield put(qualityKpi.qualityKpiFail(e));
+        yield put(qualityKpi.qualityKpiError(e));
     }
 }
 
@@ -189,7 +189,7 @@ export function* saveInformationTab(action) {
         yield call(api.saveInformationTab, 1, action.data);
         yield call(loadInformationTab);
     } catch (e) {
-        yield put(infoTab.loadInfoError(e));
+        yield put(infoTab.infoError(e));
     }
 }
 
@@ -198,7 +198,7 @@ export function* saveMilestones(action) {
         yield call(api.saveMilestones, 1, action.data);
         yield call(loadMilestones);
     } catch (e) {
-        yield put(milestones.loadMilestonesFail(e));
+        yield put(milestones.milestonesError(e));
     }
 }
 
@@ -207,7 +207,7 @@ export function* saveBlcTabIndicators(action) {
         yield call(api.saveBlcIndicators, 1, action.data);
         yield call(loadBlcTab);
     } catch (e) {
-        yield put(blc.loadFailure(e))
+        yield put(blc.blcError(e))
     }
 }
 
@@ -216,6 +216,6 @@ export function* saveBlcTabComments(action) {
         yield call(api.saveBlcComments, 1, action.data);
         yield call(loadBlcTab);
     } catch (e) {
-        yield put(blc.loadFailure(e))
+        yield put(blc.blcError(e))
     }
 }

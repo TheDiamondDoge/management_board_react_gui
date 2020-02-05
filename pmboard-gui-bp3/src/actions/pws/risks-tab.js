@@ -1,40 +1,40 @@
-export const LOAD_RISKS = "LOAD_RISKS";
-export const LOAD_RISKS_SUCCESS = "LOAD_RISKS_SUCCESS";
-export const LOAD_RISKS_IDS = "LOAD_RISKS_IDS";
-export const LOAD_RISKS_IDS_SUCCESS = "LOAD_RISKS_IDS_SUCCESS";
-export const RISKS_FAIL = "RISKS_FAIL";
-export const SAVE_RISK = "SAVE_RISK";
-export const RESET_STATE = "RESET_STATE";
+export const RISKS_LOAD = "RISKS_LOAD";
+export const RISKS_LOAD_SUCCESS = "RISKS_LOAD_SUCCESS";
+export const RISKS_IDS_LOAD = "RISKS_IDS_LOAD";
+export const RISKS_IDS_LOAD_SUCCESS = "RISKS_IDS_LOAD_SUCCESS";
+export const RISKS_ERROR = "RISKS_ERROR";
+export const RISK_SAVE = "RISK_SAVE";
+export const RISK_RESET = "RISK_RESET";
 
 export const loadRisks = () => ({
-    type: LOAD_RISKS
+    type: RISKS_LOAD
 });
 
 export const loadSuccess = ({data}) => ({
-    type: LOAD_RISKS_SUCCESS,
+    type: RISKS_LOAD_SUCCESS,
     data
 });
 
 export const loadRiskIds = () => ({
-    type: LOAD_RISKS_IDS
+    type: RISKS_IDS_LOAD
 });
 
 export const loadRisksSuccess = ({data}) => ({
-    type: LOAD_RISKS_IDS_SUCCESS,
+    type: RISKS_IDS_LOAD_SUCCESS,
     data
 });
 
 export const riskFail = (error) => ({
-    type: RISKS_FAIL,
+    type: RISKS_ERROR,
     error
 });
 
 export const saveRisk = (data) => ({
-    type: SAVE_RISK,
+    type: RISK_SAVE,
     data
 });
 
 export const resetState = () => ({
-    type: RESET_STATE
+    type: RISK_RESET
 });
 

@@ -1,25 +1,25 @@
-export const LOAD_SUMMARY = "LOAD_SUMMARY";
-export const LOAD_SUMMARY_SUCCESS = "LOAD_SUMMARY_SUCCESS";
-export const LOAD_SUMMARY_FAIL = "LOAD_SUMMARY_FAIL";
-export const RESET_STATE = "RESET_STATE";
+export const SUMMARY_LOAD = "SUMMARY_LOAD";
+export const SUMMARY_LOAD_SUCCESS = "SUMMARY_LOAD_SUCCESS";
+export const SUMMARY_ERROR = "SUMMARY_ERROR";
+export const SUMMARY_RESET = "SUMMARY_RESET";
 
-export const loadSummary = () => ({
-        type: LOAD_SUMMARY,
+export const summaryLoad = () => ({
+        type: SUMMARY_LOAD,
     }
 );
 
-export const loadSummarySuccess = (data) => ({
-        type: LOAD_SUMMARY_SUCCESS,
+export const summaryLoadSuccess = (data) => ({
+        type: SUMMARY_LOAD_SUCCESS,
         summaryData: data,
     }
 );
 
-export const loadSummaryError = (error) => ({
-        type: LOAD_SUMMARY_FAIL,
+export const summaryError = (error) => ({
+        type: SUMMARY_ERROR,
         error: error
     }
 );
 
-export const resetSummaryState = () => ({
-    type: RESET_STATE
+export const summaryReset = () => ({
+    type: SUMMARY_RESET
 });

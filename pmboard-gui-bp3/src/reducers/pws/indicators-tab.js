@@ -1,6 +1,6 @@
 import {
-    LOAD_INDICATORS,
-    LOAD_INDICATORS_FAIL,
+    INDICATORS_LOAD,
+    INDICATORS_ERROR,
 } from '../../actions/pws/indicators-tab';
 
 const initState = {
@@ -14,11 +14,11 @@ export default (state, action) => {
     }
 
     switch (action.type) {
-        case LOAD_INDICATORS:
+        case INDICATORS_LOAD:
             return {
                 ...state,
             };
-        case LOAD_INDICATORS_FAIL:
+        case INDICATORS_ERROR:
             return {
                 ...state,
             };

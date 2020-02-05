@@ -1,12 +1,12 @@
-export const LOAD_QUALITY_KPI = "LOAD_QUALITY_KPI";
+export const QUALITY_KPI_LOAD = "QUALITY_KPI_LOAD";
 export const QUALITY_KPI_SYNC = "QUALITY_KPI_SYNC";
 export const QUALITY_KPI_SAVE = "QUALITY_KPI_SAVE";
 export const QUALITY_KPI_SUCCESS = "QUALITY_KPI_SUCCESS";
-export const QUALITY_KPI_FAIL = "QUALITY_KPI_FAIL";
-export const QUALITY_KPI_RESET_STATE = "QUALITY_KPI_RESET_STATE";
+export const QUALITY_KPI_ERROR = "QUALITY_KPI_ERROR";
+export const QUALITY_KPI_RESET = "QUALITY_KPI_RESET";
 
-export const loadQualityKpi = () => ({
-    type: LOAD_QUALITY_KPI
+export const qualityKpiLoad = () => ({
+    type: QUALITY_KPI_LOAD
 });
 
 export const qualityKpiSuccess = ({data}) => ({
@@ -23,10 +23,10 @@ export const qualityKpiSave = (data) => ({
     data
 });
 
-export const qualityKpiFail = () => ({
-    type: QUALITY_KPI_FAIL,
+export const qualityKpiError = () => ({
+    type: QUALITY_KPI_ERROR,
 });
 
-export const qualityKpiResetState = () => ({
-    type: QUALITY_KPI_RESET_STATE,
+export const qualityKpiReset = () => ({
+    type: QUALITY_KPI_RESET,
 });

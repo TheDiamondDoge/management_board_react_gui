@@ -1,4 +1,4 @@
-import {LOAD_INFO, LOAD_INFO_FAIL, LOAD_INFO_SUCCESS, RESET_STATE, SAVE_INFO_DATA} from '../../actions/pws/info-tab';
+import {INFO_LOAD, INFO_ERROR, INFO_LOAD_SUCCESS, INFO_RESET, INFO_SAVE_DATA} from '../../actions/pws/info-tab';
 
 const initState = {
     loading: true,
@@ -11,29 +11,29 @@ export default (state, action) => {
     }
 
     switch (action.type) {
-        case LOAD_INFO:
+        case INFO_LOAD:
             return {
                 ...state,
                 loading: true,
             };
-        case LOAD_INFO_SUCCESS:
+        case INFO_LOAD_SUCCESS:
             return {
                 ...state,
                 payload: dataComposer(action.data),
                 loading: false,
             };
-        case LOAD_INFO_FAIL:
+        case INFO_ERROR:
             return {
                 ...state,
                 loading: false,
                 error: action.error
             };
-        case SAVE_INFO_DATA:
+        case INFO_SAVE_DATA:
             action.data = getSaveDto(action.data);
             return {
                 ...state
             };
-        case RESET_STATE:
+        case INFO_RESET:
             return initState;
         default:
             return state;

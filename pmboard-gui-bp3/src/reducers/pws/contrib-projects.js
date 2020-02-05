@@ -1,4 +1,4 @@
-import {LOAD_CONTRIB, LOAD_CONTRIB_FAIL, LOAD_CONTRIB_SUCCESS, RESET_CONTRIB} from "../../actions/pws/contrib-projects";
+import {CONTRIB_LOAD, CONTRIB_LOAD_FAIL, CONTRIB_LOAD_SUCCESS, CONTRIB_RESET} from "../../actions/pws/contrib-projects";
 
 const initialState = {
     loading: true,
@@ -11,24 +11,24 @@ export default (state, action) => {
     }
 
     switch (action.type) {
-        case LOAD_CONTRIB:
+        case CONTRIB_LOAD:
             return {
                 ...state,
                 loading: true,
             };
-        case LOAD_CONTRIB_SUCCESS:
+        case CONTRIB_LOAD_SUCCESS:
             return {
                 ...state,
                 payload: action.data,
                 loading: false,
             };
-        case LOAD_CONTRIB_FAIL:
+        case CONTRIB_LOAD_FAIL:
             return {
                 ...state,
                 error: action.error,
                 loading: false
             };
-        case RESET_CONTRIB:
+        case CONTRIB_RESET:
             return initialState;
         default:
             return state;

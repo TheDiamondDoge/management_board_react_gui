@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import summaryTab from './summary-tab';
-import {loadSummary, resetSummaryState} from "../../../actions/pws/summary-tab";
-import {resetMilestonesState} from "../../../actions/pws/milestones";
-import {resetHealthState} from "../../../actions/pws/health-indicators";
+import {summaryLoad, summaryReset} from "../../../actions/pws/summary-tab";
+import {milestonesReset} from "../../../actions/pws/milestones";
+import {healthReset} from "../../../actions/pws/health-indicators";
 
 function mapStateToProps(state) {
     return {
@@ -14,11 +14,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadData: () => dispatch(loadSummary("Hi, some tests right here!")),
+        loadData: () => dispatch(summaryLoad("Hi, some tests right here!")),
         resetData: () => {
-            dispatch(resetSummaryState());
-            dispatch(resetMilestonesState());
-            dispatch(resetHealthState())
+            dispatch(summaryReset());
+            dispatch(milestonesReset());
+            dispatch(healthReset())
         },
     }
 }

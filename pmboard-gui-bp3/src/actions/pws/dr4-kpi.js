@@ -1,10 +1,10 @@
-export const LOAD_DR4_KPI = "LOAD_DR4_KPI";
+export const DR4_KPI_LOAD = "DR4_KPI_LOAD";
 export const DR4_KPI_SUCCESS = "DR4_KPI_SUCCESS";
-export const DR4_KPI_FAIL = "DR4_KPI_FAIL";
-export const DR4_KPI_RESET_STATE = "DR4_KPI_RESET_STATE";
+export const DR4_KPI_ERROR = "DR4_KPI_ERROR";
+export const DR4_KPI_RESET = "DR4_KPI_RESET";
 
-export const loadDr4Kpi = () => ({
-    type: LOAD_DR4_KPI
+export const dr4KpiLoad = () => ({
+    type: DR4_KPI_LOAD
 });
 
 export const dr4KpiSuccess = ({data}) => ({
@@ -12,10 +12,10 @@ export const dr4KpiSuccess = ({data}) => ({
     data
 });
 
-export const dr4KpiFail = () => ({
-    type: DR4_KPI_FAIL,
+export const dr4KpiError = () => ({
+    type: DR4_KPI_ERROR,
 });
 
-export const dr4KpiResetState = () => ({
-    type: DR4_KPI_RESET_STATE,
+export const dr4KpiReset = () => ({
+    type: DR4_KPI_RESET,
 });

@@ -1,5 +1,5 @@
 import {
-    LOAD_MILESTONES_KPI, MILESTONES_KPI_FAIL, MILESTONES_KPI_RESET_STATE, MILESTONES_KPI_SUCCESS
+    MILESTONES_KPI_LOAD, MILESTONES_KPI_ERROR, MILESTONES_KPI_RESET, MILESTONES_KPI_SUCCESS
 } from "../../actions/pws/milestones-kpi";
 
 const initState = {
@@ -13,7 +13,7 @@ export default (state, action) => {
     }
 
     switch (action.type) {
-        case LOAD_MILESTONES_KPI:
+        case MILESTONES_KPI_LOAD:
             return {
                 ...state,
                 loading: true,
@@ -24,12 +24,12 @@ export default (state, action) => {
                 payload: action.data,
                 loading: false,
             };
-        case MILESTONES_KPI_FAIL:
+        case MILESTONES_KPI_ERROR:
             return {
                 ...state,
                 loading: false,
             };
-        case MILESTONES_KPI_RESET_STATE:
+        case MILESTONES_KPI_RESET:
             return initState;
         default:
             return state;

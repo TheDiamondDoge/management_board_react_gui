@@ -1,10 +1,10 @@
-export const LOAD_MILESTONES_KPI = "LOAD_MILESTONES_KPI";
+export const MILESTONES_KPI_LOAD = "MILESTONES_KPI_LOAD";
 export const MILESTONES_KPI_SUCCESS = "MILESTONES_KPI_SUCCESS";
-export const MILESTONES_KPI_FAIL = "MILESTONES_KPI_FAIL";
-export const MILESTONES_KPI_RESET_STATE = "MILESTONES_KPI_RESET_STATE";
+export const MILESTONES_KPI_ERROR = "MILESTONES_KPI_ERROR";
+export const MILESTONES_KPI_RESET = "MILESTONES_KPI_RESET";
 
-export const loadMilestonesKpi = () => ({
-    type: LOAD_MILESTONES_KPI
+export const milestonesKpiLoad = () => ({
+    type: MILESTONES_KPI_LOAD
 });
 
 export const milestonesKpiSuccess = ({data}) => ({
@@ -12,10 +12,10 @@ export const milestonesKpiSuccess = ({data}) => ({
     data
 });
 
-export const milestonesKpiFail = () => ({
-    type: MILESTONES_KPI_FAIL,
+export const milestonesKpiError = () => ({
+    type: MILESTONES_KPI_ERROR,
 });
 
-export const milestonesKpiResetState = () => ({
-    type: MILESTONES_KPI_RESET_STATE,
+export const milestonesKpiReset = () => ({
+    type: MILESTONES_KPI_RESET,
 });

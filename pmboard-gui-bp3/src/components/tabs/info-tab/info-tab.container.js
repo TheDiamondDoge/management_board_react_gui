@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import InfoTab from './info-tab';
-import {loadInfo, resetState, saveInfoData} from "../../../actions/pws/info-tab";
-import {loadMilestones, resetMilestonesState, saveMilestones} from "../../../actions/pws/milestones";
-import {loadContrib, resetContrib} from "../../../actions/pws/contrib-projects";
+import {infoLoad, infoReset, infoSaveData} from "../../../actions/pws/info-tab";
+import {milestonesLoad, milestonesReset, milestonesSave} from "../../../actions/pws/milestones";
+import {contribLoad, contribReset} from "../../../actions/pws/contrib-projects";
 
 function mapStateToProps(state) {
     return {
@@ -14,17 +14,17 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        saveInfo: (data) => dispatch(saveInfoData(data)),
-        saveMilestones: (date) => dispatch(saveMilestones(date)),
+        saveInfo: (data) => dispatch(infoSaveData(data)),
+        saveMilestones: (date) => dispatch(milestonesSave(date)),
         loadData: () => {
-            dispatch(loadInfo());
-            dispatch(loadMilestones());
-            dispatch(loadContrib())
+            dispatch(infoLoad());
+            dispatch(milestonesLoad());
+            dispatch(contribLoad())
         },
         resetData: () => {
-            dispatch(resetState());
-            dispatch(resetMilestonesState());
-            dispatch(resetContrib())
+            dispatch(infoReset());
+            dispatch(milestonesReset());
+            dispatch(contribReset())
         },
     }
 }

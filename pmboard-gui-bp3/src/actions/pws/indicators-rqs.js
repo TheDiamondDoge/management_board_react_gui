@@ -1,11 +1,11 @@
-export const LOAD_INDICATORS_RQS = "LOAD_INDICATORS_RQS";
+export const INDICATORS_RQS_LOAD = "INDICATORS_RQS_LOAD";
 export const INDICATORS_RQS_SUCCESS = "INDICATORS_RQS_SUCCESS";
 export const INDICATORS_RQS_SAVE = "INDICATORS_RQS_SAVE";
-export const INDICATORS_RQS_FAIL = "INDICATORS_RQS_FAIL";
-export const INDICATORS_RQS_RESET_STATE = "INDICATORS_RQS_RESET_STATE";
+export const INDICATORS_RQS_ERROR = "INDICATORS_RQS_ERROR";
+export const INDICATORS_RQS_RESET = "INDICATORS_RQS_RESET";
 
-export const loadIndicatorsRqs = () => ({
-    type: LOAD_INDICATORS_RQS
+export const indicatorsRqsLoad = () => ({
+    type: INDICATORS_RQS_LOAD
 });
 
 export const indicatorsRqsSuccess = ({data}) => ({
@@ -18,10 +18,10 @@ export const indicatorsRqsSave = (data) => ({
     data
 });
 
-export const indicatorsRqsFail = () => ({
-    type: INDICATORS_RQS_FAIL,
+export const indicatorsRqsError = () => ({
+    type: INDICATORS_RQS_ERROR,
 });
 
-export const indicatorsRqsResetState = () => ({
-    type: INDICATORS_RQS_RESET_STATE,
+export const indicatorsRqsReset = () => ({
+    type: INDICATORS_RQS_RESET,
 });

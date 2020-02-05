@@ -1,4 +1,4 @@
-import {ACTIONS_LOAD, ACTIONS_LOAD_SUCCESS, ACTIONS_FAILURE, ACTIONS_SAVE, RESET_STATE} from "../../actions/pws/actions-tab";
+import {ACTIONS_LOAD, ACTIONS_LOAD_SUCCESS, ACTIONS_ERROR, ACTIONS_SAVE, ACTIONS_RESET} from "../../actions/pws/actions-tab";
 
 const initState = {
     loading: true,
@@ -22,7 +22,7 @@ export default (state, action) => {
                 loading: false,
                 payload: action.data
             };
-        case ACTIONS_FAILURE:
+        case ACTIONS_ERROR:
             return {
                 ...state,
                 loading: false,
@@ -33,7 +33,7 @@ export default (state, action) => {
                 ...state,
                 loading: true,
             };
-        case RESET_STATE:
+        case ACTIONS_RESET:
             return initState;
         default:
             return state;

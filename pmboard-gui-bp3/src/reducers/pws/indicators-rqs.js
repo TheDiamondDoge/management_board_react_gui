@@ -1,8 +1,8 @@
 import {
-    INDICATORS_RQS_RESET_STATE,
-    INDICATORS_RQS_FAIL, INDICATORS_RQS_SAVE,
+    INDICATORS_RQS_RESET,
+    INDICATORS_RQS_ERROR, INDICATORS_RQS_SAVE,
     INDICATORS_RQS_SUCCESS,
-    LOAD_INDICATORS_RQS
+    INDICATORS_RQS_LOAD
 } from "../../actions/pws/indicators-rqs";
 
 const initState = {
@@ -16,7 +16,7 @@ export default (state, action) => {
     }
 
     switch (action.type) {
-        case LOAD_INDICATORS_RQS:
+        case INDICATORS_RQS_LOAD:
             return {
                 ...state,
                 loading: true,
@@ -27,7 +27,7 @@ export default (state, action) => {
                 payload: action.data,
                 loading: false,
             };
-        case INDICATORS_RQS_FAIL:
+        case INDICATORS_RQS_ERROR:
             return {
                 ...state,
                 loading: false,
@@ -37,7 +37,7 @@ export default (state, action) => {
                 ...state,
                 loading: true,
             };
-        case INDICATORS_RQS_RESET_STATE:
+        case INDICATORS_RQS_RESET:
             return initState;
         default:
             return state;

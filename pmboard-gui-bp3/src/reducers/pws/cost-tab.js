@@ -1,4 +1,4 @@
-import {LOAD_COST, LOAD_COST_FAIL, LOAD_COST_SUCCESS, UPLOAD_COST, UPLOAD_COST_FAIL, RESET_STATE} from '../../actions/pws/cost-tab';
+import {COST_LOAD, COST_LOAD_SUCCESS, COST_UPLOAD, COST_ERROR, COST_RESET} from '../../actions/pws/cost-tab';
 
 const initState = {
     loaded: false,
@@ -13,31 +13,26 @@ export default (state, action) => {
     }
 
     switch (action.type) {
-        case LOAD_COST:
+        case COST_LOAD:
             return {
                 ...state,
             };
-        case LOAD_COST_SUCCESS:
+        case COST_LOAD_SUCCESS:
             return {
                 ...state,
                 loaded: true,
                 data: action.data,
             };
-        case LOAD_COST_FAIL:
+        case COST_UPLOAD:
+            return {
+                ...state,
+            };
+        case COST_ERROR:
             return {
                 ...state,
                 error: action.error,
             };
-        case UPLOAD_COST:
-            return {
-                ...state,
-            };
-        case UPLOAD_COST_FAIL:
-            return {
-                ...state,
-                error: action.error,
-            };
-        case RESET_STATE:
+        case COST_RESET:
             return initState;
         default:
             return state;

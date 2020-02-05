@@ -1,22 +1,22 @@
-export const LOAD_CONTRIB = "LOAD_CONTRIB";
-export const LOAD_CONTRIB_SUCCESS = "LOAD_CONTRIB_SUCCESS";
-export const LOAD_CONTRIB_FAIL = "LOAD_CONTRIB_FAIL";
-export const RESET_CONTRIB = "RESET_CONTRIB";
+export const CONTRIB_LOAD = "CONTRIB_LOAD";
+export const CONTRIB_LOAD_SUCCESS = "CONTRIB_LOAD_SUCCESS";
+export const CONTRIB_LOAD_FAIL = "CONTRIB_LOAD_FAIL";
+export const CONTRIB_RESET = "CONTRIB_RESET";
 
-export const loadContrib = () => ({
-    type: LOAD_CONTRIB
+export const contribLoad = () => ({
+    type: CONTRIB_LOAD
 });
 
-export const loadContribSuccess = ({data}) => ({
-    type: LOAD_CONTRIB_SUCCESS,
+export const contribLoadSuccess = ({data}) => ({
+    type: CONTRIB_LOAD_SUCCESS,
     data
 });
 
-export const loadContribFail = (error) => ({
-    type: LOAD_CONTRIB_FAIL,
+export const contribLoadFail = (error) => ({
+    type: CONTRIB_LOAD_FAIL,
     error
 });
 
-export const resetContrib = () => ({
-    type: RESET_CONTRIB
+export const contribReset = () => ({
+    type: CONTRIB_RESET
 });

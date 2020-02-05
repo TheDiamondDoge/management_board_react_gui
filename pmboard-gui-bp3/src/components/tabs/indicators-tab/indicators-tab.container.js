@@ -1,17 +1,17 @@
 import {connect} from 'react-redux';
 import IndicatorsTab from "./indicators-tab";
-import {loadIndicators} from "../../../actions/pws/indicators-tab";
-import {resetMilestonesState} from "../../../actions/pws/milestones";
+import {indicatorsLoad} from "../../../actions/pws/indicators-tab";
+import {milestonesReset} from "../../../actions/pws/milestones";
 import {
-    loadHealth,
-    resetHealthState,
-    saveHealthComments,
-    saveHealthIndicators
+    healthLoad,
+    healthReset,
+    healthCommentsSave,
+    healthIndicatorsSave
 } from "../../../actions/pws/health-indicators";
-import {indicatorsRqsResetState, indicatorsRqsSave, loadIndicatorsRqs} from "../../../actions/pws/indicators-rqs";
-import {milestonesKpiResetState} from "../../../actions/pws/milestones-kpi";
-import {dr4KpiResetState} from "../../../actions/pws/dr4-kpi";
-import {loadQualityKpi, qualityKpiResetState, qualityKpiSave} from "../../../actions/pws/quality-kpi";
+import {indicatorsRqsReset, indicatorsRqsSave, indicatorsRqsLoad} from "../../../actions/pws/indicators-rqs";
+import {milestonesKpiReset} from "../../../actions/pws/milestones-kpi";
+import {dr4KpiReset} from "../../../actions/pws/dr4-kpi";
+import {qualityKpiLoad, qualityKpiReset, qualityKpiSave} from "../../../actions/pws/quality-kpi";
 
 function mapStateToProps(state){
     return {
@@ -26,21 +26,21 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch) {
     return {
-        healthIndicatorsSubmit: (data) => dispatch(saveHealthIndicators(data)),
-        healthCommentsSubmit: (data) => dispatch(saveHealthComments(data)),
-        healthReload: () => dispatch(loadHealth()),
+        healthIndicatorsSubmit: (data) => dispatch(healthIndicatorsSave(data)),
+        healthCommentsSubmit: (data) => dispatch(healthCommentsSave(data)),
+        healthReload: () => dispatch(healthLoad()),
         rqsSubmit: (data) => dispatch(indicatorsRqsSave(data)),
-        rqsReload: () => dispatch(loadIndicatorsRqs()),
+        rqsReload: () => dispatch(indicatorsRqsLoad()),
         qualitySubmit: (data) => dispatch(qualityKpiSave(data)),
-        qualityReload: () => dispatch(loadQualityKpi()),
-        loadData: () => dispatch(loadIndicators()),
+        qualityReload: () => dispatch(qualityKpiLoad()),
+        loadData: () => dispatch(indicatorsLoad()),
         resetState: () => {
-            dispatch(resetMilestonesState());
-            dispatch(resetHealthState());
-            dispatch(indicatorsRqsResetState());
-            dispatch(milestonesKpiResetState());
-            dispatch(dr4KpiResetState());
-            dispatch(qualityKpiResetState());
+            dispatch(milestonesReset());
+            dispatch(healthReset());
+            dispatch(indicatorsRqsReset());
+            dispatch(milestonesKpiReset());
+            dispatch(dr4KpiReset());
+            dispatch(qualityKpiReset());
         }
     }
 }

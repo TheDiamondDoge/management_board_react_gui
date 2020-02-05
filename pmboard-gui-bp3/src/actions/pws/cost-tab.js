@@ -1,36 +1,29 @@
-export const LOAD_COST = "LOAD_COST";
-export const LOAD_COST_SUCCESS = "LOAD_COST_SUCCESS";
-export const LOAD_COST_FAIL = "LOAD_COST_FAIL";
-export const UPLOAD_COST = "SAVE_COST";
-export const UPLOAD_COST_FAIL = "SAVE_COST_FAIL";
-export const RESET_STATE = "RESET_STATE";
+export const COST_LOAD = "COST_LOAD";
+export const COST_LOAD_SUCCESS = "COST_LOAD_SUCCESS";
+export const COST_UPLOAD = "COST_UPLOAD";
+export const COST_ERROR = "COST_ERROR";
+export const COST_RESET = "COST_RESET";
 
-export const loadCost = () => ({
-        type: LOAD_COST,
+export const costLoad = () => ({
+        type: COST_LOAD,
     }
 );
 
-export const loadSuccess = (data) => ({
-        type: LOAD_COST_SUCCESS,
-        data: data,
+export const costLoadSuccess = (data) => ({
+        type: COST_LOAD_SUCCESS,
+        data,
     }
 );
 
-export const loadError = (error) => ({
-        type: LOAD_COST_FAIL,
-        error: error
-    }
-);
-
-export const uploadCost = (error) => ({
-    type: UPLOAD_COST,
+export const costUpload = (error) => ({
+    type: COST_UPLOAD,
 });
 
-export const uploadCostFail = (error) => ({
-    type: UPLOAD_COST_FAIL,
-    error: error,
+export const costError = (error) => ({
+    type: COST_ERROR,
+    error,
 });
 
-export const resetState = () => ({
-    type: RESET_STATE
+export const costReset = () => ({
+    type: COST_RESET
 });

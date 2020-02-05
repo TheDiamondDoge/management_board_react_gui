@@ -1,28 +1,28 @@
-export const LOAD_MILESTONES = "LOAD_MILESTONES";
-export const SAVE_MILESTONES = "SAVE_MILESTONES";
-export const LOAD_MILESTONES_SUCCESS = "LOAD_MILESTONES_SUCCESS";
-export const LOAD_MILESTONES_FAIL = "LOAD_MILESTONES_FAIL";
-export const RESET_MILESTONES_STATE = "RESET_MILESTONES_STATE";
+export const MILESTONES_LOAD = "MILESTONES_LOAD";
+export const MILESTONES_SAVE = "MILESTONES_SAVE";
+export const MILESTONES_LOAD_SUCCESS = "MILESTONES_LOAD_SUCCESS";
+export const MILESTONES_ERROR = "MILESTONES_ERROR";
+export const MILESTONES_RESET = "MILESTONES_RESET";
 
-export const loadMilestones = () => ({
-    type: LOAD_MILESTONES,
+export const milestonesLoad = () => ({
+    type: MILESTONES_LOAD,
 });
 
-export const saveMilestones = (data) => ({
-    type: SAVE_MILESTONES,
+export const milestonesSave = (data) => ({
+    type: MILESTONES_SAVE,
     data
 });
 
-export const loadMilestonesSuccess = ({data}) => ({
-    type: LOAD_MILESTONES_SUCCESS,
+export const milestonesLoadSuccess = ({data}) => ({
+    type: MILESTONES_LOAD_SUCCESS,
     data
 });
 
-export const loadMilestonesFail = (error) => ({
-    type: LOAD_MILESTONES_FAIL,
+export const milestonesError = (error) => ({
+    type: MILESTONES_ERROR,
     error
 });
 
-export const resetMilestonesState = () => ({
-    type: RESET_MILESTONES_STATE
+export const milestonesReset = () => ({
+    type: MILESTONES_RESET
 });

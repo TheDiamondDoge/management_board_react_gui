@@ -1,22 +1,22 @@
-export const LOAD_HEALTH = "LOAD_HEALTH";
-export const LOAD_HEALTH_SUCCESS = "LOAD_HEALTH_SUCCESS";
-export const SAVE_HEALTH = "SAVE_HEALTH";
-export const SAVE_COMMENTS = "SAVE_COMMENTS";
-export const LOAD_HEALTH_FAIL = "LOAD_HEALTH_FAIL";
-export const RESET_HEALTH_STATE = "RESET_HEALTH_STATE";
+export const HEALTH_LOAD = "HEALTH_LOAD";
+export const HEALTH_LOAD_SUCCESS = "HEALTH_LOAD_SUCCESS";
+export const HEALTH_INDICATORS_SAVE = "HEALTH_INDICATORS_SAVE";
+export const HEALTH_COMMENTS_SAVE = "HEALTH_COMMENTS_SAVE";
+export const HEALTH_ERROR = "HEALTH_ERROR";
+export const HEALTH_RESET = "HEALTH_RESET";
 
-export const loadHealth = () => ({
-    type: LOAD_HEALTH,
+export const healthLoad = () => ({
+    type: HEALTH_LOAD,
 });
 
-export const loadHealthSuccess = ({data}) => ({
-    type: LOAD_HEALTH_SUCCESS,
+export const healthLoadSuccess = ({data}) => ({
+    type: HEALTH_LOAD_SUCCESS,
     healthIndicators: data,
 });
 
-export const saveHealthIndicators = (data) => {
+export const healthIndicatorsSave = (data) => {
     return {
-        type: SAVE_HEALTH,
+        type: HEALTH_INDICATORS_SAVE,
         data: {
             statuses:
                 {...data.statuses}
@@ -24,9 +24,9 @@ export const saveHealthIndicators = (data) => {
     };
 };
 
-export const saveHealthComments = (data) => {
+export const healthCommentsSave = (data) => {
     return {
-        type: SAVE_COMMENTS,
+        type: HEALTH_COMMENTS_SAVE,
         data: {
             comments:
                 {...data.comments}
@@ -35,11 +35,11 @@ export const saveHealthComments = (data) => {
 };
 
 
-export const loadHealthError = (error) => ({
-    type: LOAD_HEALTH_FAIL,
+export const healthError = (error) => ({
+    type: HEALTH_ERROR,
     error: error,
 });
 
-export const resetHealthState = () => ({
-    type: RESET_HEALTH_STATE
+export const healthReset = () => ({
+    type: HEALTH_RESET
 });

@@ -1,4 +1,4 @@
-import {LOAD_SUMMARY, LOAD_SUMMARY_FAIL, LOAD_SUMMARY_SUCCESS, RESET_STATE} from "../../actions/pws/summary-tab";
+import {SUMMARY_LOAD, SUMMARY_ERROR, SUMMARY_LOAD_SUCCESS, SUMMARY_RESET} from "../../actions/pws/summary-tab";
 
 const initState = {
     payload: {},
@@ -11,23 +11,23 @@ export default (state, action) => {
     }
 
     switch (action.type) {
-        case LOAD_SUMMARY:
+        case SUMMARY_LOAD:
             return {
                 ...state,
                 loading: true,
             };
-        case LOAD_SUMMARY_SUCCESS:
+        case SUMMARY_LOAD_SUCCESS:
             return {
                 ...state,
                 payload: dataComposer(action.summaryData.data),
                 loading: false,
             };
-        case LOAD_SUMMARY_FAIL:
+        case SUMMARY_ERROR:
             return {
                 ...state,
                 loading: false,
             };
-        case RESET_STATE:
+        case SUMMARY_RESET:
             return initState;
         default:
             return state;
