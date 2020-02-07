@@ -8,7 +8,7 @@ import FieldValue from "../field-value/field-value";
 import PropTypes from 'prop-types';
 import {dateFormatToString} from "../../util/transform-funcs";
 import {Formik} from "formik";
-import FormikInput from "../util-renderers/util-renderers";
+import FormikInput from "../controls/util-renderers";
 import {FieldsToRenderShape, RequirementsShape} from "../../util/custom-types";
 import {formikFieldHandleChange} from "../../util/util";
 import getValidationSchema from "./validation-schema";
@@ -78,11 +78,11 @@ export default class Requirements extends React.Component {
                 <thead>
                 <tr>
                     <th className={styles.table_header} colSpan={2}>
-                        <EditSaveControls onClick={this.onClickEdit}
+                        <EditSaveControls smallSize
+                                          onClick={this.onClickEdit}
                                           editMode={this.state.editMode}
                                           onSubmit={this.onSubmit}
                                           onCancel={rqsReload}
-                                          smallSize={true}
                         />
                     </th>
                 </tr>

@@ -7,7 +7,7 @@ import styles from './info-tab.module.css'
 import PropTypes from 'prop-types';
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {Field, Formik} from "formik";
-import FormikInput from "../../util-renderers/util-renderers";
+import FormikInput from "../../controls/util-renderers";
 import FieldValue from "../../field-value/field-value";
 import {MilestoneShape} from "../../../util/custom-types";
 import {formikFieldHandleChange} from "../../../util/util";

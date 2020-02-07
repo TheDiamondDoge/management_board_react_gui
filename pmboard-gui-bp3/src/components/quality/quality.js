@@ -5,7 +5,7 @@ import styles from "./quality.module.css";
 import {FieldName} from "../field-name/field-name";
 import PropTypes from "prop-types";
 import {FieldArray, Formik} from "formik";
-import FormikInput, {RenderControls} from "../util-renderers/util-renderers";
+import FormikInput, {RenderControls} from "../controls/util-renderers";
 import HelpIcon from "../help-icon/help-icon";
 import {dateFormatToString} from "../../util/transform-funcs";
 import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/custom-types";
@@ -122,9 +122,9 @@ export default class Quality extends React.Component {
                     </colgroup>
                     <thead>
                     <tr>
-                        <th>&nbsp;</th>
-                        <th>&nbsp;</th>
-                        <th>&nbsp;</th>
+                        <th/>
+                        <th/>
+                        <th/>
                         <th className={styles.column_align_center}>Objective</th>
                         <th className={styles.column_align_center}>Actual value</th>
                         <th className={styles.column_align_center}>Comment</th>

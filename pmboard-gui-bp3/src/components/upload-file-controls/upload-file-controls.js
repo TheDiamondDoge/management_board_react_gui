@@ -4,16 +4,16 @@ import PropTypes from "prop-types";
 
 export default class UploadFileControls extends React.Component {
     render() {
-        const {onClick, editMode} = this.props;
         return (
-            this.renderElements(editMode, onClick)
+            this.renderElements()
         )
     }
 
-    renderElements = (editMode, onClick) => {
+    renderElements = () => {
+        const {onClick, editMode, ...others} = this.props;
         if (editMode) {
             return (
-                <div className={this.props.className}>
+                <div className={this.props.className} {...others}>
                     <FileInput
                         text={"Choose file..."}
                         onInputChange={onClick}
@@ -22,7 +22,7 @@ export default class UploadFileControls extends React.Component {
             )
         } else {
             return (
-                <div className={this.props.className}>
+                <div className={this.props.className} {...others}>
                     <Button
                         minimal={true}
                         text={"Edit"}

@@ -3,7 +3,7 @@ import {HTMLTable, Button, Classes, Intent} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import {EnchantedTableColsConfig} from "../../../../util/custom-types";
 import {Formik} from "formik";
-import FormikInput from "../../../util-renderers/util-renderers";
+import FormikInput from "../../../controls/util-renderers";
 import {FieldName} from "../../../field-name/field-name";
 import styles from "./add-edit-dialog.module.css";
 import {formikFieldHandleChange} from "../../../../util/util";

@@ -9,6 +9,7 @@ import {dateFormatToString, stringToUrlElem} from "../../util/transform-funcs";
 import {milestonesCompare} from "../../util/comparators";
 import {MilestoneShape} from "../../util/custom-types";
 
+//TODO: need to center content
 export default class Timeline extends React.Component {
     constructor(props) {
         super(props);
@@ -192,7 +193,7 @@ export default class Timeline extends React.Component {
 
     createDecorativeRow = (milestones) => (
         <tr>
-            <td>&nbsp;</td>
+            <td/>
             {
                 milestones.map((obj, i) => (
                     <td
@@ -210,7 +211,7 @@ export default class Timeline extends React.Component {
         const iconsStyle = classNames(styles.align_center, styles.min_width);
         return (
             <tr>
-                <td>&nbsp;</td>
+                <td/>
                 {
                     milestones.map((obj, i) => (
                         <td key={i + "_status"} className={iconsStyle}>

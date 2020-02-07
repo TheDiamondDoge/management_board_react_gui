@@ -5,7 +5,7 @@ import FieldValue from "../field-value/field-value";
 import styles from './milestone-table.module.css';
 import PropTypes from "prop-types";
 import {FieldArray} from "formik";
-import FormikInput, {ArrayErrors, RenderControls} from "../util-renderers/util-renderers";
+import FormikInput, {ArrayErrors, RenderControls} from "../controls/util-renderers";
 import {boolToYesNo, dateFormatToString} from "../../util/transform-funcs";
 import {MilestoneShape} from "../../util/custom-types";
 
@@ -15,7 +15,8 @@ export default class MilestoneTable extends React.Component {
         super(props);
         this.state = {
             milestonesRendered: [],
-            withoutBaselineDate: ["OR", "DR0", "DR1"]
+            withoutBaselineDate: ["OR", "DR0", "DR1"],
+            blockedActual: ["OR"]
         };
     }
 
@@ -67,12 +68,12 @@ export default class MilestoneTable extends React.Component {
                             {
                                 milestonesData.map((milestone, key) => {
                                     const shownString = boolToYesNo(milestone.shown);
-                                    const hasBaseline = !this.state.withoutBaselineDate.includes(milestone.label.toUpperCase());
-                                    const labelEditable = ((editMode && !this.isMandatory(milestone.label))
-                                        || (editMode && renderedMilestones.includes(milestone.label.toUpperCase())));
+                                    const hasBaseline = this.hasBaseline(milestone);
+                                    const hasActual = this.hasActual(milestone);
+                                    const labelEditable = this.isLabelEditable(milestone, renderedMilestones);
+                                    const name = `milestones[${key}].label`;
 
                                     renderedMilestones.push(milestone.label);
-                                    const name = `milestones[${key}].label`;
                                     return (
                                         <tr key={key}>
                                             <td className={styles.label}>
@@ -92,7 +93,7 @@ export default class MilestoneTable extends React.Component {
                                             </td>
                                             <td className={styles.actual}>
                                                 {
-                                                    editMode
+                                                    editMode && hasActual
                                                         ? <FormikInput
                                                             type="date"
                                                             name={`milestones[${key}].actualDate`}
@@ -171,6 +172,20 @@ export default class MilestoneTable extends React.Component {
                 }}
             />
         )
+    };
+
+    hasActual = (milestone) => (
+        !this.state.blockedActual.includes(milestone.label.toUpperCase())
+    );
+
+    hasBaseline = (milestone) => (
+        !this.state.withoutBaselineDate.includes(milestone.label.toUpperCase())
+    );
+
+    isLabelEditable = (milestone, renderedMilestones) => {
+        const editMode = this.props.editMode;
+        return ((editMode && !this.isMandatory(milestone.label))
+            || (editMode && renderedMilestones.includes(milestone.label.toUpperCase())));
     };
 
     isMandatory = (label) => {
