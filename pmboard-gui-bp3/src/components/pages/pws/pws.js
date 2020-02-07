@@ -29,11 +29,11 @@ export default class PWS extends React.Component {
                 <h1>Project Pineapple</h1>
                 <Tabs
                     id="pws_tabs"
+                    large
+                    renderActiveTabPanelOnly
                     selectedTabId={this.state.selectedId}
                     className={styles.center}
                     onChange={this.onChange}
-                    renderActiveTabPanelOnly={true}
-                    large={true}
                 >
                     <Tab id="sum" title="Summary" panel={<ErrorBoundary><SummaryTab/></ErrorBoundary>}/>
                     <Tab id="ind" title="Indicators" panel={<ErrorBoundary><IndicatorsTab/></ErrorBoundary>}/>

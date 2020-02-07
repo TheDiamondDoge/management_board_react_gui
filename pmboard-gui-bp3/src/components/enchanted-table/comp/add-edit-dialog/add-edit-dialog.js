@@ -145,7 +145,7 @@ export default class AddEditDialog extends React.Component {
 
 AddEditDialog.propTypes = {
     columns: PropTypes.arrayOf(EnchantedTableColsConfig).isRequired,
-    data: PropTypes.arrayOf(PropTypes.object),
+    data: PropTypes.object,
     validationSchema: PropTypes.object,
     editDynamicInputVals: PropTypes.object,
     onSubmit: PropTypes.func,

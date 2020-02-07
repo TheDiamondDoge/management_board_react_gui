@@ -1,6 +1,7 @@
 import React from 'react';
 import {ContextMenu} from "@blueprintjs/core";
 import PropTypes from 'prop-types';
+import contextMenu from "../../../tabs/actions/components/contextMenu";
 
 export default class EnchantedRow extends React.Component {
     constructor(props) {
@@ -25,6 +26,5 @@ export default class EnchantedRow extends React.Component {
 }
 
 EnchantedRow.propTypes = {
-    //Render prop
-    contextMenu: PropTypes.func
+    contextMenu: PropTypes.object
 };

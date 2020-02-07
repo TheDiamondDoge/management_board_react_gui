@@ -121,13 +121,17 @@ export const EnchantedTableColsConfig = PropTypes.shape({
     id: PropTypes.string.isRequired,
     headerName: PropTypes.string.isRequired,
     decorator: PropTypes.func,
-    searchType: PropTypes.string,
+    searchType: PropTypes.oneOf([
+        "input", "multiselect"
+    ]),
     styles: PropTypes.shape({
         header: PropTypes.object,
         column: PropTypes.object,
     }),
     editable: PropTypes.bool,
-    inputType: PropTypes.string,
+    inputType: PropTypes.oneOf(
+        ["text", "date", "select", "multiselect", "textarea", "numeric", "checkbox"]
+    ),
     selectValues: PropTypes.arrayOf(
         PropTypes.shape({
             value: PropTypes.oneOfType([

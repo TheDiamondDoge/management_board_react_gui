@@ -66,7 +66,7 @@ Actions.propTypes = {
         loading: PropTypes.bool,
         payload: PropTypes.arrayOf(PropTypes.object),
     }),
-    relatedRisks: PropTypes.arrayOf(PropTypes.number),
+    relatedRisks: PropTypes.arrayOf(PropTypes.string),
     saveAction: PropTypes.func,
     deleteAction: PropTypes.func,
     loadData: PropTypes.func,

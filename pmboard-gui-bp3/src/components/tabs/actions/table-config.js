@@ -170,7 +170,7 @@ export default [
                 width: 80
             }
         },
-        searchType: "multiselect",
+        searchType: "input",
         inputType: "multiselect",
         decorator: printArray
     },

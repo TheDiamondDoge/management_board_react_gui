@@ -82,7 +82,7 @@ export default class EnchantedTable extends React.Component {
                         {filteredData.map((row, i) => {
                             const rowKey = `row_${i}`;
                             const contextMenuParams = this.getContextMenuParams(filteredData[i]);
-                            const menu = contextMenu(contextMenuParams) || null;
+                            const menu = contextMenu ? contextMenu(contextMenuParams) : null;
                             return (
                                 <EnchantedRow
                                     key={rowKey}
