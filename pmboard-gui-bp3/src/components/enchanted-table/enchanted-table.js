@@ -81,15 +81,8 @@ export default class EnchantedTable extends React.Component {
                         <tbody>
                         {filteredData.map((row, i) => {
                             const rowKey = `row_${i}`;
-                            const menu = contextMenu
-                                ? contextMenu({
-                                    onClick: () => {
-                                        this.dialogOpen();
-                                        this.setState({rowData: filteredData[i]})
-                                    }
-                                })
-                                : null;
-
+                            const contextMenuParams = this.getContextMenuParams(filteredData[i]);
+                            const menu = contextMenu(contextMenuParams) || null;
                             return (
                                 <EnchantedRow
                                     key={rowKey}
@@ -108,7 +101,6 @@ export default class EnchantedTable extends React.Component {
                                 </EnchantedRow>
                             )
                         })}
-
                         </tbody>
                     </HTMLTable>
                 </div>
@@ -128,10 +120,7 @@ export default class EnchantedTable extends React.Component {
                             data={this.state.rowData}
                             columns={columns}
                             validationSchema={validationSchema}
-                            onSubmit={(data) => {
-                                onSubmit(data);
-                                this.onDialogClose()
-                            }}
+                            onSubmit={this.editDialogSubmit}
                             onCancel={this.onDialogClose}
                             editDynamicInputVals={editDynamicInputVals}
                         />
@@ -278,6 +267,23 @@ export default class EnchantedTable extends React.Component {
             rowData: {}
         })
     };
+
+    editDialogSubmit = (data) => {
+        this.props.onSubmit(data);
+        this.onDialogClose()
+    };
+
+    getContextMenuParams = (rowData) => (
+        {
+            editRow: () => {
+                this.dialogOpen();
+                this.setState({
+                    rowData
+                })
+            },
+            getRow: () => (rowData)
+        }
+    )
 }
 
 EnchantedTable.propTypes = {
@@ -287,7 +293,9 @@ EnchantedTable.propTypes = {
     editable: PropTypes.bool,
     validationSchema: PropTypes.object,
     onSubmit: PropTypes.func,
+    //Render prop: {dialogOpen: func}
     renderFooter: PropTypes.func,
+    //Render prop: {editRow: func, getRow: func}
     contextMenu: PropTypes.func,
     editDynamicInputVals: PropTypes.object
 };

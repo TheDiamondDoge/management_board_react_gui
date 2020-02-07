@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import EnchantedTable from "../../enchanted-table/enchanted-table";
 import tableConfig from "./table-config";
-import {Intent, Button, Menu, MenuItem} from "@blueprintjs/core";
 import {createEnchantedTableFilters} from "../../../util/util";
-import style from "./actions.module.css";
+import TableFooter from "./components/tableFooter";
+import ContextMenu from "./components/contextMenu";
 
 export default class Actions extends React.Component {
     componentDidMount() {
@@ -24,7 +24,7 @@ export default class Actions extends React.Component {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             const {payload} = this.props.actions;
-            const {saveAction} = this.props;
+            const {saveAction, deleteAction, loadData} = this.props;
             const filters = createEnchantedTableFilters(payload);
             let relatedRisks = this.props.relatedRisks;
             if (relatedRisks !== undefined) {
@@ -45,18 +45,14 @@ export default class Actions extends React.Component {
                         interactive
                         bordered
                         contextMenu={
-                            (menuFuncs) => (
-                                <Menu>
-                                    <MenuItem icon={"edit"} text="Edit row" onClick={menuFuncs.onClick}/>
-                                </Menu>
-                            )
+                            (menuFuncs) =>
+                                <ContextMenu onEdit={menuFuncs.editRow}
+                                             onDelete={() => deleteAction(menuFuncs.getRow().uid)}
+                                />
                         }
                         renderFooter={
                             (tableFuncs) =>
-                                <>
-                                    <Button icon={"refresh"} intent={Intent.PRIMARY} minimal large onClick={() => this.props.loadData()} />
-                                    <Button icon={"add"} intent={Intent.PRIMARY} minimal large onClick={tableFuncs.dialogOpen}/>
-                                </>
+                                <TableFooter onRefresh={loadData} onAdd={tableFuncs.dialogOpen}/>
                         }
                     />
                 </CustomCard>
@@ -72,6 +68,7 @@ Actions.propTypes = {
     }),
     relatedRisks: PropTypes.arrayOf(PropTypes.number),
     saveAction: PropTypes.func,
+    deleteAction: PropTypes.func,
     loadData: PropTypes.func,
     loadFilters: PropTypes.func,
     resetData: PropTypes.func,

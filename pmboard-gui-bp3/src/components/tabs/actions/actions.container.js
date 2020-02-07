@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {actionsLoad, actionsReset, actionSave} from "../../../actions/pws/actions-tab";
+import {actionsLoad, actionsReset, actionSave, actionDelete} from "../../../actions/pws/actions-tab";
 import {loadRiskIds} from "../../../actions/pws/risks-tab";
 import Actions from "./actions";
 
@@ -14,6 +14,9 @@ function mapDispatchToProps(dispatch) {
     return {
         saveAction: (data) => {
             dispatch(actionSave(data))
+        },
+        deleteAction: (uid) => {
+            dispatch(actionDelete(uid))
         },
         loadFilters: () => {
             dispatch(loadRiskIds())

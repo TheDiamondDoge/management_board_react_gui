@@ -1,4 +1,4 @@
-import {takeEvery, takeLatest, fork} from 'redux-saga/effects';
+import {takeEvery, takeLatest, takeLeading, fork} from 'redux-saga/effects';
 import * as sagas from "./worker-sagas";
 import * as summaryTab from "../../actions/pws/summary-tab";
 import * as indicatorsTab from "../../actions/pws/indicators-tab";
@@ -96,6 +96,10 @@ function* watchActionsSave() {
     yield takeLatest(actions.ACTIONS_SAVE, sagas.saveAction);
 }
 
+function* watchActionDelete() {
+    yield takeLeading(actions.ACTIONS_DELETE, sagas.deleteAction);
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
@@ -107,6 +111,7 @@ const exportSagas = [
     fork(watchRelatedRisksLoad),
     fork(watchActionsLoad),
     fork(watchActionsSave),
+    fork(watchActionDelete),
     fork(watchInformationTabSave),
     fork(watchMilestonesLoad),
     fork(watchMilestonesSave),

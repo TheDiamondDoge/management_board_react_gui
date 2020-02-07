@@ -2,6 +2,7 @@ export const ACTIONS_LOAD = "ACTIONS_LOAD";
 export const ACTIONS_LOAD_SUCCESS = "ACTIONS_LOAD_SUCCESS";
 export const ACTIONS_ERROR = "ACTIONS_ERROR";
 export const ACTIONS_SAVE = "ACTIONS_SAVE";
+export const ACTIONS_DELETE = "ACTIONS_DELETE";
 export const ACTIONS_RESET = "ACTIONS_RESET";
 
 export const actionsLoad = () => ({
@@ -21,6 +22,11 @@ export const actionsError = (error) => ({
 export const actionSave = (data) => ({
     type: ACTIONS_SAVE,
     data
+});
+
+export const actionDelete = (uid) => ({
+    type: ACTIONS_DELETE,
+    uid
 });
 
 export const actionsReset = () => ({

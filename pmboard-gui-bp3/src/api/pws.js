@@ -83,3 +83,7 @@ export const getActions = (projectID) => (
 export const saveAction = (projectID, payload) => (
     axios.post(`http://localhost:8080/api/projects/${projectID}/tabs/actions`, payload)
 );
+
+export const deleteAction = (uid) => (
+    axios.delete(`http://localhost:8080/api/actions/${uid}`)
+);
