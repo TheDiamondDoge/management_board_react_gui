@@ -1,3 +1,6 @@
+import {boolToYesNo} from "../../../util/transform-funcs";
+import {dateDecorator} from "../../../util/common-decorators";
+
 export default [
     {
         id: "impact", headerName: "Impact",
@@ -9,11 +12,7 @@ export default [
                 color: "blue", textAlign: "center"
             }
         },
-        decorator: function (value) {
-            return `${value} => decorated by decorator`;
-        },
-        editable: true,
-        inputType: "textarea"
+        searchType: "input"
     },
     {
         id: "probability", headerName: "Probability",
@@ -25,7 +24,7 @@ export default [
                 textAlign: "center"
             }
         },
-        editable: true,
+        searchType: "input"
     },
     {
         id: "rating", headerName: "Rating",
@@ -38,7 +37,6 @@ export default [
             }
         },
         searchType: "input",
-        editable: true,
     },
     {
         id: "previous", headerName: "Previous",
@@ -49,7 +47,8 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "input"
     },
     {
         id: "initial", headerName: "Initial",
@@ -60,7 +59,8 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "input"
     },
     {
         id: "riskDisplayId", headerName: "Risk ID",
@@ -84,7 +84,7 @@ export default [
                 wordBreak: "break-word"
             }
         },
-        editable: true,
+        searchType: "input"
     },
     {
         id: "impactDescription", headerName: "Impact Description",
@@ -95,7 +95,8 @@ export default [
             column: {
                 wordBreak: "break-word"
             }
-        }
+        },
+        searchType: "input"
     },
     {
         id: "businessImpact", headerName: "Business Impact",
@@ -106,7 +107,8 @@ export default [
             column: {
                 wordBreak: "break-word"
             }
-        }
+        },
+        searchType: "input"
     },
     {
         id: "riskResponse", headerName: "Risk Response",
@@ -114,7 +116,8 @@ export default [
             header: {
                 width: "100px"
             },
-        }
+        },
+        searchType: "input"
     },
     {
         id: "mitigation", headerName: "Mitigation Plan Description",
@@ -122,7 +125,8 @@ export default [
             header: {
                 width: "300px"
             },
-        }
+        },
+        searchType: "input"
     },
     {
         id: "decisionDate", headerName: "Decision Date",
@@ -133,7 +137,9 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "multiselect",
+        decorator: dateDecorator
     },
     {
         id: "estimatedCost", headerName: "Estimated Cost",
@@ -144,7 +150,8 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "input"
     },
     {
         id: "provisionBudget", headerName: "Provision for budget",
@@ -155,7 +162,8 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "input"
     },
     {
         id: "responsible", headerName: "Responsible",
@@ -166,7 +174,8 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "input"
     },
     {
         id: "target", headerName: "Target (Plan)",
@@ -177,7 +186,9 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "multiselect",
+        decorator: dateDecorator
     },
     {
         id: "done", headerName: "Done (Do)",
@@ -188,18 +199,22 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "multiselect",
+        decorator: dateDecorator
     },
     {
         id: "result", headerName: "Result (Check, Act)",
         style: {
             header: {
-                width: "110px"
+                width: "120px"
             },
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "multiselect",
+        decorator: dateDecorator
     },
     {
         id: "imported", headerName: "Imported On",
@@ -210,7 +225,9 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "multiselect",
+        decorator: dateDecorator
     },
     {
         id: "by", headerName: "Imported by",
@@ -221,7 +238,8 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "input"
     },
     {
         id: "report", headerName: "Report",
@@ -232,6 +250,10 @@ export default [
             column: {
                 textAlign: "center"
             }
-        }
+        },
+        searchType: "multiselect",
+        inputType: "checkbox",
+        editable: true,
+        decorator: (data) => boolToYesNo(data)
     },
 ];

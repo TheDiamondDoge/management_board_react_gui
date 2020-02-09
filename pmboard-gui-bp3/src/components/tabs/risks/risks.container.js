@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import {loadRisks, resetState} from "../../../actions/pws/risks-tab";
+import {loadRisks, resetState, saveRisk} from "../../../actions/pws/risks-tab";
 import Risks from "./risks";
 
 function mapStateToProps(state) {
@@ -11,7 +11,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         loadData: () => dispatch(loadRisks()),
-        resetData: () => dispatch(resetState())
+        resetData: () => dispatch(resetState()),
+        saveRisk: (data) => dispatch(saveRisk(data))
     }
 }
 

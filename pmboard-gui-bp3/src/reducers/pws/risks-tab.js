@@ -49,6 +49,7 @@ export default (state, action) => {
         case RISK_SAVE:
             return {
                 ...state,
+                loading: true,
             };
         case RISK_RESET:
             return initState;

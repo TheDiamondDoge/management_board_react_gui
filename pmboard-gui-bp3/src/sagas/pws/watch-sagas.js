@@ -84,6 +84,10 @@ function* watchRisksLoad() {
     yield takeEvery(risks.RISKS_LOAD, sagas.loadRisks)
 }
 
+function* watchRiskSave() {
+    yield takeLatest(risks.RISK_SAVE, sagas.saveRisk);
+}
+
 function* watchRelatedRisksLoad() {
     yield takeEvery(risks.RISKS_IDS_LOAD, sagas.loadRelatedRisksIds)
 }
@@ -108,6 +112,7 @@ const exportSagas = [
     fork(watchBlcTabSaveIndicators),
     fork(watchBlcTabSaveComments),
     fork(watchRisksLoad),
+    fork(watchRiskSave),
     fork(watchRelatedRisksLoad),
     fork(watchActionsLoad),
     fork(watchActionsSave),

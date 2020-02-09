@@ -41,6 +41,22 @@ export function stringCompare(a, b){
     return 0;
 }
 
+export function picklistObjectsCompare(a, b) {
+    if (!a) {
+        if (!b) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    if (a.label > b.label) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 export const isBoolean = (val) => (
     val === true || val === false
 );

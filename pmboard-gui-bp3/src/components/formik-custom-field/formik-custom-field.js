@@ -62,9 +62,9 @@ export default class FormikCustomField extends React.Component {
             case "numeric":
                 return (
                     //onValueChange handler should be passed instead of onChange
-                    <NumericInput allowNumericCharactersOnly={true}
+                    <NumericInput allowNumericCharactersOnly
+                                  fill
                                   buttonPosition="none"
-                                  fill={true}
                                   {...field} {...props}
 
                     />

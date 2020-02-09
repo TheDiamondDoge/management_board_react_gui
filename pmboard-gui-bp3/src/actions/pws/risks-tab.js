@@ -24,7 +24,7 @@ export const loadRisksSuccess = ({data}) => ({
     data
 });
 
-export const riskFail = (error) => ({
+export const riskError = (error) => ({
     type: RISKS_ERROR,
     error
 });

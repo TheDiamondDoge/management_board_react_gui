@@ -6,7 +6,7 @@ import {Formik} from "formik";
 import FormikInput from "../../../controls/util-renderers";
 import {FieldName} from "../../../field-name/field-name";
 import styles from "./add-edit-dialog.module.css";
-import {formikFieldHandleChange} from "../../../../util/util";
+import {formikFieldHandleChange, getPropFromStringPath} from "../../../../util/util";
 import {getObjByLabel, removeSelectedObjByLabel} from "../../util";
 
 //TODO: Yup validation
@@ -47,7 +47,7 @@ export default class AddEditDialog extends React.Component {
                                             const columnId = col.id;
                                             const columnName = col.headerName;
                                             const inputType = col.inputType;
-                                            const itemsToSelectFrom = col.selectValues || editDynamicInputVals[columnId];
+                                            const itemsToSelectFrom = col.selectValues || getPropFromStringPath(editDynamicInputVals, columnId);
                                             let optionalProps = this.getSpecificProps(inputType, {
                                                 formikProps,
                                                 columnId,
@@ -135,6 +135,8 @@ export default class AddEditDialog extends React.Component {
                 optionalProps.onItemSelect = this.onItemSelect(columnId, formikProps);
                 optionalProps.onRemove = this.onRemove(columnId, selected, formikProps);
                 break;
+            case "checkbox":
+                optionalProps.value = formikProps.values[columnId];
             default:
                 return optionalProps;
         }

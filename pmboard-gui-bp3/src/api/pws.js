@@ -72,6 +72,10 @@ export const getRisks = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/risks`)
 );
 
+export const saveRisks = (projectID, risk) => (
+    axios.put(`http://localhost:8080/api/projects/${projectID}/tabs/risks`, risk)
+);
+
 export const getRelatedRisksIds = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/risks/id`)
 );

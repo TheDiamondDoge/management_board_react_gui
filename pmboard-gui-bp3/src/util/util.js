@@ -1,3 +1,6 @@
+import {boolToYesNo, dateFormatToString} from "./transform-funcs";
+import {isBoolean, picklistObjectsCompare} from "./comparators";
+
 export function formikFieldHandleChange(form) {
     return function (name) {
         return function (value) {
@@ -41,10 +44,23 @@ export function createEnchantedTableFilters(data) {
             result[colId] = result[colId] ? result[colId] : [];
             const value = dataRow[colId];
             if (!~result[colId].findIndex((obj) => obj.value === value)) {
-                result[colId].push({value: value, label: value});
+                const label = getLabel(value);
+                result[colId].push({value: value, label: label});
             }
         });
     });
 
+    Object.keys(result).forEach((filter) => result[filter].sort(picklistObjectsCompare));
+
     return result;
+}
+
+function getLabel(value) {
+    if (isBoolean(value)) {
+        return boolToYesNo(value);
+    } else if (/\d{4}-\d{2}-\d{2}/.test(value)) {
+        return dateFormatToString(new Date(value));
+    } else {
+        return value;
+    }
 }

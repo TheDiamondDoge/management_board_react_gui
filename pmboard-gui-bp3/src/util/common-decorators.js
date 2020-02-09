@@ -5,9 +5,6 @@ export function printArray(arr) {
 }
 
 export function dateDecorator(str) {
-    let date;
-    if (str) {
-        date = new Date(str);
-    }
-    return date != "Invalid Date" ? dateFormatToString(new Date(str)) : date;
+    if (!str) return "";
+    return dateFormatToString(new Date(str));
 }

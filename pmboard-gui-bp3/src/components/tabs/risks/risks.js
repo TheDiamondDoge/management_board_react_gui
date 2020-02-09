@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CustomCard from "../../card/custom-card";
-import {Intent, Button} from "@blueprintjs/core";
 import EnchantedTable from "../../enchanted-table/enchanted-table";
 import colSettings from "./table-config";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {RisksTabRisk} from "../../../util/custom-types";
 import {createEnchantedTableFilters} from "../../../util/util";
+import ContextMenu from "./components/context-menu";
+import TableFooter from "./components/table-footer";
 
 export default class Risks extends React.Component {
     componentDidMount() {
@@ -23,6 +24,7 @@ export default class Risks extends React.Component {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             const {payload} = this.props.risks;
+            const {saveRisk} = this.props;
             const picklists = createEnchantedTableFilters(payload);
             return (
                 <CustomCard autosize>
@@ -30,15 +32,18 @@ export default class Risks extends React.Component {
                         data={payload}
                         columns={colSettings}
                         filterValues={picklists}
+                        onSubmit={saveRisk}
                         striped
                         interactive
                         bordered
                         editable
+                        contextMenu={
+                            (menuFuncs) => <ContextMenu onEdit={menuFuncs.editRow}/>
+                        }
                         renderFooter={() => (
-                            <>
-                                <Button text={"Export to Excel"} icon={"export"} intent={Intent.PRIMARY} minimal/>
-                                <Button text={"Import Excel"} icon={"import"} intent={Intent.PRIMARY} minimal/>
-                            </>
+                            <TableFooter onExcelExport={() => alert("Excel exported")}
+                                         onExcelImport={() => alert("Excel imported")}
+                            />
                         )}
                     />
                 </CustomCard>
@@ -53,5 +58,6 @@ Risks.propTypes = {
         payload: PropTypes.arrayOf(RisksTabRisk).isRequired
     }),
     loadData: PropTypes.func.isRequired,
-    resetData: PropTypes.func.isRequired
+    resetData: PropTypes.func.isRequired,
+    saveRisk: PropTypes.func.isRequired
 };

@@ -125,7 +125,16 @@ export function* loadRisks() {
         const data = yield call(api.getRisks, 1);
         yield put(risks.loadSuccess(data));
     } catch (e) {
-        yield put(risks.riskFail(e));
+        yield put(risks.riskError(e));
+    }
+}
+
+export function* saveRisk(actions) {
+    try {
+        yield call(api.saveRisks, 1, actions.data);
+        yield call(loadRisks);
+    } catch (e) {
+        yield put(risks.riskError(e));
     }
 }
 
@@ -134,7 +143,7 @@ export function* loadRelatedRisksIds() {
         const data = yield call(api.getRelatedRisksIds, 1);
         yield put(risks.loadRisksSuccess(data));
     } catch (e) {
-        yield put(risks.riskFail(e))
+        yield put(risks.riskError(e))
     }
 }
 
