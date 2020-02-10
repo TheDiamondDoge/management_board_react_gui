@@ -11,6 +11,7 @@ import * as contrib from "../../actions/pws/contrib-projects";
 import * as blc from "../../actions/pws/blc-tab";
 import * as risks from "../../actions/pws/risks-tab";
 import * as actions from "../../actions/pws/actions-tab";
+import * as cost from "../../actions/pws/cost-tab";
 
 function* watchSummaryTabLoad() {
     yield takeEvery(summaryTab.SUMMARY_LOAD, sagas.loadSummaryTab);
@@ -104,6 +105,10 @@ function* watchActionDelete() {
     yield takeLeading(actions.ACTIONS_DELETE, sagas.deleteAction);
 }
 
+function* watchCostLoad() {
+    yield takeEvery(cost.COST_LOAD, sagas.loadCost);
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
@@ -117,6 +122,7 @@ const exportSagas = [
     fork(watchActionsLoad),
     fork(watchActionsSave),
     fork(watchActionDelete),
+    fork(watchCostLoad),
     fork(watchInformationTabSave),
     fork(watchMilestonesLoad),
     fork(watchMilestonesSave),

@@ -13,6 +13,7 @@ import * as contrib from "../../actions/pws/contrib-projects";
 import * as blc from "../../actions/pws/blc-tab";
 import * as risks from "../../actions/pws/risks-tab";
 import * as actions from "../../actions/pws/actions-tab";
+import * as cost from "../../actions/pws/cost-tab";
 
 export function* loadSummaryTab() {
     try {
@@ -153,6 +154,15 @@ export function* loadActions() {
         yield put(actions.actionsLoadSuccess(data))
     } catch (e) {
         yield put(actions.actionsError(e))
+    }
+}
+
+export function* loadCost() {
+    try {
+        const data = yield call(api.getCost, 1);
+        yield put(cost.costLoadSuccess(data));
+    } catch (e) {
+        yield put(cost.costError(e));
     }
 }
 

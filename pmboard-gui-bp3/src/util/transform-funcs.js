@@ -40,6 +40,21 @@ export const dateFormatToString = (date) => {
     return `${day}-${month}-${year}`;
 };
 
+export const getDateFromStringWithTime = (str) => {
+    const dateInSeconds = Date.parse(str);
+    if (isNaN(dateInSeconds)) return "";
+
+    const date = new Date(dateInSeconds);
+    let day = date.getDate();
+    let month = MONTHS_NAMES[date.getMonth()];
+    let year = date.getFullYear().toString();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+
+    return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+};
+
 function isDate(date) {
     return typeof date.getMonth === "function";
 }

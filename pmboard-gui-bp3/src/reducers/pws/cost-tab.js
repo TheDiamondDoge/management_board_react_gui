@@ -1,10 +1,8 @@
 import {COST_LOAD, COST_LOAD_SUCCESS, COST_UPLOAD, COST_ERROR, COST_RESET} from '../../actions/pws/cost-tab';
 
 const initState = {
-    loaded: false,
-    data: {},
-    filepath: "",
-    error: {},
+    loading: true,
+    payload: {}
 };
 
 export default (state, action) => {
@@ -16,21 +14,24 @@ export default (state, action) => {
         case COST_LOAD:
             return {
                 ...state,
+                loading: true,
             };
         case COST_LOAD_SUCCESS:
             return {
                 ...state,
-                loaded: true,
-                data: action.data,
+                loading: false,
+                payload: action.data,
             };
         case COST_UPLOAD:
             return {
                 ...state,
+                loading: true,
             };
         case COST_ERROR:
             return {
                 ...state,
                 error: action.error,
+                loading: false,
             };
         case COST_RESET:
             return initState;

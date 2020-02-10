@@ -9,13 +9,13 @@ export const costLoad = () => ({
     }
 );
 
-export const costLoadSuccess = (data) => ({
+export const costLoadSuccess = ({data}) => ({
         type: COST_LOAD_SUCCESS,
         data,
     }
 );
 
-export const costUpload = (error) => ({
+export const costUpload = () => ({
     type: COST_UPLOAD,
 });
 

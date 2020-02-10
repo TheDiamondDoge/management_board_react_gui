@@ -91,3 +91,7 @@ export const saveAction = (projectID, payload) => (
 export const deleteAction = (uid) => (
     axios.delete(`http://localhost:8080/api/actions/${uid}`)
 );
+
+export const getCost = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/cost`)
+);

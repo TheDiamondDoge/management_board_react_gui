@@ -5,7 +5,7 @@ import styles from './pws.module.css';
 import SummaryTab from "../../tabs/summary-tab/summary-tab.container";
 import InfoTab from "../../tabs/info-tab/info-tab.container";
 import IndicatorsTab from "../../tabs/indicators-tab/indicators-tab.container";
-import CostTab from "../../tabs/cost-tab/cost-tab";
+import CostTab from "../../tabs/cost-tab/cost-tab.container";
 import BlcDashboard from "../../tabs/blc/blc.container";
 import Risks from "../../tabs/risks/risks.container";
 import ErrorBoundary from "../../error-boundary/error-boundary";
@@ -15,7 +15,7 @@ export default class PWS extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedId: 'risks'
+            selectedId: 'cost'
         };
     }
 
