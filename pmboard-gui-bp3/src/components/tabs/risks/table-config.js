@@ -1,5 +1,5 @@
 import {boolToYesNo} from "../../../util/transform-funcs";
-import {dateDecorator} from "../../../util/common-decorators";
+import {dateDecorator, impactDecorator} from "../../../util/common-decorators";
 
 export default [
     {
@@ -9,7 +9,7 @@ export default [
                 width: "70px"
             },
             column: {
-                color: "blue", textAlign: "center"
+                textAlign: "center"
             }
         },
         searchType: "input"
@@ -36,7 +36,8 @@ export default [
                 textAlign: "center"
             }
         },
-        searchType: "input",
+        searchType: "multiselect",
+        decorator: impactDecorator
     },
     {
         id: "previous", headerName: "Previous",
