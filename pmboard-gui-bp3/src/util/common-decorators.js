@@ -1,6 +1,6 @@
 import {dateFormatToString} from "./transform-funcs";
 
-export function printArray(arr) {
+export function arrayDecorator(arr) {
     return Array.isArray(arr) ? arr.join("; ") : arr;
 }
 

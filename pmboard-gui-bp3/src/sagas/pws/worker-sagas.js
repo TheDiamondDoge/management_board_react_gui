@@ -14,6 +14,7 @@ import * as blc from "../../actions/pws/blc-tab";
 import * as risks from "../../actions/pws/risks-tab";
 import * as actions from "../../actions/pws/actions-tab";
 import * as cost from "../../actions/pws/cost-tab";
+import * as requirements from "../../actions/pws/requirements-tab";
 
 export function* loadSummaryTab() {
     try {
@@ -163,6 +164,15 @@ export function* loadCost() {
         yield put(cost.costLoadSuccess(data));
     } catch (e) {
         yield put(cost.costError(e));
+    }
+}
+
+export function* loadRequirements() {
+    try {
+        const data = yield call(api.getRequirements, 1);
+        yield put(requirements.loadRequirementsSuccess(data));
+    } catch (e) {
+        yield put(requirements.errorRequirements(e));
     }
 }
 

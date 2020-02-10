@@ -95,3 +95,7 @@ export const deleteAction = (uid) => (
 export const getCost = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/cost`)
 );
+
+export const getRequirements = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/rqs`)
+);

@@ -10,6 +10,7 @@ import BlcDashboard from "../../tabs/blc/blc.container";
 import Risks from "../../tabs/risks/risks.container";
 import ErrorBoundary from "../../error-boundary/error-boundary";
 import Actions from "../../tabs/actions/actions.container";
+import Requirements from "../../tabs/requirements-tab/requirements-tab.container";
 
 export default class PWS extends React.Component {
     constructor(props) {
@@ -42,7 +43,7 @@ export default class PWS extends React.Component {
                     <Tab id="risks" title="Risks" panel={<ErrorBoundary><Risks/></ErrorBoundary>}/>
                     <Tab id="cost" title="Cost" panel={<ErrorBoundary><CostTab/></ErrorBoundary>}/>
                     <Tab id="rep" title="Report" disabled panel={<ErrorBoundary><Hello/></ErrorBoundary>}/>
-                    <Tab id="req" title="Requirements" disabled/>
+                    <Tab id="req" title="Requirements" panel={<ErrorBoundary><Requirements/></ErrorBoundary>}/>
                     <Tab id="back" title="Backlog" disabled/>
                     <Tab id="blc" title="BLC Dashboard" panel={<ErrorBoundary><BlcDashboard/></ErrorBoundary>}/>
                 </Tabs>

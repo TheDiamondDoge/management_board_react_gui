@@ -163,3 +163,32 @@ export const RisksTabRisk = PropTypes.shape({
     result: PropTypes.string,
     report: PropTypes.bool
 });
+
+export const RqsTabRq = PropTypes.arrayOf(
+    PropTypes.shape({
+        reqId: PropTypes.string.isRequired,
+        headline: PropTypes.string.isRequired,
+        priority: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+        fixVersions: PropTypes.arrayOf(PropTypes.string),
+        components: PropTypes.string.isRequired,
+    })
+);
+
+const CostRow = PropTypes.shape({
+    state: PropTypes.number,
+    milestone: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
+    comment: PropTypes.string.isRequired,
+});
+
+const CostTable = PropTypes.shape({
+    committed: CostRow,
+    realized: CostRow,
+});
+
+export const CostTabTypes = PropTypes.shape({
+    updated: PropTypes.string,
+    charged: CostTable,
+    capex: CostTable
+});

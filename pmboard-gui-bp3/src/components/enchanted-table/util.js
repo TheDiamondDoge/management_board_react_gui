@@ -10,6 +10,6 @@ export function removeSelectedObjByLabel(obj, arr) {
     return  arr.filter(elem => obj.label !== elem.label);
 }
 
-export function renderValue(value, decorator) {
-    return decorator ? decorator(value) : value;
+export function renderValue(value, decorator, row) {
+    return decorator ? decorator(value, row) : value;
 }

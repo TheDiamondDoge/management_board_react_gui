@@ -1,4 +1,4 @@
-import {dateDecorator, printArray} from "../../../util/common-decorators";
+import {dateDecorator, arrayDecorator} from "../../../util/common-decorators";
 
 export default [
     {
@@ -172,6 +172,6 @@ export default [
         },
         searchType: "input",
         inputType: "multiselect",
-        decorator: printArray
+        decorator: arrayDecorator
     },
 ];

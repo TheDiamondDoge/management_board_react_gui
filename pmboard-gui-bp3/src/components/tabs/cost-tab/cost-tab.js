@@ -6,6 +6,7 @@ import UploadFileControls from "../../upload-file-controls/upload-file-controls"
 import PropTypes from "prop-types";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {getDateFromStringWithTime} from "../../../util/transform-funcs";
+import {CostTabTypes} from "../../../util/custom-types"
 
 export default class CostTab extends React.Component {
     constructor(props){
@@ -72,6 +73,6 @@ CostTab.propTypes = {
     resetData: PropTypes.func,
     cost: PropTypes.shape({
         loading: PropTypes.bool.isRequired,
-        payload: PropTypes.object.isRequired,
+        payload: CostTabTypes
     })
 };

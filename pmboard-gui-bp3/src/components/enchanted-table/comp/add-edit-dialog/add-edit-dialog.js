@@ -137,6 +137,7 @@ export default class AddEditDialog extends React.Component {
                 break;
             case "checkbox":
                 optionalProps.value = formikProps.values[columnId];
+                break;
             default:
                 return optionalProps;
         }

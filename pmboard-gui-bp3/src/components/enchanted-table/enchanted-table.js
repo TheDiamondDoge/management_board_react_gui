@@ -94,7 +94,7 @@ export default class EnchantedTable extends React.Component {
                                         const decorator = col.decorator;
                                         return (
                                             <td key={colId} style={styles}>
-                                                {renderValue(row[colId], decorator)}
+                                                {renderValue(row[colId], decorator, row)}
                                             </td>
                                         )
                                     })}
@@ -270,7 +270,7 @@ export default class EnchantedTable extends React.Component {
 
     editDialogSubmit = (data) => {
         this.props.onSubmit(data);
-        this.onDialogClose()
+        this.onDialogClose();
     };
 
     getContextMenuParams = (rowData) => (
