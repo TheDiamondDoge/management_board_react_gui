@@ -2,22 +2,54 @@ import React from "react";
 import Chart from "chart.js";
 import "chartjs-plugin-annotation";
 import PropTypes from "prop-types";
+import styles from "./bar-chart.module.css";
+import {RangeSlider} from "@blueprintjs/core";
 
 export default class BarChart extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            shouldChartUpdate: true,
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+    }
+
     chartRef = React.createRef();
     barChart = null;
+    timer = null;
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.barChart) {
-            this.barChart.destroy();
+        if (this.state.shouldChartUpdate) {
+            if (this.barChart) {
+                this.barChart.destroy();
+            }
+            this.createChart(this.props.data);
         }
-        this.createChart(this.props.data);
     }
 
     render() {
+        let labelCount;
+        let initialRange;
+        if (!this.props.data.labels) {
+            labelCount = 0;
+        } else {
+            labelCount = this.props.data.labels.length;
+            initialRange = [0, labelCount];
+        }
         return (
             <div>
-                <canvas id="myChart" ref={this.chartRef}/>
+                <canvas id="myChart" className={styles.canvas} ref={this.chartRef}/>
+                <RangeSlider
+                    min={0}
+                    max={labelCount}
+                    stepSize={1}
+                    labelStepSize={1}
+                    onChange={
+                        this.handleChange
+                    }
+                    value={this.state.range || initialRange}
+                />
             </div>
         );
     }
@@ -102,6 +134,18 @@ export default class BarChart extends React.Component {
                 }
             }
         });
+    }
+
+    handleChange(range) {
+        this.setState({shouldChartUpdate: false});
+        this.setRange(range)
+        console.log("ON CHANGE", this.timer);
+        clearTimeout(this.timer);
+        this.timer = setTimeout(() => this.setState({shouldChartUpdate: true}), 300)
+    }
+
+    setRange(range) {
+        this.setState({range});
     }
 }
 

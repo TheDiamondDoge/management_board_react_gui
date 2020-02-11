@@ -1,0 +1,12 @@
+.header_container {
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.center {
+    display: inline;
+}
+
+.tooltip {
+    margin-left: 5px;
+}

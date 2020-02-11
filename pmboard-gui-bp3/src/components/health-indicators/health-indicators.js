@@ -84,10 +84,13 @@ export default class HealthIndicators extends React.Component {
                     <th>
                         <FieldName name={"Status"}/>
                         <Tooltip
-                            content={<TooltipContent title={healthStatusHelp.title} content={healthStatusHelp.content} />}
+                            content={<TooltipContent
+                                        title={healthStatusHelp.title}
+                                        content={healthStatusHelp.content}
+                                    />}
                             position={Position.TOP}
                         >
-                            <HelpIcon />
+                            <HelpIcon/>
                         </Tooltip>
                         {
                             !isSummaryMode && !this.state.editCommentMode &&

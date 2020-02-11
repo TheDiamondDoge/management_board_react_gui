@@ -23,16 +23,15 @@ export default class CustomCard extends React.Component {
     handleResize = () => {
         this.setState({
             width: window.innerWidth,
-            height: window.innerHeight
         })
     };
 
     getStyleProp(autosize) {
-        const {width, height} = this.state;
+        const {width} = this.state;
         if (autosize) {
             return {
                 width: getWorkingAreaWidth(width) || "",
-                height: (height - 230) || ""
+                height: "auto"
             }
         } else {
             return {};

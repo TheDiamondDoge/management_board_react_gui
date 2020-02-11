@@ -11,7 +11,7 @@ import Risks from "../../tabs/risks/risks.container";
 import ErrorBoundary from "../../error-boundary/error-boundary";
 import Actions from "../../tabs/actions/actions.container";
 import Requirements from "../../tabs/requirements-tab/requirements-tab.container";
-import BacklogTab from "../../tabs/actions/backlog-tab/backlog-tab.container";
+import BacklogTab from "../../tabs/backlog-tab/backlog-tab.container";
 
 export default class PWS extends React.Component {
     constructor(props) {
