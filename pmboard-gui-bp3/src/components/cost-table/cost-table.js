@@ -1,7 +1,7 @@
 import React from "react";
 import {HTMLTable} from "@blueprintjs/core";
 import PropTypes from "prop-types";
-import styles from "./costTable.module.css";
+import styles from "./cost-table.module.css";
 
 export default class CostTable extends React.Component {
     render() {

@@ -11,12 +11,13 @@ import Risks from "../../tabs/risks/risks.container";
 import ErrorBoundary from "../../error-boundary/error-boundary";
 import Actions from "../../tabs/actions/actions.container";
 import Requirements from "../../tabs/requirements-tab/requirements-tab.container";
+import BacklogTab from "../../tabs/actions/backlog-tab/backlog-tab.container";
 
 export default class PWS extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedId: 'cost'
+            selectedId: 'back'
         };
     }
 
@@ -44,7 +45,7 @@ export default class PWS extends React.Component {
                     <Tab id="cost" title="Cost" panel={<ErrorBoundary><CostTab/></ErrorBoundary>}/>
                     <Tab id="rep" title="Report" disabled panel={<ErrorBoundary><Hello/></ErrorBoundary>}/>
                     <Tab id="req" title="Requirements" panel={<ErrorBoundary><Requirements/></ErrorBoundary>}/>
-                    <Tab id="back" title="Backlog" disabled/>
+                    <Tab id="back" title="Backlog" panel={<ErrorBoundary><BacklogTab/></ErrorBoundary>}/>
                     <Tab id="blc" title="BLC Dashboard" panel={<ErrorBoundary><BlcDashboard/></ErrorBoundary>}/>
                 </Tabs>
             </div>

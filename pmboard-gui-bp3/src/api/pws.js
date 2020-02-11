@@ -99,3 +99,7 @@ export const getCost = (projectID) => (
 export const getRequirements = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/rqs`)
 );
+
+export const getBacklogChart = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/backlog/chart`)
+);

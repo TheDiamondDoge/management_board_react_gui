@@ -1,5 +1,5 @@
 import React from "react";
-import CostTable from "../../cost-table/costTable";
+import CostTable from "../../cost-table/cost-table";
 import CustomCard from "../../card/custom-card";
 import styles from "./cost-tab.module.css";
 import UploadFileControls from "../../upload-file-controls/upload-file-controls";

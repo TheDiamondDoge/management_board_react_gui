@@ -15,6 +15,7 @@ import * as risks from "../../actions/pws/risks-tab";
 import * as actions from "../../actions/pws/actions-tab";
 import * as cost from "../../actions/pws/cost-tab";
 import * as requirements from "../../actions/pws/requirements-tab";
+import * as backlog from "../../actions/pws/backlog";
 
 export function* loadSummaryTab() {
     try {
@@ -173,6 +174,15 @@ export function* loadRequirements() {
         yield put(requirements.loadRequirementsSuccess(data));
     } catch (e) {
         yield put(requirements.errorRequirements(e));
+    }
+}
+
+export function* loadBacklogChart() {
+    try {
+        const data = yield call(api.getBacklogChart, 1);
+        yield put(backlog.loadBacklogChartSuccess(data));
+    } catch (e) {
+        yield put(backlog.errorBacklog(e))
     }
 }
 

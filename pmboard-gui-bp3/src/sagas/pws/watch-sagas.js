@@ -13,6 +13,7 @@ import * as risks from "../../actions/pws/risks-tab";
 import * as actions from "../../actions/pws/actions-tab";
 import * as cost from "../../actions/pws/cost-tab";
 import * as requirements from "../../actions/pws/requirements-tab";
+import * as backlog from "../../actions/pws/backlog";
 
 function* watchSummaryTabLoad() {
     yield takeEvery(summaryTab.SUMMARY_LOAD, sagas.loadSummaryTab);
@@ -114,6 +115,10 @@ function* watchRequirementsLoad() {
     yield takeEvery(requirements.REQUIREMENTS_LOAD, sagas.loadRequirements);
 }
 
+function* watchBacklogChartLoad() {
+    yield takeEvery(backlog.BACKLOG_CHART_LOAD, sagas.loadBacklogChart)
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
@@ -129,6 +134,7 @@ const exportSagas = [
     fork(watchActionDelete),
     fork(watchCostLoad),
     fork(watchRequirementsLoad),
+    fork(watchBacklogChartLoad),
     fork(watchInformationTabSave),
     fork(watchMilestonesLoad),
     fork(watchMilestonesSave),

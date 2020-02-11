@@ -7,7 +7,7 @@ import {MultiSelect} from "@blueprintjs/select";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import {Rnd} from "react-rnd";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
-import {Bar, Chart} from 'react-chartjs-2';
+import BarChart from "../bar-chart/bar-chart";
 
 export default class World extends React.Component {
     constructor(props) {
@@ -17,29 +17,6 @@ export default class World extends React.Component {
             selectedItems: ["Hi", "I", "am", "Robert"],
             isDialog: false
         }
-    }
-
-    componentDidMount() {
-         Chart.pluginService.register({
-            afterDraw: function (chart, easing) {
-                return {
-                    annotation: {
-                        annotations: [{
-                            type: 'line',
-                            mode: 'horizontal',
-                            scaleID: 'y-axis-0',
-                            value: 55,
-                            borderColor: 'rgb(75, 192, 192)',
-                            borderWidth: 4,
-                            label: {
-                                enabled: true,
-                                content: 'Test'
-                            }
-                        }]
-                    }
-                }
-            }
-        });
     }
 
     addElement = (elem) => {
@@ -68,21 +45,6 @@ export default class World extends React.Component {
                 <MenuItem text={"Sort by Desc"} icon={"sort-desc"}/>
             </Menu>
         );
-
-        const data = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [
-                {
-                    label: 'My First dataset',
-                    backgroundColor: 'rgba(255,99,132,0.2)',
-                    borderColor: 'rgba(255,99,132,1)',
-                    borderWidth: 1,
-                    hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-                    hoverBorderColor: 'rgba(255,99,132,1)',
-                    data: [65, 59, 80, 81, 56, 55, 40]
-                }
-            ]
-        };
 
         return (
             <>
@@ -224,51 +186,8 @@ export default class World extends React.Component {
                         this.setState((prev) => ({isDialog: !prev.isDialog}))
                     }
                     }/>
-                <div>
-                    <h2>Bar Example (custom size)</h2>
-                    <Bar
-                        data={data}
-                        width={100}
-                        height={500}
-                        options={{
-                            maintainAspectRatio: false,
-                            scales: {
-                                yAxes: [{
-                                    stacked: true,
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: "Number of CRs (severity ECMA)"
-                                    }
-                                }],
-                                xAxes: [{
-                                    stacked: true,
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: "Week “yyww”"
-                                    }
 
-                                }]
-                            },
-                            plugins: {
-                                annotation: {
-                                    annotations: [{
-                                        type: 'line',
-                                        mode: 'horizontal',
-                                        scaleID: 'y-axis-0',
-                                        value: 55,
-                                        borderColor: 'rgb(75, 192, 192)',
-                                        borderWidth: 4,
-                                        label: {
-                                            enabled: true,
-                                            content: 'Test'
-                                        }
-                                    }]
-                                }
-                            }
-                        }
-                        }
-                    />
-                </div>
+                    {/*<BarChart />*/}
             </>
         );
     }
