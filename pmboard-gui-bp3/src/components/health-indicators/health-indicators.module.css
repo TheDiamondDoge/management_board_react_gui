@@ -18,3 +18,7 @@
 .inline_block {
     display: inline-block;
 }
+
+.help_icon {
+    margin-left: 10px;
+}

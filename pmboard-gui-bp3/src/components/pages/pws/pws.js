@@ -1,6 +1,6 @@
 import React from 'react';
 import {Tab, Tabs} from "@blueprintjs/core";
-import Hello from '../../test_comps/world.container';
+import Report from '../../tabs/report-tab/report-tab';
 import styles from './pws.module.css';
 import SummaryTab from "../../tabs/summary-tab/summary-tab.container";
 import InfoTab from "../../tabs/info-tab/info-tab.container";
@@ -18,7 +18,7 @@ export default class PWS extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedId: 'defects'
+            selectedId: 'report'
         };
     }
 
@@ -44,7 +44,7 @@ export default class PWS extends React.Component {
                     <Tab id="actions" title="Actions" panel={<ErrorBoundary><Actions/></ErrorBoundary>}/>
                     <Tab id="risks" title="Risks" panel={<ErrorBoundary><Risks/></ErrorBoundary>}/>
                     <Tab id="cost" title="Cost" panel={<ErrorBoundary><CostTab/></ErrorBoundary>}/>
-                    <Tab id="report" title="Report" disabled panel={<ErrorBoundary><Hello/></ErrorBoundary>}/>
+                    <Tab id="report" title="Report" panel={<ErrorBoundary><Report/></ErrorBoundary>}/>
                     <Tab id="rqs" title="Requirements" panel={<ErrorBoundary><Requirements/></ErrorBoundary>}/>
                     <Tab id="backlog" title="Backlog" panel={<ErrorBoundary><BacklogTab/></ErrorBoundary>}/>
                     <Tab id="defects" title="Defects" panel={<ErrorBoundary><DefectsTab/></ErrorBoundary>}/>

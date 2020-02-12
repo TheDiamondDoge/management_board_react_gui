@@ -7,7 +7,10 @@ import {MultiSelect} from "@blueprintjs/select";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import {Rnd} from "react-rnd";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
-import BarChart from "../charts/backlog-defects-chart/backlog-defects-chart";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.bubble.css';
+import 'react-quill/dist/quill.core.css';
 
 export default class World extends React.Component {
     constructor(props) {
@@ -15,7 +18,8 @@ export default class World extends React.Component {
 
         this.state = {
             selectedItems: ["Hi", "I", "am", "Robert"],
-            isDialog: false
+            isDialog: false,
+            quill: "<h1>Hell-0</h1>"
         }
     }
 
@@ -119,7 +123,7 @@ export default class World extends React.Component {
                                             <MultiSelect
                                                 name={"selector"}
                                                 items={[{name: "A", id: 1}, {name: "B", id: 2}, {name: "C", id: 3}]}
-                                                itemRenderer={(item, {modifiers, handleClick}) =>
+                                                itemRenderer={(item, {handleClick}) =>
                                                     <MenuItem
                                                         key={item.id}
                                                         text={item.name}
@@ -186,8 +190,9 @@ export default class World extends React.Component {
                         this.setState((prev) => ({isDialog: !prev.isDialog}))
                     }
                     }/>
-
-                    {/*<BarChart />*/}
+                <div style={{height: "400px", width: "900px"}}>
+                    <ReactQuill readOnly value={this.state.quill} onChange={(x, q, w, e, r) => console.log(x, q, w, e)}/>
+                </div>
             </>
         );
     }

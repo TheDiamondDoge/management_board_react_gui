@@ -1,0 +1,35 @@
+.naming_block {
+    margin-top: 5px;
+}
+
+.name {
+    margin-right: 5px;
+}
+
+.health_minimal {
+    margin-right: 20px;
+}
+
+.risk_block {
+    padding-left: 10px;
+}
+
+.inline_block {
+    display: inline-block;
+}
+
+.float_right {
+    float: right;
+}
+
+.red {
+    color: #db3737;
+}
+
+.orange {
+    color: #bf7326;
+}
+
+.green {
+    color: #0d8050;
+}

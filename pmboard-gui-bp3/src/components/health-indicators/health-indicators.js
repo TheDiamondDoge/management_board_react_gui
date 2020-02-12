@@ -70,8 +70,8 @@ export default class HealthIndicators extends React.Component {
         const {onCancel, fieldsToRender} = this.props;
         return (
             <HTMLTable
+                striped
                 className={styles.health_table}
-                striped={true}
             >
                 <colgroup>
                     <col className={styles.status_col}/>
@@ -90,7 +90,7 @@ export default class HealthIndicators extends React.Component {
                                     />}
                             position={Position.TOP}
                         >
-                            <HelpIcon/>
+                            <HelpIcon className={styles.help_icon}/>
                         </Tooltip>
                         {
                             !isSummaryMode && !this.state.editCommentMode &&
