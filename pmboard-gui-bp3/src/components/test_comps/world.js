@@ -7,7 +7,7 @@ import {MultiSelect} from "@blueprintjs/select";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import {Rnd} from "react-rnd";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
-import BarChart from "../bar-chart/bar-chart";
+import BarChart from "../charts/backlog-defects-chart/backlog-defects-chart";
 
 export default class World extends React.Component {
     constructor(props) {

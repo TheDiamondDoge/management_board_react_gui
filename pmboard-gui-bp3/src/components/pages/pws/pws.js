@@ -12,12 +12,13 @@ import ErrorBoundary from "../../error-boundary/error-boundary";
 import Actions from "../../tabs/actions/actions.container";
 import Requirements from "../../tabs/requirements-tab/requirements-tab.container";
 import BacklogTab from "../../tabs/backlog-tab/backlog-tab.container";
+import DefectsTab from "../../tabs/defects-tab/defects-tab.container";
 
 export default class PWS extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedId: 'back'
+            selectedId: 'defects'
         };
     }
 
@@ -37,15 +38,16 @@ export default class PWS extends React.Component {
                     className={styles.center}
                     onChange={this.onChange}
                 >
-                    <Tab id="sum" title="Summary" panel={<ErrorBoundary><SummaryTab/></ErrorBoundary>}/>
-                    <Tab id="ind" title="Indicators" panel={<ErrorBoundary><IndicatorsTab/></ErrorBoundary>}/>
-                    <Tab id="inf" title="Information" panel={<ErrorBoundary><InfoTab/></ErrorBoundary>}/>
+                    <Tab id="summary" title="Summary" panel={<ErrorBoundary><SummaryTab/></ErrorBoundary>}/>
+                    <Tab id="indicators" title="Indicators" panel={<ErrorBoundary><IndicatorsTab/></ErrorBoundary>}/>
+                    <Tab id="information" title="Information" panel={<ErrorBoundary><InfoTab/></ErrorBoundary>}/>
                     <Tab id="actions" title="Actions" panel={<ErrorBoundary><Actions/></ErrorBoundary>}/>
                     <Tab id="risks" title="Risks" panel={<ErrorBoundary><Risks/></ErrorBoundary>}/>
                     <Tab id="cost" title="Cost" panel={<ErrorBoundary><CostTab/></ErrorBoundary>}/>
-                    <Tab id="rep" title="Report" disabled panel={<ErrorBoundary><Hello/></ErrorBoundary>}/>
-                    <Tab id="req" title="Requirements" panel={<ErrorBoundary><Requirements/></ErrorBoundary>}/>
-                    <Tab id="back" title="Backlog" panel={<ErrorBoundary><BacklogTab/></ErrorBoundary>}/>
+                    <Tab id="report" title="Report" disabled panel={<ErrorBoundary><Hello/></ErrorBoundary>}/>
+                    <Tab id="rqs" title="Requirements" panel={<ErrorBoundary><Requirements/></ErrorBoundary>}/>
+                    <Tab id="backlog" title="Backlog" panel={<ErrorBoundary><BacklogTab/></ErrorBoundary>}/>
+                    <Tab id="defects" title="Defects" panel={<ErrorBoundary><DefectsTab/></ErrorBoundary>}/>
                     <Tab id="blc" title="BLC Dashboard" panel={<ErrorBoundary><BlcDashboard/></ErrorBoundary>}/>
                 </Tabs>
             </div>

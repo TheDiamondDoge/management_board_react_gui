@@ -14,3 +14,7 @@
 .float_right {
     float: right;
 }
+
+.inline_block {
+    display: inline-block;
+}

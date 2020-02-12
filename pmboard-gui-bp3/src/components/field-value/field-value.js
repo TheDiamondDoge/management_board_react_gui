@@ -24,5 +24,5 @@ FieldValue.propTypes = {
         PropTypes.number,
         PropTypes.bool,
     ]),
-    useName: PropTypes.bool
+    useName: PropTypes.string
 };

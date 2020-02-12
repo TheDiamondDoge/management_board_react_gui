@@ -192,3 +192,14 @@ export const CostTabTypes = PropTypes.shape({
     charged: CostTable,
     capex: CostTable
 });
+
+export const BacklogDefectsTypes = PropTypes.shape({
+    dev: PropTypes.arrayOf(PropTypes.number),
+    in: PropTypes.arrayOf(PropTypes.number),
+    labels: PropTypes.arrayOf(PropTypes.string),
+    newIssues: PropTypes.arrayOf(PropTypes.number),
+    out: PropTypes.arrayOf(PropTypes.number),
+    qa: PropTypes.arrayOf(PropTypes.number),
+    qaDone: PropTypes.arrayOf(PropTypes.number),
+    updatedOn: PropTypes.string,
+});

@@ -6,7 +6,7 @@ import TooltipContent from "../../tooltip-content/tooltip-content";
 import BacklogDefectsPage from "../backlog-defects-page/backlog-defects-page";
 import {BacklogDefectsTypes} from "../../../util/custom-types";
 
-export default class BacklogTab extends React.Component {
+export default class DefectsTab extends React.Component {
     componentDidMount() {
         this.props.loadData();
     }
@@ -15,19 +15,18 @@ export default class BacklogTab extends React.Component {
         this.props.resetData();
     }
 
-
     render() {
         const {loading} = this.props;
         if (loading) {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
-            const {payload} = this.props.backlog;
+            const {payload} = this.props.defects;
             const {updatedOn, ...data} = payload;
             return (
                 <CustomCard autosize>
                     <BacklogDefectsPage
                         data={data}
-                        header="Defects backlog (ECMA CRs)"
+                        header="New Open Defects (ECMA CRs)"
                         onUpdate={() => alert("Updated")}
                         onCurrentClick={() => alert("Current week")}
                         updatedOn={updatedOn}
@@ -39,10 +38,10 @@ export default class BacklogTab extends React.Component {
     }
 }
 
-BacklogTab.propTypes = {
+DefectsTab.propTypes = {
     loadData: PropTypes.func.isRequired,
     resetData: PropTypes.func.isRequired,
-    backlog: PropTypes.shape({
+    defects: PropTypes.shape({
         loading: PropTypes.bool.isRequired,
         payload: BacklogDefectsTypes.isRequired
     })

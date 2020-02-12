@@ -16,6 +16,7 @@ import risks from "./pws/risks-tab";
 import actions from "./pws/actions";
 import requirements from "./pws/requirements-tab";
 import backlog from "./pws/backlog";
+import defects from "./pws/defects";
 
 export default combineReducers({
     pws: pwsReducers()
@@ -39,6 +40,7 @@ function pwsReducers() {
         risks: risks,
         actions: actions,
         requirementsTab: requirements,
-        backlogTab: backlog
+        backlogTab: backlog,
+        defectsTab: defects
     })
 }

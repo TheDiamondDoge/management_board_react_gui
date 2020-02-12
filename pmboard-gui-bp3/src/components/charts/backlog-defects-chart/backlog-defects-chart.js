@@ -2,7 +2,7 @@ import React from "react";
 import Chart from "chart.js";
 import "chartjs-plugin-annotation";
 import PropTypes from "prop-types";
-import styles from "./bar-chart.module.css";
+import styles from "./backlog-defects-chart.module.css";
 import {RangeSlider} from "@blueprintjs/core";
 
 export default class BarChart extends React.Component {
@@ -33,13 +33,16 @@ export default class BarChart extends React.Component {
 
     render() {
         let initialRange;
+        let labelsAmount;
         if (!this.props.data.labels) {
             initialRange = [0, 0];
+            labelsAmount = 1;
         } else {
             const {labels} = this.props.data;
             const min = labels[0];
             const max = labels[labels.length - 1];
-            initialRange = [Number(min), Number(max)];
+            initialRange = [Number(min), Number(max) - 2];
+            labelsAmount = labels.length || 1;
         }
         return (
             <div>
@@ -48,7 +51,7 @@ export default class BarChart extends React.Component {
                     min={initialRange[0]}
                     max={initialRange[1]}
                     stepSize={1}
-                    labelStepSize={5}
+                    labelStepSize={labelsAmount}
                     onChange={this.onChange}
                     value={this.state.range || initialRange}
                 />
