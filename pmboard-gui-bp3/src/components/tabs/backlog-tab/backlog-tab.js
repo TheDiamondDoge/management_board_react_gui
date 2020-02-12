@@ -5,8 +5,10 @@ import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import BarChart from "../../bar-chart/bar-chart";
 import styles from "./backlog-tab.module.css";
 import TooltipContent from "../../tooltip-content/tooltip-content";
-import {Position, Tooltip} from "@blueprintjs/core";
+import {Button, Intent, Position, Tooltip} from "@blueprintjs/core";
 import HelpIcon from "../../help-icon/help-icon";
+import UpdatedInfo from "../../updated-info/updated-info";
+import FieldValue from "../../field-value/field-value";
 
 export default class BacklogTab extends React.Component {
     componentDidMount() {
@@ -24,6 +26,7 @@ export default class BacklogTab extends React.Component {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             const {payload} = this.props.backlog;
+            const {updatedOn} = payload;
             return (
                 <CustomCard autosize>
                     <div className={styles.header_container}>
@@ -38,6 +41,22 @@ export default class BacklogTab extends React.Component {
                         </Tooltip>
                     </div>
                     <BarChart data={payload}/>
+                    <br/>
+                    <UpdatedInfo date={updatedOn}/>
+                    <br/>
+                    <div>
+                        <Button
+                            minimal
+                            icon={"refresh"}
+                            intent={Intent.PRIMARY}
+                            text="Update Grid"
+                            onClick={() => alert("???")}
+                        />
+                        <FieldValue useName="Current week"
+                                    value="http://google.com"
+                                    className={styles.float_right}
+                        />
+                    </div>
                 </CustomCard>
             );
         }

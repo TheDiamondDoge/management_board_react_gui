@@ -13,41 +13,43 @@ export default class BarChart extends React.Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.onChange = this.handleChange();
     }
 
     chartRef = React.createRef();
     barChart = null;
-    timer = null;
+    onChange = null;
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (this.state.shouldChartUpdate) {
             if (this.barChart) {
                 this.barChart.destroy();
             }
-            this.createChart(this.props.data);
+            const data = this.filterData(this.props.data);
+            this.filtered = data;
+            this.createChart(data);
         }
     }
 
     render() {
-        let labelCount;
         let initialRange;
         if (!this.props.data.labels) {
-            labelCount = 0;
+            initialRange = [0, 0];
         } else {
-            labelCount = this.props.data.labels.length;
-            initialRange = [0, labelCount];
+            const {labels} = this.props.data;
+            const min = labels[0];
+            const max = labels[labels.length - 1];
+            initialRange = [Number(min), Number(max)];
         }
         return (
             <div>
                 <canvas id="myChart" className={styles.canvas} ref={this.chartRef}/>
                 <RangeSlider
-                    min={0}
-                    max={labelCount}
+                    min={initialRange[0]}
+                    max={initialRange[1]}
                     stepSize={1}
-                    labelStepSize={1}
-                    onChange={
-                        this.handleChange
-                    }
+                    labelStepSize={5}
+                    onChange={this.onChange}
                     value={this.state.range || initialRange}
                 />
             </div>
@@ -136,16 +138,33 @@ export default class BarChart extends React.Component {
         });
     }
 
-    handleChange(range) {
-        this.setState({shouldChartUpdate: false});
-        this.setRange(range)
-        console.log("ON CHANGE", this.timer);
-        clearTimeout(this.timer);
-        this.timer = setTimeout(() => this.setState({shouldChartUpdate: true}), 300)
+    handleChange() {
+        let timeout;
+        return (range) => {
+            this.setState({shouldChartUpdate: false});
+            this.setState({range});
+            clearTimeout(timeout);
+            timeout = setTimeout(() => this.setState({shouldChartUpdate: true}), 300)
+        }
     }
 
-    setRange(range) {
-        this.setState({range});
+    filterData(data) {
+        const range = this.state.range;
+        if (!range) return data;
+
+        const {labels} = data;
+        const startIndex = labels.findIndex((item) => item == range[0]);
+        const endIndex = labels.findIndex((item) => item == range[1]);
+
+        let filtered = {};
+        filtered.dev = data.dev.slice(startIndex, endIndex + 1);
+        filtered.in = data.in.slice(startIndex, endIndex + 1);
+        filtered.newIssues = data.newIssues.slice(startIndex, endIndex + 1);
+        filtered.out = data.out.slice(startIndex, endIndex + 1);
+        filtered.qa = data.qa.slice(startIndex, endIndex + 1);
+        filtered.qaDone = data.qaDone.slice(startIndex, endIndex + 1);
+        filtered.labels = data.labels.slice(startIndex, endIndex + 1);
+        return filtered;
     }
 }
 

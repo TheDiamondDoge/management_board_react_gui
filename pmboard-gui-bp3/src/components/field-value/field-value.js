@@ -7,9 +7,9 @@ import classNames from 'classnames';
 
 export default class FieldValue extends React.Component {
     render() {
-        let {value, className, ...other} = this.props;
+        let {value, className, useName, ...other} = this.props;
         const classes = classNames(styles.word_wrap, className);
-        value = stringToUrlElem(nullToEmptyStr(value));
+        value = stringToUrlElem(nullToEmptyStr(value), useName);
         return (
             <div className={classes} {...other}>
                 {value}
@@ -24,4 +24,5 @@ FieldValue.propTypes = {
         PropTypes.number,
         PropTypes.bool,
     ]),
+    useName: PropTypes.bool
 };
