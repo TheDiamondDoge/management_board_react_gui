@@ -85,4 +85,17 @@ export const boolToYesNo = (val) => (
     val === true ? "Yes" : "No"
 );
 
+export const getIndicatorsColor = (number) => {
+    switch (number) {
+        case 1:
+            return "green";
+        case 2:
+            return "yellow";
+        case 3:
+            return "red";
+        default:
+            return "blank";
+    }
+};
+
 

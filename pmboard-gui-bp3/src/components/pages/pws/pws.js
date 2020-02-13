@@ -1,6 +1,6 @@
 import React from 'react';
 import {Tab, Tabs} from "@blueprintjs/core";
-import Report from '../../tabs/report-tab/report-tab';
+import Report from '../../tabs/report-tab/report-tab.container';
 import styles from './pws.module.css';
 import SummaryTab from "../../tabs/summary-tab/summary-tab.container";
 import InfoTab from "../../tabs/info-tab/info-tab.container";

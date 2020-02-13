@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import {HTMLTable} from "@blueprintjs/core";
 import StatusIndicator from "../status-indicator/status-indicator";
 import styles from "./health-indicators-minimal.module.css";
+import {getIndicatorsColor} from "../../util/transform-funcs";
 
 export default function HealthIndicatorsMinimal(props) {
-    const {className} = props;
+    const {indicators, className} = props;
+    const {schedule, scope, quality, cost} = indicators;
     return (
         <HTMLTable
             striped
@@ -24,16 +26,16 @@ export default function HealthIndicatorsMinimal(props) {
             <tbody>
             <tr>
                 <td className={styles.td_style}>
-                    <StatusIndicator status={"green"} className={styles.status_icon}/>
+                    <StatusIndicator status={getIndicatorsColor(schedule)} className={styles.status_icon}/>
                 </td>
                 <td className={styles.td_style}>
-                    <StatusIndicator status={"blank"} className={styles.status_icon}/>
+                    <StatusIndicator status={getIndicatorsColor(scope)} className={styles.status_icon}/>
                 </td>
                 <td className={styles.td_style}>
-                    <StatusIndicator status={"yellow"} className={styles.status_icon}/>
+                    <StatusIndicator status={getIndicatorsColor(quality)} className={styles.status_icon}/>
                 </td>
                 <td className={styles.td_style}>
-                    <StatusIndicator status={"red"} className={styles.status_icon}/>
+                    <StatusIndicator status={getIndicatorsColor(cost)} className={styles.status_icon}/>
                 </td>
             </tr>
             </tbody>

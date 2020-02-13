@@ -14,7 +14,7 @@ import RenderFieldHelper from "../../../util/render-field-helper";
 import {HealthIndicatorsShape, MilestoneShape, SummaryShape} from "../../../util/custom-types";
 import ErrorBoundary from "../../error-boundary/error-boundary";
 
-
+//TODO Executive (flags) endpoint changed. Tune this
 export default class SummaryTab extends React.Component {
     componentDidMount() {
         this.props.loadData();

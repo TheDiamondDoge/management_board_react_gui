@@ -17,6 +17,7 @@ import actions from "./pws/actions";
 import requirements from "./pws/requirements-tab";
 import backlog from "./pws/backlog";
 import defects from "./pws/defects";
+import report from "./pws/report-tab";
 
 export default combineReducers({
     pws: pwsReducers()
@@ -41,6 +42,7 @@ function pwsReducers() {
         actions: actions,
         requirementsTab: requirements,
         backlogTab: backlog,
-        defectsTab: defects
+        defectsTab: defects,
+        reportTab: report
     })
 }
