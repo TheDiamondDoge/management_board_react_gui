@@ -13,26 +13,30 @@ export default function HealthIndicatorsMinimal(props) {
             condensed
             className={className}
         >
+            <thead>
             <tr>
                 <th>Schedule</th>
                 <th>Scope</th>
                 <th>Quality</th>
                 <th>Cost</th>
             </tr>
+            </thead>
+            <tbody>
             <tr>
-                <th className={styles.td_style}>
+                <td className={styles.td_style}>
                     <StatusIndicator status={"green"} className={styles.status_icon}/>
-                </th>
-                <th className={styles.td_style}>
+                </td>
+                <td className={styles.td_style}>
                     <StatusIndicator status={"blank"} className={styles.status_icon}/>
-                </th>
-                <th className={styles.td_style}>
+                </td>
+                <td className={styles.td_style}>
                     <StatusIndicator status={"yellow"} className={styles.status_icon}/>
-                </th>
-                <th className={styles.td_style}>
+                </td>
+                <td className={styles.td_style}>
                     <StatusIndicator status={"red"} className={styles.status_icon}/>
-                </th>
+                </td>
             </tr>
+            </tbody>
         </HTMLTable>
     )
 }
