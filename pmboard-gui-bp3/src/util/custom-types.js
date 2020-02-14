@@ -203,3 +203,10 @@ export const BacklogDefectsTypes = PropTypes.shape({
     qaDone: PropTypes.arrayOf(PropTypes.number),
     updatedOn: PropTypes.string,
 });
+
+export const RiskReportType = PropTypes.shape({
+    rating: PropTypes.number.isRequired,
+    riskDescription: PropTypes.string,
+    impactDescription: PropTypes.string,
+    mitigation: PropTypes.string
+});

@@ -4,15 +4,14 @@ import PropTypes from "prop-types";
 
 export default class EditSaveControls extends React.Component {
     render() {
-        const {onSubmit, onCancel, onClick, editMode, smallSize} = this.props;
         return (
-            this.renderElements(editMode, smallSize, onSubmit, onCancel, onClick)
+            this.renderElements()
         )
     }
 
-    renderElements = (editMode, smallSize, onSubmit, onCancel, onClick) => {
+    renderElements = () => {
+        let {className, smallSize, loading, editMode, onSubmit, onCancel, onClick} = this.props;
         let condProps = this.getButtonProps(smallSize);
-        let {className} = this.props;
         if (editMode) {
             return (
                 <div className={className}>
@@ -45,6 +44,7 @@ export default class EditSaveControls extends React.Component {
                         icon={"edit"}
                         onClick={onClick}
                         intent={Intent.PRIMARY}
+                        loading={loading}
                         {...condProps}
                     />
                 </div>
@@ -72,4 +72,5 @@ EditSaveControls.propTypes = {
     editMode: PropTypes.bool,
     smallSize: PropTypes.bool,
     className: PropTypes.string,
+    loading: PropTypes.bool
 };

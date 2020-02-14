@@ -111,3 +111,7 @@ export const getDefectsChart = (projectID) => (
 export const getReportTab = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/report`)
 );
+
+export const getUserReports = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/user_reports`)
+);

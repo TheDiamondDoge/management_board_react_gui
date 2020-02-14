@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactQuill from "react-quill";
 import styles from './custom-quill.module.css';
 import EditSaveControls from "../controls/edit-save-controls";
 import {Formik} from "formik";
 
 import 'react-quill/dist/quill.snow.css';
+import FormikInput from "../controls/util-renderers";
 
 
 export default class CustomQuill extends React.Component {
@@ -15,6 +15,7 @@ export default class CustomQuill extends React.Component {
         this.state = {
             editMode: false,
             default: {
+                value: "<p>(Empty)</p>",
                 modules: {
                     toolbar: this.toolbarOptions,
                 }
@@ -27,17 +28,19 @@ export default class CustomQuill extends React.Component {
     submitForm = null;
 
     render() {
-        const {header, value, onSubmit, ...otherProps} = this.props;
+        const {header, onSubmit, loading, ...otherProps} = this.props;
+        const value = this.props.value || this.state.default.value;
         const {editMode} = this.state;
         const readOnly = !editMode;
         let modules = this.getModules(editMode);
         return (
             <Formik
+                enableReinitialize
                 onSubmit={(values, formikActions) => {
                     formikActions.setSubmitting(false);
                     onSubmit(values);
                 }}
-                initialValues={{text: value}}
+                initialValues={{text: value || "AAA"}}
                 render={(formikProps) => {
                     this.submitForm = formikProps.submitForm;
                     return (
@@ -52,13 +55,15 @@ export default class CustomQuill extends React.Component {
                                                   onCancel={this.onEditChange}
                                                   onSubmit={() => this.submitForm()}
                                                   editMode={editMode}
+                                                  loading={loading}
                                 />
                             </div>
-                            <ReactQuill readOnly={readOnly}
-                                        modules={modules}
-                                        value={formikProps.values.text}
-                                        onChange={(data) => formikProps.setFieldValue("text", data)}
-                                        {...otherProps}
+                            <FormikInput
+                                {...otherProps}
+                                type={"quill"}
+                                name={"text"}
+                                readOnly={readOnly}
+                                modules={modules}
                             />
                         </>
                     )
@@ -104,5 +109,6 @@ export default class CustomQuill extends React.Component {
 CustomQuill.propTypes = {
     header: PropTypes.node,
     value: PropTypes.string,
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    loading: PropTypes.bool
 };

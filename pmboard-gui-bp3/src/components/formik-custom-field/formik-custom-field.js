@@ -7,6 +7,8 @@ import styles from "./formik-custom-field.module.css";
 import {Field} from "formik";
 import PropTypes from "prop-types";
 import FormikSelectList from "../formik-select-list";
+import CustomQuill from "../custom-quill/custom-quill";
+import ReactQuill from "react-quill";
 
 export default class FormikCustomField extends React.Component {
     constructor(props) {
@@ -87,6 +89,11 @@ export default class FormikCustomField extends React.Component {
             case "multiselect":
                 return (
                     <FormikSelectList {...props} {...field}/>
+                );
+            case "quill":
+                const {value, onChange, name, ...restField} = field;
+                return (
+                    <ReactQuill {...props} {...restField} value={value} onChange={onChange(name)}/>
                 );
             case "text":
             default:

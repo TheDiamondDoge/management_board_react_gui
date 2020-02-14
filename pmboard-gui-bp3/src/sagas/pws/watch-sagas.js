@@ -16,6 +16,7 @@ import * as requirements from "../../actions/pws/requirements-tab";
 import * as backlog from "../../actions/pws/backlog";
 import * as defects from "../../actions/pws/defects";
 import * as report from "../../actions/pws/report-tab";
+import * as userReport from "../../actions/pws/user-reports";
 
 function* watchSummaryTabLoad() {
     yield takeEvery(summaryTab.SUMMARY_LOAD, sagas.loadSummaryTab);
@@ -129,6 +130,10 @@ function* watchReportTabLoad() {
     yield takeEvery(report.REPORT_LOAD, sagas.loadReportTab)
 }
 
+function* watchUserReportLoad() {
+    yield takeEvery(userReport.USER_REPORTS_LOAD, sagas.loadUserReports)
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
@@ -157,7 +162,8 @@ const exportSagas = [
     fork(watchIndicatorsQualitySave),
     fork(watchIndicatorsQualityLoad),
     fork(watchContribLoad),
-    fork(watchReportTabLoad)
+    fork(watchReportTabLoad),
+    fork(watchUserReportLoad)
 ];
 
 export default exportSagas;

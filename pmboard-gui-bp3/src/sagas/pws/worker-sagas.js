@@ -18,6 +18,7 @@ import * as requirements from "../../actions/pws/requirements-tab";
 import * as backlog from "../../actions/pws/backlog";
 import * as defects from "../../actions/pws/defects";
 import * as report from "../../actions/pws/report-tab";
+import * as userReports from "../../actions/pws/user-reports";
 
 export function* loadSummaryTab() {
     try {
@@ -201,8 +202,19 @@ export function* loadReportTab() {
     try {
         const data = yield call(api.getReportTab, 1);
         yield put(report.loadReportSuccess(data));
+        yield call(loadRequirements);
+        yield call(loadUserReports);
     } catch (e) {
         yield put(report.errorReport(e));
+    }
+}
+
+export function* loadUserReports() {
+    try {
+        const data = yield call(api.getUserReports, 1);
+        yield put(userReports.loadUserReportsSuccess(data));
+    } catch(e) {
+        yield put(userReports.errorUserReports(e));
     }
 }
 

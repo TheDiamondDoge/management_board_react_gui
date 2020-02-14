@@ -1,20 +1,4 @@
-import React from "react";
-
 const MONTHS_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-export const stringToUrlElem = (url, label = "Click here") => (
-    isUrl(url) ? (<a href={url} target="_blank" rel="noopener noreferrer">{label}</a>) : url
-);
-
-let isUrl = (value) => {
-    const expr = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/gi;
-    const regExp = new RegExp(expr);
-    return toStr(value).match(regExp);
-};
-
-let toStr = (value) => (
-    value + ""
-);
 
 export const blcNumberToState = (num) => {
     switch (num) {

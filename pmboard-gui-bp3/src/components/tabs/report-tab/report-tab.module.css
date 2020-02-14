@@ -25,3 +25,8 @@
 .green {
     color: #0d8050;
 }
+
+.scope_definition {
+    height: 250px;
+    overflow-y: auto;
+}
