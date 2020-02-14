@@ -21,7 +21,7 @@ export default class RqsReportList extends React.Component {
                         const id = rq.reqId;
                         const url = this.state.url + `/${id}`;
                         return (
-                            <li key={id}>
+                            <li key={id} className={styles.list_item}>
                                 <div>
                                     <SafeUrl label={id}
                                              url={url}

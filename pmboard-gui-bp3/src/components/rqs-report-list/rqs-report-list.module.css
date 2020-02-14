@@ -1,5 +1,9 @@
 .list {
-    list-style-image: none;
+    list-style: none;
+}
+
+.list_item {
+    margin-bottom: 15px;
 }
 
 .url {
