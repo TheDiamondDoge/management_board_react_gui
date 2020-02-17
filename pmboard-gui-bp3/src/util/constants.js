@@ -27,3 +27,11 @@ export const ValidationErrors = {
     },
     REQUIRED: "Value required"
 };
+
+export const ReportTypes = {
+    SUMMARY: "summary",
+    RED_FLAG: "red",
+    ORANGE_FLAG: "orange",
+    GREEN_FLAG: "green",
+    DETAILS: "details",
+};

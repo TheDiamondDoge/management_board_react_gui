@@ -1,5 +1,6 @@
 export const USER_REPORTS_LOAD = "USER_REPORTS_LOAD";
 export const USER_REPORTS_LOAD_SUCCESS = "USER_REPORTS_LOAD_SUCCESS";
+export const USER_REPORTS_SAVE = "USER_REPORTS_SAVE";
 export const USER_REPORTS_ERROR = "USER_REPORTS_ERROR";
 export const USER_REPORTS_RESET = "USER_REPORTS_RESET";
 
@@ -9,6 +10,12 @@ export const loadUserReports = () => ({
 
 export const loadUserReportsSuccess = ({data}) => ({
     type: USER_REPORTS_LOAD_SUCCESS,
+    data
+});
+
+
+export const saveUserReport = (data) => ({
+    type: USER_REPORTS_SAVE,
     data
 });
 

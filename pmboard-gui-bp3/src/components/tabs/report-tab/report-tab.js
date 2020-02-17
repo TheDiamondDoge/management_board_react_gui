@@ -13,6 +13,7 @@ import TwoItemsLiner from "../../two-items-liner/two-items-liner";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {MilestoneShape, RiskReportType} from "../../../util/custom-types";
 import RqsReportList from "../../rqs-report-list/rqs-report-list";
+import {ReportTypes} from "../../../util/constants";
 
 //TODO populate snapshots in popover
 export default class ReportTab extends React.Component {
@@ -38,7 +39,7 @@ export default class ReportTab extends React.Component {
 
             const userReportsLoading = this.props.userReports.loading;
             const userReportsPayload = this.props.userReports.payload;
-            console.log("PAYKIAD", userReportsPayload)
+            const userReportSubmit = this.props.saveData;
             const {details, green, orange, red, summary} = userReportsPayload;
             return (
                 <>
@@ -61,25 +62,25 @@ export default class ReportTab extends React.Component {
                     <CustomCard>
                         <CustomQuill value={summary}
                                      header={<h3>Executive Status Summary</h3>}
-                                     onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
+                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.SUMMARY, userReportSubmit)}
                                      loading={userReportsLoading}
                         />
                         <br/>
                         <CustomQuill value={red}
                                      header={<h3 className={styles.red}>Red Flag (executive action needed)</h3>}
-                                     onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
+                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.RED_FLAG, userReportSubmit)}
                                      loading={userReportsLoading}
                         />
                         <br/>
                         <CustomQuill value={orange}
                                      header={<h3 className={styles.orange}>Orange Flag (core team action needed)</h3>}
-                                     onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
+                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.ORANGE_FLAG, userReportSubmit)}
                                      loading={userReportsLoading}
                         />
                         <br/>
                         <CustomQuill value={green}
                                      header={<h3 className={styles.green}>Green Flag</h3>}
-                                     onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
+                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.GREEN_FLAG, userReportSubmit)}
                                      loading={userReportsLoading}
                         />
                     </CustomCard>
@@ -87,7 +88,7 @@ export default class ReportTab extends React.Component {
                     <CustomCard>
                         <CustomQuill value={details}
                                      header={<h3>Current Project Details</h3>}
-                                     onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
+                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.DETAILS, userReportSubmit)}
                                      loading={userReportsLoading}
                         />
                     </CustomCard>
@@ -122,6 +123,15 @@ export default class ReportTab extends React.Component {
                     </CustomCard>
                 </>
             );
+        }
+    }
+
+    onUserReportSaveFactory(type, submitFunc) {
+        return function(value) {
+            submitFunc({
+                type: type,
+                data: value
+            })
         }
     }
 
@@ -163,6 +173,7 @@ export default class ReportTab extends React.Component {
 ReportTab.propTypes = {
     loadData: PropTypes.func.isRequired,
     resetData: PropTypes.func.isRequired,
+    saveData: PropTypes.func.isRequired,
     report: PropTypes.shape({
         loading: PropTypes.bool.isRequired,
         payload: PropTypes.shape({

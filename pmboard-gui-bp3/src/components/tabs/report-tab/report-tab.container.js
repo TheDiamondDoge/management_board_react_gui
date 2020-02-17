@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import {loadReport, resetReport} from "../../../actions/pws/report-tab";
 import ReportTab from "./report-tab";
 import {resetRequirements} from "../../../actions/pws/requirements-tab";
-import {resetUserReports} from "../../../actions/pws/user-reports";
+import {resetUserReports, saveUserReport} from "../../../actions/pws/user-reports";
 
 function mapStateToProps(state) {
     return {
@@ -19,7 +19,8 @@ function mapDispatchToProps(dispatch) {
             dispatch(resetReport());
             dispatch(resetRequirements());
             dispatch(resetUserReports())
-        }
+        },
+        saveData: (data) => dispatch(saveUserReport(data))
     }
 }
 

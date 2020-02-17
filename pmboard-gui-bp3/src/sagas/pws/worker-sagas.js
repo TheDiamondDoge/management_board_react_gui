@@ -19,6 +19,7 @@ import * as backlog from "../../actions/pws/backlog";
 import * as defects from "../../actions/pws/defects";
 import * as report from "../../actions/pws/report-tab";
 import * as userReports from "../../actions/pws/user-reports";
+import {load} from "dotenv";
 
 export function* loadSummaryTab() {
     try {
@@ -214,6 +215,15 @@ export function* loadUserReports() {
         const data = yield call(api.getUserReports, 1);
         yield put(userReports.loadUserReportsSuccess(data));
     } catch(e) {
+        yield put(userReports.errorUserReports(e));
+    }
+}
+
+export function* saveUserReport(action) {
+    try {
+        yield call(api.saveUserReports, 1, action.data);
+        yield call(loadUserReports);
+    } catch (e) {
         yield put(userReports.errorUserReports(e));
     }
 }

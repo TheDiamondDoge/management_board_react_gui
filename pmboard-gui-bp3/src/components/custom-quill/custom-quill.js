@@ -38,7 +38,8 @@ export default class CustomQuill extends React.Component {
                 enableReinitialize
                 onSubmit={(values, formikActions) => {
                     formikActions.setSubmitting(false);
-                    onSubmit(values);
+                    onSubmit(values.text);
+                    this.onEditChange();
                 }}
                 initialValues={{text: value || "AAA"}}
                 render={(formikProps) => {

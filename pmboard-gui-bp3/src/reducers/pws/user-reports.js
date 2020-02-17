@@ -2,7 +2,7 @@ import {
     USER_REPORTS_ERROR,
     USER_REPORTS_LOAD,
     USER_REPORTS_LOAD_SUCCESS,
-    USER_REPORTS_RESET
+    USER_REPORTS_RESET, USER_REPORTS_SAVE
 } from "../../actions/pws/user-reports";
 
 export const initState = {
@@ -26,6 +26,11 @@ export default (state, action) => {
                 ...state,
                 loading: false,
                 payload: action.data
+            };
+        case USER_REPORTS_SAVE:
+            return {
+                ...state,
+                loading: true
             };
         case USER_REPORTS_ERROR:
             return {

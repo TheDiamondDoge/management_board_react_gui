@@ -134,6 +134,10 @@ function* watchUserReportLoad() {
     yield takeEvery(userReport.USER_REPORTS_LOAD, sagas.loadUserReports)
 }
 
+function* watchUserReportSave() {
+    yield takeLatest(userReport.USER_REPORTS_SAVE, sagas.saveUserReport)
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
@@ -163,7 +167,8 @@ const exportSagas = [
     fork(watchIndicatorsQualityLoad),
     fork(watchContribLoad),
     fork(watchReportTabLoad),
-    fork(watchUserReportLoad)
+    fork(watchUserReportLoad),
+    fork(watchUserReportSave)
 ];
 
 export default exportSagas;
