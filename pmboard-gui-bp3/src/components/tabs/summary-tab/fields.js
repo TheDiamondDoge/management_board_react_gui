@@ -32,7 +32,10 @@ export default {
         },
     },
     executiveSummary: {label: "Executive Status Summary"},
-    executiveActions: {label: "Executive Action Needed"},
+    redFlag: {label: "Red Flag"},
+    orangeFlag: {label: "Orange Flag"},
+    greenFlag: {label: "Green Flag"},
+    details: {label: "Current Project Details"},
     collabSite: {label: "Project Collaboration Site"},
     epmPwaSite: {
         label: "EPM project PWA Site:",

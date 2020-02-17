@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import styles from './custom-quill.module.css';
 import EditSaveControls from "../controls/edit-save-controls";
 import {Formik} from "formik";
+import FormikInput from "../controls/util-renderers";
 
 import 'react-quill/dist/quill.snow.css';
-import FormikInput from "../controls/util-renderers";
 
 
 export default class CustomQuill extends React.Component {

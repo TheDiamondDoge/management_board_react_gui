@@ -13,6 +13,9 @@ import PropTypes from 'prop-types';
 import RenderFieldHelper from "../../../util/render-field-helper";
 import {HealthIndicatorsShape, MilestoneShape, SummaryShape} from "../../../util/custom-types";
 import ErrorBoundary from "../../error-boundary/error-boundary";
+import ReactQuill from "react-quill";
+
+import 'react-quill/dist/quill.snow.css';
 
 //TODO Executive (flags) endpoint changed. Tune this
 export default class SummaryTab extends React.Component {
@@ -88,13 +91,14 @@ export default class SummaryTab extends React.Component {
                                     renderHelper.displayOrNot(obj, validationParams)
                                         ? <div key={obj} className={styles.executive_block}>
                                             <FieldName name={renderHelper.getLabelById(obj)}/>
-                                            <FieldValue value={`${status[obj]}`}/>
+                                            <ReactQuill defaultValue={status[obj]} modules={{toolbar: null}} readOnly/>
+                                            {/*<FieldValue value={`${status[obj]}`}/>*/}
                                         </div>
                                         : ""
                                 ))
                             }
                         </div>
-                        <div className="right_part">
+                        <div className={styles.right_part}>
                             {
                                 Object.keys(links).map((obj) => (
                                     renderHelper.displayOrNot(obj, validationParams)

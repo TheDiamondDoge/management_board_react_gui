@@ -13,7 +13,7 @@
     position: relative;
 }
 
-th {
+.th_style {
     position: sticky;
     top: 0;
     background: white;

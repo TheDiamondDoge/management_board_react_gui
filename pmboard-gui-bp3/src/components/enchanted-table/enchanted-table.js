@@ -52,7 +52,7 @@ export default class EnchantedTable extends React.Component {
                                 const defaultStyle = {width: style.width || ""};
                                 const id = field.id;
                                 const filterType = field.searchType ? field.searchType : "";
-                                const headerName = `${id}_header`;
+                                const headerName = classNames(`${id}_header`, styles.th_style);
                                 return (
                                     <th
                                         key={headerName}

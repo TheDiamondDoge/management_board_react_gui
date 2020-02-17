@@ -54,7 +54,7 @@ export default class Timeline extends React.Component {
                         </td>
                         {
                             milestones.map((milestone, key) => (
-                                this.createContentCell(dateFormatToString(new Date(milestone.actualDate)), key)
+                                this.createContentCell(dateFormatToString(new Date(milestone.baselineDate)), key)
                             ))
                         }
                     </tr>

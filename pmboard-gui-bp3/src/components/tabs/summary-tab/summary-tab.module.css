@@ -34,7 +34,5 @@
 }
 
 .right_part {
-    display: flex;
-    justify-items: center;
-    align-items: center;
+    margin: auto;
 }

@@ -60,7 +60,10 @@ let dataComposer = (data) => ({
     },
     status: {
         executiveSummary: data.executiveSummary,
-        executiveActions: data.executiveActions,
+        redFlag: data.redFlag,
+        orangeFlag: data.orangeFlag,
+        greenFlag: data.greenFlag,
+        details: data.details,
     },
     links: {
         collabSite: data.collabSite,
