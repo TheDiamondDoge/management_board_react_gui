@@ -71,6 +71,7 @@ let dataComposer = (data) => ({
         documentationRepo: data.documentationRepo,
         defectsReportSite: data.defectsReportSite,
         activeRisks: data.activeRisks,
+        activeActions: data.activeActions,
     },
     pwsInfo: {
         epmLastSavedDate: data.epmLastSavedDate,

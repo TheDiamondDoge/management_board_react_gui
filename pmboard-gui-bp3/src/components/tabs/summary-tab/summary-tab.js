@@ -92,7 +92,6 @@ export default class SummaryTab extends React.Component {
                                         ? <div key={obj} className={styles.executive_block}>
                                             <FieldName name={renderHelper.getLabelById(obj)}/>
                                             <ReactQuill defaultValue={status[obj]} modules={{toolbar: null}} readOnly/>
-                                            {/*<FieldValue value={`${status[obj]}`}/>*/}
                                         </div>
                                         : ""
                                 ))

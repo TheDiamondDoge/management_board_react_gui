@@ -51,6 +51,7 @@ export default {
         }
     },
     activeRisks: {label: "Active Risks"},
+    activeActions: {label: "Active Actions"},
     epmLastSavedDate: {
         label: "EPM Last Saved",
         notAllowedIf: {
