@@ -11,6 +11,8 @@ import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
 import 'react-quill/dist/quill.core.css';
+import ContributingOpenProjects from "../contributing-projects-table/contributing-open-projects";
+import CustomCard from "../card/custom-card";
 
 export default class World extends React.Component {
     constructor(props) {
@@ -191,7 +193,11 @@ export default class World extends React.Component {
                     }
                     }/>
                 <div style={{height: "400px", width: "900px"}}>
-                    <ReactQuill readOnly value={this.state.quill} onChange={(x, q, w, e, r) => console.log(x, q, w, e)}/>
+                    <ReactQuill readOnly value={this.state.quill}
+                                onChange={(x, q, w, e, r) => console.log(x, q, w, e)}/>
+                </div>
+                <div style={{width: "100px", overflowX: "auto"}}>
+                    <ContributingOpenProjects/>
                 </div>
             </>
         );
