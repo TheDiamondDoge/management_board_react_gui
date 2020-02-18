@@ -2,7 +2,7 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
 import {Formik, Field, Form, ErrorMessage} from "formik";
-import {HTMLTable, MenuItem, Popover, Position, Button, Menu, Dialog} from "@blueprintjs/core";
+import {HTMLTable, MenuItem, Popover, Position, Button, Menu, Dialog, Intent} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import {Rnd} from "react-rnd";
@@ -192,16 +192,153 @@ export default class World extends React.Component {
                         this.setState((prev) => ({isDialog: !prev.isDialog}))
                     }
                     }/>
-                <div style={{height: "400px", width: "900px"}}>
-                    <ReactQuill readOnly value={this.state.quill}
-                                onChange={(x, q, w, e, r) => console.log(x, q, w, e)}/>
+                {/*<div style={{height: "100px", width: "900px"}}>*/}
+                {/*    <ReactQuill readOnly value={this.state.quill}*/}
+                {/*                onChange={(x, q, w, e, r) => console.log(x, q, w, e)}/>*/}
+                {/*</div>*/}
+                <div style={{width: "900px", overflowX: "auto", backgroundColor: "white"}}>
+                    <ContributingOpenProjects minDate={"2019-03-05"} maxDate={"2020-06-06"} offer={this.offer} contributed={[this.notAnOffer]}/>
                 </div>
-                <div style={{width: "100px", overflowX: "auto"}}>
-                    <ContributingOpenProjects/>
-                </div>
+                <Button intent={Intent.SUCCESS} text={"Lol"}/>
             </>
         );
     }
+
+    offer = {
+        "offerName": "Project One",
+        "milestones": [{
+            "label": "OR",
+            "baselineDate": "2019-10-19",
+            "actualDate": "2019-03-05",
+            "completion": 50,
+            "meetingMinutes": "http://www.google.com",
+            "shown": true
+        }, {
+            "label": "DR0",
+            "baselineDate": "2019-09-22",
+            "actualDate": "2019-09-29",
+            "completion": 50,
+            "meetingMinutes": "www.google.com",
+            "shown": false
+        }, {
+            "label": "DR1",
+            "baselineDate": "2019-04-09",
+            "actualDate": "2019-04-10",
+            "completion": 100,
+            "meetingMinutes": "http://www.google.com",
+            "shown": true
+        }, {
+            "label": "DR2",
+            "baselineDate": "2019-11-22",
+            "actualDate": "2019-11-30",
+            "completion": 50,
+            "meetingMinutes": "www.google.com",
+            "shown": false
+        }, {
+            "label": "DR3",
+            "baselineDate": "2019-12-24",
+            "actualDate": "2019-12-25",
+            "completion": 50,
+            "meetingMinutes": "www.google.com",
+            "shown": true
+        }, {
+            "label": "DR4",
+            "baselineDate": "2019-09-24",
+            "actualDate": null,
+            "completion": 50,
+            "meetingMinutes": "www.google.com",
+            "shown": false
+        }, {
+            "label": "OBR",
+            "baselineDate": "2020-01-16",
+            "actualDate": "2020-02-06",
+            "completion": 50,
+            "meetingMinutes": "http://www.google.com",
+            "shown": true
+        }, {
+            "label": "CI",
+            "baselineDate": "2020-02-06",
+            "actualDate": "2020-02-06",
+            "completion": 50,
+            "meetingMinutes": "www.google.com",
+            "shown": true
+        }, {
+            "label": "DR5",
+            "baselineDate": "2020-01-06",
+            "actualDate": "2020-01-15",
+            "completion": 50,
+            "meetingMinutes": "www.google.com",
+            "shown": true
+        }]
+    };
+
+    notAnOffer = {
+        "projectName": "Project Two",
+        "milestones": [{
+            "label": "OR",
+            "baselineDate": "2019-10-19",
+            "actualDate": "2019-04-05",
+            "completion": 50,
+            "meetingMinutes": "http://www.google.com",
+            "shown": true
+        }, {
+            "label": "DR0",
+            "baselineDate": "2019-09-22",
+            "actualDate": "2019-06-29",
+            "completion": 50,
+            "meetingMinutes": "www.google.com",
+            "shown": false
+        }, {
+            "label": "DR1",
+            "baselineDate": "2019-04-09",
+            "actualDate": "2019-05-10",
+            "completion": 100,
+            "meetingMinutes": "http://www.google.com",
+            "shown": true
+        }, {
+            "label": "DR2",
+            "baselineDate": "2019-11-22",
+            "actualDate": "2019-12-30",
+            "completion": 50,
+            "meetingMinutes": "www.google.com",
+            "shown": false
+        }, {
+            "label": "DR3",
+            "baselineDate": "2019-12-24",
+            "actualDate": "2019-12-25",
+            "completion": 50,
+            "meetingMinutes": "www.google.com",
+            "shown": true
+        }, {
+            "label": "DR4",
+            "baselineDate": "2019-09-24",
+            "actualDate": "2019-11-24",
+            "completion": 50,
+            "meetingMinutes": "www.google.com",
+            "shown": false
+        }, {
+            "label": "OBR",
+            "baselineDate": "2020-01-16",
+            "actualDate": "2020-01-06",
+            "completion": 50,
+            "meetingMinutes": "http://www.google.com",
+            "shown": true
+        }, {
+            "label": "CI",
+            "baselineDate": "2020-02-06",
+            "actualDate": "2020-01-06",
+            "completion": 50,
+            "meetingMinutes": "www.google.com",
+            "shown": true
+        }, {
+            "label": "DR5",
+            "baselineDate": "2020-01-06",
+            "actualDate": "2020-01-15",
+            "completion": 50,
+            "meetingMinutes": "www.google.com",
+            "shown": true
+        }]
+    };
 };
 
 World.propTypes = {

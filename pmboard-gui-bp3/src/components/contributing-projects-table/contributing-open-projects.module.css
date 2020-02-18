@@ -1,0 +1,25 @@
+.products_name {
+    padding-left: 30px !important;
+}
+
+.last_compl_col {
+    width: 70px;
+}
+
+.th_style {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.td_style {
+    text-align: center !important;
+}
+
+.current_month {
+    border-right: 2px solid #0f9960;
+    border-left: 2px solid #0f9960;
+}
+
+.year_left_border {
+    border-left: 2px solid black;
+}
