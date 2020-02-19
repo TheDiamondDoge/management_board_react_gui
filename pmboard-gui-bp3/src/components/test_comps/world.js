@@ -13,6 +13,7 @@ import 'react-quill/dist/quill.bubble.css';
 import 'react-quill/dist/quill.core.css';
 import ContributingOpenProjects from "../contributing-projects-table/contributing-open-projects";
 import CustomCard from "../card/custom-card";
+import Legend from "../../legend/legend";
 
 export default class World extends React.Component {
     constructor(props) {
@@ -199,13 +200,18 @@ export default class World extends React.Component {
                 <div style={{width: "900px", overflowX: "auto", backgroundColor: "white"}}>
                     <ContributingOpenProjects minDate={"2019-03-05"} maxDate={"2020-06-06"} offer={this.offer} contributed={[this.notAnOffer]}/>
                 </div>
-                <Button intent={Intent.SUCCESS} text={"Lol"}/>
+                <br/>
+                <br/>
+                <br/>
+                <Legend/>
+                <Button intent={Intent.DANGER} text={"Lol"}/>
             </>
         );
     }
 
     offer = {
         "offerName": "Project One",
+        "projectState": "FORECAST",
         "milestones": [{
             "label": "OR",
             "baselineDate": "2019-10-19",
@@ -274,6 +280,7 @@ export default class World extends React.Component {
 
     notAnOffer = {
         "projectName": "Project Two",
+        "projectState": "COMMITTED",
         "milestones": [{
             "label": "OR",
             "baselineDate": "2019-10-19",
@@ -333,7 +340,7 @@ export default class World extends React.Component {
         }, {
             "label": "DR5",
             "baselineDate": "2020-01-06",
-            "actualDate": "2020-01-15",
+            "actualDate": "2020-03-15",
             "completion": 50,
             "meetingMinutes": "www.google.com",
             "shown": true

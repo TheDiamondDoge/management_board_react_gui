@@ -23,3 +23,16 @@
 .year_left_border {
     border-left: 2px solid black;
 }
+/*TODO SASS????*/
+.bkground_grey {
+    background-color: #e2e2e2;
+}
+
+.bkground_red {
+    background-color: #de4747;
+}
+
+.label {
+    margin-bottom: 3px;
+    padding: 5px;
+}
