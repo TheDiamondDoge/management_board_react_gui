@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import InfoTab from './info-tab';
 import {infoLoad, infoReset, infoSaveData} from "../../../actions/pws/info-tab";
 import {milestonesLoad, milestonesReset, milestonesSave} from "../../../actions/pws/milestones";
-import {contribLoad, contribReset} from "../../../actions/pws/contrib-projects";
+import {contribLoad, contribReset} from "../../../actions/pws/contrib-list";
 
 function mapStateToProps(state) {
     return {

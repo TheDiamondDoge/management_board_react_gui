@@ -11,7 +11,7 @@ import indicatorsRqsReducer from "./pws/indicators-rqs";
 import milestonesKpiReducer from "./pws/milestones-kpi";
 import dr4KpiReducer from "./pws/dr4-kpi";
 import qualityKpiReducer from "./pws/quality-kpi";
-import contrib from "./pws/contrib-projects";
+import contrib from "./pws/contrib-list";
 import risks from "./pws/risks-tab";
 import actions from "./pws/actions";
 import requirements from "./pws/requirements-tab";
@@ -19,6 +19,7 @@ import backlog from "./pws/backlog";
 import defects from "./pws/defects";
 import report from "./pws/report-tab";
 import userReports from "./pws/user-reports";
+import contribTable from "./pws/contrib-table";
 
 export default combineReducers({
     pws: pwsReducers()
@@ -45,6 +46,7 @@ function pwsReducers() {
         backlogTab: backlog,
         defectsTab: defects,
         reportTab: report,
-        userReports: userReports
+        userReports: userReports,
+        contribTable: contribTable,
     })
 }

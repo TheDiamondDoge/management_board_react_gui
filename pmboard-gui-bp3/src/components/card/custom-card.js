@@ -30,10 +30,17 @@ export default class CustomCard extends React.Component {
     getStyleProp(autosize) {
         const {width, height} = this.state;
         if (autosize) {
-            return {
+            let size = {
                 width: getWorkingAreaWidth(width) || "",
                 height: (height - 230) || ""
+            };
+            if (autosize === "x") {
+                delete size.height;
             }
+            if (autosize === "y") {
+                delete size.width;
+            }
+            return size;
         } else {
             return {};
         }
@@ -59,5 +66,7 @@ export default class CustomCard extends React.Component {
 CustomCard.propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
-    autosize: PropTypes.bool,
+    autosize: PropTypes.oneOf([
+        true, false, "x", "y"
+    ]),
 };

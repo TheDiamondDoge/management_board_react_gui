@@ -1,4 +1,4 @@
-import {CONTRIB_LOAD, CONTRIB_LOAD_FAIL, CONTRIB_LOAD_SUCCESS, CONTRIB_RESET} from "../../actions/pws/contrib-projects";
+import {CONTRIB_LOAD, CONTRIB_LOAD_FAIL, CONTRIB_LOAD_SUCCESS, CONTRIB_RESET} from "../../actions/pws/contrib-list";
 
 const initialState = {
     loading: true,

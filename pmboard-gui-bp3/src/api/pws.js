@@ -119,3 +119,7 @@ export const getUserReports = (projectID) => (
 export const saveUserReports = (projectID, payload) => (
     axios.post(`http://localhost:8080/api/projects/${projectID}/tabs/user_reports`, payload)
 );
+
+export const getContribTable = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/contrib`)
+);

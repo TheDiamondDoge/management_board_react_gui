@@ -7,13 +7,13 @@ import {MultiSelect} from "@blueprintjs/select";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import {Rnd} from "react-rnd";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
-import ReactQuill from "react-quill";
+import ContributingOpenProjects from "../contributing-projects-table/contributing-open-projects";
+import Legend from "../../legend/legend";
+
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
 import 'react-quill/dist/quill.core.css';
-import ContributingOpenProjects from "../contributing-projects-table/contributing-open-projects";
-import CustomCard from "../card/custom-card";
-import Legend from "../../legend/legend";
+
 
 export default class World extends React.Component {
     constructor(props) {
@@ -210,7 +210,7 @@ export default class World extends React.Component {
     }
 
     offer = {
-        "offerName": "Project One",
+        "projectName": "Project One",
         "projectState": "FORECAST",
         "milestones": [{
             "label": "OR",

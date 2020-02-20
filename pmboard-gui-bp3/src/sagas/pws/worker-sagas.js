@@ -9,7 +9,7 @@ import * as milestonesKpi from "../../actions/pws/milestones-kpi";
 import * as dr4Kpi from "../../actions/pws/dr4-kpi";
 import * as qualityKpi from "../../actions/pws/quality-kpi";
 import * as infoTab from "../../actions/pws/info-tab";
-import * as contrib from "../../actions/pws/contrib-projects";
+import * as contrib from "../../actions/pws/contrib-list";
 import * as blc from "../../actions/pws/blc-tab";
 import * as risks from "../../actions/pws/risks-tab";
 import * as actions from "../../actions/pws/actions-tab";
@@ -19,7 +19,7 @@ import * as backlog from "../../actions/pws/backlog";
 import * as defects from "../../actions/pws/defects";
 import * as report from "../../actions/pws/report-tab";
 import * as userReports from "../../actions/pws/user-reports";
-import {load} from "dotenv";
+import * as contribTable from "../../actions/pws/contrib-table";
 
 export function* loadSummaryTab() {
     try {
@@ -61,6 +61,15 @@ export function* loadContributableProjects() {
         yield put(contrib.contribLoadSuccess(data));
     } catch (e) {
         yield put(contrib.contribLoadFail(e))
+    }
+}
+
+export function* loadContribTable() {
+    try {
+        const data = yield call(api.getContribTable, 1);
+        yield put(contribTable.loadContribTableSuccess(data));
+    } catch (e) {
+        yield put(contribTable.errorContribTable(e));
     }
 }
 

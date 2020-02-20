@@ -11,13 +11,15 @@ import fieldsToRender from "../../health-indicators/health-fields";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import PropTypes from 'prop-types';
 import RenderFieldHelper from "../../../util/render-field-helper";
-import {HealthIndicatorsShape, MilestoneShape, SummaryShape} from "../../../util/custom-types";
+import {ContribTable, HealthIndicatorsShape, MilestoneShape, SummaryShape} from "../../../util/custom-types";
 import ErrorBoundary from "../../error-boundary/error-boundary";
 import ReactQuill from "react-quill";
+import ContributingOpenProjects from "../../contributing-projects-table/contributing-open-projects";
+import Legend from "../../../legend/legend";
 
 import 'react-quill/dist/quill.snow.css';
 
-//TODO Executive (flags) endpoint changed. Tune this
+
 export default class SummaryTab extends React.Component {
     componentDidMount() {
         this.props.loadData();
@@ -36,6 +38,7 @@ export default class SummaryTab extends React.Component {
             const {general, status, links, pwsInfo, validationParams} = this.props.summaryData.payload;
             const milestones = this.props.milestones;
             const healthIndicators = this.props.healthIndicators;
+            const contribTable = this.props.contribTable;
 
             let mainCardStyle = classNames(styles.data_fields);
             let secondaryCardStyle = classNames(styles.secondary_card);
@@ -127,6 +130,32 @@ export default class SummaryTab extends React.Component {
                             }
                         </div>
                     </CustomCard>
+
+                    <br/>
+
+                    {contribTable.payload.offer && (
+                        <CustomCard autosize={"x"}>
+                            {contribTable.loading
+                                ? (<LoadingSpinner/>)
+                                : (
+                                    <ErrorBoundary>
+                                        <div className={styles.overflow_x}>
+                                            <ContributingOpenProjects
+                                                offer={contribTable.payload.offer}
+                                                contributed={contribTable.payload.products}
+                                                minDate={contribTable.payload.minDate}
+                                                maxDate={contribTable.payload.maxDate}
+                                            />
+                                        </div>
+                                    </ErrorBoundary>
+                                )
+                            }
+                            <br/>
+                            <br/>
+                            <br/>
+                            <Legend/>
+                        </CustomCard>
+                    )}
                 </div>
             )
         }
@@ -136,6 +165,10 @@ export default class SummaryTab extends React.Component {
 SummaryTab.propTypes = {
     loadData: PropTypes.func,
     resetData: PropTypes.func,
+    contribTable: PropTypes.shape({
+        loading: PropTypes.bool,
+        payload: ContribTable
+    }),
     summaryData: SummaryShape.isRequired,
     milestones: PropTypes.shape({
         loading: PropTypes.bool,

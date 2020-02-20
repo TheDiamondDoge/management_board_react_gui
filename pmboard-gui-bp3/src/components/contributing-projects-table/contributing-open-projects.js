@@ -4,11 +4,14 @@ import moment from "moment";
 import styles from "./contributing-open-projects.module.css";
 import classNames from "classnames";
 import {FieldName} from "../field-name/field-name";
+import {ContribTable} from "../../util/custom-types";
+import {dateFormatToString} from "../../util/transform-funcs";
 
-//TODO: this.getMilestonesForOffer(...) - to be done
+//TODO: last approved DR
+//TODO: Sticky left part??? (absolute)
 export default class ContributingOpenProjects extends React.Component {
     render() {
-        const {offerName, milestones, projectState} = this.props.offer;
+        const {projectName: offerName} = this.props.offer;
         const {maxDate, minDate} = this.props;
 
         const max = moment(maxDate);
@@ -16,16 +19,15 @@ export default class ContributingOpenProjects extends React.Component {
         const monthsBetween = Math.ceil(max.diff(min, "months", true));
 
         const {tdForYear, currentMonthIndex} = this.calculateTdsForYear(monthsBetween, min);
-        const tds = this.getMilestonesPerMonth(monthsBetween, min, milestones, projectState);
-        console.log("TDS", tds);
         const years = Object.keys(tdForYear);
 
+        const offer = this.getMilestonesPerMonthForOffers(monthsBetween, min);
         const products = this.getMilestonesPerMonthForProducts(monthsBetween, min);
 
         const lastComplTh = classNames(styles.last_compl_col, styles.th_style);
         const yearTh = classNames(styles.year_left_border, styles.th_style);
         return (
-            <>
+            <div className={styles.table_margin}>
                 <HTMLTable
                     bordered
                 >
@@ -48,7 +50,7 @@ export default class ContributingOpenProjects extends React.Component {
                         <th className={lastComplTh}>
                             <FieldName name="Last completed (Approved DR)"/>
                         </th>
-                        {this.getMonthsTds(tds, min, currentMonthIndex)}
+                        {this.getMonthsTds(offer, min, currentMonthIndex)}
                     </tr>
                     </thead>
                     <tbody>
@@ -57,7 +59,7 @@ export default class ContributingOpenProjects extends React.Component {
                         <td className={styles.td_style}>
                             DR1
                         </td>
-                        {this.renderMilestonesTds(tds, currentMonthIndex)}
+                        {this.renderMilestonesTds(offer, currentMonthIndex)}
                     </tr>
                     {Object.keys(products).map(prjName =>
                         (
@@ -74,7 +76,7 @@ export default class ContributingOpenProjects extends React.Component {
                     )}
                     </tbody>
                 </HTMLTable>
-            </>
+            </div>
         );
     }
 
@@ -110,9 +112,13 @@ export default class ContributingOpenProjects extends React.Component {
             const datePlusMonths = startDate.add(i, "month");
             const month = datePlusMonths.month();
             const year = datePlusMonths.year();
-            const filteredMils = milestones.filter((milestone) => (
-                moment(milestone.actualDate).year() === year && moment(milestone.actualDate).month() === month)
-            );
+            const filteredMils = milestones.filter((milestone) => {
+                const date = milestone.actualDate || milestone.baselineDate;
+                return (
+                    moment(date).year() === year && moment(date).month() === month
+                )
+            });
+
 
             let needYearBorder = false;
             if (year !== prevYear) {
@@ -120,17 +126,23 @@ export default class ContributingOpenProjects extends React.Component {
                 prevYear = year;
             }
 
-            const isCommitted = projectState.toUpperCase() == "COMMITTED";
+            const isCommitted = projectState.toUpperCase() === "COMMITTED";
             tds[i] = {milestones: filteredMils, needYearBorder, isCommitted}
         }
         return tds;
     }
 
+    getMilestonesPerMonthForOffers(monthsBetween, min) {
+        const {milestones, projectState} = this.props.offer;
+        return this.getMilestonesPerMonth(monthsBetween, min, milestones, projectState);
+    }
+
     getMilestonesPerMonthForProducts(monthsBetween, min) {
         let products = {};
-        const contributed = this.props.contributed;
+        const contributed = this.props.contributed || [];
         for (let i = 0; i < contributed.length; i++) {
-            products[contributed[i].projectName] = this.getMilestonesPerMonth(monthsBetween, min, contributed[i].milestones, contributed[i].projectState);
+            const {projectName, milestones, projectState} = contributed[i];
+            products[projectName] = this.getMilestonesPerMonth(monthsBetween, min, milestones, projectState);
         }
 
         return products;
@@ -164,7 +176,6 @@ export default class ContributingOpenProjects extends React.Component {
                 {[styles.year_left_border]: item.needYearBorder}
             );
             const td = item.milestones;
-            console.log("AAAAAAAAAAAAAAAA", item);
             if (td.length === 0) {
                 return <td key={i} className={classes}/>;
             } else {
@@ -182,10 +193,8 @@ export default class ContributingOpenProjects extends React.Component {
 
     renderMilestoneLabel(milestone, isCommitted, currentDate) {
         const {completion, actualDate} = milestone;
-        console.log("AAAAAAAAAAAAAAAA", milestone);
-        //TODO if project committed condition (oO)
         const isLate = currentDate.diff(moment(actualDate)) > 0;
-        let classes = "";
+        let classes;
         if (isCommitted) {
             classes = classNames(
                 {[styles.bkground_grey]: isLate && completion !== 100 && isCommitted},
@@ -197,10 +206,19 @@ export default class ContributingOpenProjects extends React.Component {
                 styles.label
             );
         }
+        const dateStr = milestone.actualDate || milestone.baselineDate;
+        const title = dateFormatToString(new Date(dateStr));
         return (
-            <div key={milestone.label} className={classes}>
+            <div key={milestone.label}
+                 className={classes}
+                 title={title}
+            >
                 {milestone.label}
             </div>
         )
     }
 }
+
+ContributingOpenProjects.propTypes = {
+    ContribTable
+};

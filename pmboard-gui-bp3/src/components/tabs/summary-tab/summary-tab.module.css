@@ -36,3 +36,7 @@
 .right_part {
     margin: auto;
 }
+
+.overflow_x {
+    overflow-x: auto;
+}

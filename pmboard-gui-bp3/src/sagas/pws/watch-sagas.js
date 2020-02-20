@@ -7,7 +7,7 @@ import * as healthIndicators from "../../actions/pws/health-indicators";
 import * as rqIndicators from "../../actions/pws/indicators-rqs";
 import * as quality from "../../actions/pws/quality-kpi";
 import * as milestones from "../../actions/pws/milestones";
-import * as contrib from "../../actions/pws/contrib-projects";
+import * as contrib from "../../actions/pws/contrib-list";
 import * as blc from "../../actions/pws/blc-tab";
 import * as risks from "../../actions/pws/risks-tab";
 import * as actions from "../../actions/pws/actions-tab";
@@ -17,6 +17,7 @@ import * as backlog from "../../actions/pws/backlog";
 import * as defects from "../../actions/pws/defects";
 import * as report from "../../actions/pws/report-tab";
 import * as userReport from "../../actions/pws/user-reports";
+import * as contribTable from "../../actions/pws/contrib-table";
 
 function* watchSummaryTabLoad() {
     yield takeEvery(summaryTab.SUMMARY_LOAD, sagas.loadSummaryTab);
@@ -84,6 +85,10 @@ function* watchMilestonesSave() {
 
 function* watchContribLoad() {
     yield takeEvery(contrib.CONTRIB_LOAD, sagas.loadContributableProjects)
+}
+
+function* watchContibTableLoad() {
+    yield takeEvery(contribTable.CONTRIB_TABLE_LOAD, sagas.loadContribTable)
 }
 
 function* watchRisksLoad() {
@@ -168,7 +173,8 @@ const exportSagas = [
     fork(watchContribLoad),
     fork(watchReportTabLoad),
     fork(watchUserReportLoad),
-    fork(watchUserReportSave)
+    fork(watchUserReportSave),
+    fork(watchContibTableLoad)
 ];
 
 export default exportSagas;

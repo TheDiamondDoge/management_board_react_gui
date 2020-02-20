@@ -210,3 +210,17 @@ export const RiskReportType = PropTypes.shape({
     impactDescription: PropTypes.string,
     mitigation: PropTypes.string
 });
+
+export const ContribProject = PropTypes.shape({
+    projectName: PropTypes.string,
+    projectState: PropTypes.string,
+    lastApproved: MilestoneShape,
+    milestones: PropTypes.arrayOf(MilestoneShape)
+});
+
+export const ContribTable = PropTypes.shape({
+    offer: ContribProject,
+    contributed: PropTypes.arrayOf(ContribProject),
+    minDate: PropTypes.string,
+    maxDate: PropTypes.string
+});
