@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import {getWorkingAreaWidth} from "../../util/util";
 
-export default class CustomCard extends React.Component {
+export default class CustomCard extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {}

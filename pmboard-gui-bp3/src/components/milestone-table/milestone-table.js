@@ -1,6 +1,6 @@
 import React from 'react';
 import {HTMLTable} from "@blueprintjs/core";
-import {FieldName} from "../field-name/field-name";
+import FieldName from "../field-name/field-name";
 import FieldValue from "../field-value/field-value";
 import styles from './milestone-table.module.css';
 import PropTypes from "prop-types";

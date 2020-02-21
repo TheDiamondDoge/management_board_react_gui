@@ -61,7 +61,7 @@ export default {
     pwsLastUpdatedDate: {
         label: "PWS Last Updated",
         notAllowedIf: {
-            isEpm: [false],
+            isEpm: [true],
         }
     },
     pwsLastUpdatedBy: {label: "PWS Last Updated By"},

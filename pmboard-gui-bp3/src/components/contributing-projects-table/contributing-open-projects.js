@@ -3,7 +3,7 @@ import {HTMLTable} from "@blueprintjs/core";
 import moment from "moment";
 import styles from "./contributing-open-projects.module.css";
 import classNames from "classnames";
-import {FieldName} from "../field-name/field-name";
+import FieldName from "../field-name/field-name";
 import {ContribTable} from "../../util/custom-types";
 import {dateFormatToString} from "../../util/transform-funcs";
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Timeline from "../../timeline/timeline";
-import {FieldName} from "../../field-name/field-name";
+import FieldName from "../../field-name/field-name";
 import FieldValue from "../../field-value/field-value";
 import styles from './summary-tab.module.css';
 import classNames from 'classnames';
@@ -16,8 +16,11 @@ import ErrorBoundary from "../../error-boundary/error-boundary";
 import ReactQuill from "react-quill";
 import ContributingOpenProjects from "../../contributing-projects-table/contributing-open-projects";
 import Legend from "../../../legend/legend";
+import OfferProductTitle from "../../contributing-projects-table/components/offer-product-title/offer-product-title";
+import {ProjectTypes} from "../../../util/constants";
 
 import 'react-quill/dist/quill.snow.css';
+import LastUpdated from "../../last-updated/last-updated";
 
 
 export default class SummaryTab extends React.Component {
@@ -60,12 +63,12 @@ export default class SummaryTab extends React.Component {
                         <div className="left_part">
                             {
                                 Object.keys(general).map((obj) => (
-                                    renderHelper.displayOrNot(obj, validationParams)
-                                        ? <div key={obj} className={mainCardStyle}>
+                                    renderHelper.displayOrNot(obj, validationParams) && (
+                                        <div key={obj} className={mainCardStyle}>
                                             <FieldName name={renderHelper.getLabelById(obj)}/>
                                             <FieldValue value={general[obj]}/>
                                         </div>
-                                        : ""
+                                    )
                                 ))
                             }
                         </div>
@@ -91,24 +94,24 @@ export default class SummaryTab extends React.Component {
                         <div className="left_part">
                             {
                                 Object.keys(status).map((obj) => (
-                                    renderHelper.displayOrNot(obj, validationParams)
-                                        ? <div key={obj} className={styles.executive_block}>
+                                    renderHelper.displayOrNot(obj, validationParams) && (
+                                        <div key={obj} className={styles.executive_block}>
                                             <FieldName name={renderHelper.getLabelById(obj)}/>
                                             <ReactQuill defaultValue={status[obj]} modules={{toolbar: null}} readOnly/>
                                         </div>
-                                        : ""
+                                    )
                                 ))
                             }
                         </div>
                         <div className={styles.right_part}>
                             {
                                 Object.keys(links).map((obj) => (
-                                    renderHelper.displayOrNot(obj, validationParams)
-                                        ? <div key={obj} className={secondaryCardStyle}>
+                                    renderHelper.displayOrNot(obj, validationParams) && (
+                                        <div key={obj} className={secondaryCardStyle}>
                                             <FieldName name={renderHelper.getLabelById(obj)}/>
                                             <FieldValue value={`${links[obj]}`}/>
                                         </div>
-                                        : ""
+                                    )
                                 ))
                             }
                         </div>
@@ -120,12 +123,12 @@ export default class SummaryTab extends React.Component {
                         <div>
                             {
                                 Object.keys(pwsInfo).map((obj) => (
-                                    renderHelper.displayOrNot(obj, validationParams)
-                                        ? <div key={obj} className={styles.data_fields}>
+                                    renderHelper.displayOrNot(obj, validationParams) && (
+                                        <div key={obj} className={styles.data_fields}>
                                             <FieldName name={renderHelper.getLabelById(obj)}/>
-                                            <FieldValue value={`${pwsInfo[obj]}`}/>
+                                            {this.renderHelper(obj, pwsInfo[obj])}
                                         </div>
-                                        : ""
+                                    )
                                 ))
                             }
                         </div>
@@ -133,11 +136,17 @@ export default class SummaryTab extends React.Component {
 
                     <br/>
 
-                    {contribTable.payload.offer && (
-                        <CustomCard autosize={"x"}>
-                            {contribTable.loading
-                                ? (<LoadingSpinner/>)
-                                : (
+                    <CustomCard autosize={"x"}>
+                        {contribTable.loading
+                            ? (<LoadingSpinner/>)
+                            : (
+                                <>
+                                    <OfferProductTitle
+                                        className={styles.bottom_margin}
+                                        isOffer={validationParams.projectType === ProjectTypes.OFFER}
+                                        isContrib={!!contribTable.payload.offer}
+                                    />
+                                    {contribTable.payload.offer &&
                                     <ErrorBoundary>
                                         <div className={styles.overflow_x}>
                                             <ContributingOpenProjects
@@ -148,16 +157,22 @@ export default class SummaryTab extends React.Component {
                                             />
                                         </div>
                                     </ErrorBoundary>
-                                )
-                            }
-                            <br/>
-                            <br/>
-                            <br/>
-                            <Legend/>
-                        </CustomCard>
-                    )}
+                                    }
+                                </>
+                            )
+                        }
+                        {contribTable.payload.offer && <Legend/>}
+                    </CustomCard>
                 </div>
             )
+        }
+    }
+
+    renderHelper(id, data) {
+        if (id === "pwsLastUpdatedDate") {
+            return <LastUpdated dateStr={data}/>
+        } else {
+            return <FieldValue value={data}/>
         }
     }
 }

@@ -40,3 +40,7 @@
 .overflow_x {
     overflow-x: auto;
 }
+
+.bottom_margin {
+    margin-bottom: 20px;
+}

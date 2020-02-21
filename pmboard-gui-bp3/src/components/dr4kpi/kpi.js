@@ -2,7 +2,7 @@ import React from 'react';
 import {HTMLTable, Position, Tooltip} from "@blueprintjs/core";
 import styles from "./kpi.module.css";
 import classNames from "classnames";
-import {FieldName} from "../field-name/field-name";
+import FieldName from "../field-name/field-name";
 import PropTypes from "prop-types";
 import {nullToNA} from "../../util/transform-funcs";
 import HelpIcon from "../help-icon/help-icon";

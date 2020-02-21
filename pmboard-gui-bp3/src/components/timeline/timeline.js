@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import StatusIndicator from "../status-indicator/status-indicator";
 import {Icon, Intent} from "@blueprintjs/core";
 import PropTypes from 'prop-types';
-import {FieldName} from "../field-name/field-name";
+import FieldName from "../field-name/field-name";
 import {dateFormatToString} from "../../util/transform-funcs";
 import {milestonesCompare} from "../../util/comparators";
 import {MilestoneShape} from "../../util/custom-types";

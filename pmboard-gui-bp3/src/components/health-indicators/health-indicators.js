@@ -1,5 +1,5 @@
 import React from "react";
-import {FieldName} from "../field-name/field-name";
+import FieldName from "../field-name/field-name";
 import {HTMLTable, Position, Tooltip} from "@blueprintjs/core";
 import styles from "./health-indicators.module.css";
 import StatusIndicator from "../status-indicator/status-indicator";

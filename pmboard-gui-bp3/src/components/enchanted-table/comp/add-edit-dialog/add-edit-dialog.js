@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {EnchantedTableColsConfig} from "../../../../util/custom-types";
 import {Formik} from "formik";
 import FormikInput from "../../../controls/util-renderers";
-import {FieldName} from "../../../field-name/field-name";
+import FieldName from "../../../field-name/field-name";
 import styles from "./add-edit-dialog.module.css";
 import {formikFieldHandleChange, getPropFromStringPath} from "../../../../util/util";
 import {getObjByLabel, removeSelectedObjByLabel} from "../../util";

@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const MONTHS_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 export const blcNumberToState = (num) => {
@@ -11,6 +13,11 @@ export const blcNumberToState = (num) => {
         default:
             return "blank"
     }
+};
+
+export const isDateLateForOneMonth = (dateStr) => {
+    const date = moment(dateStr);
+    return Math.abs(date.diff(moment())) >= 1;
 };
 
 export const dateFormatToString = (date) => {
