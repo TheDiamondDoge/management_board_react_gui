@@ -21,6 +21,8 @@ import {
     RequirementsShape
 } from "../../../util/custom-types";
 import ErrorBoundary from "../../error-boundary/error-boundary";
+import {getPropFromStringPath} from "../../../util/util";
+import {getIndicatorsColor} from "../../../util/transform-funcs";
 
 export default class IndicatorsTab extends React.Component {
     componentDidMount() {
@@ -37,6 +39,8 @@ export default class IndicatorsTab extends React.Component {
         const {
             healthIndicatorsSubmit, healthCommentsSubmit, healthReload, rqsSubmit, qualitySubmit, qualityReload, rqsReload
         } = this.props;
+        const overall = getPropFromStringPath(healthIndicators, "payload.statuses.current.overall");
+        const overallIndicator = getIndicatorsColor(overall);
         return (
             <div className={styles.data_grid}>
                 <CustomCard className={styles.timeline}>
@@ -45,7 +49,7 @@ export default class IndicatorsTab extends React.Component {
                             ? <LoadingSpinner/>
                             : (
                                 <ErrorBoundary>
-                                    <Timeline milestones={milestones.payload}/>
+                                    <Timeline milestones={milestones.payload} status={overallIndicator}/>
                                 </ErrorBoundary>
                             )
                     }

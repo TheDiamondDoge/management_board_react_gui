@@ -12,6 +12,7 @@ import HelpIcon from "../help-icon/help-icon";
 import {healthStatusHelp} from "../../util/global-helps";
 import TooltipContent from "../tooltip-content/tooltip-content";
 import {FieldsToRenderShape, HealthIndicatorsShape} from "../../util/custom-types";
+import FormikInput from "../controls/util-renderers";
 
 export default class HealthIndicators extends React.Component {
     constructor(props) {
@@ -20,6 +21,9 @@ export default class HealthIndicators extends React.Component {
             editStatusMode: false,
             editCommentMode: false,
         };
+
+        this.onClickEditStatus = this.onClickEditStatus.bind(this);
+        this.onClickEditComment = this.onClickEditComment.bind(this);
     }
 
     submitForm = null;
@@ -95,12 +99,12 @@ export default class HealthIndicators extends React.Component {
                         {
                             !isSummaryMode && !this.state.editCommentMode &&
                             <EditSaveControls
+                                smallSize
                                 className={styles.inline_block}
                                 editMode={this.state.editStatusMode}
-                                onClick={() => this.onClickEditStatus()}
-                                onSubmit={() => this.submitForm()}
+                                onClick={this.onClickEditStatus}
+                                onSubmit={this.submitForm}
                                 onCancel={onCancel}
-                                smallSize={true}
                             />
                         }
                     </th>
@@ -120,12 +124,12 @@ export default class HealthIndicators extends React.Component {
                             {
                                 !this.state.editStatusMode &&
                                 <EditSaveControls
+                                    smallSize
                                     className={styles.inline_block}
                                     editMode={this.state.editCommentMode}
-                                    onClick={() => this.onClickEditComment()}
+                                    onClick={this.onClickEditComment}
                                     onCancel={onCancel}
-                                    onSubmit={() => this.submitForm()}
-                                    smallSize={true}
+                                    onSubmit={this.submitForm}
                                 />
                             }
                         </th>
@@ -174,7 +178,7 @@ export default class HealthIndicators extends React.Component {
         if (this.state.editCommentMode) {
             return (
                 <td>
-                    <Field type="textarea" name={name} component={FormikCustomField}/>
+                    <FormikInput type="textarea" name={name}/>
                 </td>
             )
         } else {

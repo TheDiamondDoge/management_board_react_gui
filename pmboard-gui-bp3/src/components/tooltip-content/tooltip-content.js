@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function TooltipContent(props) {
+export default React.memo(function TooltipContent(props) {
     const title = props.title;
     const content = props.content;
     return (
@@ -9,4 +9,4 @@ export default function TooltipContent(props) {
             <p dangerouslySetInnerHTML={{__html: content}}/>
         </div>
     )
-}
+});

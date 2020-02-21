@@ -10,13 +10,11 @@ import {milestonesCompare} from "../../util/comparators";
 import {MilestoneShape} from "../../util/custom-types";
 import SafeUrl from "../safe-url/safe-url";
 
-//TODO: need to center content
 export default class Timeline extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            currentDate: this.getCurrentDate(),
-        };
+
+        this.currentDate = this.getCurrentDate();
     }
 
     render() {
@@ -89,16 +87,15 @@ export default class Timeline extends React.Component {
         return (
             <td key={i} className={styles.line}>
                 {
-                    i === pos
-                        ? (
+                    (i === pos) &&
+                         (
                             <div
                                 className={timelineIndClasses}
                                 style={{marginLeft: fullMargin}}
                             >
-                                <StatusIndicator status={"red"}/>
+                                <StatusIndicator status={this.props.status}/>
                             </div>
                         )
-                        : ""
                 }
             </td>
         )
@@ -227,7 +224,7 @@ export default class Timeline extends React.Component {
     getMilestoneStatusIcon = (milestone) => {
         if(milestone.completion === 100) {
             return <Icon icon={"tick"} intent={Intent.SUCCESS}/>
-        } else if (new Date(milestone.actualDate) < this.state.currentDate) {
+        } else if (new Date(milestone.actualDate) < this.currentDate) {
             return <Icon icon={"cross"} intent={Intent.DANGER}/>;
         } else {
             return "";
@@ -238,7 +235,7 @@ export default class Timeline extends React.Component {
         let firstDate = new Date(milestones[positionObj.first].actualDate);
         let lastDate = new Date(milestones[positionObj.last].actualDate);
 
-        return ((this.state.currentDate - firstDate.getTime()) / (lastDate.getTime() - firstDate.getTime()));
+        return ((this.currentDate - firstDate.getTime()) / (lastDate.getTime() - firstDate.getTime()));
     };
 
     getCurrentDate() {
@@ -257,18 +254,18 @@ export default class Timeline extends React.Component {
         for (; i < milestones.length; i++) {
             let currMilestoneDate = new Date(milestones[i].actualDate);
             currMilestoneDate.setHours(0, 0, 0, 0);
-            if (this.state.currentDate > currMilestoneDate) {
+            if (this.currentDate > currMilestoneDate) {
                 continue;
             }
 
-            if (this.state.currentDate === currMilestoneDate.getTime()) {
+            if (this.currentDate === currMilestoneDate.getTime()) {
                 return {
                     first: i,
                     last: i,
                 };
             }
 
-            if (this.state.currentDate < currMilestoneDate) {
+            if (this.currentDate < currMilestoneDate) {
                 return {
                     first: i - 1,
                     last: i,
@@ -283,5 +280,8 @@ export default class Timeline extends React.Component {
 }
 
 Timeline.propTypes = {
+    //Should be sorted
     milestones: PropTypes.arrayOf(MilestoneShape).isRequired,
+    status: PropTypes.oneOf(["red", "green", "yellow", "blank"]),
+    classNames: PropTypes.string
 };

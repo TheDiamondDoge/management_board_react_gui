@@ -35,7 +35,7 @@ export default class Requirements extends React.Component {
     updateFieldHandler = null;
 
     render() {
-        const {addedAfterDr1, committedAtDr1, modifiedAfterDr1, removedAfterDr1} = this.props.requirements;
+        const {requirements} = this.props;
         const {rqsSubmit} = this.props;
         return (
             <Formik
@@ -43,12 +43,9 @@ export default class Requirements extends React.Component {
                     formikActions.setSubmitting(false);
                     rqsSubmit(values);
                 }}
-                initialValues={{
-                    committedAtDr1,
-                    addedAfterDr1,
-                    removedAfterDr1,
-                    modifiedAfterDr1
-                }}
+                initialValues={
+                    requirements
+                }
                 validationSchema={
                     getValidationSchema()
                 }
@@ -116,9 +113,10 @@ export default class Requirements extends React.Component {
                 return <FieldValue value={sum}/>;
             default: {
                 if (this.state.editMode) {
-                    return <FormikInput type="numeric" name={propName} onValueChange={this.updateFieldHandler(propName)}/>;
+                    return <FormikInput type="numeric" name={propName}
+                                        onValueChange={this.updateFieldHandler(propName)}/>;
                 } else {
-                    return <FieldValue value={value} />
+                    return <FieldValue value={value}/>
                 }
             }
         }

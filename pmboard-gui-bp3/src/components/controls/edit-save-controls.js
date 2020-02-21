@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Intent} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 
-export default class EditSaveControls extends React.Component {
+export default class EditSaveControls extends React.PureComponent {
     render() {
         return (
             this.renderElements()

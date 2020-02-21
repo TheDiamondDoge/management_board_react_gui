@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import styles from './status-indicator.module.css';
 
-export default class StatusIndicator extends React.Component {
+export default class StatusIndicator extends React.PureComponent {
     render() {
         const {className, status} = this.props;
         let classes = classNames(className, styles.indicator, styles[this.getClassName(status)]);
