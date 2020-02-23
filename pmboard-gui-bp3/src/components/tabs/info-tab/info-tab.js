@@ -247,8 +247,8 @@ export default class InfoTab extends React.Component {
                 <div className={styles.ecma_backlog_row}>
                     {
                         Object.keys(value).map((key, i) => {
-                            const milestoneSelectName = `${stateBranch}.${obj}.${key}.milestone`;
-                            const valueInputName = `${stateBranch}.${obj}.${key}.value`;
+                                const milestoneSelectName = `${stateBranch}.${obj}.${key}.milestone`;
+                                const valueInputName = `${stateBranch}.${obj}.${key}.value`;
                                 return (
                                     <React.Fragment key={key}>
                                         <FieldName
@@ -385,7 +385,12 @@ InfoTab.propTypes = {
     }),
     contrib: PropTypes.shape({
         loading: PropTypes.bool,
-        payload: PropTypes.array,
+        payload: PropTypes.arrayOf(
+            PropTypes.shape({
+                projectID: PropTypes.number.isRequired,
+                projectName: PropTypes.string.isRequired
+            })
+        ),
     }),
     loadData: PropTypes.func,
     resetData: PropTypes.func,

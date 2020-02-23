@@ -7,11 +7,11 @@ export default function FormikInput(props) {
     return <Field {...props} component={FormikCustomField}/>;
 };
 
-export const RenderControls = (props) => {
+export const RenderControls = React.memo((props) => {
     const {type, ...others} = props;
     const args = getControlProps(type);
     return (<MiniButton {...others} icon={args.icon} intent={args.intent}/>)
-};
+});
 
 const getControlProps = (type) => {
     switch (type) {
@@ -33,13 +33,13 @@ const getControlProps = (type) => {
     }
 };
 
-export const MiniButton = (props) => (
+export const MiniButton = React.memo((props) => (
     <Button
         style={{display: "inline-block", textAlign: "center"}}
         minimal
         {...props}
     />
-);
+));
 
 export const ArrayErrors = ({errors, name}) => (
     typeof errors[name] === 'string' ? <div style={{color: "red"}}>{errors[name]}</div> : null
