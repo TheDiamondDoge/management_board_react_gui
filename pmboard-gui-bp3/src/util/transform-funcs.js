@@ -17,7 +17,7 @@ export const blcNumberToState = (num) => {
 
 export const isDateLateForOneMonth = (dateStr) => {
     const date = moment(dateStr);
-    return Math.abs(date.diff(moment())) >= 1;
+    return Math.abs(date.diff(moment(), "month")) >= 1;
 };
 
 export const dateFormatToString = (date) => {

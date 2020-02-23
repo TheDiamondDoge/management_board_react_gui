@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Intent, FileInput} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 
-export default class UploadFileControls extends React.Component {
+export default class UploadFileControls extends React.PureComponent {
     render() {
         return (
             this.renderElements()
