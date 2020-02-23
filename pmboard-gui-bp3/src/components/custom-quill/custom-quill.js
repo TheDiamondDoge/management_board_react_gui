@@ -41,7 +41,7 @@ export default class CustomQuill extends React.Component {
                     onSubmit(values.text);
                     this.onEditChange();
                 }}
-                initialValues={{text: value || "AAA"}}
+                initialValues={{text: value}}
                 render={(formikProps) => {
                     this.submitForm = formikProps.submitForm;
                     return (
@@ -54,7 +54,7 @@ export default class CustomQuill extends React.Component {
                                                   className={styles.inline_block}
                                                   onClick={this.onEditChange}
                                                   onCancel={this.onEditChange}
-                                                  onSubmit={() => this.submitForm()}
+                                                  onSubmit={this.submitForm}
                                                   editMode={editMode}
                                                   loading={loading}
                                 />

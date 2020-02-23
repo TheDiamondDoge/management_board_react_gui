@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './updated-info.module.css';
-import {getDateFromStringWithTime} from "../../util/transform-funcs";
+import LastUpdated from "../last-updated/last-updated";
 
-export default function UpdatedInfo(props) {
-    const {date, ...others} = props;
-    const updated = getDateFromStringWithTime(date);
-    return (
-        <div {...others}>
-            Updated On:
-            <span className={styles.updated}>
-                {updated}
-            </span>
-        </div>
-    )
+export default class UpdatedInfo extends React.PureComponent {
+    render() {
+        const {date, ...others} = this.props;
+        return (
+            <div {...others}>
+                Updated On:
+                <LastUpdated className={styles.updated} dateStr={date}/>
+            </div>
+        )
+    }
 }
 
 UpdatedInfo.propTypes = {

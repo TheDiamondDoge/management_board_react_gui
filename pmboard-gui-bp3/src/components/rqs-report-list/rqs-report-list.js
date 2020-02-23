@@ -3,7 +3,7 @@ import SafeUrl from "../safe-url/safe-url";
 import PropTypes from "prop-types";
 import styles from "./rqs-report-list.module.css";
 
-export default class RqsReportList extends React.Component {
+export default class RqsReportList extends React.PureComponent {
     constructor(props) {
         super(props);
 
