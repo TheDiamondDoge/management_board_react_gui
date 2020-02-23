@@ -108,7 +108,6 @@ export default class EnchantedTable extends React.Component {
                     {footer}
                 </div>
 
-                {/*TODO: fix dialog resizing*/}
                 <Dialog
                     isOpen={isDialogOpen && editable}
                     onClose={this.onDialogClose}
@@ -167,9 +166,9 @@ export default class EnchantedTable extends React.Component {
         const self = this;
         return function (e) {
             const val = e.target.value;
-            self.setState({
-                filters: {[id]: val}
-            });
+            self.setState((prev) => ({
+                filters: {...prev.filters, [id]: val}
+            }));
         }
     }
 
@@ -181,7 +180,7 @@ export default class EnchantedTable extends React.Component {
                 if (val && !prevFilters.includes(val)) {
                     const filtersArr = [...prevFilters, val];
                     return {
-                        filters: {[id]: filtersArr}
+                        filters: {...prev.filters, [id]: filtersArr}
                     }
                 }
             });
@@ -193,9 +192,9 @@ export default class EnchantedTable extends React.Component {
         return function (obj) {
             let filtersArr = self.state.filters[id];
             let newArr = removeSelectedObjByLabel(obj, filtersArr);
-            self.setState({
-                filters: {[id]: newArr}
-            });
+            self.setState((prev) => ({
+                filters: {...prev.filters, [id]: newArr}
+            }));
         }
     }
 

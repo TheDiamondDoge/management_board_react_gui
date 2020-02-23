@@ -7,6 +7,7 @@ import tableConfig from "./table-config";
 import {createEnchantedTableFilters} from "../../../util/util";
 import TableFooter from "./components/tableFooter";
 import ContextMenu from "./components/contextMenu";
+import validationSchema from "./validation-schema";
 
 export default class Actions extends React.Component {
     componentDidMount() {
@@ -44,6 +45,7 @@ export default class Actions extends React.Component {
                         striped
                         interactive
                         bordered
+                        validationSchema={validationSchema}
                         contextMenu={
                             (menuFuncs) =>
                                 <ContextMenu onEdit={menuFuncs.editRow}
