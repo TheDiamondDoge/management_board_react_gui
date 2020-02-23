@@ -18,7 +18,7 @@ export default class PWS extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedId: 'report'
+            selectedId: 'rqs'
         };
     }
 

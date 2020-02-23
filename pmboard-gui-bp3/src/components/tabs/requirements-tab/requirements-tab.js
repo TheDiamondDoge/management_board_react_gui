@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import tableConfig from './table-config';
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {RqsTabRq} from "../../../util/custom-types";
+import TableFooter from "./components/table-footer";
 
 export default class RequirementsTab extends React.Component {
     componentDidMount() {
@@ -29,6 +30,9 @@ export default class RequirementsTab extends React.Component {
                         bordered
                         data={payload}
                         columns={tableConfig}
+                        renderFooter={() => (
+                            <TableFooter onRefresh={this.props.loadData}/>
+                        )}
                     />
                 </CustomCard>
             );
