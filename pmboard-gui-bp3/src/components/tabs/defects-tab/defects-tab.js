@@ -23,7 +23,7 @@ export default class DefectsTab extends React.Component {
             const {payload} = this.props.defects;
             const {updatedOn, ...data} = payload;
             return (
-                <CustomCard autosize>
+                <CustomCard autosize={"x"}>
                     <BacklogDefectsPage
                         data={data}
                         header="New Open Defects (ECMA CRs)"

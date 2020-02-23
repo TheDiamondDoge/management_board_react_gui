@@ -24,7 +24,7 @@ export default class BacklogTab extends React.Component {
             const {payload} = this.props.backlog;
             const {updatedOn, ...data} = payload;
             return (
-                <CustomCard autosize>
+                <CustomCard autosize={'x'}>
                     <BacklogDefectsPage
                         data={data}
                         header="Defects backlog (ECMA CRs)"
