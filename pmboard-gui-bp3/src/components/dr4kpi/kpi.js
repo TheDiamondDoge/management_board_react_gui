@@ -36,7 +36,6 @@ export default class Kpi extends React.Component {
                 </thead>
                 <tbody>
                 {
-                    //TODO: re-write with render-helper class
                     Object.keys(fieldsToRender).map((field) => {
                         if (field === "year") return true;
 

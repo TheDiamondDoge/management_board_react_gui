@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import {FieldArray, Formik} from "formik";
 import FormikInput, {RenderControls} from "../controls/util-renderers";
 import HelpIcon from "../help-icon/help-icon";
-import {dateFormatToString} from "../../util/transform-funcs";
+import {dateFormatToString, getDateFromStringWithTime} from "../../util/transform-funcs";
 import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/custom-types";
 import FieldValue from "../field-value/field-value";
 import {formikFieldHandleChange} from "../../util/util";
@@ -92,13 +92,13 @@ export default class Quality extends React.Component {
                 <div>
                     <div className={styles.float_left}>
                         <Button
+                            minimal
                             intent={"primary"}
-                            minimal={true}
                         >
                             <Icon icon={"refresh"}/>
                         </Button>
                         Last synchro:
-                        <span className={styles.sync_date}>{dateFormatToString(new Date(syncDate))}</span>
+                        <span className={styles.sync_date}>{getDateFromStringWithTime(syncDate)}</span>
                     </div>
                     <EditSaveControls
                         className={styles.float_right}
@@ -109,8 +109,8 @@ export default class Quality extends React.Component {
                     />
                 </div>
                 <HTMLTable
+                    striped
                     className={styles.quality_table}
-                    striped={true}
                 >
                     <colgroup>
                         <col className={styles.descr_col}/>
@@ -132,6 +132,7 @@ export default class Quality extends React.Component {
                     </thead>
                     <tbody>
                     {
+                        //TODO: render-helper-class
                         Object.keys(fieldsToRender).map(field => {
                                 if (field === "testExecution" || field === "testRate") {
                                     return this.renderComplexRows(values, field, true);
@@ -167,27 +168,26 @@ export default class Quality extends React.Component {
                     return indicators.map((row, i) => (
                         <tr key={`${field}_${i}`}>
                             {
-                                i === 0
-                                    ? <>
-                                        <td rowSpan={rowSpan}>
-                                            <FieldName name={rowTitle}/>
-                                            {
-                                                <Tooltip content={help} position={Position.TOP}>
-                                                    <HelpIcon/>
-                                                </Tooltip>
-                                            }
-                                        </td>
-                                        <td rowSpan={rowSpan}>
-                                            {
-                                                this.state.editMode && isControlled &&
-                                                <RenderControls
-                                                    type="add"
-                                                    onClick={() => arrayHelpers.push(this.getEmptyRowObject(comment))}
-                                                />
-                                            }
-                                        </td>
-                                    </>
-                                    : false
+                                (i === 0) &&
+                                <>
+                                    <td rowSpan={rowSpan}>
+                                        <FieldName name={rowTitle}/>
+                                        {
+                                            <Tooltip content={help} position={Position.TOP}>
+                                                <HelpIcon className={styles.help_icon}/>
+                                            </Tooltip>
+                                        }
+                                    </td>
+                                    <td rowSpan={rowSpan}>
+                                        {
+                                            this.state.editMode && isControlled &&
+                                            <RenderControls
+                                                type="add"
+                                                onClick={() => arrayHelpers.push(this.getEmptyRowObject(comment))}
+                                            />
+                                        }
+                                    </td>
+                                </>
                             }
                             <td>
                                 {
@@ -195,7 +195,7 @@ export default class Quality extends React.Component {
                                     <RenderControls
                                         type="delete"
                                         onClick={() => this.removeRow(values[field], arrayHelpers, i)}
-                                     />
+                                    />
                                 }
                             </td>
                             <td className={styles.column_align_center}>
@@ -206,7 +206,7 @@ export default class Quality extends React.Component {
                                             name={`${field}[${i}].objective`}
                                             onValueChange={this.updateFieldHandler(`${field}[${i}].objective`)}
                                         />
-                                        : <FieldValue value={row.objective} />
+                                        : <FieldValue value={row.objective}/>
                                 }
                             </td>
                             <td className={styles.column_align_center}>
@@ -217,22 +217,21 @@ export default class Quality extends React.Component {
                                             name={`${field}[${i}].actual`}
                                             onValueChange={this.updateFieldHandler(`${field}[${i}].actual`)}
                                         />
-                                        : <FieldValue value={row.actual} />
+                                        : <FieldValue value={row.actual}/>
                                 }
                             </td>
                             {
-                                i === 0
-                                    ? <td rowSpan={rowSpan} className={styles.column_align_center}>
-                                        {
-                                            this.state.editMode
-                                                ? <FormikInput
-                                                    type="textarea"
-                                                    name={`${field}[${i}].comment`}
-                                                />
-                                                : <FieldValue value={comment} />
-                                        }
-                                    </td>
-                                    : false
+                                (i === 0) &&
+                                <td rowSpan={rowSpan} className={styles.column_align_center}>
+                                    {
+                                        this.state.editMode
+                                            ? <FormikInput
+                                                type="textarea"
+                                                name={`${field}[${i}].comment`}
+                                            />
+                                            : <FieldValue value={comment}/>
+                                    }
+                                </td>
                             }
                         </tr>
                     ))

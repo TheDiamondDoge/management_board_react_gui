@@ -63,6 +63,7 @@ export default class FormikCustomField extends React.Component {
                 );
             case "numeric":
                 return (
+                    //TODO if NaN - cant change value
                     //onValueChange handler should be passed instead of onChange
                     <NumericInput allowNumericCharactersOnly
                                   fill
