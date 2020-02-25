@@ -12,7 +12,6 @@ import {Formik} from "formik";
 import {formikFieldHandleChange} from "../../../util/util";
 import {BlcTab} from "../../../util/custom-types";
 
-//TODO: Fetch is OK, need to populate
 export default class BlcDashboard extends React.Component {
     constructor(props) {
         super(props);
@@ -68,6 +67,7 @@ export default class BlcDashboard extends React.Component {
             return <LoadingSpinner/>
         } else {
             const {pm, pmo, sales, rowToSave} = this.props.blcTab.payload;
+            const showSubmitCancel = this.shouldShowEditControls();
             return (
                 <>
                     <CustomCard>
@@ -106,19 +106,22 @@ export default class BlcDashboard extends React.Component {
                             }
                         />
                     </CustomCard>
-                    {
-                        (this.state.isPmoRow || this.state.isPmRow || this.state.isSalesRow || this.state.isCommentsEdit) &&
+                    {showSubmitCancel &&
                         <EditSaveControls editMode={true}
                                           onCancel={() => {
                                               this.cancelEdit();
                                               this.props.loadData();
                                           }}
-                                          onSubmit={this.submitForm}
+                                        onSubmit={this.submitForm}
                         />
                     }
                 </>
             )
         }
+    }
+
+    shouldShowEditControls() {
+        return this.state.isPmoRow || this.state.isPmRow || this.state.isSalesRow || this.state.isCommentsEdit;
     }
 
     getRowToSaveValue = () => {
@@ -141,9 +144,9 @@ export default class BlcDashboard extends React.Component {
         const {pm, pmo, sales} = formikProps.values;
         return (
             <HTMLTable
-                bordered={true}
+                bordered
+                striped
                 className={styles.blc_table}
-                striped={true}
             >
                 {this.renderColGroup()}
                 {this.renderHeader(thClasses, thCommentClasses)}
@@ -214,50 +217,57 @@ export default class BlcDashboard extends React.Component {
         </colgroup>
     );
 
-    renderHeader = (thClasses, thCommentClasses) => (
-        <thead>
-        <tr>
-            <th className={thClasses} rowSpan={2}>Role</th>
-            <th className={thClasses} rowSpan={2}>Who</th>
-            <th className={thClasses} rowSpan={2}>Updated On</th>
-            <th className={thClasses} rowSpan={2}>Opportunity Review</th>
-            <th className={thClasses} rowSpan={2}>Charter</th>
-            <th className={thClasses} rowSpan={2}>Project Plan</th>
-            <th className={thClasses} rowSpan={2}>Tailoring</th>
-            <th className={thClasses} colSpan={2}>Accountability</th>
-            <th className={thClasses} colSpan={2}>Business Plan</th>
-            <th className={thClasses} colSpan={2}>Launch Plan</th>
-            <th className={thClasses} rowSpan={2}>Lessons Learned</th>
-            <th className={thClasses} rowSpan={2}>Risks</th>
-            <th className={thCommentClasses} rowSpan={2}>
-                <div>
-                    <div className={style.inline_block}>
-                        {
-                            !this.state.isPmRow && !this.state.isPmoRow && !this.state.isSalesRow && !this.state.isCommentsEdit &&
-                            <Button
-                                minimal={true}
-                                icon={"edit"}
-                                intent={"primary"}
-                                onClick={this.onClickCommentsEdit}
-                            />
-                        }
+    renderHeader = (thClasses, thCommentClasses) => {
+        const isEditButton = this.shouldShowEditButton();
+        return (
+            <thead>
+            <tr>
+                <th className={thClasses} rowSpan={2}>Role</th>
+                <th className={thClasses} rowSpan={2}>Who</th>
+                <th className={thClasses} rowSpan={2}>Updated On</th>
+                <th className={thClasses} rowSpan={2}>Opportunity Review</th>
+                <th className={thClasses} rowSpan={2}>Charter</th>
+                <th className={thClasses} rowSpan={2}>Project Plan</th>
+                <th className={thClasses} rowSpan={2}>Tailoring</th>
+                <th className={thClasses} colSpan={2}>Accountability</th>
+                <th className={thClasses} colSpan={2}>Business Plan</th>
+                <th className={thClasses} colSpan={2}>Launch Plan</th>
+                <th className={thClasses} rowSpan={2}>Lessons Learned</th>
+                <th className={thClasses} rowSpan={2}>Risks</th>
+                <th className={thCommentClasses} rowSpan={2}>
+                    <div>
+                        <div className={style.inline_block}>
+                            {
+                                isEditButton &&
+                                <Button
+                                    minimal
+                                    icon={"edit"}
+                                    intent={"primary"}
+                                    onClick={this.onClickCommentsEdit}
+                                />
+                            }
+                        </div>
+                        <div className={style.inline_block}>
+                            Comments
+                        </div>
                     </div>
-                    <div className={style.inline_block}>
-                        Comments
-                    </div>
-                </div>
-            </th>
-        </tr>
-        <tr>
-            <th className={thClasses}>Program Mgr</th>
-            <th className={thClasses}>Core team members</th>
-            <th className={thClasses}>Plan</th>
-            <th className={thClasses}>Sales Buy-in</th>
-            <th className={thClasses}>Plan</th>
-            <th className={thClasses}>Sales Buy-in</th>
-        </tr>
-        </thead>
-    );
+                </th>
+            </tr>
+            <tr>
+                <th className={thClasses}>Program Mgr</th>
+                <th className={thClasses}>Core team members</th>
+                <th className={thClasses}>Plan</th>
+                <th className={thClasses}>Sales Buy-in</th>
+                <th className={thClasses}>Plan</th>
+                <th className={thClasses}>Sales Buy-in</th>
+            </tr>
+            </thead>
+        );
+    };
+
+    shouldShowEditButton() {
+        return !this.state.isPmRow && !this.state.isPmoRow && !this.state.isSalesRow && !this.state.isCommentsEdit;
+    }
 
     isInEditMode = () => {
         return (this.state.isPmRow || this.state.isPmoRow || this.state.isSalesRow || this.state.isCommentsEdit)

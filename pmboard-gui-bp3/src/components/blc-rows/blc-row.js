@@ -17,15 +17,16 @@ export default class BlcRow extends React.Component {
         } = this.props;
         const tdClasses = classNames(style.column_align_center, style.word_break);
         const commentName = `${this.props.rowName}.comment`;
+        const isEditShown = this.shouldShowEditButton();
         return (
             <tr>
                 <td>
                     <div>
                         <div className={style.inline_block}>
                             {
-                                !isValuesEdit && !isCommentsEdit && !isControlsHidden &&
+                                isEditShown &&
                                 <Button
-                                    minimal={true}
+                                    minimal
                                     icon={"edit"}
                                     intent={"primary"}
                                     onClick={onClickEdit}
@@ -55,13 +56,17 @@ export default class BlcRow extends React.Component {
                 <td className={tdClasses}>
                     {isCommentsEdit
                         ? (<FormikInput type="textarea"
-                                        fill={true}
+                                        fill
                                         name={commentName}
                         />)
                         : comment}
                 </td>
             </tr>
         )
+    }
+
+    shouldShowEditButton() {
+        return !this.props.isValuesEdit && !this.props.isCommentsEdit && !this.props.isControlsHidden
     }
 
     selectElement = (num, key) => {
