@@ -21,15 +21,21 @@ import {ProjectTypes} from "../../../util/constants";
 
 import 'react-quill/dist/quill.snow.css';
 import LastUpdated from "../../last-updated/last-updated";
+import {getPropFromStringPath} from "../../../util/util";
+import {getIndicatorsColor} from "../../../util/transform-funcs";
 
 
 export default class SummaryTab extends React.Component {
     componentDidMount() {
-        this.props.loadData();
-    }
+        console.log(this.props.tabId);
+        console.log("window location", window.location.pathname);
+        console.log("window location", window.location.search);
+        const tabName = new URLSearchParams(window.location.search);
+        tabName.set("tab", this.props.tabId);
+        tabName.set("projectId", this.props.projectId);
+        console.log(tabName.toString());
 
-    componentWillUnmount() {
-        this.props.resetData();
+        window.history.pushState("Tabs",`${this.props.tabId} tab`, `/pws?${tabName.toString()}`);
     }
 
     render() {
@@ -43,6 +49,9 @@ export default class SummaryTab extends React.Component {
             const healthIndicators = this.props.healthIndicators;
             const contribTable = this.props.contribTable;
 
+            const overall = getPropFromStringPath(healthIndicators, "payload.statuses.current.overall");
+            const overallIndicator = getIndicatorsColor(overall);
+
             let mainCardStyle = classNames(styles.data_fields);
             let secondaryCardStyle = classNames(styles.secondary_card);
             return (
@@ -53,7 +62,7 @@ export default class SummaryTab extends React.Component {
                                 ? <LoadingSpinner/>
                                 : (
                                     <ErrorBoundary>
-                                        <Timeline milestones={milestones.payload}/>
+                                        <Timeline milestones={milestones.payload} status={overallIndicator}/>
                                     </ErrorBoundary>
                                 )
                         }
@@ -78,9 +87,9 @@ export default class SummaryTab extends React.Component {
                                 : (
                                     <ErrorBoundary>
                                         <HealthIndicators
+                                            isSummaryMode={true}
                                             indicators={healthIndicators.payload}
                                             fieldsToRender={fieldsToRender}
-                                            isSummaryMode={true}
                                         />
                                     </ErrorBoundary>
                                 )
@@ -178,8 +187,6 @@ export default class SummaryTab extends React.Component {
 }
 
 SummaryTab.propTypes = {
-    loadData: PropTypes.func,
-    resetData: PropTypes.func,
     contribTable: PropTypes.shape({
         loading: PropTypes.bool,
         payload: ContribTable

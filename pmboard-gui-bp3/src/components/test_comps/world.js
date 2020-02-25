@@ -44,6 +44,12 @@ export default class World extends React.Component {
 
     isSelected = (elem) => (this.state.selectedItems.includes(elem));
 
+    test() {
+        // document.getElementById("content").innerHTML = response.html;
+        // document.title = response.pageTitle;
+        window.history.pushState("Hello","Title", "/pws?tab=information");
+    }
+
     render() {
         const {test, testPassed, onClick1, onClick2} = this.props;
         const menu = (
@@ -204,7 +210,7 @@ export default class World extends React.Component {
                 <br/>
                 <br/>
                 <Legend/>
-                <Button intent={Intent.DANGER} text={"Lol"}/>
+                <Button intent={Intent.DANGER} text={"Lol"} onClick={this.test}/>
             </>
         );
     }

@@ -18,7 +18,14 @@ export default class PWS extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedId: 'blc'
+            selectedId: "",
+            defaults: {
+                defaultTab: "summary",
+                defaultTabNames: [
+                    "summary", "indicators", "information", "actions", "risks",
+                    "cost", "report", "rqs", "backlog", "defects", "blc"
+                ]
+            }
         };
     }
 
@@ -27,6 +34,9 @@ export default class PWS extends React.Component {
     );
 
     render() {
+        console.log(SummaryTab);
+        console.log("PARAMS", this.props.location.search);
+        const tabName = this.getActiveTabName();
         return (
             <div>
                 <h1>Project Pineapple</h1>
@@ -34,11 +44,11 @@ export default class PWS extends React.Component {
                     id="pws_tabs"
                     large
                     renderActiveTabPanelOnly
-                    selectedTabId={this.state.selectedId}
+                    selectedTabId={this.state.selectedId || tabName}
                     className={styles.center}
                     onChange={this.onChange}
                 >
-                    <Tab id="summary" title="Summary" panel={<ErrorBoundary><SummaryTab/></ErrorBoundary>}/>
+                    <Tab id="summary" title="Summary" panel={<ErrorBoundary><SummaryTab projectId={1} tabId={"summary"}/></ErrorBoundary>}/>
                     <Tab id="indicators" title="Indicators" panel={<ErrorBoundary><IndicatorsTab/></ErrorBoundary>}/>
                     <Tab id="information" title="Information" panel={<ErrorBoundary><InfoTab/></ErrorBoundary>}/>
                     <Tab id="actions" title="Actions" panel={<ErrorBoundary><Actions/></ErrorBoundary>}/>
@@ -52,5 +62,15 @@ export default class PWS extends React.Component {
                 </Tabs>
             </div>
         );
+    }
+
+    getActiveTabName() {
+        const urlParams = this.props.location.search;
+        const tabName = new URLSearchParams(urlParams).get('tab');
+        return this.isTabNameExists(tabName) ? tabName.toLowerCase() : this.state.defaults.defaultTab;
+    }
+
+    isTabNameExists(name) {
+        return this.state.defaults.defaultTabNames.includes(String(name).toLowerCase());
     }
 }
