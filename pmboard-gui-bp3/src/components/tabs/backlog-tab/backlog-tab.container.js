@@ -1,7 +1,7 @@
 import {connect} from "react-redux";
 import {loadBacklogChart, resetBacklog} from "../../../actions/pws/backlog";
 import BacklogTab from "./backlog-tab";
-import {withOnMountCall} from "../../../util/HOCs";
+import {withOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
@@ -21,4 +21,8 @@ const executeMethodsConfig = {
     onUnmount: "resetData",
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withOnMountCall(BacklogTab)(executeMethodsConfig));
+const ConnectedComponent = withOnMountCall(
+    withPwsTabNameUrlChanger(BacklogTab)
+)(executeMethodsConfig);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

@@ -13,6 +13,7 @@ import Actions from "../../tabs/actions/actions.container";
 import Requirements from "../../tabs/requirements-tab/requirements-tab.container";
 import BacklogTab from "../../tabs/backlog-tab/backlog-tab.container";
 import DefectsTab from "../../tabs/defects-tab/defects-tab.container";
+import {PWSTabs} from "../../../util/constants";
 
 export default class PWS extends React.Component {
     constructor(props) {
@@ -20,13 +21,14 @@ export default class PWS extends React.Component {
         this.state = {
             selectedId: "",
             defaults: {
-                defaultTab: "summary",
-                defaultTabNames: [
-                    "summary", "indicators", "information", "actions", "risks",
-                    "cost", "report", "rqs", "backlog", "defects", "blc"
-                ]
+                defaultSelectedTab: "summary",
+                defaultTabNames: this.getDefaultTabNames()
             }
         };
+    }
+
+    getDefaultTabNames() {
+        return Object.keys(PWSTabs).map(key => PWSTabs[key])
     }
 
     onChange = (tabId) => (
@@ -48,17 +50,17 @@ export default class PWS extends React.Component {
                     className={styles.center}
                     onChange={this.onChange}
                 >
-                    <Tab id="summary" title="Summary" panel={<ErrorBoundary><SummaryTab projectId={1} tabId={"summary"}/></ErrorBoundary>}/>
-                    <Tab id="indicators" title="Indicators" panel={<ErrorBoundary><IndicatorsTab/></ErrorBoundary>}/>
-                    <Tab id="information" title="Information" panel={<ErrorBoundary><InfoTab/></ErrorBoundary>}/>
-                    <Tab id="actions" title="Actions" panel={<ErrorBoundary><Actions/></ErrorBoundary>}/>
-                    <Tab id="risks" title="Risks" panel={<ErrorBoundary><Risks/></ErrorBoundary>}/>
-                    <Tab id="cost" title="Cost" panel={<ErrorBoundary><CostTab/></ErrorBoundary>}/>
-                    <Tab id="report" title="Report" panel={<ErrorBoundary><Report/></ErrorBoundary>}/>
-                    <Tab id="rqs" title="Requirements" panel={<ErrorBoundary><Requirements/></ErrorBoundary>}/>
-                    <Tab id="backlog" title="Backlog" panel={<ErrorBoundary><BacklogTab/></ErrorBoundary>}/>
-                    <Tab id="defects" title="Defects" panel={<ErrorBoundary><DefectsTab/></ErrorBoundary>}/>
-                    <Tab id="blc" title="BLC Dashboard" panel={<ErrorBoundary><BlcDashboard/></ErrorBoundary>}/>
+                    <Tab id="summary" title="Summary" panel={<ErrorBoundary><SummaryTab tabId={PWSTabs.SUMMARY}/></ErrorBoundary>}/>
+                    <Tab id="indicators" title="Indicators" panel={<ErrorBoundary><IndicatorsTab tabId={PWSTabs.INDICATORS}/></ErrorBoundary>}/>
+                    <Tab id="information" title="Information" panel={<ErrorBoundary><InfoTab tabId={PWSTabs.INFORMATION}/></ErrorBoundary>}/>
+                    <Tab id="actions" title="Actions" panel={<ErrorBoundary><Actions tabId={PWSTabs.ACTIONS}/></ErrorBoundary>}/>
+                    <Tab id="risks" title="Risks" panel={<ErrorBoundary><Risks tabId={PWSTabs.RISKS}/></ErrorBoundary>}/>
+                    <Tab id="cost" title="Cost" panel={<ErrorBoundary><CostTab tabId={PWSTabs.COST}/></ErrorBoundary>}/>
+                    <Tab id="report" title="Report" panel={<ErrorBoundary><Report tabId={PWSTabs.REPORT}/></ErrorBoundary>}/>
+                    <Tab id="rqs" title="Requirements" panel={<ErrorBoundary><Requirements tabId={PWSTabs.REQUIREMENTS}/></ErrorBoundary>}/>
+                    <Tab id="backlog" title="Backlog" panel={<ErrorBoundary><BacklogTab tabId={PWSTabs.BACKLOG}/></ErrorBoundary>}/>
+                    <Tab id="defects" title="Defects" panel={<ErrorBoundary><DefectsTab tabId={PWSTabs.DEFECTS}/></ErrorBoundary>}/>
+                    <Tab id="blc" title="BLC Dashboard" panel={<ErrorBoundary><BlcDashboard tabId={PWSTabs.BLC}/></ErrorBoundary>}/>
                 </Tabs>
             </div>
         );
@@ -67,7 +69,7 @@ export default class PWS extends React.Component {
     getActiveTabName() {
         const urlParams = this.props.location.search;
         const tabName = new URLSearchParams(urlParams).get('tab');
-        return this.isTabNameExists(tabName) ? tabName.toLowerCase() : this.state.defaults.defaultTab;
+        return this.isTabNameExists(tabName) ? tabName.toLowerCase() : this.state.defaults.defaultSelectedTab;
     }
 
     isTabNameExists(name) {

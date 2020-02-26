@@ -7,6 +7,20 @@ export const ProjectTypes = {
     ENABLED : "ENABLED",
 };
 
+export const PWSTabs = {
+    SUMMARY: "summary",
+    INDICATORS: "indicators",
+    INFORMATION: "information",
+    ACTIONS: "actions",
+    RISKS: "risks",
+    COST: "cost",
+    REPORT: "report",
+    REQUIREMENTS: "requirements",
+    BACKLOG: "backlog",
+    DEFECTS: "defects",
+    BLC: "blc"
+};
+
 export const ProjectStates = {
     ENABLED: "ENABLED",
     DISABLED: "DISABLED"

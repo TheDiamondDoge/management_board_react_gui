@@ -62,6 +62,4 @@ Actions.propTypes = {
     relatedRisks: PropTypes.arrayOf(PropTypes.string),
     saveAction: PropTypes.func,
     deleteAction: PropTypes.func,
-    loadData: PropTypes.func,
-    resetData: PropTypes.func,
 };

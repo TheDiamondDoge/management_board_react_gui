@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import DefectsTab from "./defects-tab";
 import {loadDefectsChart, resetDefects} from "../../../actions/pws/defects";
-import {withOnMountCall} from "../../../util/HOCs";
+import {withOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
@@ -21,4 +21,8 @@ const executeMethodsConfig = {
     onUnmount: "resetData",
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withOnMountCall(DefectsTab)(executeMethodsConfig));
+const ConnectedComponent = withOnMountCall(
+    withPwsTabNameUrlChanger(DefectsTab)
+)(executeMethodsConfig);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

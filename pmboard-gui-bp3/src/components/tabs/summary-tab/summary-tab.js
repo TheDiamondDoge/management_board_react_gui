@@ -18,26 +18,13 @@ import ContributingOpenProjects from "../../contributing-projects-table/contribu
 import Legend from "../../legend/legend";
 import OfferProductTitle from "../../contributing-projects-table/components/offer-product-title/offer-product-title";
 import {ProjectTypes} from "../../../util/constants";
-
-import 'react-quill/dist/quill.snow.css';
 import LastUpdated from "../../last-updated/last-updated";
 import {getPropFromStringPath} from "../../../util/util";
 import {getIndicatorsColor} from "../../../util/transform-funcs";
 
+import 'react-quill/dist/quill.snow.css';
 
 export default class SummaryTab extends React.Component {
-    componentDidMount() {
-        console.log(this.props.tabId);
-        console.log("window location", window.location.pathname);
-        console.log("window location", window.location.search);
-        const tabName = new URLSearchParams(window.location.search);
-        tabName.set("tab", this.props.tabId);
-        tabName.set("projectId", this.props.projectId);
-        console.log(tabName.toString());
-
-        window.history.pushState("Tabs",`${this.props.tabId} tab`, `/pws?${tabName.toString()}`);
-    }
-
     render() {
         const {loading} = this.props.summaryData;
         const renderHelper = new RenderFieldHelper(summaryFieldsToRender);

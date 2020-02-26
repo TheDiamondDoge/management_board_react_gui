@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import {actionsLoad, actionsReset, actionSave, actionDelete} from "../../../actions/pws/actions-tab";
 import {loadRiskIds} from "../../../actions/pws/risks-tab";
 import Actions from "./actions";
-import {withOnMountCall} from "../../../util/HOCs";
+import {withOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
@@ -32,4 +32,8 @@ const executeMethodsConfig = {
     onUnmount: "resetData",
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withOnMountCall(Actions)(executeMethodsConfig));
+const ConnectedComponent = withOnMountCall(
+    withPwsTabNameUrlChanger(Actions)
+)(executeMethodsConfig);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

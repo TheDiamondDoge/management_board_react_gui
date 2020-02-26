@@ -4,7 +4,7 @@ import {summaryLoad, summaryReset} from "../../../actions/pws/summary-tab";
 import {milestonesReset} from "../../../actions/pws/milestones";
 import {healthReset} from "../../../actions/pws/health-indicators";
 import {loadContribTable, resetContribTable} from "../../../actions/pws/contrib-table";
-import {withOnMountCall} from "../../../util/HOCs";
+import {withOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
@@ -35,4 +35,8 @@ const executeMethodsConfig = {
     onUnmount: "resetData",
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withOnMountCall(summaryTab)(executeMethodsConfig));
+const ConnectedComponent = withOnMountCall(
+    withPwsTabNameUrlChanger(summaryTab)
+)(executeMethodsConfig);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);
