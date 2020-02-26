@@ -17,14 +17,6 @@ export default class CostTab extends React.Component {
         };
     }
 
-    componentDidMount() {
-        this.props.loadData();
-    }
-
-    componentWillUnmount() {
-        this.props.resetData();
-    }
-
     toggleControls = () => {
         this.setState((prevState) => ({
             editMode: !prevState.editMode
@@ -72,8 +64,6 @@ export default class CostTab extends React.Component {
 }
 
 CostTab.propTypes = {
-    loadData: PropTypes.func,
-    resetData: PropTypes.func,
     cost: PropTypes.shape({
         loading: PropTypes.bool.isRequired,
         payload: CostTabTypes

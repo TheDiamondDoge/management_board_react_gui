@@ -17,14 +17,6 @@ import {ReportTypes} from "../../../util/constants";
 
 //TODO populate snapshots in popover
 export default class ReportTab extends React.Component {
-    componentDidMount() {
-        this.props.loadData();
-    }
-
-    componentWillUnmount() {
-        this.props.resetData();
-    }
-
     render() {
         const {loading} = this.props.report;
         if (loading) {
@@ -171,8 +163,6 @@ export default class ReportTab extends React.Component {
 }
 
 ReportTab.propTypes = {
-    loadData: PropTypes.func.isRequired,
-    resetData: PropTypes.func.isRequired,
     saveData: PropTypes.func.isRequired,
     report: PropTypes.shape({
         loading: PropTypes.bool.isRequired,

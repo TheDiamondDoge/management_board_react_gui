@@ -25,14 +25,6 @@ import {getPropFromStringPath} from "../../../util/util";
 import {getIndicatorsColor} from "../../../util/transform-funcs";
 
 export default class IndicatorsTab extends React.Component {
-    componentDidMount() {
-        this.props.loadData();
-    }
-
-    componentWillUnmount() {
-        this.props.resetState();
-    }
-
     //TODO: use render-helper class
     render() {
         const {milestones, healthIndicators, requirements, milestonesKpi, dr4Kpi, qualityKpi} = this.props;
@@ -164,8 +156,6 @@ IndicatorsTab.propTypes = {
         loading: PropTypes.bool,
         payload: QualityIndicatorsShape
     }),
-    loadData: PropTypes.func,
-    resetState: PropTypes.func,
     healthIndicatorsSubmit: PropTypes.func,
     healthCommentsSubmit: PropTypes.func,
     healthReload: PropTypes.func,

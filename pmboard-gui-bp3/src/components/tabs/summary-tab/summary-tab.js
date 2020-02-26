@@ -15,7 +15,7 @@ import {ContribTable, HealthIndicatorsShape, MilestoneShape, SummaryShape} from 
 import ErrorBoundary from "../../error-boundary/error-boundary";
 import ReactQuill from "react-quill";
 import ContributingOpenProjects from "../../contributing-projects-table/contributing-open-projects";
-import Legend from "../../../legend/legend";
+import Legend from "../../legend/legend";
 import OfferProductTitle from "../../contributing-projects-table/components/offer-product-title/offer-product-title";
 import {ProjectTypes} from "../../../util/constants";
 

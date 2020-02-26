@@ -7,14 +7,6 @@ import BacklogDefectsPage from "../backlog-defects-page/backlog-defects-page";
 import {BacklogDefectsTypes} from "../../../util/custom-types";
 
 export default class DefectsTab extends React.Component {
-    componentDidMount() {
-        this.props.loadData();
-    }
-
-    componentWillUnmount() {
-        this.props.resetData();
-    }
-
     render() {
         const {loading} = this.props;
         if (loading) {
@@ -39,8 +31,6 @@ export default class DefectsTab extends React.Component {
 }
 
 DefectsTab.propTypes = {
-    loadData: PropTypes.func.isRequired,
-    resetData: PropTypes.func.isRequired,
     defects: PropTypes.shape({
         loading: PropTypes.bool.isRequired,
         payload: BacklogDefectsTypes.isRequired

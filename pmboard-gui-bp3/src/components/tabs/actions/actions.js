@@ -10,15 +10,6 @@ import ContextMenu from "./components/contextMenu";
 import validationSchema from "./validation-schema";
 
 export default class Actions extends React.Component {
-    componentDidMount() {
-        this.props.loadFilters();
-        this.props.loadData();
-    }
-
-    componentWillUnmount() {
-        this.props.resetData();
-    }
-
     render() {
         const {loading} = this.props.actions;
         if (loading) {
@@ -72,6 +63,5 @@ Actions.propTypes = {
     saveAction: PropTypes.func,
     deleteAction: PropTypes.func,
     loadData: PropTypes.func,
-    loadFilters: PropTypes.func,
     resetData: PropTypes.func,
 };

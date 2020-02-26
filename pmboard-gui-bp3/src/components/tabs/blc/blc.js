@@ -30,14 +30,6 @@ export default class BlcDashboard extends React.Component {
         this.submitForm = formikSubmitFunc;
     };
 
-    componentDidMount() {
-        this.props.loadData();
-    }
-
-    componentWillUnmount() {
-        this.props.resetData();
-    }
-
     onClickEdit = (row) => {
         this.setState((prevState) => ({
                 [row]: !prevState[row]
@@ -275,8 +267,6 @@ export default class BlcDashboard extends React.Component {
 }
 
 BlcDashboard.propTypes = {
-    loadData: PropTypes.func,
-    resetData: PropTypes.func,
     saveIndicators: PropTypes.func,
     saveComments: PropTypes.func,
     blcTab: BlcTab.isRequired,

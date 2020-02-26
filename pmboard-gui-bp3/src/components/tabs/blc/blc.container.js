@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import blcTab from "./blc";
 import {blcLoad, blcReset, blcCommentsSave, blcIndicatorsSave} from "../../../actions/pws/blc-tab";
+import {withOnMountCall} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
@@ -17,4 +18,9 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(blcTab)
+const executeMethodsConfig = {
+    onMount: "loadData",
+    onUnmount: "resetData",
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withOnMountCall(blcTab)(executeMethodsConfig));

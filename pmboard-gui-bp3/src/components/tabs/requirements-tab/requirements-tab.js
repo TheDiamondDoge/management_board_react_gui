@@ -8,14 +8,6 @@ import {RqsTabRq} from "../../../util/custom-types";
 import TableFooter from "./components/table-footer";
 
 export default class RequirementsTab extends React.Component {
-    componentDidMount() {
-        this.props.loadData();
-    }
-
-    componentWillUnmount() {
-        this.props.resetData();
-    }
-
     render() {
         const {loading} = this.props.rqs;
         if (loading) {
@@ -41,8 +33,6 @@ export default class RequirementsTab extends React.Component {
 }
 
 RequirementsTab.propTypes = {
-    loadData: PropTypes.func.isRequired,
-    resetData: PropTypes.func.isRequired,
     rqs: PropTypes.shape({
         loading: PropTypes.bool,
         payload: RqsTabRq

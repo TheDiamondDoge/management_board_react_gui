@@ -31,14 +31,6 @@ export default class InfoTab extends React.Component {
         this.mandatoryMilestones = ["OR", "DR0", "DR1", "DR2", "DR3", "DR4", "OBR", "CI"];
     }
 
-    componentDidMount() {
-        this.props.loadData();
-    }
-
-    componentWillUnmount() {
-        this.props.resetData();
-    }
-
     submitForm = null;
 
     bindFormSubmission = (formikSubmitForm) => {
@@ -392,8 +384,6 @@ InfoTab.propTypes = {
             })
         ),
     }),
-    loadData: PropTypes.func,
-    resetData: PropTypes.func,
     saveInfo: PropTypes.func,
     saveMilestones: PropTypes.func,
 };

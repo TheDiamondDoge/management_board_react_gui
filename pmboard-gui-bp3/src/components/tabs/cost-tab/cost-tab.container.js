@@ -1,6 +1,7 @@
 import {connect} from "react-redux";
 import CostTab from "./cost-tab";
 import {costLoad, costReset} from "../../../actions/pws/cost-tab";
+import {withOnMountCall} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
@@ -15,4 +16,9 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CostTab);
+const executeMethodsConfig = {
+    onMount: "loadData",
+    onUnmount: "resetData",
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withOnMountCall(CostTab)(executeMethodsConfig));

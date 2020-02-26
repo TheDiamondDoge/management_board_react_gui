@@ -3,6 +3,7 @@ import InfoTab from './info-tab';
 import {infoLoad, infoReset, infoSaveData} from "../../../actions/pws/info-tab";
 import {milestonesLoad, milestonesReset, milestonesSave} from "../../../actions/pws/milestones";
 import {contribLoad, contribReset} from "../../../actions/pws/contrib-list";
+import {withOnMountCall} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
@@ -29,4 +30,9 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(InfoTab);
+const executeMethodsConfig = {
+    onMount: "loadData",
+    onUnmount: "resetData",
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withOnMountCall(InfoTab)(executeMethodsConfig));

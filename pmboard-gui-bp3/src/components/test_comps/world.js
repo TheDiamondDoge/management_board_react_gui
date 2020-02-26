@@ -8,7 +8,7 @@ import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import {Rnd} from "react-rnd";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
 import ContributingOpenProjects from "../contributing-projects-table/contributing-open-projects";
-import Legend from "../../legend/legend";
+import Legend from "../legend/legend";
 
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';

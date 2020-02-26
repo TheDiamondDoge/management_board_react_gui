@@ -2,6 +2,7 @@ import {connect} from 'react-redux';
 import {actionsLoad, actionsReset, actionSave, actionDelete} from "../../../actions/pws/actions-tab";
 import {loadRiskIds} from "../../../actions/pws/risks-tab";
 import Actions from "./actions";
+import {withOnMountCall} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
@@ -18,12 +19,17 @@ function mapDispatchToProps(dispatch) {
         deleteAction: (uid) => {
             dispatch(actionDelete(uid))
         },
-        loadFilters: () => {
-            dispatch(loadRiskIds())
+        loadData: () => {
+            dispatch(actionsLoad());
+            dispatch(loadRiskIds());
         },
-        loadData: () => dispatch(actionsLoad()),
         resetData: () => dispatch(actionsReset()),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Actions);
+const executeMethodsConfig = {
+    onMount: "loadData",
+    onUnmount: "resetData",
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withOnMountCall(Actions)(executeMethodsConfig));

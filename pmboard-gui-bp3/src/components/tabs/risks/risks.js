@@ -10,14 +10,6 @@ import ContextMenu from "./components/context-menu";
 import TableFooter from "./components/table-footer";
 
 export default class Risks extends React.Component {
-    componentDidMount() {
-        this.props.loadData();
-    }
-
-    componentWillUnmount() {
-        this.props.resetData();
-    }
-
     render() {
         const {loading} = this.props.risks;
         if (loading) {
@@ -57,7 +49,5 @@ Risks.propTypes = {
         loading: PropTypes.bool.isRequired,
         payload: PropTypes.arrayOf(RisksTabRisk).isRequired
     }),
-    loadData: PropTypes.func.isRequired,
-    resetData: PropTypes.func.isRequired,
     saveRisk: PropTypes.func.isRequired
 };
