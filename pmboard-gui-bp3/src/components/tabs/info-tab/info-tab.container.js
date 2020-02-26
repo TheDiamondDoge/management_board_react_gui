@@ -35,8 +35,6 @@ const executeMethodsConfig = {
     onUnmount: "resetData",
 };
 
-const ConnectedComponent = withOnMountCall(
-    withPwsTabNameUrlChanger(InfoTab)
-)(executeMethodsConfig);
+const ConnectedComponent = withOnMountCall(withPwsTabNameUrlChanger(InfoTab), executeMethodsConfig);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

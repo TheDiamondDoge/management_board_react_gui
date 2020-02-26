@@ -21,4 +21,4 @@ const conf = {
     onUnmount: "resetData",
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withOnMountCall(PWS)(conf));
+export default connect(mapStateToProps, mapDispatchToProps)(withOnMountCall(PWS, conf));

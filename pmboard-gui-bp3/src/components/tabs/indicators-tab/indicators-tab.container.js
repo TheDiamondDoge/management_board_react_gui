@@ -51,8 +51,6 @@ const executeMethodsConfig = {
     onUnmount: "resetState",
 };
 
-const ConnectedComponent = withOnMountCall(
-    withPwsTabNameUrlChanger(IndicatorsTab)
-)(executeMethodsConfig);
+const ConnectedComponent = withOnMountCall(withPwsTabNameUrlChanger(IndicatorsTab), executeMethodsConfig);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

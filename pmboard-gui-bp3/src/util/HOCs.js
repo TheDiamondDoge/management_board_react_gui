@@ -1,19 +1,17 @@
 import React from 'react';
 
-export function withOnMountCall(Component) {
-    return function (config) {
-        return class extends React.Component {
-            componentDidMount() {
-                this.props[config.onMount]();
-            }
+export function withOnMountCall(Component, config) {
+    return class extends React.Component {
+        componentDidMount() {
+            this.props[config.onMount]();
+        }
 
-            componentWillUnmount() {
-                this.props[config.onUnmount]();
-            }
+        componentWillUnmount() {
+            this.props[config.onUnmount]();
+        }
 
-            render() {
-                return <Component {...this.props}/>
-            }
+        render() {
+            return <Component {...this.props}/>
         }
     }
 }
