@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import {loadProjectDefaults, resetProjectDefaults} from "../../../actions/pws/default";
 import PWS from "./pws";
-import {withOnMountCall} from "../../../util/HOCs";
+import {withPwsOnMountCall} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
@@ -11,14 +11,13 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadData: () => dispatch(loadProjectDefaults()),
+        loadData: (projectId) => dispatch(loadProjectDefaults(projectId)),
         resetData: () => dispatch(resetProjectDefaults())
     }
 }
 
 const conf = {
-    onMount: "loadData",
     onUnmount: "resetData",
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withOnMountCall(PWS, conf));
+export default connect(mapStateToProps, mapDispatchToProps)(withPwsOnMountCall(PWS, conf));

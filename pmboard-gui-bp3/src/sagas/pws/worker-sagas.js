@@ -22,13 +22,13 @@ import * as userReports from "../../actions/pws/user-reports";
 import * as contribTable from "../../actions/pws/contrib-table";
 import * as defaults from "../../actions/pws/default";
 
-export function* loadSummaryTab() {
+export function* loadSummaryTab({projectId}) {
     try {
-        const data = yield call(api.getSummaryInfo, 1);
+        const data = yield call(api.getSummaryInfo, projectId);
         yield put(summaryTab.summaryLoadSuccess(data));
 
-        yield call(loadHealthIndicators);
-        yield call(loadMilestones);
+        yield call(loadHealthIndicators, {projectId});
+        yield call(loadMilestones, {projectId});
     } catch (e) {
         yield put(summaryTab.summaryError(e));
     }
@@ -65,27 +65,27 @@ export function* loadContributableProjects() {
     }
 }
 
-export function* loadContribTable() {
+export function* loadContribTable({projectId}) {
     try {
-        const data = yield call(api.getContribTable, 1);
+        const data = yield call(api.getContribTable, projectId);
         yield put(contribTable.loadContribTableSuccess(data));
     } catch (e) {
         yield put(contribTable.errorContribTable(e));
     }
 }
 
-export function* loadHealthIndicators() {
+export function* loadHealthIndicators({projectId}) {
     try {
-        const data = yield call(api.getHealthIndicators, 1);
+        const data = yield call(api.getHealthIndicators, projectId);
         yield put(healthIndicators.healthLoadSuccess(data));
     } catch (e) {
         yield put(healthIndicators.healthError(e));
     }
 }
 
-export function* loadMilestones() {
+export function* loadMilestones({projectId}) {
     try {
-        const data = yield call(api.getMilestones, 1);
+        const data = yield call(api.getMilestones, projectId);
         yield put(milestones.milestonesLoadSuccess(data));
     } catch (e) {
         yield put(milestones.milestonesError(e));
@@ -320,9 +320,9 @@ export function* saveBlcTabComments(action) {
     }
 }
 
-export function* loadProjectDefaults(action) {
+export function* loadProjectDefaults({projectId}) {
     try {
-        const data = yield call(api.getProjectDefaults, 1);
+        const data = yield call(api.getProjectDefaults, projectId);
         yield put(defaults.loadProjectDefaultsSuccess(data));
     } catch (e) {
         yield put(defaults.errorProjectDefaults(e));

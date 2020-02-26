@@ -4,8 +4,9 @@ export const CONTRIB_TABLE_ERROR = "CONTRIB_TABLE_ERROR";
 export const CONTRIB_TABLE_RESET = "CONTRIB_TABLE_RESET";
 
 
-export const loadContribTable = () => ({
+export const loadContribTable = (projectId) => ({
     type: CONTRIB_TABLE_LOAD,
+    projectId
 });
 
 export const loadContribTableSuccess = ({data}) => ({

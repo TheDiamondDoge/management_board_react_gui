@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {loadRequirements, resetRequirements} from "../../../actions/pws/requirements-tab";
 import Requirements from "./requirements-tab";
-import {withOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
+import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
@@ -21,6 +21,6 @@ const executeMethodsConfig = {
     onUnmount: "resetData",
 };
 
-const ConnectedComponent = withOnMountCall(withPwsTabNameUrlChanger(Requirements), executeMethodsConfig);
+const ConnectedComponent = withPwsOnMountCall(withPwsTabNameUrlChanger(Requirements), executeMethodsConfig);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

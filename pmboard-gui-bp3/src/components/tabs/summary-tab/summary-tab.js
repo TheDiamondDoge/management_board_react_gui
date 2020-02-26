@@ -25,6 +25,12 @@ import {getIndicatorsColor} from "../../../util/transform-funcs";
 import 'react-quill/dist/quill.snow.css';
 
 export default class SummaryTab extends React.Component {
+    // componentDidMount() {
+    //     const {loadData} = this.props;
+    //     const {projectId} = this.props.defaults.payload;
+    //     loadData(projectId);
+    // }
+
     render() {
         const {loading} = this.props.summaryData;
         const renderHelper = new RenderFieldHelper(summaryFieldsToRender);
@@ -174,6 +180,8 @@ export default class SummaryTab extends React.Component {
 }
 
 SummaryTab.propTypes = {
+    loadData: PropTypes.func.isRequired,
+    defaults: PropTypes.object.isRequired,
     contribTable: PropTypes.shape({
         loading: PropTypes.bool,
         payload: ContribTable

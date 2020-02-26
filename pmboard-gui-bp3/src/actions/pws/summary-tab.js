@@ -3,8 +3,9 @@ export const SUMMARY_LOAD_SUCCESS = "SUMMARY_LOAD_SUCCESS";
 export const SUMMARY_ERROR = "SUMMARY_ERROR";
 export const SUMMARY_RESET = "SUMMARY_RESET";
 
-export const summaryLoad = () => ({
+export const summaryLoad = (projectId) => ({
         type: SUMMARY_LOAD,
+        projectId
     }
 );
 

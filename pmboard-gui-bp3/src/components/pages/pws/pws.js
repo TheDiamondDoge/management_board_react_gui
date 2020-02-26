@@ -17,6 +17,7 @@ import {PWSTabs} from "../../../util/constants";
 import PropTypes from "prop-types";
 import LoadingStatus from "../../global-statuses/loading-status";
 import StatusContainer from "../../status-container/status-container";
+import {getUrlParam} from "../../../util/util";
 
 export default class PWS extends React.Component {
     constructor(props) {
@@ -29,6 +30,12 @@ export default class PWS extends React.Component {
             }
         };
     }
+
+    componentDidMount() {
+        const projectId = getUrlParam("projectId");
+        this.props.loadData(projectId);
+    }
+
 
     render() {
         const {loading} = this.props.defaults;
@@ -102,5 +109,6 @@ PWS.propTypes = {
             projectName: PropTypes.string,
             projectId: PropTypes.number
         })
-    })
+    }),
+    loadData: PropTypes.func.isRequired,
 };

@@ -3,7 +3,7 @@ import {loadReport, resetReport} from "../../../actions/pws/report-tab";
 import ReportTab from "./report-tab";
 import {resetRequirements} from "../../../actions/pws/requirements-tab";
 import {resetUserReports, saveUserReport} from "../../../actions/pws/user-reports";
-import {withOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
+import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
@@ -30,6 +30,6 @@ const executeMethodsConfig = {
     onUnmount: "resetData",
 };
 
-const ConnectedComponent = withOnMountCall(withPwsTabNameUrlChanger(ReportTab), executeMethodsConfig);
+const ConnectedComponent = withPwsOnMountCall(withPwsTabNameUrlChanger(ReportTab), executeMethodsConfig);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

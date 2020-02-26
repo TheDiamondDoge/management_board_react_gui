@@ -12,7 +12,7 @@ import {indicatorsRqsReset, indicatorsRqsSave, indicatorsRqsLoad} from "../../..
 import {milestonesKpiReset} from "../../../actions/pws/milestones-kpi";
 import {dr4KpiReset} from "../../../actions/pws/dr4-kpi";
 import {qualityKpiLoad, qualityKpiReset, qualityKpiSave} from "../../../actions/pws/quality-kpi";
-import {withOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
+import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state){
     return {
@@ -51,6 +51,6 @@ const executeMethodsConfig = {
     onUnmount: "resetState",
 };
 
-const ConnectedComponent = withOnMountCall(withPwsTabNameUrlChanger(IndicatorsTab), executeMethodsConfig);
+const ConnectedComponent = withPwsOnMountCall(withPwsTabNameUrlChanger(IndicatorsTab), executeMethodsConfig);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);
