@@ -123,3 +123,7 @@ export const saveUserReports = (projectID, payload) => (
 export const getContribTable = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/contrib`)
 );
+
+export const getProjectDefaults = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/defaults`)
+);

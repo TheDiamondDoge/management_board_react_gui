@@ -8,12 +8,7 @@ export function withOnMountCall(Component) {
             }
 
             componentWillUnmount() {
-                try {
-                    this.props[config.onUnmount]();
-                } catch (e) {
-                    console.log("HMMMMMM", this.props, config);
-                    throw e;
-                }
+                this.props[config.onUnmount]();
             }
 
             render() {
@@ -29,9 +24,11 @@ export function withPwsTabNameUrlChanger(Component) {
             const tabId = this.props.tabId;
             if (tabId) {
                 const urlParams = new URLSearchParams(window.location.search);
+                const urlBase = window.location.pathname;
                 urlParams.set("tab", tabId);
-                // urlParams.set("projectId", this.props.projectId);
-                window.history.pushState("Tabs", `${this.props.tabId} tab`, `/pws?${urlParams.toString()}`);
+
+                const url = `${urlBase}?${urlParams.toString()}`;
+                window.history.pushState("Tabs", `${tabId} tab`, url);
             }
         }
 

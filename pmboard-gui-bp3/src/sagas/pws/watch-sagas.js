@@ -18,6 +18,7 @@ import * as defects from "../../actions/pws/defects";
 import * as report from "../../actions/pws/report-tab";
 import * as userReport from "../../actions/pws/user-reports";
 import * as contribTable from "../../actions/pws/contrib-table";
+import * as defaults from "../../actions/pws/default";
 
 function* watchSummaryTabLoad() {
     yield takeEvery(summaryTab.SUMMARY_LOAD, sagas.loadSummaryTab);
@@ -143,6 +144,10 @@ function* watchUserReportSave() {
     yield takeLatest(userReport.USER_REPORTS_SAVE, sagas.saveUserReport)
 }
 
+function* watchProjectDefaultsLoad() {
+    yield takeLatest(defaults.PROJECT_DEFAULTS_LOAD, sagas.loadProjectDefaults)
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
@@ -174,7 +179,8 @@ const exportSagas = [
     fork(watchReportTabLoad),
     fork(watchUserReportLoad),
     fork(watchUserReportSave),
-    fork(watchContibTableLoad)
+    fork(watchContibTableLoad),
+    fork(watchProjectDefaultsLoad)
 ];
 
 export default exportSagas;

@@ -20,6 +20,7 @@ import * as defects from "../../actions/pws/defects";
 import * as report from "../../actions/pws/report-tab";
 import * as userReports from "../../actions/pws/user-reports";
 import * as contribTable from "../../actions/pws/contrib-table";
+import * as defaults from "../../actions/pws/default";
 
 export function* loadSummaryTab() {
     try {
@@ -316,5 +317,14 @@ export function* saveBlcTabComments(action) {
         yield call(loadBlcTab);
     } catch (e) {
         yield put(blc.blcError(e))
+    }
+}
+
+export function* loadProjectDefaults(action) {
+    try {
+        const data = yield call(api.getProjectDefaults, 1);
+        yield put(defaults.loadProjectDefaultsSuccess(data));
+    } catch (e) {
+        yield put(defaults.errorProjectDefaults(e));
     }
 }

@@ -10,7 +10,7 @@ import LoadingStatus from "../global-statuses/loading-status";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
-const Pws = React.lazy(() => import("../pages/pws/pws"));
+const Pws = React.lazy(() => import("../pages/pws/pws.container"));
 const World = React.lazy(() => import("../test_comps/world"));
 const Test = React.lazy(() => import("../test_comps/test"));
 const suspenseFallback = <StatusContainer><LoadingStatus/></StatusContainer>;

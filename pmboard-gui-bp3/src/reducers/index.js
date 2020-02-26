@@ -20,6 +20,7 @@ import defects from "./pws/defects";
 import report from "./pws/report-tab";
 import userReports from "./pws/user-reports";
 import contribTable from "./pws/contrib-table";
+import defaults from "./pws/default";
 
 export default combineReducers({
     pws: pwsReducers()
@@ -48,5 +49,6 @@ function pwsReducers() {
         reportTab: report,
         userReports: userReports,
         contribTable: contribTable,
+        defaults: defaults
     })
 }
