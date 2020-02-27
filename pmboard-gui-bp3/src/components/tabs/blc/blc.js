@@ -63,7 +63,7 @@ export default class BlcDashboard extends React.Component {
             const showSubmitCancel = this.shouldShowEditControls();
             return (
                 <>
-                    <CustomCard>
+                    <CustomCard autosize={"x"}>
                         <Button intent={Intent.SUCCESS}
                                 className={Classes.MINIMAL}
                                 icon={"upload"}
@@ -100,13 +100,13 @@ export default class BlcDashboard extends React.Component {
                         />
                     </CustomCard>
                     {showSubmitCancel &&
-                        <EditSaveControls editMode={true}
-                                          onCancel={() => {
-                                              this.cancelEdit();
-                                              this.props.loadData();
-                                          }}
-                                        onSubmit={this.submitForm}
-                        />
+                    <EditSaveControls editMode={true}
+                                      onCancel={() => {
+                                          this.cancelEdit();
+                                          this.props.loadData();
+                                      }}
+                                      onSubmit={this.submitForm}
+                    />
                     }
                 </>
             )
@@ -136,56 +136,58 @@ export default class BlcDashboard extends React.Component {
         const thCommentClasses = classNames(styles.column_align_center);
         const {pm, pmo, sales} = formikProps.values;
         return (
-            <HTMLTable
-                bordered
-                striped
-                className={styles.blc_table}
-            >
-                {this.renderColGroup()}
-                {this.renderHeader(thClasses, thCommentClasses)}
+            <div className={styles.overflow_wrapper}>
+                <HTMLTable
+                    bordered
+                    striped
+                    className={styles.blc_table}
+                >
+                    {this.renderColGroup()}
+                    {this.renderHeader(thClasses, thCommentClasses)}
 
-                <tbody>
-                <BlcRow
-                    rowName={"pm"}
-                    roleName={"Program Manager"}
-                    lastUpdatedBy={pm.csl}
-                    updatedOn={pm.updatedOn}
-                    rowValues={pm.indicators}
-                    comment={pm.comment}
-                    onClickEdit={() => (this.onClickEdit("isPmRow"))}
-                    onChange={this.handleChange}
-                    isValuesEdit={this.state.isPmRow}
-                    isCommentsEdit={this.state.isCommentsEdit}
-                    isControlsHidden={this.isInEditMode()}
-                />
-                <BlcRow
-                    rowName={"pmo"}
-                    roleName={"PMO - Quality"}
-                    lastUpdatedBy={pmo.csl}
-                    updatedOn={pmo.updatedOn}
-                    rowValues={pmo.indicators}
-                    comment={pmo.comment}
-                    onClickEdit={() => (this.onClickEdit("isPmoRow"))}
-                    onChange={this.handleChange}
-                    isValuesEdit={this.state.isPmoRow}
-                    isCommentsEdit={this.state.isCommentsEdit}
-                    isControlsHidden={this.isInEditMode()}
-                />
-                <BlcRow
-                    rowName={"sales"}
-                    roleName={"Sales"}
-                    lastUpdatedBy={sales.csl}
-                    updatedOn={sales.updatedOn}
-                    rowValues={sales.indicators}
-                    comment={sales.comment}
-                    onClickEdit={() => (this.onClickEdit("isSalesRow"))}
-                    onChange={this.handleChange}
-                    isValuesEdit={this.state.isSalesRow}
-                    isCommentsEdit={this.state.isCommentsEdit}
-                    isControlsHidden={this.isInEditMode()}
-                />
-                </tbody>
-            </HTMLTable>
+                    <tbody>
+                    <BlcRow
+                        rowName={"pm"}
+                        roleName={"Program Manager"}
+                        lastUpdatedBy={pm.csl}
+                        updatedOn={pm.updatedOn}
+                        rowValues={pm.indicators}
+                        comment={pm.comment}
+                        onClickEdit={() => (this.onClickEdit("isPmRow"))}
+                        onChange={this.handleChange}
+                        isValuesEdit={this.state.isPmRow}
+                        isCommentsEdit={this.state.isCommentsEdit}
+                        isControlsHidden={this.isInEditMode()}
+                    />
+                    <BlcRow
+                        rowName={"pmo"}
+                        roleName={"PMO - Quality"}
+                        lastUpdatedBy={pmo.csl}
+                        updatedOn={pmo.updatedOn}
+                        rowValues={pmo.indicators}
+                        comment={pmo.comment}
+                        onClickEdit={() => (this.onClickEdit("isPmoRow"))}
+                        onChange={this.handleChange}
+                        isValuesEdit={this.state.isPmoRow}
+                        isCommentsEdit={this.state.isCommentsEdit}
+                        isControlsHidden={this.isInEditMode()}
+                    />
+                    <BlcRow
+                        rowName={"sales"}
+                        roleName={"Sales"}
+                        lastUpdatedBy={sales.csl}
+                        updatedOn={sales.updatedOn}
+                        rowValues={sales.indicators}
+                        comment={sales.comment}
+                        onClickEdit={() => (this.onClickEdit("isSalesRow"))}
+                        onChange={this.handleChange}
+                        isValuesEdit={this.state.isSalesRow}
+                        isCommentsEdit={this.state.isCommentsEdit}
+                        isControlsHidden={this.isInEditMode()}
+                    />
+                    </tbody>
+                </HTMLTable>
+            </div>
         );
     };
 

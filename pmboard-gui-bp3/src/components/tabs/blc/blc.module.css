@@ -1,3 +1,8 @@
+.overflow_wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
 .column_align_center {
     text-align: center !important;
     vertical-align: middle !important;
