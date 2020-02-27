@@ -8,6 +8,7 @@ import {createEnchantedTableFilters} from "../../../util/util";
 import TableFooter from "./components/tableFooter";
 import ContextMenu from "./components/contextMenu";
 import validationSchema from "./validation-schema";
+import {ProjectDefaults} from "../../../util/custom-types";
 
 export default class Actions extends React.Component {
     render() {
@@ -15,8 +16,8 @@ export default class Actions extends React.Component {
         if (loading) {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
+            this.projectId = this.props.defaults.payload.projectId;
             const {payload} = this.props.actions;
-            const {saveAction, deleteAction, loadData} = this.props;
             const filters = createEnchantedTableFilters(payload);
             let relatedRisks = this.props.relatedRisks;
             if (relatedRisks !== undefined) {
@@ -31,7 +32,7 @@ export default class Actions extends React.Component {
                         columns={tableConfig}
                         filterValues={filters}
                         editDynamicInputVals={editDynamicInputVals}
-                        onSubmit={saveAction}
+                        onSubmit={this.handleSaveAction}
                         editable
                         striped
                         interactive
@@ -40,25 +41,42 @@ export default class Actions extends React.Component {
                         contextMenu={
                             (menuFuncs) =>
                                 <ContextMenu onEdit={menuFuncs.editRow}
-                                             onDelete={() => deleteAction(menuFuncs.getRow().uid)}
+                                             onDelete={() => this.handleDeleteAction(menuFuncs.getRow().uid)}
                                 />
                         }
                         renderFooter={
                             (tableFuncs) =>
-                                <TableFooter onRefresh={loadData} onAdd={tableFuncs.dialogOpen}/>
+                                <TableFooter onRefresh={this.handleLoadData} onAdd={tableFuncs.dialogOpen}/>
                         }
                     />
                 </CustomCard>
             )
         }
     }
+
+    handleSaveAction = (data) => {
+        this.props.saveAction(this.projectId, data);
+    };
+
+    handleDeleteAction = (data) => {
+        this.props.deleteAction(this.projectId, data);
+    };
+
+    handleLoadData = () => {
+        this.props.loadData(this.projectId);
+    };
 }
 
 Actions.propTypes = {
+    defaults: PropTypes.shape({
+        payload: ProjectDefaults.isRequired,
+        loading: PropTypes.bool.isRequired,
+    }).isRequired,
     actions: PropTypes.shape({
         loading: PropTypes.bool,
         payload: PropTypes.arrayOf(PropTypes.object),
     }),
+    loadData: PropTypes.func.isRequired,
     relatedRisks: PropTypes.arrayOf(PropTypes.string),
     saveAction: PropTypes.func,
     deleteAction: PropTypes.func,

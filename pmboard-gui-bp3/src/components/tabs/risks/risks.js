@@ -4,7 +4,7 @@ import CustomCard from "../../card/custom-card";
 import EnchantedTable from "../../enchanted-table/enchanted-table";
 import colSettings from "./table-config";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
-import {RisksTabRisk} from "../../../util/custom-types";
+import {ProjectDefaults, RisksTabRisk} from "../../../util/custom-types";
 import {createEnchantedTableFilters} from "../../../util/util";
 import ContextMenu from "./components/context-menu";
 import TableFooter from "./components/table-footer";
@@ -16,7 +16,7 @@ export default class Risks extends React.Component {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             const {payload} = this.props.risks;
-            const {saveRisk} = this.props;
+            this.projectId = this.props.defaults.payload.projectId;
             const picklists = createEnchantedTableFilters(payload);
             return (
                 <CustomCard autosize>
@@ -24,7 +24,7 @@ export default class Risks extends React.Component {
                         data={payload}
                         columns={colSettings}
                         filterValues={picklists}
-                        onSubmit={saveRisk}
+                        onSubmit={this.handleSaveRisks}
                         striped
                         interactive
                         bordered
@@ -42,9 +42,17 @@ export default class Risks extends React.Component {
             );
         }
     }
+
+    handleSaveRisks = (data) => {
+        this.props.saveRisk(this.projectId, data);
+    };
 }
 
 Risks.propTypes = {
+    defaults: PropTypes.shape({
+        payload: ProjectDefaults.isRequired,
+        loading: PropTypes.bool.isRequired,
+    }).isRequired,
     risks: PropTypes.shape({
         loading: PropTypes.bool.isRequired,
         payload: PropTypes.arrayOf(RisksTabRisk).isRequired

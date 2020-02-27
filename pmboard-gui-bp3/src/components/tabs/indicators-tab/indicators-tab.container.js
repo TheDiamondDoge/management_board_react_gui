@@ -16,6 +16,7 @@ import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state){
     return {
+        defaults: state.pws.defaults,
         milestones: state.pws.milestones,
         healthIndicators: state.pws.healthIndicators,
         requirements: state.pws.indicatorsRqs,
@@ -27,14 +28,14 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch) {
     return {
-        healthIndicatorsSubmit: (data) => dispatch(healthIndicatorsSave(data)),
-        healthCommentsSubmit: (data) => dispatch(healthCommentsSave(data)),
-        healthReload: () => dispatch(healthLoad()),
-        rqsSubmit: (data) => dispatch(indicatorsRqsSave(data)),
-        rqsReload: () => dispatch(indicatorsRqsLoad()),
-        qualitySubmit: (data) => dispatch(qualityKpiSave(data)),
-        qualityReload: () => dispatch(qualityKpiLoad()),
-        loadData: () => dispatch(indicatorsLoad()),
+        healthIndicatorsSubmit: (projectId, data) => dispatch(healthIndicatorsSave(projectId, data)),
+        healthCommentsSubmit: (projectId, data) => dispatch(healthCommentsSave(projectId, data)),
+        healthReload: (projectId) => dispatch(healthLoad(projectId)),
+        rqsSubmit: (projectId, data) => dispatch(indicatorsRqsSave(projectId, data)),
+        rqsReload: (projectId) => dispatch(indicatorsRqsLoad(projectId)),
+        qualitySubmit: (projectId, data) => dispatch(qualityKpiSave(projectId, data)),
+        qualityReload: (projectId) => dispatch(qualityKpiLoad(projectId)),
+        loadData: (projectId) => dispatch(indicatorsLoad(projectId)),
         resetState: () => {
             dispatch(milestonesReset());
             dispatch(healthReset());

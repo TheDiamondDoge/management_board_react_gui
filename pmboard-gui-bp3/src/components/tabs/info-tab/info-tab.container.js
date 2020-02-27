@@ -7,6 +7,7 @@ import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
+        defaults: state.pws.defaults,
         information: state.pws.infoTab,
         milestones: state.pws.milestones,
         contrib: state.pws.contrib,
@@ -15,12 +16,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        saveInfo: (data) => dispatch(infoSaveData(data)),
-        saveMilestones: (date) => dispatch(milestonesSave(date)),
-        loadData: () => {
-            dispatch(infoLoad());
-            dispatch(milestonesLoad());
-            dispatch(contribLoad())
+        saveInfo: (projectId, data) => dispatch(infoSaveData(projectId, data)),
+        saveMilestones: (projectId, date) => dispatch(milestonesSave(projectId, date)),
+        loadData: (projectId) => {
+            dispatch(infoLoad(projectId));
+            dispatch(milestonesLoad(projectId));
+            dispatch(contribLoad(projectId))
         },
         resetData: () => {
             dispatch(infoReset());

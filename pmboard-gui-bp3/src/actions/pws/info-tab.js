@@ -4,8 +4,9 @@ export const INFO_ERROR = "INFO_ERROR";
 export const INFO_SAVE_DATA = "INFO_SAVE_DATA";
 export const INFO_RESET = "INFO_RESET";
 
-export const infoLoad = () => ({
+export const infoLoad = (projectId) => ({
         type: INFO_LOAD,
+        projectId
     }
 );
 
@@ -21,9 +22,10 @@ export const infoError = (error) => ({
     }
 );
 
-export const infoSaveData = (data) => ({
+export const infoSaveData = (projectId, data) => ({
     type: INFO_SAVE_DATA,
-    data
+    data,
+    projectId,
 });
 
 export const infoReset = () => ({

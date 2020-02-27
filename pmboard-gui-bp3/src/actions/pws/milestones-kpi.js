@@ -3,8 +3,9 @@ export const MILESTONES_KPI_SUCCESS = "MILESTONES_KPI_SUCCESS";
 export const MILESTONES_KPI_ERROR = "MILESTONES_KPI_ERROR";
 export const MILESTONES_KPI_RESET = "MILESTONES_KPI_RESET";
 
-export const milestonesKpiLoad = () => ({
-    type: MILESTONES_KPI_LOAD
+export const milestonesKpiLoad = (projectId) => ({
+    type: MILESTONES_KPI_LOAD,
+    projectId
 });
 
 export const milestonesKpiSuccess = ({data}) => ({

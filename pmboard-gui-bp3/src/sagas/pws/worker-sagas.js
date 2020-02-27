@@ -34,22 +34,22 @@ export function* loadSummaryTab({projectId}) {
     }
 }
 
-export function* loadIndicatorsTab() {
+export function* loadIndicatorsTab({projectId}) {
     try {
-        yield call(loadMilestones);
-        yield call(loadHealthIndicators);
-        yield call(loadIndicatorsRqs);
-        yield call(loadMilestonesKpi);
-        yield call(loadDr4Kpi);
-        yield call(loadQualityKpi)
+        yield call(loadMilestones, {projectId});
+        yield call(loadHealthIndicators, {projectId});
+        yield call(loadIndicatorsRqs, {projectId});
+        yield call(loadMilestonesKpi, {projectId});
+        yield call(loadDr4Kpi, {projectId});
+        yield call(loadQualityKpi, {projectId});
     } catch (e) {
         yield put(indicatorsTab.indicatorsError(e))
     }
 }
 
-export function* loadInformationTab() {
+export function* loadInformationTab({projectId}) {
     try {
-        const data = yield call(api.getInformationTab, 1);
+        const data = yield call(api.getInformationTab, projectId);
         yield put(infoTab.infoLoadSuccess(data));
     } catch (e) {
         yield put(infoTab.infoError);
@@ -92,229 +92,229 @@ export function* loadMilestones({projectId}) {
     }
 }
 
-export function* loadIndicatorsRqs() {
+export function* loadIndicatorsRqs({projectId}) {
     try {
-        const data = yield call(api.getIndicatorsRqs, 1);
+        const data = yield call(api.getIndicatorsRqs, projectId);
         yield put(rqIndicators.indicatorsRqsSuccess(data));
     } catch (e) {
         yield put(rqIndicators.indicatorsRqsError(e));
     }
 }
 
-export function* loadMilestonesKpi() {
+export function* loadMilestonesKpi({projectId}) {
     try {
-        const data = yield call(api.getMilestonesKpi, 1);
+        const data = yield call(api.getMilestonesKpi, projectId);
         yield put(milestonesKpi.milestonesKpiSuccess(data));
     } catch (e) {
         yield put(milestonesKpi.milestonesKpiError(e))
     }
 }
 
-export function* loadDr4Kpi() {
+export function* loadDr4Kpi({projectId}) {
     try {
-        const data = yield call(api.getDr4Kpi, 1);
+        const data = yield call(api.getDr4Kpi, projectId);
         yield put(dr4Kpi.dr4KpiSuccess(data));
     } catch (e) {
         yield put(dr4Kpi.dr4KpiError(e))
     }
 }
 
-export function* loadQualityKpi() {
+export function* loadQualityKpi({projectId}) {
     try {
-        const data = yield call(api.getQualityKpi, 1);
+        const data = yield call(api.getQualityKpi, projectId);
         yield put(qualityKpi.qualityKpiSuccess(data))
     } catch (e) {
         yield put(qualityKpi.qualityKpiError(e))
     }
 }
 
-export function* loadBlcTab() {
+export function* loadBlcTab({projectId}) {
     try {
-        const data = yield call(api.getBlcTabData, 1);
+        const data = yield call(api.getBlcTabData, projectId);
         yield put(blc.blcLoadSuccess(data.data))
     } catch(e) {
         yield put(blc.blcError(e))
     }
 }
 
-export function* loadRisks() {
+export function* loadRisks({projectId}) {
     try {
-        const data = yield call(api.getRisks, 1);
+        const data = yield call(api.getRisks, projectId);
         yield put(risks.loadSuccess(data));
     } catch (e) {
         yield put(risks.riskError(e));
     }
 }
 
-export function* saveRisk(actions) {
+export function* saveRisk({projectId, data}) {
     try {
-        yield call(api.saveRisks, 1, actions.data);
-        yield call(loadRisks);
+        yield call(api.saveRisks, projectId, data);
+        yield call(loadRisks, {projectId});
     } catch (e) {
         yield put(risks.riskError(e));
     }
 }
 
-export function* loadRelatedRisksIds() {
+export function* loadRelatedRisksIds({projectId}) {
     try {
-        const data = yield call(api.getRelatedRisksIds, 1);
+        const data = yield call(api.getRelatedRisksIds, projectId);
         yield put(risks.loadRisksSuccess(data));
     } catch (e) {
         yield put(risks.riskError(e))
     }
 }
 
-export function* loadActions() {
+export function* loadActions({projectId}) {
     try {
-        const data = yield call(api.getActions, 1);
+        const data = yield call(api.getActions, projectId);
         yield put(actions.actionsLoadSuccess(data))
     } catch (e) {
         yield put(actions.actionsError(e))
     }
 }
 
-export function* loadCost() {
+export function* loadCost({projectId}) {
     try {
-        const data = yield call(api.getCost, 1);
+        const data = yield call(api.getCost, projectId);
         yield put(cost.costLoadSuccess(data));
     } catch (e) {
         yield put(cost.costError(e));
     }
 }
 
-export function* loadRequirements() {
+export function* loadRequirements({projectId}) {
     try {
-        const data = yield call(api.getRequirements, 1);
+        const data = yield call(api.getRequirements, projectId);
         yield put(requirements.loadRequirementsSuccess(data));
     } catch (e) {
         yield put(requirements.errorRequirements(e));
     }
 }
 
-export function* loadBacklogChart() {
+export function* loadBacklogChart({projectId}) {
     try {
-        const data = yield call(api.getBacklogChart, 1);
+        const data = yield call(api.getBacklogChart, projectId);
         yield put(backlog.loadBacklogChartSuccess(data));
     } catch (e) {
         yield put(backlog.errorBacklog(e))
     }
 }
 
-export function* loadDefectsChart() {
+export function* loadDefectsChart({projectId}) {
     try {
-        const data = yield call(api.getDefectsChart, 1);
+        const data = yield call(api.getDefectsChart, projectId);
         yield put(defects.loadDefectsChartSuccess(data));
     } catch (e) {
         yield put(defects.errorDefects(e))
     }
 }
 
-export function* loadReportTab() {
+export function* loadReportTab({projectId}) {
     try {
-        const data = yield call(api.getReportTab, 1);
+        const data = yield call(api.getReportTab, projectId);
         yield put(report.loadReportSuccess(data));
-        yield call(loadRequirements);
-        yield call(loadUserReports);
+        yield call(loadRequirements, {projectId});
+        yield call(loadUserReports, {projectId});
     } catch (e) {
         yield put(report.errorReport(e));
     }
 }
 
-export function* loadUserReports() {
+export function* loadUserReports({projectId}) {
     try {
-        const data = yield call(api.getUserReports, 1);
+        const data = yield call(api.getUserReports, projectId);
         yield put(userReports.loadUserReportsSuccess(data));
     } catch(e) {
         yield put(userReports.errorUserReports(e));
     }
 }
 
-export function* saveUserReport(action) {
+export function* saveUserReport({projectId, data}) {
     try {
-        yield call(api.saveUserReports, 1, action.data);
-        yield call(loadUserReports);
+        yield call(api.saveUserReports, projectId, data);
+        yield call(loadUserReports, {projectId});
     } catch (e) {
         yield put(userReports.errorUserReports(e));
     }
 }
 
-export function* saveAction(action) {
+export function* saveAction({projectId, data}) {
     try {
-         yield call(api.saveAction, 1, action.data);
-         yield call(loadActions);
+         yield call(api.saveAction, projectId, data);
+         yield call(loadActions, {projectId});
     } catch (e) {
         yield put(actions.actionsError(e));
     }
 }
 
-export function* deleteAction(action) {
+export function* deleteAction({uid, projectId}) {
     try {
-        yield call(api.deleteAction, action.uid);
-        yield call(loadActions);
+        yield call(api.deleteAction, uid);
+        yield call(loadActions, {projectId});
     } catch (e) {
         yield put(actions.actionsError(e));
     }
 }
 
-export function* saveHealthIndicators(action) {
+export function* saveHealthIndicators({projectId, data}) {
     try {
-        yield call(api.saveHealthIndicatorsPost, 1, action.data);
-        yield call(loadHealthIndicators);
+        yield call(api.saveHealthIndicatorsPost, projectId, data);
+        yield call(loadHealthIndicators, {projectId});
     } catch (e) {
         yield put(healthIndicators.healthError(e))
     }
 }
 
-export function* saveIndicatorsRqs(action) {
+export function* saveIndicatorsRqs({projectId, data}) {
     try {
-        yield call(api.saveIndicatorsRqs, 1, action.data);
-        yield call(loadIndicatorsRqs);
-        yield call(loadDr4Kpi);
+        yield call(api.saveIndicatorsRqs, projectId, data);
+        yield call(loadIndicatorsRqs, {projectId});
+        yield call(loadDr4Kpi, {projectId});
     } catch(e) {
         yield put(rqIndicators.indicatorsRqsError(e));
     }
 }
 
-export function* saveIndicatorsQuality(action) {
+export function* saveIndicatorsQuality({projectId, data}) {
     try {
-        yield call(api.saveQualityKpi, 1, action.data);
-        yield call(loadQualityKpi);
+        yield call(api.saveQualityKpi, projectId, data);
+        yield call(loadQualityKpi, {projectId});
     } catch (e) {
         yield put(qualityKpi.qualityKpiError(e));
     }
 }
 
-export function* saveInformationTab(action) {
+export function* saveInformationTab({projectId, data}) {
     try {
-        yield call(api.saveInformationTab, 1, action.data);
-        yield call(loadInformationTab);
+        yield call(api.saveInformationTab, projectId, data);
+        yield call(loadInformationTab, {projectId});
     } catch (e) {
         yield put(infoTab.infoError(e));
     }
 }
 
-export function* saveMilestones(action) {
+export function* saveMilestones({projectId, data}) {
     try {
-        yield call(api.saveMilestones, 1, action.data);
-        yield call(loadMilestones);
+        yield call(api.saveMilestones, projectId, data);
+        yield call(loadMilestones, {projectId});
     } catch (e) {
         yield put(milestones.milestonesError(e));
     }
 }
 
-export function* saveBlcTabIndicators(action) {
+export function* saveBlcTabIndicators({projectId, data}) {
     try {
-        yield call(api.saveBlcIndicators, 1, action.data);
-        yield call(loadBlcTab);
+        yield call(api.saveBlcIndicators, projectId, data);
+        yield call(loadBlcTab, {projectId});
     } catch (e) {
         yield put(blc.blcError(e))
     }
 }
 
-export function* saveBlcTabComments(action) {
+export function* saveBlcTabComments({projectId, data}) {
     try {
-        yield call(api.saveBlcComments, 1, action.data);
-        yield call(loadBlcTab);
+        yield call(api.saveBlcComments, projectId, data);
+        yield call(loadBlcTab, {projectId});
     } catch (e) {
         yield put(blc.blcError(e))
     }

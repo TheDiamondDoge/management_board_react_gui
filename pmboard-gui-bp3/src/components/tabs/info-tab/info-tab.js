@@ -9,7 +9,7 @@ import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {Field, Formik} from "formik";
 import FormikInput from "../../controls/util-renderers";
 import FieldValue from "../../field-value/field-value";
-import {MilestoneShape} from "../../../util/custom-types";
+import {MilestoneShape, ProjectDefaults} from "../../../util/custom-types";
 import {formikFieldHandleChange} from "../../../util/util";
 import {infoFieldsToRender} from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
@@ -40,12 +40,14 @@ export default class InfoTab extends React.Component {
     sendData = (data) => {
         const {saveInfo, saveMilestones} = this.props;
         const {milestones, ...infoDto} = data;
-        saveInfo(infoDto);
-        saveMilestones(milestones);
+        const {projectId} = this.props.defaults.payload;
+        saveInfo(projectId, infoDto);
+        saveMilestones(projectId, milestones);
     };
 
     cancelInput = () => {
-        this.props.loadData();
+        const {projectId} = this.props.defaults.payload;
+        this.props.loadData(projectId);
         this.editClickHandle();
     };
 
@@ -370,6 +372,10 @@ export default class InfoTab extends React.Component {
 }
 
 InfoTab.propTypes = {
+    defaults: PropTypes.shape({
+        payload: ProjectDefaults.isRequired,
+        loading: PropTypes.bool.isRequired,
+    }).isRequired,
     information: PropTypes.object.isRequired,
     milestones: PropTypes.shape({
         loading: PropTypes.bool,

@@ -4,7 +4,7 @@ import EnchantedTable from "../../enchanted-table/enchanted-table";
 import PropTypes from 'prop-types';
 import tableConfig from './table-config';
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
-import {RqsTabRq} from "../../../util/custom-types";
+import {ProjectDefaults, RqsTabRq} from "../../../util/custom-types";
 import TableFooter from "./components/table-footer";
 
 export default class RequirementsTab extends React.Component {
@@ -13,6 +13,7 @@ export default class RequirementsTab extends React.Component {
         if (loading) {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
+            this.projectId = this.props.defaults.payload.projectId;
             const {payload} = this.props.rqs;
             return (
                 <CustomCard autosize>
@@ -23,16 +24,24 @@ export default class RequirementsTab extends React.Component {
                         data={payload}
                         columns={tableConfig}
                         renderFooter={() => (
-                            <TableFooter onRefresh={this.props.loadData}/>
+                            <TableFooter onRefresh={this.handleLoadData}/>
                         )}
                     />
                 </CustomCard>
             );
         }
     }
+
+    handleLoadData = () => {
+        this.props.loadData(this.projectId)
+    };
 }
 
 RequirementsTab.propTypes = {
+    defaults: PropTypes.shape({
+        payload: ProjectDefaults.isRequired,
+        loading: PropTypes.bool.isRequired,
+    }).isRequired,
     rqs: PropTypes.shape({
         loading: PropTypes.bool,
         payload: RqsTabRq

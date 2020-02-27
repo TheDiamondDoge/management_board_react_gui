@@ -16,7 +16,7 @@ import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {
     HealthIndicatorsShape,
     MilestoneKpiShape,
-    MilestoneShape,
+    MilestoneShape, ProjectDefaults,
     QualityIndicatorsShape,
     RequirementsShape
 } from "../../../util/custom-types";
@@ -27,10 +27,8 @@ import {getIndicatorsColor} from "../../../util/transform-funcs";
 export default class IndicatorsTab extends React.Component {
     //TODO: use render-helper class
     render() {
+        this.projectId = this.props.defaults.payload.projectId;
         const {milestones, healthIndicators, requirements, milestonesKpi, dr4Kpi, qualityKpi} = this.props;
-        const {
-            healthIndicatorsSubmit, healthCommentsSubmit, healthReload, rqsSubmit, qualitySubmit, qualityReload, rqsReload
-        } = this.props;
         const overall = getPropFromStringPath(healthIndicators, "payload.statuses.current.overall");
         const overallIndicator = getIndicatorsColor(overall);
         return (
@@ -55,11 +53,10 @@ export default class IndicatorsTab extends React.Component {
                                 <ErrorBoundary>
                                     <HealthIndicators
                                         indicators={healthIndicators.payload}
-                                        isSummaryMode={false}
                                         fieldsToRender={healthFields}
-                                        onIndicatorsSubmit={healthIndicatorsSubmit}
-                                        onCommentsSubmit={healthCommentsSubmit}
-                                        onCancel={healthReload}
+                                        onIndicatorsSubmit={this.handleHealthIndicatorsSubmit}
+                                        onCommentsSubmit={this.handleHealthCommentsSubmit}
+                                        onCancel={this.handleHealthReload}
                                     />
                                 </ErrorBoundary>
                             )
@@ -75,8 +72,8 @@ export default class IndicatorsTab extends React.Component {
                                     <Requirements
                                         requirements={requirements.payload}
                                         fieldsToRender={fieldsRequirements}
-                                        rqsSubmit={rqsSubmit}
-                                        rqsReload={rqsReload}
+                                        rqsSubmit={this.handleRqsSubmit}
+                                        rqsReload={this.handleRqsReload}
                                     />
                                 </ErrorBoundary>
                             )
@@ -119,8 +116,8 @@ export default class IndicatorsTab extends React.Component {
                                     <Quality
                                         qualityKpi={qualityKpi.payload}
                                         fieldsToRender={qualityFields}
-                                        onSubmit={qualitySubmit}
-                                        onCancel={qualityReload}
+                                        onSubmit={this.handleQualitySubmit}
+                                        onCancel={this.handleQualityReload}
                                     />
                                 </ErrorBoundary>
                             )
@@ -129,9 +126,42 @@ export default class IndicatorsTab extends React.Component {
             </div>
         )
     }
-}
+
+    handleHealthIndicatorsSubmit = (data) => {
+        this.props.healthIndicatorsSubmit(this.projectId, data);
+    };
+
+    handleHealthCommentsSubmit = (data) => {
+        this.props.healthCommentsSubmit(this.projectId, data);
+    };
+
+    handleHealthReload = () => {
+        this.props.healthReload(this.projectId);
+    };
+
+    handleRqsSubmit = (data) => {
+        this.props.rqsSubmit(this.projectId, data);
+    };
+
+    handleRqsReload = () => {
+        this.props.rqsReload(this.projectId);
+    };
+
+    handleQualityReload = () => {
+        this.props.qualityReload(this.projectId);
+    };
+
+    handleQualitySubmit = (data) => {
+        this.props.qualitySubmit(this.projectId, data);
+    };
+};
+
 
 IndicatorsTab.propTypes = {
+    defaults: PropTypes.shape({
+        payload: ProjectDefaults.isRequired,
+        loading: PropTypes.bool.isRequired,
+    }).isRequired,
     milestones: PropTypes.shape({
         loading: PropTypes.bool,
         payload: PropTypes.arrayOf(MilestoneShape)

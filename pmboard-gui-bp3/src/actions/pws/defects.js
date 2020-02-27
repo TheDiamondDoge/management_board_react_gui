@@ -3,8 +3,9 @@ export const DEFECTS_CHART_LOAD_SUCCESS = "DEFECTS_CHART_LOAD_SUCCESS";
 export const DEFECTS_ERROR = "DEFECTS_ERROR";
 export const DEFECTS_RESET = "DEFECTS_RESET";
 
-export const loadDefectsChart = () => ({
+export const loadDefectsChart = (projectId) => ({
     type: DEFECTS_CHART_LOAD,
+    projectId
 });
 
 export const loadDefectsChartSuccess = ({data}) => ({

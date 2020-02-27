@@ -4,8 +4,9 @@ export const COST_UPLOAD = "COST_UPLOAD";
 export const COST_ERROR = "COST_ERROR";
 export const COST_RESET = "COST_RESET";
 
-export const costLoad = () => ({
+export const costLoad = (projectId) => ({
         type: COST_LOAD,
+        projectId
     }
 );
 
@@ -15,8 +16,9 @@ export const costLoadSuccess = ({data}) => ({
     }
 );
 
-export const costUpload = () => ({
+export const costUpload = (projectId) => ({
     type: COST_UPLOAD,
+    projectId
 });
 
 export const costError = (error) => ({

@@ -5,16 +5,17 @@ import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
+        defaults: state.pws.defaults,
         blcTab: state.pws.blcTab,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadData: () => dispatch(blcLoad()),
+        loadData: (projectId) => dispatch(blcLoad(projectId)),
         resetData: () => dispatch(blcReset()),
-        saveIndicators: (data) => dispatch(blcIndicatorsSave(data)),
-        saveComments: (data) => dispatch(blcCommentsSave(data)),
+        saveIndicators: (projectId, data) => dispatch(blcIndicatorsSave(projectId, data)),
+        saveComments: (projectId, data) => dispatch(blcCommentsSave(projectId, data)),
     }
 }
 

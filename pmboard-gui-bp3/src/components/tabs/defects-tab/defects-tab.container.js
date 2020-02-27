@@ -5,13 +5,14 @@ import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
+        defaults: state.pws.defaults,
         defects: state.pws.defectsTab,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadData: () => dispatch(loadDefectsChart()),
+        loadData: (projectId) => dispatch(loadDefectsChart(projectId)),
         resetData: () => dispatch(resetDefects())
     }
 }

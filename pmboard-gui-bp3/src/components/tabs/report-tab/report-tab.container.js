@@ -7,6 +7,7 @@ import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
+        defaults: state.pws.defaults,
         report: state.pws.reportTab,
         rqs: state.pws.requirementsTab,
         userReports: state.pws.userReports
@@ -15,13 +16,13 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadData: () => dispatch(loadReport()),
+        loadData: (projectId) => dispatch(loadReport(projectId)),
         resetData: () => {
             dispatch(resetReport());
             dispatch(resetRequirements());
             dispatch(resetUserReports())
         },
-        saveData: (data) => dispatch(saveUserReport(data))
+        saveData: (projectId, data) => dispatch(saveUserReport(projectId, data))
     }
 }
 

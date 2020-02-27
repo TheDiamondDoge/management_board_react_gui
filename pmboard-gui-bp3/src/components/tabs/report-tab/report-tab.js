@@ -11,17 +11,19 @@ import CustomQuill from "../../custom-quill/custom-quill";
 import RisksList from "../../risks-list/risks-list";
 import TwoItemsLiner from "../../two-items-liner/two-items-liner";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
-import {MilestoneShape, RiskReportType} from "../../../util/custom-types";
+import {MilestoneShape, ProjectDefaults, RiskReportType} from "../../../util/custom-types";
 import RqsReportList from "../../rqs-report-list/rqs-report-list";
 import {ReportTypes} from "../../../util/constants";
 
 //TODO populate snapshots in popover
+//TODO reload summary/flags when save or cancel
 export default class ReportTab extends React.Component {
     render() {
         const {loading} = this.props.report;
         if (loading) {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
+            this.projectId = this.props.defaults.payload.projectId;
             const {updatedOn, projectName, projectManager, indicators, milestones, risks} = this.props.report.payload;
             const uploadClasses = classNames(styles.inline_block, styles.float_right, styles.health_minimal);
             const risksObj = this.getRiskObj(risks);
@@ -31,7 +33,6 @@ export default class ReportTab extends React.Component {
 
             const userReportsLoading = this.props.userReports.loading;
             const userReportsPayload = this.props.userReports.payload;
-            const userReportSubmit = this.props.saveData;
             const {details, green, orange, red, summary} = userReportsPayload;
             return (
                 <>
@@ -54,25 +55,25 @@ export default class ReportTab extends React.Component {
                     <CustomCard>
                         <CustomQuill value={summary}
                                      header={<h3>Executive Status Summary</h3>}
-                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.SUMMARY, userReportSubmit)}
+                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.SUMMARY, this.handleSaveData)}
                                      loading={userReportsLoading}
                         />
                         <br/>
                         <CustomQuill value={red}
                                      header={<h3 className={styles.red}>Red Flag (executive action needed)</h3>}
-                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.RED_FLAG, userReportSubmit)}
+                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.RED_FLAG, this.handleSaveData)}
                                      loading={userReportsLoading}
                         />
                         <br/>
                         <CustomQuill value={orange}
                                      header={<h3 className={styles.orange}>Orange Flag (core team action needed)</h3>}
-                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.ORANGE_FLAG, userReportSubmit)}
+                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.ORANGE_FLAG, this.handleSaveData)}
                                      loading={userReportsLoading}
                         />
                         <br/>
                         <CustomQuill value={green}
                                      header={<h3 className={styles.green}>Green Flag</h3>}
-                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.GREEN_FLAG, userReportSubmit)}
+                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.GREEN_FLAG, this.handleSaveData)}
                                      loading={userReportsLoading}
                         />
                     </CustomCard>
@@ -80,7 +81,7 @@ export default class ReportTab extends React.Component {
                     <CustomCard>
                         <CustomQuill value={details}
                                      header={<h3>Current Project Details</h3>}
-                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.DETAILS, userReportSubmit)}
+                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.DETAILS, this.handleSaveData)}
                                      loading={userReportsLoading}
                         />
                     </CustomCard>
@@ -160,9 +161,17 @@ export default class ReportTab extends React.Component {
             />
         </Popover>
     );
+
+    handleSaveData = (data) => {
+        this.props.saveData(this.projectId, data);
+    };
 }
 
 ReportTab.propTypes = {
+    defaults: PropTypes.shape({
+        payload: ProjectDefaults.isRequired,
+        loading: PropTypes.bool.isRequired,
+    }).isRequired,
     saveData: PropTypes.func.isRequired,
     report: PropTypes.shape({
         loading: PropTypes.bool.isRequired,

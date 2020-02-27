@@ -5,8 +5,9 @@ export const BLC_INDICATORS_SAVE = "BLC_INDICATORS_SAVE";
 export const BLC_COMMENTS_SAVE = "BLC_COMMENTS_SAVE";
 export const BLC_RESET = "BLC_RESET";
 
-export const blcLoad = () => ({
+export const blcLoad = (projectId) => ({
     type: BLC_LOAD,
+    projectId
 });
 
 export const blcLoadSuccess = (data) => ({
@@ -19,14 +20,16 @@ export const blcError = (error) => ({
     error
 });
 
-export const blcIndicatorsSave = (data) => ({
+export const blcIndicatorsSave = (projectId, data) => ({
     type: BLC_INDICATORS_SAVE,
-    data
+    data,
+    projectId,
 });
 
-export const blcCommentsSave = (data) => ({
+export const blcCommentsSave = (projectId, data) => ({
     type: BLC_COMMENTS_SAVE,
-    data
+    data,
+    projectId,
 });
 
 export const blcReset = () => ({

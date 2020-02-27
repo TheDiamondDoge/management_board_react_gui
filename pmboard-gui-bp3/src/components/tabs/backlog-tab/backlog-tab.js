@@ -4,7 +4,7 @@ import CustomCard from "../../card/custom-card";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import TooltipContent from "../../tooltip-content/tooltip-content";
 import BacklogDefectsPage from "../backlog-defects-page/backlog-defects-page";
-import {BacklogDefectsTypes} from "../../../util/custom-types";
+import {BacklogDefectsTypes, ProjectDefaults} from "../../../util/custom-types";
 
 export default class BacklogTab extends React.Component {
     render() {
@@ -31,6 +31,10 @@ export default class BacklogTab extends React.Component {
 }
 
 BacklogTab.propTypes = {
+    defaults: PropTypes.shape({
+        payload: ProjectDefaults.isRequired,
+        loading: PropTypes.bool.isRequired,
+    }).isRequired,
     backlog: PropTypes.shape({
         loading: PropTypes.bool.isRequired,
         payload: BacklogDefectsTypes.isRequired

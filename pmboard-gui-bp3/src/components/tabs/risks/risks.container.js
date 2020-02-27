@@ -5,15 +5,16 @@ import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
+        defaults: state.pws.defaults,
         risks: state.pws.risks,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadData: () => dispatch(loadRisks()),
+        loadData: (projectId) => dispatch(loadRisks(projectId)),
         resetData: () => dispatch(resetState()),
-        saveRisk: (data) => dispatch(saveRisk(data))
+        saveRisk: (projectId, data) => dispatch(saveRisk(projectId, data))
     }
 }
 

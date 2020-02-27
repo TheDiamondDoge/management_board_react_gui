@@ -5,13 +5,14 @@ import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
+        defaults: state.pws.defaults,
         backlog: state.pws.backlogTab,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        loadData: () => dispatch(loadBacklogChart()),
+        loadData: (projectId) => dispatch(loadBacklogChart(projectId)),
         resetData: () => dispatch(resetBacklog())
     }
 }

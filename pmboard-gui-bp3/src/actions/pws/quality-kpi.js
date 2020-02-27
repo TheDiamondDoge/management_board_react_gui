@@ -5,8 +5,9 @@ export const QUALITY_KPI_SUCCESS = "QUALITY_KPI_SUCCESS";
 export const QUALITY_KPI_ERROR = "QUALITY_KPI_ERROR";
 export const QUALITY_KPI_RESET = "QUALITY_KPI_RESET";
 
-export const qualityKpiLoad = () => ({
-    type: QUALITY_KPI_LOAD
+export const qualityKpiLoad = (projectId) => ({
+    type: QUALITY_KPI_LOAD,
+    projectId
 });
 
 export const qualityKpiSuccess = ({data}) => ({
@@ -14,13 +15,15 @@ export const qualityKpiSuccess = ({data}) => ({
     data
 });
 
-export const qualityKpiSync = () => ({
+export const qualityKpiSync = (projectId) => ({
     type: QUALITY_KPI_SYNC,
+    projectId
 });
 
-export const qualityKpiSave = (data) => ({
+export const qualityKpiSave = (projectId, data) => ({
     type: QUALITY_KPI_SAVE,
-    data
+    data,
+    projectId,
 });
 
 export const qualityKpiError = () => ({

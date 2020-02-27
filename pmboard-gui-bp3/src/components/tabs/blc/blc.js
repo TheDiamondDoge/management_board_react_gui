@@ -10,7 +10,7 @@ import style from "../../blc-rows/blc-row.module.css";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {Formik} from "formik";
 import {formikFieldHandleChange} from "../../../util/util";
-import {BlcTab} from "../../../util/custom-types";
+import {BlcTab, ProjectDefaults} from "../../../util/custom-types";
 
 export default class BlcDashboard extends React.Component {
     constructor(props) {
@@ -58,6 +58,7 @@ export default class BlcDashboard extends React.Component {
         if (loading) {
             return <LoadingSpinner/>
         } else {
+            this.projectId = this.props.defaults.payload.projectId;
             const {pm, pmo, sales, rowToSave} = this.props.blcTab.payload;
             const showSubmitCancel = this.shouldShowEditControls();
             return (
@@ -77,9 +78,9 @@ export default class BlcDashboard extends React.Component {
                                 values.rowToSave = this.getRowToSaveValue();
                                 const {saveComments, saveIndicators} = this.props;
                                 if (this.state.isCommentsEdit) {
-                                    saveComments(values);
+                                    saveComments(this.projectId, values);
                                 } else {
-                                    saveIndicators(values);
+                                    saveIndicators(this.projectId, values);
                                 }
 
                                 this.cancelEdit();
@@ -267,6 +268,10 @@ export default class BlcDashboard extends React.Component {
 }
 
 BlcDashboard.propTypes = {
+    defaults: PropTypes.shape({
+        payload: ProjectDefaults.isRequired,
+        loading: PropTypes.bool.isRequired,
+    }).isRequired,
     saveIndicators: PropTypes.func,
     saveComments: PropTypes.func,
     blcTab: BlcTab.isRequired,

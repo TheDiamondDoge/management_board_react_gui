@@ -55,27 +55,27 @@ export default class PWS extends React.Component {
                         className={styles.center}
                         onChange={this.onChange}
                     >
-                        <Tab id="summary" title="Summary"
+                        <Tab id={PWSTabs.SUMMARY} title="Summary"
                              panel={<ErrorBoundary><SummaryTab tabId={PWSTabs.SUMMARY}/></ErrorBoundary>}/>
-                        <Tab id="indicators" title="Indicators"
+                        <Tab id={PWSTabs.INDICATORS} title="Indicators"
                              panel={<ErrorBoundary><IndicatorsTab tabId={PWSTabs.INDICATORS}/></ErrorBoundary>}/>
-                        <Tab id="information" title="Information"
+                        <Tab id={PWSTabs.INFORMATION} title="Information"
                              panel={<ErrorBoundary><InfoTab tabId={PWSTabs.INFORMATION}/></ErrorBoundary>}/>
-                        <Tab id="actions" title="Actions"
+                        <Tab id={PWSTabs.ACTIONS} title="Actions"
                              panel={<ErrorBoundary><Actions tabId={PWSTabs.ACTIONS}/></ErrorBoundary>}/>
-                        <Tab id="risks" title="Risks"
+                        <Tab id={PWSTabs.RISKS} title="Risks"
                              panel={<ErrorBoundary><Risks tabId={PWSTabs.RISKS}/></ErrorBoundary>}/>
-                        <Tab id="cost" title="Cost"
+                        <Tab id={PWSTabs.COST} title="Cost"
                              panel={<ErrorBoundary><CostTab tabId={PWSTabs.COST}/></ErrorBoundary>}/>
-                        <Tab id="report" title="Report"
+                        <Tab id={PWSTabs.REPORT} title="Report"
                              panel={<ErrorBoundary><Report tabId={PWSTabs.REPORT}/></ErrorBoundary>}/>
-                        <Tab id="rqs" title="Requirements"
+                        <Tab id={PWSTabs.REQUIREMENTS} title="Requirements"
                              panel={<ErrorBoundary><Requirements tabId={PWSTabs.REQUIREMENTS}/></ErrorBoundary>}/>
-                        <Tab id="backlog" title="Backlog"
+                        <Tab id={PWSTabs.BACKLOG} title="Backlog"
                              panel={<ErrorBoundary><BacklogTab tabId={PWSTabs.BACKLOG}/></ErrorBoundary>}/>
-                        <Tab id="defects" title="Defects"
+                        <Tab id={PWSTabs.DEFECTS} title="Defects"
                              panel={<ErrorBoundary><DefectsTab tabId={PWSTabs.DEFECTS}/></ErrorBoundary>}/>
-                        <Tab id="blc" title="BLC Dashboard"
+                        <Tab id={PWSTabs.BLC} title="BLC Dashboard"
                              panel={<ErrorBoundary><BlcDashboard tabId={PWSTabs.BLC}/></ErrorBoundary>}/>
                     </Tabs>
                 </div>

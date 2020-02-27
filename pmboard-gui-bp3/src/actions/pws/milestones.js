@@ -4,13 +4,15 @@ export const MILESTONES_LOAD_SUCCESS = "MILESTONES_LOAD_SUCCESS";
 export const MILESTONES_ERROR = "MILESTONES_ERROR";
 export const MILESTONES_RESET = "MILESTONES_RESET";
 
-export const milestonesLoad = () => ({
+export const milestonesLoad = (projectId) => ({
     type: MILESTONES_LOAD,
+    projectId
 });
 
-export const milestonesSave = (data) => ({
+export const milestonesSave = (projectId, data) => ({
     type: MILESTONES_SAVE,
-    data
+    data,
+    projectId,
 });
 
 export const milestonesLoadSuccess = ({data}) => ({

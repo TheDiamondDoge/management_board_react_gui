@@ -3,8 +3,9 @@ export const REQUIREMENTS_LOAD_SUCCESS = "REQUIREMENTS_LOAD_SUCCESS";
 export const REQUIREMENTS_ERROR = "REQUIREMENTS_ERROR";
 export const REQUIREMENTS_RESET = "REQUIREMENTS_RESET";
 
-export const loadRequirements = () => ({
+export const loadRequirements = (projectId) => ({
     type: REQUIREMENTS_LOAD,
+    projectId
 });
 
 export const loadRequirementsSuccess = ({data}) => ({

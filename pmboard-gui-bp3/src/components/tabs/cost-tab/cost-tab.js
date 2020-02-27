@@ -5,7 +5,7 @@ import styles from "./cost-tab.module.css";
 import UploadFileControls from "../../upload-file-controls/upload-file-controls";
 import PropTypes from "prop-types";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
-import {CostTabTypes} from "../../../util/custom-types"
+import {CostTabTypes, ProjectDefaults} from "../../../util/custom-types"
 import LastUpdated from "../../last-updated/last-updated";
 import SafeUrl from "../../safe-url/safe-url";
 
@@ -64,6 +64,10 @@ export default class CostTab extends React.Component {
 }
 
 CostTab.propTypes = {
+    defaults: PropTypes.shape({
+        payload: ProjectDefaults.isRequired,
+        loading: PropTypes.bool.isRequired,
+    }).isRequired,
     cost: PropTypes.shape({
         loading: PropTypes.bool.isRequired,
         payload: CostTabTypes

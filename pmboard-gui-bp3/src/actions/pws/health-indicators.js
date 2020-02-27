@@ -5,8 +5,9 @@ export const HEALTH_COMMENTS_SAVE = "HEALTH_COMMENTS_SAVE";
 export const HEALTH_ERROR = "HEALTH_ERROR";
 export const HEALTH_RESET = "HEALTH_RESET";
 
-export const healthLoad = () => ({
+export const healthLoad = (projectId) => ({
     type: HEALTH_LOAD,
+    projectId
 });
 
 export const healthLoadSuccess = ({data}) => ({
@@ -14,23 +15,25 @@ export const healthLoadSuccess = ({data}) => ({
     healthIndicators: data,
 });
 
-export const healthIndicatorsSave = (data) => {
+export const healthIndicatorsSave = (projectId, data) => {
     return {
         type: HEALTH_INDICATORS_SAVE,
         data: {
             statuses:
                 {...data.statuses}
-        }
+        },
+        projectId
     };
 };
 
-export const healthCommentsSave = (data) => {
+export const healthCommentsSave = (projectId, data) => {
     return {
         type: HEALTH_COMMENTS_SAVE,
         data: {
             comments:
                 {...data.comments}
         },
+        projectId,
     }
 };
 

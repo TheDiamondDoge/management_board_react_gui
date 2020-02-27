@@ -224,3 +224,8 @@ export const ContribTable = PropTypes.shape({
     minDate: PropTypes.string,
     maxDate: PropTypes.string
 });
+
+export const ProjectDefaults = PropTypes.shape({
+    projectId: PropTypes.number.isRequired,
+    projectName: PropTypes.string
+});

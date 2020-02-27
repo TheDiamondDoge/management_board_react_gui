@@ -11,7 +11,13 @@ import fieldsToRender from "../../health-indicators/health-fields";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import PropTypes from 'prop-types';
 import RenderFieldHelper from "../../../util/render-field-helper";
-import {ContribTable, HealthIndicatorsShape, MilestoneShape, SummaryShape} from "../../../util/custom-types";
+import {
+    ContribTable,
+    HealthIndicatorsShape,
+    MilestoneShape,
+    ProjectDefaults,
+    SummaryShape
+} from "../../../util/custom-types";
 import ErrorBoundary from "../../error-boundary/error-boundary";
 import ReactQuill from "react-quill";
 import ContributingOpenProjects from "../../contributing-projects-table/contributing-open-projects";
@@ -25,12 +31,6 @@ import {getIndicatorsColor} from "../../../util/transform-funcs";
 import 'react-quill/dist/quill.snow.css';
 
 export default class SummaryTab extends React.Component {
-    // componentDidMount() {
-    //     const {loadData} = this.props;
-    //     const {projectId} = this.props.defaults.payload;
-    //     loadData(projectId);
-    // }
-
     render() {
         const {loading} = this.props.summaryData;
         const renderHelper = new RenderFieldHelper(summaryFieldsToRender);
@@ -181,7 +181,10 @@ export default class SummaryTab extends React.Component {
 
 SummaryTab.propTypes = {
     loadData: PropTypes.func.isRequired,
-    defaults: PropTypes.object.isRequired,
+    defaults: PropTypes.shape({
+        payload: ProjectDefaults.isRequired,
+        loading: PropTypes.bool.isRequired,
+    }).isRequired,
     contribTable: PropTypes.shape({
         loading: PropTypes.bool,
         payload: ContribTable

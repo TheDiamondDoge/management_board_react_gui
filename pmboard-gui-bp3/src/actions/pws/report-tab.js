@@ -3,8 +3,9 @@ export const REPORT_LOAD_SUCCESS = "REPORT_LOAD_SUCCESS";
 export const REPORT_ERROR = "REPORT_ERROR";
 export const REPORT_RESET = "REPORT_RESET";
 
-export const loadReport = () => ({
+export const loadReport = (projectId) => ({
     type: REPORT_LOAD,
+    projectId
 });
 
 export const loadReportSuccess = ({data}) => ({

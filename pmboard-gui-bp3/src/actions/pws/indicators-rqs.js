@@ -4,8 +4,9 @@ export const INDICATORS_RQS_SAVE = "INDICATORS_RQS_SAVE";
 export const INDICATORS_RQS_ERROR = "INDICATORS_RQS_ERROR";
 export const INDICATORS_RQS_RESET = "INDICATORS_RQS_RESET";
 
-export const indicatorsRqsLoad = () => ({
-    type: INDICATORS_RQS_LOAD
+export const indicatorsRqsLoad = (projectId) => ({
+    type: INDICATORS_RQS_LOAD,
+    projectId
 });
 
 export const indicatorsRqsSuccess = ({data}) => ({
@@ -13,9 +14,10 @@ export const indicatorsRqsSuccess = ({data}) => ({
     data
 });
 
-export const indicatorsRqsSave = (data) => ({
+export const indicatorsRqsSave = (projectId, data) => ({
     type: INDICATORS_RQS_SAVE,
-    data
+    data,
+    projectId,
 });
 
 export const indicatorsRqsError = () => ({

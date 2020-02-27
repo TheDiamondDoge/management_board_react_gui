@@ -3,8 +3,9 @@ export const DR4_KPI_SUCCESS = "DR4_KPI_SUCCESS";
 export const DR4_KPI_ERROR = "DR4_KPI_ERROR";
 export const DR4_KPI_RESET = "DR4_KPI_RESET";
 
-export const dr4KpiLoad = () => ({
-    type: DR4_KPI_LOAD
+export const dr4KpiLoad = (projectId) => ({
+    type: DR4_KPI_LOAD,
+    projectId
 });
 
 export const dr4KpiSuccess = ({data}) => ({
