@@ -2,7 +2,7 @@ import {connect} from 'react-redux';
 import {loadReport, resetReport} from "../../../actions/pws/report-tab";
 import ReportTab from "./report-tab";
 import {resetRequirements} from "../../../actions/pws/requirements-tab";
-import {resetUserReports, saveUserReport} from "../../../actions/pws/user-reports";
+import {loadUserReports, resetUserReports, saveUserReport} from "../../../actions/pws/user-reports";
 import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
@@ -22,7 +22,8 @@ function mapDispatchToProps(dispatch) {
             dispatch(resetRequirements());
             dispatch(resetUserReports())
         },
-        saveData: (projectId, data) => dispatch(saveUserReport(projectId, data))
+        saveData: (projectId, data) => dispatch(saveUserReport(projectId, data)),
+        reloadUserReports: (projectId) => dispatch(loadUserReports(projectId))
     }
 }
 

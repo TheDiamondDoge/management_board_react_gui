@@ -56,24 +56,28 @@ export default class ReportTab extends React.Component {
                         <CustomQuill value={summary}
                                      header={<h3>Executive Status Summary</h3>}
                                      onSubmit={this.onUserReportSaveFactory(ReportTypes.SUMMARY, this.handleSaveData)}
+                                     onCancel={this.handleUserReportReload}
                                      loading={userReportsLoading}
                         />
                         <br/>
                         <CustomQuill value={red}
                                      header={<h3 className={styles.red}>Red Flag (executive action needed)</h3>}
                                      onSubmit={this.onUserReportSaveFactory(ReportTypes.RED_FLAG, this.handleSaveData)}
+                                     onCancel={this.handleUserReportReload}
                                      loading={userReportsLoading}
                         />
                         <br/>
                         <CustomQuill value={orange}
                                      header={<h3 className={styles.orange}>Orange Flag (core team action needed)</h3>}
                                      onSubmit={this.onUserReportSaveFactory(ReportTypes.ORANGE_FLAG, this.handleSaveData)}
+                                     onCancel={this.handleUserReportReload}
                                      loading={userReportsLoading}
                         />
                         <br/>
                         <CustomQuill value={green}
                                      header={<h3 className={styles.green}>Green Flag</h3>}
                                      onSubmit={this.onUserReportSaveFactory(ReportTypes.GREEN_FLAG, this.handleSaveData)}
+                                     onCancel={this.handleUserReportReload}
                                      loading={userReportsLoading}
                         />
                     </CustomCard>
@@ -82,6 +86,7 @@ export default class ReportTab extends React.Component {
                         <CustomQuill value={details}
                                      header={<h3>Current Project Details</h3>}
                                      onSubmit={this.onUserReportSaveFactory(ReportTypes.DETAILS, this.handleSaveData)}
+                                     onCancel={this.handleUserReportReload}
                                      loading={userReportsLoading}
                         />
                     </CustomCard>
@@ -165,6 +170,10 @@ export default class ReportTab extends React.Component {
     handleSaveData = (data) => {
         this.props.saveData(this.projectId, data);
     };
+
+    handleUserReportReload = () => {
+        this.props.reloadUserReports(this.projectId);
+    };
 }
 
 ReportTab.propTypes = {
@@ -172,6 +181,7 @@ ReportTab.propTypes = {
         payload: ProjectDefaults.isRequired,
         loading: PropTypes.bool.isRequired,
     }).isRequired,
+    reloadUserReports: PropTypes.func.isRequired,
     saveData: PropTypes.func.isRequired,
     report: PropTypes.shape({
         loading: PropTypes.bool.isRequired,

@@ -47,6 +47,8 @@ export default class SummaryTab extends React.Component {
 
             let mainCardStyle = classNames(styles.data_fields);
             let secondaryCardStyle = classNames(styles.secondary_card);
+            let contribTitleClasses = this.getContribTitleClasses(contribTable, validationParams.projectType);
+
             return (
                 <div>
                     <CustomCard>
@@ -144,7 +146,7 @@ export default class SummaryTab extends React.Component {
                             : (
                                 <>
                                     <OfferProductTitle
-                                        className={styles.bottom_margin}
+                                        className={contribTitleClasses}
                                         isOffer={validationParams.projectType === ProjectTypes.OFFER}
                                         isContrib={!!contribTable.payload.offer}
                                     />
@@ -175,6 +177,14 @@ export default class SummaryTab extends React.Component {
             return <LastUpdated dateStr={data}/>
         } else {
             return <FieldValue value={data}/>
+        }
+    }
+
+    getContribTitleClasses(contribTable, projectType) {
+        if (!contribTable.loading) {
+            return classNames({
+                [styles.bottom_margin] : (projectType === ProjectTypes.OFFER || !!contribTable.payload.offer)
+            });
         }
     }
 }

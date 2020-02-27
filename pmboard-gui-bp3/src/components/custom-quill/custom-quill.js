@@ -23,6 +23,7 @@ export default class CustomQuill extends React.Component {
         };
 
         this.onEditChange = this.onEditChange.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
     submitForm = null;
@@ -53,7 +54,7 @@ export default class CustomQuill extends React.Component {
                                 <EditSaveControls smallSize
                                                   className={styles.inline_block}
                                                   onClick={this.onEditChange}
-                                                  onCancel={this.onEditChange}
+                                                  onCancel={this.handleCancel}
                                                   onSubmit={this.submitForm}
                                                   editMode={editMode}
                                                   loading={loading}
@@ -81,6 +82,11 @@ export default class CustomQuill extends React.Component {
         } else {
             return this.state.default.modules;
         }
+    }
+
+    handleCancel() {
+        this.onEditChange();
+        this.props.onCancel();
     }
 
     onEditChange() {
@@ -111,5 +117,6 @@ CustomQuill.propTypes = {
     header: PropTypes.node,
     value: PropTypes.string,
     onSubmit: PropTypes.func,
+    onCancel: PropTypes.func,
     loading: PropTypes.bool
 };
