@@ -7,6 +7,7 @@ import {FocusStyleManager} from "@blueprintjs/core";
 import {BrowserRouter as Router, Route} from "react-router-dom";
 import StatusContainer from "../status-container/status-container";
 import LoadingStatus from "../global-statuses/loading-status";
+import AppToaster from "../app-toaster/app-toaster.container";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -29,6 +30,7 @@ export default function App() {
                     </Suspense>
                 </Router>
             </WorkingArea>
+            <AppToaster/>
         </div>
     );
 }

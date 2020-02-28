@@ -21,16 +21,17 @@ import * as report from "../../actions/pws/report-tab";
 import * as userReports from "../../actions/pws/user-reports";
 import * as contribTable from "../../actions/pws/contrib-table";
 import * as defaults from "../../actions/pws/default";
+import {addDangerToast} from "../../actions/app/toaster";
 
 export function* loadSummaryTab({projectId}) {
     try {
         const data = yield call(api.getSummaryInfo, projectId);
         yield put(summaryTab.summaryLoadSuccess(data));
-
         yield call(loadHealthIndicators, {projectId});
         yield call(loadMilestones, {projectId});
     } catch (e) {
         yield put(summaryTab.summaryError(e));
+        yield put(addDangerToast("Summary tab load failed. Please reload"));
     }
 }
 
@@ -43,7 +44,8 @@ export function* loadIndicatorsTab({projectId}) {
         yield call(loadDr4Kpi, {projectId});
         yield call(loadQualityKpi, {projectId});
     } catch (e) {
-        yield put(indicatorsTab.indicatorsError(e))
+        yield put(indicatorsTab.indicatorsError(e));
+        yield put(addDangerToast("Indicators tab load failed. Please reload"));
     }
 }
 
@@ -52,7 +54,8 @@ export function* loadInformationTab({projectId}) {
         const data = yield call(api.getInformationTab, projectId);
         yield put(infoTab.infoLoadSuccess(data));
     } catch (e) {
-        yield put(infoTab.infoError);
+        yield put(infoTab.infoError(e));
+        yield put(addDangerToast("Information tab load failed. Please reload"));
     }
 }
 
@@ -61,7 +64,8 @@ export function* loadContributableProjects() {
         const data = yield call(api.getContributableProjects);
         yield put(contrib.contribLoadSuccess(data));
     } catch (e) {
-        yield put(contrib.contribLoadFail(e))
+        yield put(contrib.contribLoadFail(e));
+        yield put(addDangerToast("List of contributing projects load failed. Please reload"));
     }
 }
 
@@ -71,6 +75,7 @@ export function* loadContribTable({projectId}) {
         yield put(contribTable.loadContribTableSuccess(data));
     } catch (e) {
         yield put(contribTable.errorContribTable(e));
+        yield put(addDangerToast("Contribution table load failed. Please reload"));
     }
 }
 
@@ -80,6 +85,7 @@ export function* loadHealthIndicators({projectId}) {
         yield put(healthIndicators.healthLoadSuccess(data));
     } catch (e) {
         yield put(healthIndicators.healthError(e));
+        yield put(addDangerToast("Health Indicators load failed. Please reload"));
     }
 }
 
@@ -89,6 +95,7 @@ export function* loadMilestones({projectId}) {
         yield put(milestones.milestonesLoadSuccess(data));
     } catch (e) {
         yield put(milestones.milestonesError(e));
+        yield put(addDangerToast("Milestones load failed. Please reload"));
     }
 }
 
@@ -98,6 +105,7 @@ export function* loadIndicatorsRqs({projectId}) {
         yield put(rqIndicators.indicatorsRqsSuccess(data));
     } catch (e) {
         yield put(rqIndicators.indicatorsRqsError(e));
+        yield put(addDangerToast("RQs indicators load failed. Please reload"));
     }
 }
 
@@ -106,7 +114,8 @@ export function* loadMilestonesKpi({projectId}) {
         const data = yield call(api.getMilestonesKpi, projectId);
         yield put(milestonesKpi.milestonesKpiSuccess(data));
     } catch (e) {
-        yield put(milestonesKpi.milestonesKpiError(e))
+        yield put(milestonesKpi.milestonesKpiError(e));
+        yield put(addDangerToast("Milestones KPI load failed. Please reload"));
     }
 }
 
@@ -115,7 +124,8 @@ export function* loadDr4Kpi({projectId}) {
         const data = yield call(api.getDr4Kpi, projectId);
         yield put(dr4Kpi.dr4KpiSuccess(data));
     } catch (e) {
-        yield put(dr4Kpi.dr4KpiError(e))
+        yield put(dr4Kpi.dr4KpiError(e));
+        yield put(addDangerToast("DR4 KPI load failed. Please reload"));
     }
 }
 
@@ -124,7 +134,8 @@ export function* loadQualityKpi({projectId}) {
         const data = yield call(api.getQualityKpi, projectId);
         yield put(qualityKpi.qualityKpiSuccess(data))
     } catch (e) {
-        yield put(qualityKpi.qualityKpiError(e))
+        yield put(qualityKpi.qualityKpiError(e));
+        yield put(addDangerToast("Quality KPI load failed. Please reload"));
     }
 }
 
@@ -133,7 +144,8 @@ export function* loadBlcTab({projectId}) {
         const data = yield call(api.getBlcTabData, projectId);
         yield put(blc.blcLoadSuccess(data.data))
     } catch(e) {
-        yield put(blc.blcError(e))
+        yield put(blc.blcError(e));
+        yield put(addDangerToast("BLC tab load failed. Please reload"));
     }
 }
 
@@ -143,6 +155,7 @@ export function* loadRisks({projectId}) {
         yield put(risks.loadSuccess(data));
     } catch (e) {
         yield put(risks.riskError(e));
+        yield put(addDangerToast("Risks load failed. Please reload"));
     }
 }
 
@@ -152,6 +165,7 @@ export function* saveRisk({projectId, data}) {
         yield call(loadRisks, {projectId});
     } catch (e) {
         yield put(risks.riskError(e));
+        yield put(addDangerToast("Save failed. Please try again"));
     }
 }
 
@@ -160,7 +174,8 @@ export function* loadRelatedRisksIds({projectId}) {
         const data = yield call(api.getRelatedRisksIds, projectId);
         yield put(risks.loadRisksSuccess(data));
     } catch (e) {
-        yield put(risks.riskError(e))
+        yield put(risks.riskError(e));
+        yield put(addDangerToast("Related Risks load failed. Please reload"));
     }
 }
 
@@ -169,7 +184,8 @@ export function* loadActions({projectId}) {
         const data = yield call(api.getActions, projectId);
         yield put(actions.actionsLoadSuccess(data))
     } catch (e) {
-        yield put(actions.actionsError(e))
+        yield put(actions.actionsError(e));
+        yield put(addDangerToast("Actions load failed. Please reload"));
     }
 }
 
@@ -179,6 +195,7 @@ export function* loadCost({projectId}) {
         yield put(cost.costLoadSuccess(data));
     } catch (e) {
         yield put(cost.costError(e));
+        yield put(addDangerToast("Cost load failed. Please reload"));
     }
 }
 
@@ -188,6 +205,7 @@ export function* loadRequirements({projectId}) {
         yield put(requirements.loadRequirementsSuccess(data));
     } catch (e) {
         yield put(requirements.errorRequirements(e));
+        yield put(addDangerToast("Requirements load failed. Please reload"));
     }
 }
 
@@ -196,7 +214,8 @@ export function* loadBacklogChart({projectId}) {
         const data = yield call(api.getBacklogChart, projectId);
         yield put(backlog.loadBacklogChartSuccess(data));
     } catch (e) {
-        yield put(backlog.errorBacklog(e))
+        yield put(backlog.errorBacklog(e));
+        yield put(addDangerToast("Backlog chart load failed. Please reload"));
     }
 }
 
@@ -205,7 +224,8 @@ export function* loadDefectsChart({projectId}) {
         const data = yield call(api.getDefectsChart, projectId);
         yield put(defects.loadDefectsChartSuccess(data));
     } catch (e) {
-        yield put(defects.errorDefects(e))
+        yield put(defects.errorDefects(e));
+        yield put(addDangerToast("Defects chart load failed. Please reload"));
     }
 }
 
@@ -217,6 +237,7 @@ export function* loadReportTab({projectId}) {
         yield call(loadUserReports, {projectId});
     } catch (e) {
         yield put(report.errorReport(e));
+        yield put(addDangerToast("Report tab load failed. Please reload"));
     }
 }
 
@@ -226,6 +247,7 @@ export function* loadUserReports({projectId}) {
         yield put(userReports.loadUserReportsSuccess(data));
     } catch(e) {
         yield put(userReports.errorUserReports(e));
+        yield put(addDangerToast("Save failed. Please try again"));
     }
 }
 
@@ -235,6 +257,7 @@ export function* saveUserReport({projectId, data}) {
         yield call(loadUserReports, {projectId});
     } catch (e) {
         yield put(userReports.errorUserReports(e));
+        yield put(addDangerToast("Save failed. Please try again"));
     }
 }
 
@@ -244,6 +267,7 @@ export function* saveAction({projectId, data}) {
          yield call(loadActions, {projectId});
     } catch (e) {
         yield put(actions.actionsError(e));
+        yield put(addDangerToast("Save failed. Please try again"));
     }
 }
 
@@ -253,6 +277,7 @@ export function* deleteAction({uid, projectId}) {
         yield call(loadActions, {projectId});
     } catch (e) {
         yield put(actions.actionsError(e));
+        yield put(addDangerToast("Delete failed. Please try again"));
     }
 }
 
@@ -261,7 +286,8 @@ export function* saveHealthIndicators({projectId, data}) {
         yield call(api.saveHealthIndicatorsPost, projectId, data);
         yield call(loadHealthIndicators, {projectId});
     } catch (e) {
-        yield put(healthIndicators.healthError(e))
+        yield put(healthIndicators.healthError(e));
+        yield put(addDangerToast("Save failed. Please try again"));
     }
 }
 
@@ -272,6 +298,7 @@ export function* saveIndicatorsRqs({projectId, data}) {
         yield call(loadDr4Kpi, {projectId});
     } catch(e) {
         yield put(rqIndicators.indicatorsRqsError(e));
+        yield put(addDangerToast("Save failed. Please try again"));
     }
 }
 
@@ -281,6 +308,7 @@ export function* saveIndicatorsQuality({projectId, data}) {
         yield call(loadQualityKpi, {projectId});
     } catch (e) {
         yield put(qualityKpi.qualityKpiError(e));
+        yield put(addDangerToast("Save failed. Please try again"));
     }
 }
 
@@ -290,6 +318,7 @@ export function* saveInformationTab({projectId, data}) {
         yield call(loadInformationTab, {projectId});
     } catch (e) {
         yield put(infoTab.infoError(e));
+        yield put(addDangerToast("Save failed. Please try again"));
     }
 }
 
@@ -299,6 +328,7 @@ export function* saveMilestones({projectId, data}) {
         yield call(loadMilestones, {projectId});
     } catch (e) {
         yield put(milestones.milestonesError(e));
+        yield put(addDangerToast("Save failed. Please try again"));
     }
 }
 
@@ -307,7 +337,8 @@ export function* saveBlcTabIndicators({projectId, data}) {
         yield call(api.saveBlcIndicators, projectId, data);
         yield call(loadBlcTab, {projectId});
     } catch (e) {
-        yield put(blc.blcError(e))
+        yield put(blc.blcError(e));
+        yield put(addDangerToast("Save failed. Please try again"));
     }
 }
 
@@ -316,7 +347,8 @@ export function* saveBlcTabComments({projectId, data}) {
         yield call(api.saveBlcComments, projectId, data);
         yield call(loadBlcTab, {projectId});
     } catch (e) {
-        yield put(blc.blcError(e))
+        yield put(blc.blcError(e));
+        yield put(addDangerToast("Save failed. Please try again"));
     }
 }
 
@@ -326,5 +358,6 @@ export function* loadProjectDefaults({projectId}) {
         yield put(defaults.loadProjectDefaultsSuccess(data));
     } catch (e) {
         yield put(defaults.errorProjectDefaults(e));
+        yield put(addDangerToast("Project defaults load failed. Please reload"));
     }
 }

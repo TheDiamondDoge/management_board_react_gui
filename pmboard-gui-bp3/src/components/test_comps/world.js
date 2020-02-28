@@ -2,13 +2,11 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
 import {Formik, Field, Form, ErrorMessage} from "formik";
-import {HTMLTable, MenuItem, Popover, Position, Button, Menu, Dialog, Intent} from "@blueprintjs/core";
+import {HTMLTable, MenuItem, Popover, Position, Button, Menu, Dialog, Intent, Toast, Toaster} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import {Rnd} from "react-rnd";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
-import ContributingOpenProjects from "../contributing-projects-table/contributing-open-projects";
-import Legend from "../legend/legend";
 
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
@@ -22,7 +20,13 @@ export default class World extends React.Component {
         this.state = {
             selectedItems: ["Hi", "I", "am", "Robert"],
             isDialog: false,
-            quill: "<h1>Hell-0</h1>"
+            quill: "<h1>Hell-0</h1>",
+            toasts: [
+                {id: 1, name: "Hello", isShown: true},
+                {id: 2, name: "this", isShown: true},
+                {id: 3, name: "is", isShown: true},
+                {id: 4, name: "toast", isShown: true},
+            ]
         }
     }
 
@@ -47,7 +51,7 @@ export default class World extends React.Component {
     test() {
         // document.getElementById("content").innerHTML = response.html;
         // document.title = response.pageTitle;
-        window.history.pushState("Hello","Title", "/pws?tab=information");
+        window.history.pushState("Hello", "Title", "/pws?tab=information");
     }
 
     render() {
@@ -190,169 +194,42 @@ export default class World extends React.Component {
                 <Popover content={menu} position={Position.RIGHT_BOTTOM}>
                     <Button icon={"sort"} minimal/>
                 </Popover>
-                {/*<StatusContainer>*/}
-                {/*    <ErrorStatus/>*/}
-                {/*</StatusContainer>*/}
-                <Button
-                    onClick={() => {
-                        console.log(this.state.isDialog);
-                        this.setState((prev) => ({isDialog: !prev.isDialog}))
-                    }
-                    }/>
-                {/*<div style={{height: "100px", width: "900px"}}>*/}
-                {/*    <ReactQuill readOnly value={this.state.quill}*/}
-                {/*                onChange={(x, q, w, e, r) => console.log(x, q, w, e)}/>*/}
-                {/*</div>*/}
-                <div style={{width: "900px", overflowX: "auto", backgroundColor: "white"}}>
-                    <ContributingOpenProjects minDate={"2019-03-05"} maxDate={"2020-06-06"} offer={this.offer} contributed={[this.notAnOffer]}/>
-                </div>
+                <br/>
+                <Toaster>
+                    {this.state.toasts.map((toast) =>
+                        toast.isShown &&
+                        <Toast
+                            id={toast.id}
+                            message={toast.name}
+                            timeout={1000 * toast.id}
+                            intent={Intent.SUCCESS}
+                            onDismiss={(q) => this.onDismiss(q, toast.id)}
+                        />
+                    )}
+                </Toaster>
                 <br/>
                 <br/>
-                <br/>
-                <Legend/>
-                <Button intent={Intent.DANGER} text={"Lol"} onClick={this.test}/>
+                <Button intent={Intent.DANGER} text={"Lol"} onClick={this.addToast}/>
             </>
         );
     }
 
-    offer = {
-        "projectName": "Project One",
-        "projectState": "FORECAST",
-        "milestones": [{
-            "label": "OR",
-            "baselineDate": "2019-10-19",
-            "actualDate": "2019-03-05",
-            "completion": 50,
-            "meetingMinutes": "http://www.google.com",
-            "shown": true
-        }, {
-            "label": "DR0",
-            "baselineDate": "2019-09-22",
-            "actualDate": "2019-09-29",
-            "completion": 50,
-            "meetingMinutes": "www.google.com",
-            "shown": false
-        }, {
-            "label": "DR1",
-            "baselineDate": "2019-04-09",
-            "actualDate": "2019-04-10",
-            "completion": 100,
-            "meetingMinutes": "http://www.google.com",
-            "shown": true
-        }, {
-            "label": "DR2",
-            "baselineDate": "2019-11-22",
-            "actualDate": "2019-11-30",
-            "completion": 50,
-            "meetingMinutes": "www.google.com",
-            "shown": false
-        }, {
-            "label": "DR3",
-            "baselineDate": "2019-12-24",
-            "actualDate": "2019-12-25",
-            "completion": 50,
-            "meetingMinutes": "www.google.com",
-            "shown": true
-        }, {
-            "label": "DR4",
-            "baselineDate": "2019-09-24",
-            "actualDate": null,
-            "completion": 50,
-            "meetingMinutes": "www.google.com",
-            "shown": false
-        }, {
-            "label": "OBR",
-            "baselineDate": "2020-01-16",
-            "actualDate": "2020-02-06",
-            "completion": 50,
-            "meetingMinutes": "http://www.google.com",
-            "shown": true
-        }, {
-            "label": "CI",
-            "baselineDate": "2020-02-06",
-            "actualDate": "2020-02-06",
-            "completion": 50,
-            "meetingMinutes": "www.google.com",
-            "shown": true
-        }, {
-            "label": "DR5",
-            "baselineDate": "2020-01-06",
-            "actualDate": "2020-01-15",
-            "completion": 50,
-            "meetingMinutes": "www.google.com",
-            "shown": true
-        }]
+    onDismiss = (isDismissed, id) => {
+        this.setState((prevState) => {
+            let newToasts = [...prevState.toasts];
+            newToasts = newToasts.filter(toast => toast.id !== id);
+            return {
+                toasts: [...newToasts]
+            }
+        })
     };
 
-    notAnOffer = {
-        "projectName": "Project Two",
-        "projectState": "COMMITTED",
-        "milestones": [{
-            "label": "OR",
-            "baselineDate": "2019-10-19",
-            "actualDate": "2019-04-05",
-            "completion": 50,
-            "meetingMinutes": "http://www.google.com",
-            "shown": true
-        }, {
-            "label": "DR0",
-            "baselineDate": "2019-09-22",
-            "actualDate": "2019-06-29",
-            "completion": 50,
-            "meetingMinutes": "www.google.com",
-            "shown": false
-        }, {
-            "label": "DR1",
-            "baselineDate": "2019-04-09",
-            "actualDate": "2019-05-10",
-            "completion": 100,
-            "meetingMinutes": "http://www.google.com",
-            "shown": true
-        }, {
-            "label": "DR2",
-            "baselineDate": "2019-11-22",
-            "actualDate": "2019-12-30",
-            "completion": 50,
-            "meetingMinutes": "www.google.com",
-            "shown": false
-        }, {
-            "label": "DR3",
-            "baselineDate": "2019-12-24",
-            "actualDate": "2019-12-25",
-            "completion": 50,
-            "meetingMinutes": "www.google.com",
-            "shown": true
-        }, {
-            "label": "DR4",
-            "baselineDate": "2019-09-24",
-            "actualDate": "2019-11-24",
-            "completion": 50,
-            "meetingMinutes": "www.google.com",
-            "shown": false
-        }, {
-            "label": "OBR",
-            "baselineDate": "2020-01-16",
-            "actualDate": "2020-01-06",
-            "completion": 50,
-            "meetingMinutes": "http://www.google.com",
-            "shown": true
-        }, {
-            "label": "CI",
-            "baselineDate": "2020-02-06",
-            "actualDate": "2020-01-06",
-            "completion": 50,
-            "meetingMinutes": "www.google.com",
-            "shown": true
-        }, {
-            "label": "DR5",
-            "baselineDate": "2020-01-06",
-            "actualDate": "2020-03-15",
-            "completion": 50,
-            "meetingMinutes": "www.google.com",
-            "shown": true
-        }]
-    };
-};
+    addToast = () => {
+        this.setState((prevState) => ({
+            toasts: [...prevState.toasts, {id: "14", name: "Ya-ya", isShown: true}]
+        }));
+    }
+}
 
 World.propTypes = {
     test: PropTypes.bool,
