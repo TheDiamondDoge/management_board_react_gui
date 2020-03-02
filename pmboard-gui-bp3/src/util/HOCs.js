@@ -1,5 +1,6 @@
 import React from 'react';
 
+//TODO: bind projectId to load function
 export function withPwsOnMountCall(Component, config) {
     return class extends React.Component {
         componentDidMount() {

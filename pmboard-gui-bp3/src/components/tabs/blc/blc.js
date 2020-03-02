@@ -103,7 +103,7 @@ export default class BlcDashboard extends React.Component {
                     <EditSaveControls editMode={true}
                                       onCancel={() => {
                                           this.cancelEdit();
-                                          this.props.loadData();
+                                          this.props.loadData(this.props.defaults.payload.projectId);
                                       }}
                                       onSubmit={this.submitForm}
                     />
