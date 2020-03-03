@@ -52,8 +52,8 @@ export const saveInformationTab = (projectID, payload) => (
     axios.post(`http://localhost:8080/api/projects/${projectID}/tabs/information`, payload)
 );
 
-export const getContributableProjects = () => (
-    axios.get(`http://localhost:8080/api/projects/contrib`)
+export const getContributableProjects = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/contrib`)
 );
 
 export const getBlcTabData = (projectID) => (

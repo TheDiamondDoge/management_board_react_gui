@@ -59,9 +59,9 @@ export function* loadInformationTab({projectId}) {
     }
 }
 
-export function* loadContributableProjects() {
+export function* loadContributableProjects({projectId}) {
     try {
-        const data = yield call(api.getContributableProjects);
+        const data = yield call(api.getContributableProjects, projectId);
         yield put(contrib.contribLoadSuccess(data));
     } catch (e) {
         yield put(contrib.contribLoadFail(e));
