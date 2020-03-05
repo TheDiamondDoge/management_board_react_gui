@@ -1,0 +1,31 @@
+import React from 'react';
+import {Icon, Intent} from "@blueprintjs/core";
+import PropTypes from "prop-types";
+import styles from "./project-not-found-status.module.css";
+
+export default class ProjectNotFoundStatus extends React.PureComponent {
+    render() {
+        const {id, ...others} = this.props;
+        const message = this.getErrorMessage(id);
+        return (
+            <div className={styles.wrapper} {...others}>
+                <Icon icon={"inbox-search"}
+                      iconSize={50}
+                      intent={Intent.PRIMARY}
+                      className={styles.icon_style}
+                />
+                {message}
+            </div>
+        )
+    }
+
+    getErrorMessage(id) {
+        return id
+            ? `Project with id ${id} - not found`
+            : "Project not found";
+    }
+}
+
+ProjectNotFoundStatus.propTypes = {
+    id: PropTypes.number,
+};

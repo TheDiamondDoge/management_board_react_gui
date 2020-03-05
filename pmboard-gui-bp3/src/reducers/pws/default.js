@@ -8,7 +8,7 @@ import {
 const initState = {
     loading: true,
     payload: {},
-    error: {},
+    error: null,
 };
 
 export default (state, action) => {
