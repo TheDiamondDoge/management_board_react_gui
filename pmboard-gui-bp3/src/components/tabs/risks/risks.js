@@ -8,8 +8,19 @@ import {ProjectDefaults, RisksTabRisk} from "../../../util/custom-types";
 import {createEnchantedTableFilters} from "../../../util/util";
 import ContextMenu from "./components/context-menu";
 import TableFooter from "./components/table-footer";
+import UploadFileControlsHidden from "../../upload-file-controls/upload-file-controls-hidden";
 
 export default class Risks extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            file: null
+        };
+        this.uploadRef = React.createRef();
+        this.submitRef = React.createRef();
+    }
+
     render() {
         const {loading} = this.props.risks;
         if (loading) {
@@ -34,14 +45,22 @@ export default class Risks extends React.Component {
                         }
                         renderFooter={() => (
                             <TableFooter onExcelExport={() => alert("Excel exported")}
-                                         onExcelImport={() => alert("Excel imported")}
+                                         onExcelImport={this.openFileUploadDialog}
                             />
                         )}
+                    />
+                    <UploadFileControlsHidden submitRef={this.submitRef}
+                                              uploadRef={this.uploadRef}
+                                              onSubmit={(file) => console.log(file)}
                     />
                 </CustomCard>
             );
         }
     }
+
+    openFileUploadDialog = () => {
+        this.uploadRef.current.click();
+    };
 
     handleSaveRisks = (data) => {
         this.props.saveRisk(this.projectId, data);
