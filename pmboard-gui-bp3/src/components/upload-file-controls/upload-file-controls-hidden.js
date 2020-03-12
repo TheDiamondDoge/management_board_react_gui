@@ -9,10 +9,11 @@ export default class UploadFileControlsHidden extends React.PureComponent {
         this.state = {
             file: null
         };
+        this.submitRef = React.createRef();
     }
 
     render() {
-        const {submitRef, uploadRef} = this.props;
+        const {uploadRef} = this.props;
         return (
             <div>
                 <form onSubmit={this.handleFormSubmit}>
@@ -21,17 +22,16 @@ export default class UploadFileControlsHidden extends React.PureComponent {
                            onChange={this.onFilePick}
                            className={styles.hidden}
                     />
-                    <input ref={submitRef} type="submit" className={styles.hidden}/>
+                    <input ref={this.submitRef} type="submit" className={styles.hidden}/>
                 </form>
             </div>
         );
     }
 
     onFilePick = (e) => {
-        const {submitRef} = this.props;
         this.setState(
             {file: e.currentTarget.files[0]},
-            () => submitRef.current.click()
+            () => this.submitRef.current.click()
         );
     };
 
@@ -39,12 +39,13 @@ export default class UploadFileControlsHidden extends React.PureComponent {
         e.preventDefault();
         e.stopPropagation();
 
-        this.props.onSubmit(this.state.file);
+        const data = new FormData();
+        data.append('file', this.state.file);
+        this.props.onSubmit(data);
     };
 }
 
 UploadFileControlsHidden.propTypes = {
-    submitRef: PropTypes.object.isRequired,
     uploadRef: PropTypes.object.isRequired,
     onSubmit: PropTypes.func.isRequired,
 };

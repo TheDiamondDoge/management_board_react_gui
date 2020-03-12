@@ -18,7 +18,6 @@ export default class Risks extends React.Component {
             file: null
         };
         this.uploadRef = React.createRef();
-        this.submitRef = React.createRef();
     }
 
     render() {
@@ -27,6 +26,7 @@ export default class Risks extends React.Component {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             const {payload} = this.props.risks;
+            const {uploadRisksFile} = this.props;
             this.projectId = this.props.defaults.payload.projectId;
             const picklists = createEnchantedTableFilters(payload);
             return (
@@ -49,9 +49,8 @@ export default class Risks extends React.Component {
                             />
                         )}
                     />
-                    <UploadFileControlsHidden submitRef={this.submitRef}
-                                              uploadRef={this.uploadRef}
-                                              onSubmit={(file) => console.log(file)}
+                    <UploadFileControlsHidden uploadRef={this.uploadRef}
+                                              onSubmit={(file) => uploadRisksFile(this.projectId, file)}
                     />
                 </CustomCard>
             );
@@ -76,5 +75,6 @@ Risks.propTypes = {
         loading: PropTypes.bool.isRequired,
         payload: PropTypes.arrayOf(RisksTabRisk).isRequired
     }),
-    saveRisk: PropTypes.func.isRequired
+    saveRisk: PropTypes.func.isRequired,
+    uploadRisksFile: PropTypes.func.isRequired
 };

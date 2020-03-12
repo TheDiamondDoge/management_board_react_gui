@@ -170,6 +170,18 @@ export function* saveRisk({projectId, data}) {
     }
 }
 
+export function* uploadRisksFile({projectId, data}) {
+    try {
+        yield call(api.uploadRisksFile, projectId, data);
+        console.log("File: ", data);
+        yield put(addSuccessToast("File uploaded"));
+        yield call(loadRisks, {projectId});
+    } catch (e) {
+        yield put(risks.riskError(e));
+        yield put(addDangerToast("Risks upload failed"));
+    }
+}
+
 export function* loadRelatedRisksIds({projectId}) {
     try {
         const data = yield call(api.getRelatedRisksIds, projectId);

@@ -5,7 +5,7 @@ import {
     RISKS_IDS_LOAD_SUCCESS,
     RISKS_ERROR,
     RISK_RESET,
-    RISK_SAVE
+    RISK_SAVE, RISKS_UPLOAD
 } from "../../actions/pws/risks-tab";
 
 const initState = {
@@ -50,6 +50,10 @@ export default (state, action) => {
             return {
                 ...state,
                 loading: true,
+            };
+        case RISKS_UPLOAD:
+            return {
+                ...state,
             };
         case RISK_RESET:
             return initState;

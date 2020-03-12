@@ -4,6 +4,7 @@ export const RISKS_IDS_LOAD = "RISKS_IDS_LOAD";
 export const RISKS_IDS_LOAD_SUCCESS = "RISKS_IDS_LOAD_SUCCESS";
 export const RISKS_ERROR = "RISKS_ERROR";
 export const RISK_SAVE = "RISK_SAVE";
+export const RISKS_UPLOAD = "RISKS_UPLOAD";
 export const RISK_RESET = "RISK_RESET";
 
 export const loadRisks = (projectId) => ({
@@ -33,6 +34,12 @@ export const riskError = (error) => ({
 
 export const saveRisk = (projectId, data) => ({
     type: RISK_SAVE,
+    data,
+    projectId,
+});
+
+export const uploadRisks = (projectId, data) => ({
+    type: RISKS_UPLOAD,
     data,
     projectId,
 });

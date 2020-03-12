@@ -76,6 +76,10 @@ export const saveRisks = (projectID, risk) => (
     axios.put(`http://localhost:8080/api/projects/${projectID}/tabs/risks`, risk)
 );
 
+export const uploadRisksFile = (projectID, file) => (
+    axios.post(`http://localhost:8080/api/projects/${projectID}/tabs/risks`, file)
+);
+
 export const getRelatedRisksIds = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/risks/id`)
 );
