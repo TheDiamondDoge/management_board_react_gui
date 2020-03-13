@@ -9,6 +9,9 @@ import {createEnchantedTableFilters} from "../../../util/util";
 import ContextMenu from "./components/context-menu";
 import TableFooter from "./components/table-footer";
 import UploadFileControlsHidden from "../../upload-file-controls/upload-file-controls-hidden";
+import {Classes, Dialog, Icon} from "@blueprintjs/core";
+import ExcelError from "../../excel-error/excel-error";
+import {Intent} from "@blueprintjs/core/lib/cjs/common/intent";
 
 export default class Risks extends React.Component {
     constructor(props) {
@@ -28,6 +31,8 @@ export default class Risks extends React.Component {
             const {payload} = this.props.risks;
             const {uploadRisksFile} = this.props;
             this.projectId = this.props.defaults.payload.projectId;
+            const {errors} = this.props.risks;
+
             const picklists = createEnchantedTableFilters(payload);
             return (
                 <CustomCard autosize>
@@ -52,8 +57,25 @@ export default class Risks extends React.Component {
                     <UploadFileControlsHidden uploadRef={this.uploadRef}
                                               onSubmit={(file) => uploadRisksFile(this.projectId, file)}
                     />
+                    {this.shouldDialogRender(!!errors)}
                 </CustomCard>
             );
+        }
+    }
+
+    shouldDialogRender(condition) {
+        if (condition) {
+            const {errors} = this.props.risks;
+            return (
+                <Dialog isOpen={condition} title={"Warning"} icon={<Icon icon={"warning-sign"} intent={Intent.WARNING}/>}>
+                    <div className={Classes.DIALOG_BODY}>
+                        Risks uploaded with following errors:
+                        <ul>
+                            {errors.map(err => <li><ExcelError {...err}/></li>)}
+                        </ul>
+                    </div>
+                </Dialog>
+            )
         }
     }
 
