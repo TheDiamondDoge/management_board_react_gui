@@ -5,7 +5,7 @@ import {
     RISKS_IDS_LOAD_SUCCESS,
     RISKS_ERROR,
     RISK_RESET,
-    RISK_SAVE, RISKS_UPLOAD, RISKS_UPLOAD_SUCCESS
+    RISK_SAVE, RISKS_UPLOAD, RISKS_UPLOAD_SUCCESS, RISKS_ERRORS_SHOWED
 } from "../../actions/pws/risks-tab";
 
 const initState = {
@@ -13,6 +13,7 @@ const initState = {
     payload: [],
     riskIDs: [],
     error: "",
+    errorListShowed: false
 };
 
 export default (state, action) => {
@@ -59,7 +60,13 @@ export default (state, action) => {
         case RISKS_UPLOAD_SUCCESS:
             return {
                 ...state,
-                errors: [...action.errors]
+                errors: [...action.errors],
+                errorListShowed: false,
+            };
+        case RISKS_ERRORS_SHOWED:
+            return {
+                ...state,
+                errorListShowed: true
             };
         case RISK_RESET:
             return initState;

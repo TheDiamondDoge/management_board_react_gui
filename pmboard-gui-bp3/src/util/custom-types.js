@@ -145,7 +145,7 @@ export const EnchantedTableColsConfig = PropTypes.shape({
 export const RisksTabRisk = PropTypes.shape({
     riskId: PropTypes.number,
     impact: PropTypes.number,
-    probability: PropTypes.string,
+    probability: PropTypes.number,
     rating: PropTypes.number,
     previous: PropTypes.number,
     initial: PropTypes.number,
@@ -228,4 +228,10 @@ export const ContribTable = PropTypes.shape({
 export const ProjectDefaults = PropTypes.shape({
     projectId: PropTypes.number.isRequired,
     projectName: PropTypes.string
+});
+
+export const ExcelError = PropTypes.shape({
+    cellIndex: PropTypes.number.isRequired,
+    rowIndex: PropTypes.number.isRequired,
+    message: PropTypes.string.isRequired,
 });
