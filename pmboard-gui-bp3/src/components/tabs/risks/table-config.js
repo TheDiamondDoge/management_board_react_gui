@@ -1,5 +1,10 @@
 import {boolToYesNo} from "../../../util/transform-funcs";
-import {dateDecorator, errorDisplayDecorator, impactDecorator} from "../../../util/common-decorators";
+import {
+    dateDecorator,
+    errorDisplayDecorator,
+    impactDecorator,
+    probabilityDecorator
+} from "../../../util/common-decorators";
 
 export default [
     {
@@ -26,7 +31,7 @@ export default [
             }
         },
         searchType: "input",
-        decorator: errorDisplayDecorator
+        decorator: probabilityDecorator
     },
     {
         id: "rating", headerName: "Rating",

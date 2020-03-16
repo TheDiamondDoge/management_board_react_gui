@@ -28,6 +28,16 @@ export function impactDecorator(value) {
     }
 }
 
+export function probabilityDecorator(value) {
+    if (!value) {
+        return "None";
+    } else if (value == -1) {
+        return <ErrorDecorator/>
+    } else {
+        return `${value * 100}%`;
+    }
+}
+
 export function errorDisplayDecorator(value) {
     if (value == -1 || value === "Error") {
         return <ErrorDecorator/>
