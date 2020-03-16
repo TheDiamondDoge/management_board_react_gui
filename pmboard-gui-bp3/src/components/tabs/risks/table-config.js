@@ -1,5 +1,5 @@
 import {boolToYesNo} from "../../../util/transform-funcs";
-import {dateDecorator, impactDecorator} from "../../../util/common-decorators";
+import {dateDecorator, errorDisplayDecorator, impactDecorator} from "../../../util/common-decorators";
 
 export default [
     {
@@ -9,10 +9,11 @@ export default [
                 width: "70px"
             },
             column: {
-                textAlign: "center"
+                textAlign: "center",
             }
         },
-        searchType: "input"
+        searchType: "input",
+        decorator: errorDisplayDecorator
     },
     {
         id: "probability", headerName: "Probability",
@@ -24,7 +25,8 @@ export default [
                 textAlign: "center"
             }
         },
-        searchType: "input"
+        searchType: "input",
+        decorator: errorDisplayDecorator
     },
     {
         id: "rating", headerName: "Rating",
@@ -49,7 +51,8 @@ export default [
                 textAlign: "center"
             }
         },
-        searchType: "input"
+        searchType: "input",
+        decorator: errorDisplayDecorator
     },
     {
         id: "initial", headerName: "Initial",
@@ -61,7 +64,8 @@ export default [
                 textAlign: "center"
             }
         },
-        searchType: "input"
+        searchType: "input",
+        decorator: errorDisplayDecorator
     },
     {
         id: "riskDisplayId", headerName: "Risk ID",
@@ -73,7 +77,8 @@ export default [
                 textAlign: "center"
             }
         },
-        searchType: "multiselect"
+        searchType: "multiselect",
+        decorator: errorDisplayDecorator
     },
     {
         id: "riskDescription", headerName: "Risk Description",
@@ -85,7 +90,8 @@ export default [
                 wordBreak: "break-word"
             }
         },
-        searchType: "input"
+        searchType: "input",
+        decorator: errorDisplayDecorator
     },
     {
         id: "impactDescription", headerName: "Impact Description",
@@ -97,7 +103,8 @@ export default [
                 wordBreak: "break-word"
             }
         },
-        searchType: "input"
+        searchType: "input",
+        decorator: errorDisplayDecorator
     },
     {
         id: "businessImpact", headerName: "Business Impact",
@@ -109,7 +116,8 @@ export default [
                 wordBreak: "break-word"
             }
         },
-        searchType: "input"
+        searchType: "input",
+        decorator: errorDisplayDecorator
     },
     {
         id: "riskResponse", headerName: "Risk Response",
@@ -118,7 +126,8 @@ export default [
                 width: "100px"
             },
         },
-        searchType: "input"
+        searchType: "input",
+        decorator: errorDisplayDecorator
     },
     {
         id: "mitigation", headerName: "Mitigation Plan Description",
@@ -127,7 +136,8 @@ export default [
                 width: "300px"
             },
         },
-        searchType: "input"
+        searchType: "input",
+        decorator: errorDisplayDecorator
     },
     {
         id: "decisionDate", headerName: "Decision Date",
@@ -152,7 +162,8 @@ export default [
                 textAlign: "center"
             }
         },
-        searchType: "input"
+        searchType: "input",
+        decorator: errorDisplayDecorator
     },
     {
         id: "provisionBudget", headerName: "Provision for budget",
@@ -164,7 +175,8 @@ export default [
                 textAlign: "center"
             }
         },
-        searchType: "input"
+        searchType: "input",
+        decorator: errorDisplayDecorator
     },
     {
         id: "responsible", headerName: "Responsible",
@@ -176,7 +188,8 @@ export default [
                 textAlign: "center"
             }
         },
-        searchType: "input"
+        searchType: "input",
+        decorator: errorDisplayDecorator
     },
     {
         id: "target", headerName: "Target (Plan)",
@@ -240,7 +253,8 @@ export default [
                 textAlign: "center"
             }
         },
-        searchType: "input"
+        searchType: "input",
+        decorator: errorDisplayDecorator
     },
     {
         id: "report", headerName: "Report",
