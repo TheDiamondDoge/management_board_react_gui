@@ -1,8 +1,7 @@
 import React from 'react';
 
-//TODO: bind projectId to load function
 export function withPwsOnMountCall(Component, config) {
-    return class extends React.Component {
+    const WithPwsOnMountCall = class extends React.Component {
         componentDidMount() {
             if (config.onMount) {
                 const {projectId} = this.props.defaults.payload;
@@ -19,11 +18,14 @@ export function withPwsOnMountCall(Component, config) {
         render() {
             return <Component {...this.props}/>
         }
-    }
+    };
+
+    WithPwsOnMountCall.displayName = `WithPwsOnMountCall(${getDisplayName(Component)})`;
+    return WithPwsOnMountCall;
 }
 
 export function withPwsTabNameUrlChanger(Component) {
-    return class extends React.Component {
+    const WithPwsTabNameUrlChanger = class extends React.Component {
         componentDidMount() {
             const tabId = this.props.tabId;
             if (tabId) {
@@ -40,5 +42,12 @@ export function withPwsTabNameUrlChanger(Component) {
             const {tabId, ...others} = this.props;
             return <Component {...others}/>;
         }
-    }
+    };
+
+    WithPwsTabNameUrlChanger.displayName = `WithPwsTabNameUrlChanger(${getDisplayName(Component)})`;
+    return WithPwsTabNameUrlChanger;
+}
+
+function getDisplayName(Component) {
+    return Component.displayName || Component.name || 'Component';
 }
