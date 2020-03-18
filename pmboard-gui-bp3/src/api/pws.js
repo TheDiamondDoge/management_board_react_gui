@@ -80,6 +80,10 @@ export const uploadRisksFile = (projectID, file) => (
     axios.post(`http://localhost:8080/api/projects/${projectID}/tabs/risks`, file)
 );
 
+export const downloadRisksFile = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/risksFile`, {responseType: "blob"})
+);
+
 export const getRelatedRisksIds = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/risks/id`)
 );

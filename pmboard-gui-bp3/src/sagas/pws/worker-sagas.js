@@ -1,4 +1,5 @@
 import * as api from '../../api/pws';
+import FileSaver from 'file-saver';
 import {call, put} from 'redux-saga/effects';
 import * as summaryTab from "../../actions/pws/summary-tab";
 import * as healthIndicators from "../../actions/pws/health-indicators";
@@ -179,6 +180,17 @@ export function* uploadRisksFile({projectId, data}) {
     } catch (e) {
         yield put(risks.riskError(e));
         yield put(addDangerToast(`Risks upload failed. ${e.response.data.message}`));
+    }
+}
+
+export function* downloadRisksFile({projectId, projectName}) {
+    try {
+        const data = yield call(api.downloadRisksFile, projectId);
+        yield call(FileSaver.saveAs, new Blob([data.data]), `${projectName}_risks.xlsx`);
+        yield put(addSuccessToast("Risk file downloaded"))
+    } catch(e) {
+        yield put(risks.riskError(e));
+        yield put(addDangerToast(`Risk download failed. ${e.response.data.message}`))
     }
 }
 

@@ -1,5 +1,12 @@
 import {connect} from "react-redux";
-import {loadRisks, resetState, saveRisk, setErrorsShowedTrue, uploadRisks} from "../../../actions/pws/risks-tab";
+import {
+    downloadRisks,
+    loadRisks,
+    resetState,
+    saveRisk,
+    setErrorsShowedTrue,
+    uploadRisks
+} from "../../../actions/pws/risks-tab";
 import Risks from "./risks";
 import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
@@ -16,6 +23,7 @@ function mapDispatchToProps(dispatch) {
         resetData: () => dispatch(resetState()),
         saveRisk: (projectId, data) => dispatch(saveRisk(projectId, data)),
         uploadRisksFile: (projectId, data) => dispatch(uploadRisks(projectId, data)),
+        downloadRisks: (projectId, projectName) => dispatch(downloadRisks(projectId, projectName)),
         setErrorsShowedTrue: () => dispatch(setErrorsShowedTrue())
     }
 }

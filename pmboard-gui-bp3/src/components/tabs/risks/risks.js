@@ -27,8 +27,9 @@ export default class Risks extends React.Component {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             const {payload, errorListShowed} = this.props.risks;
-            const {uploadRisksFile, setErrorsShowedTrue} = this.props;
+            const {uploadRisksFile, setErrorsShowedTrue, downloadRisks} = this.props;
             this.projectId = this.props.defaults.payload.projectId;
+            const {projectName} = this.props.defaults.payload;
             const {errors} = this.props.risks;
 
             const picklists = createEnchantedTableFilters(payload);
@@ -47,7 +48,7 @@ export default class Risks extends React.Component {
                             (menuFuncs) => <ContextMenu onEdit={menuFuncs.editRow}/>
                         }
                         renderFooter={() => (
-                            <TableFooter onExcelExport={() => alert("Excel exported")}
+                            <TableFooter onExcelExport={() => downloadRisks(this.projectId, projectName)}
                                          onExcelImport={this.openFileUploadDialog}
                             />
                         )}
@@ -84,5 +85,6 @@ Risks.propTypes = {
     }),
     saveRisk: PropTypes.func.isRequired,
     uploadRisksFile: PropTypes.func.isRequired,
+    downloadRisks: PropTypes.func.isRequired,
     setErrorsShowedTrue: PropTypes.func.isRequired,
 };
