@@ -23,6 +23,7 @@ import * as userReports from "../../actions/pws/user-reports";
 import * as contribTable from "../../actions/pws/contrib-table";
 import * as defaults from "../../actions/pws/default";
 import {addDangerToast, addSuccessToast} from "../../actions/app/toaster";
+import {costError} from "../../actions/pws/cost-tab";
 
 export function* loadSummaryTab({projectId}) {
     try {
@@ -221,6 +222,17 @@ export function* loadCost({projectId}) {
     } catch (e) {
         yield put(cost.costError(e));
         yield put(addDangerToast("'Cost' load failed. Please try again"));
+    }
+}
+
+export function* uploadCostFile({projectId, data}) {
+    try {
+        yield call(api.uploadCost, projectId, data);
+        yield call(loadCost, {projectId});
+        yield put(addSuccessToast("File uploaded"));
+    } catch (e) {
+        yield put(costError(e));
+        yield put(addDangerToast(`'Cost' upload failed. ${e.response.data.message}`));
     }
 }
 

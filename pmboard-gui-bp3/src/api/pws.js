@@ -104,6 +104,10 @@ export const getCost = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/cost`)
 );
 
+export const uploadCost = (projectID, file) => (
+    axios.post(`http://localhost:8080/api/projects/${projectID}/tabs/cost`, file)
+);
+
 export const getRequirements = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/rqs`)
 );

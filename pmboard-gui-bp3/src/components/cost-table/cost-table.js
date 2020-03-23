@@ -2,6 +2,7 @@ import React from "react";
 import {HTMLTable} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import styles from "./cost-table.module.css";
+import {toTwoTrailingDigits} from "../../util/transform-funcs";
 
 export default class CostTable extends React.Component {
     render() {
@@ -29,12 +30,12 @@ export default class CostTable extends React.Component {
                 <tbody>
                 <tr>
                     <td>Committed at {committed.milestone}</td>
-                    <td className={styles.column_align_center}>{committed.value}</td>
+                    <td className={styles.column_align_center}>{toTwoTrailingDigits(committed.value)}</td>
                     <td>{committed.comment}</td>
                 </tr>
                 <tr>
                     <td>Released at {realized.milestone}</td>
-                    <td className={styles.column_align_center}>{realized.value}</td>
+                    <td className={styles.column_align_center}>{toTwoTrailingDigits(realized.value)}</td>
                     <td>{realized.comment}</td>
                 </tr>
                 </tbody>

@@ -16,9 +16,10 @@ export const costLoadSuccess = ({data}) => ({
     }
 );
 
-export const costUpload = (projectId) => ({
+export const costUpload = (projectId, data) => ({
     type: COST_UPLOAD,
-    projectId
+    projectId,
+    data
 });
 
 export const costError = (error) => ({

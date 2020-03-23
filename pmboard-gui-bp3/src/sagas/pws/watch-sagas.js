@@ -128,6 +128,10 @@ function* watchCostLoad() {
     yield takeEvery(cost.COST_LOAD, sagas.loadCost);
 }
 
+function* watchCostUpload() {
+    yield takeEvery(cost.COST_UPLOAD, sagas.uploadCostFile);
+}
+
 function* watchRequirementsLoad() {
     yield takeEvery(requirements.REQUIREMENTS_LOAD, sagas.loadRequirements);
 }
@@ -172,6 +176,7 @@ const exportSagas = [
     fork(watchActionsSave),
     fork(watchActionDelete),
     fork(watchCostLoad),
+    fork(watchCostUpload),
     fork(watchRequirementsLoad),
     fork(watchBacklogChartLoad),
     fork(watchDefectsChartLoad),

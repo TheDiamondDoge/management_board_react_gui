@@ -93,4 +93,6 @@ export const toPercents = (value) => {
     return Math.round((value + Number.EPSILON) * 100) / 100 * 100;
 };
 
-
+export const toTwoTrailingDigits = (value) => {
+    return Math.round((value + Number.EPSILON) * 100) / 100;
+};
