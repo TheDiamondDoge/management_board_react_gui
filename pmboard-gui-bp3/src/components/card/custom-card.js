@@ -36,6 +36,8 @@ export default class CustomCard extends React.PureComponent {
             };
             if (autosize === "x") {
                 delete size.height;
+                delete size.width;
+
             }
             if (autosize === "y") {
                 delete size.width;
@@ -49,13 +51,13 @@ export default class CustomCard extends React.PureComponent {
     render() {
         const {className, autosize, children} = this.props;
         let classes = classNames(className, styles.custom_card);
-        const style = this.getStyleProp(autosize);
+        // const style = this.getStyleProp(autosize);
         return (
             <Card
                 interactive={false}
                 elevation={Elevation.THREE}
                 className={classes}
-                style={style}
+                // style={style}
             >
                 {children}
             </Card>

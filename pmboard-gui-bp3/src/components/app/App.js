@@ -16,6 +16,7 @@ const World = React.lazy(() => import("../test_comps/world"));
 const Test = React.lazy(() => import("../test_comps/test"));
 const suspenseFallback = <StatusContainer><LoadingStatus/></StatusContainer>;
 
+//TODO: Adaptive
 export default function App() {
     return (
         <div className={styles.container}>

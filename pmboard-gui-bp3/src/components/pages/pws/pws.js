@@ -20,6 +20,8 @@ import StatusContainer from "../../status-container/status-container";
 import {getUrlParam} from "../../../util/util";
 import ProjectNotFoundStatus from "../../global-statuses/project-not-found-status/project-not-found-status";
 
+import "./pws.css";
+
 export default class PWS extends React.Component {
     constructor(props) {
         super(props);
@@ -47,7 +49,6 @@ export default class PWS extends React.Component {
         if (loading) {
             return <StatusContainer><LoadingStatus/></StatusContainer>;
         } else if (error) {
-            console.log(error);
             return <ProjectNotFoundStatus id={this.projectId}/>;
         } else {
             const tabName = this.getActiveTabName();
