@@ -20,4 +20,5 @@
 
 .page {
     grid-area: page;
+    height: 100%;
 }

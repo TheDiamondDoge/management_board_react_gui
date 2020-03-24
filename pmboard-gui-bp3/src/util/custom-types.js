@@ -164,6 +164,11 @@ export const RisksTabRisk = PropTypes.shape({
     report: PropTypes.bool
 });
 
+export const RisksTab = PropTypes.shape({
+    risks: PropTypes.arrayOf(RisksTabRisk),
+    fileExists: PropTypes.bool
+});
+
 export const RqsTabRq = PropTypes.arrayOf(
     PropTypes.shape({
         reqId: PropTypes.string.isRequired,

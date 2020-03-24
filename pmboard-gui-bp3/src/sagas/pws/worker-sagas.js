@@ -24,6 +24,7 @@ import * as contribTable from "../../actions/pws/contrib-table";
 import * as defaults from "../../actions/pws/default";
 import {addDangerToast, addSuccessToast} from "../../actions/app/toaster";
 import {costError} from "../../actions/pws/cost-tab";
+import {riskError} from "../../actions/pws/risks-tab";
 
 export function* loadSummaryTab({projectId}) {
     try {
@@ -281,7 +282,6 @@ export function* loadReportTab({projectId}) {
 export function* loadUserReports({projectId}) {
     try {
         const data = yield call(api.getUserReports, projectId);
-        yield put(addSuccessToast("Saved"));
         yield put(userReports.loadUserReportsSuccess(data));
     } catch(e) {
         yield put(userReports.errorUserReports(e));
@@ -397,6 +397,26 @@ export function* saveBlcTabComments({projectId, data}) {
     } catch (e) {
         yield put(blc.blcError(e));
         yield put(addDangerToast("Save failed. Please try again"));
+    }
+}
+
+export function* getLastUploadedCost({projectId, projectName}) {
+    try {
+        const data = yield call(api.getCostLastUploadedFile, projectId);
+        yield call(FileSaver.saveAs, new Blob([data.data]), `${projectName}_cost.xlsx`);
+    } catch (e) {
+        yield put(costError(e));
+        yield put(addDangerToast("Error. Can`t get last updated cost file."));
+    }
+}
+
+export function* getLastUploadedRisks({projectId, projectName}) {
+    try {
+        const data = yield call(api.getRisksLastUploadedFile, projectId);
+        yield call(FileSaver.saveAs, new Blob([data.data]), `${projectName}_risks.xlsx`);
+    } catch (e) {
+        yield put(riskError(e));
+        yield put(addDangerToast("Error. Can`t get last updated risks file"));
     }
 }
 

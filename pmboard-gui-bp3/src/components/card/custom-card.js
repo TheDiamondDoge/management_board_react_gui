@@ -32,7 +32,7 @@ export default class CustomCard extends React.PureComponent {
         if (autosize) {
             let size = {
                 width: getWorkingAreaWidth(width) || "",
-                height: (height - 230) || ""
+                height: (height - 240) || ""
             };
             if (autosize === "x") {
                 delete size.height;

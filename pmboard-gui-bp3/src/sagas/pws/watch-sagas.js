@@ -156,6 +156,14 @@ function* watchUserReportSave() {
     yield takeLatest(userReport.USER_REPORTS_SAVE, sagas.saveUserReport)
 }
 
+function* watchGetLastUploadedCost() {
+    yield takeLatest(cost.COST_GET_LAST_UPLOADED, sagas.getLastUploadedCost)
+}
+
+function* watchGetLastUploadedRisks() {
+    yield takeLatest(risks.RISKS_GET_LAST_UPLOADED, sagas.getLastUploadedRisks)
+}
+
 function* watchProjectDefaultsLoad() {
     yield takeLatest(defaults.PROJECT_DEFAULTS_LOAD, sagas.loadProjectDefaults)
 }
@@ -195,6 +203,8 @@ const exportSagas = [
     fork(watchUserReportLoad),
     fork(watchUserReportSave),
     fork(watchContibTableLoad),
+    fork(watchGetLastUploadedCost),
+    fork(watchGetLastUploadedRisks),
     fork(watchProjectDefaultsLoad)
 ];
 

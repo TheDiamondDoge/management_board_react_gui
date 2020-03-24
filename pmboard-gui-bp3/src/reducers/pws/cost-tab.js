@@ -1,4 +1,11 @@
-import {COST_LOAD, COST_LOAD_SUCCESS, COST_UPLOAD, COST_ERROR, COST_RESET} from '../../actions/pws/cost-tab';
+import {
+    COST_LOAD,
+    COST_LOAD_SUCCESS,
+    COST_UPLOAD,
+    COST_ERROR,
+    COST_RESET,
+    COST_GET_LAST_UPLOADED
+} from '../../actions/pws/cost-tab';
 
 const initState = {
     loading: true,
@@ -26,6 +33,10 @@ export default (state, action) => {
             return {
                 ...state,
                 loading: true,
+            };
+        case COST_GET_LAST_UPLOADED:
+            return {
+                ...state,
             };
         case COST_ERROR:
             return {

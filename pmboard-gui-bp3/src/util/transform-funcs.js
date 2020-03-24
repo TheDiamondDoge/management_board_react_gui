@@ -15,6 +15,10 @@ export const blcNumberToState = (num) => {
     }
 };
 
+export const nanToEmptyString = (num) => (
+    isNaN(num) ? "" : num
+);
+
 export const isDateLateForOneMonth = (dateStr) => {
     const date = moment(dateStr);
     return Math.abs(date.diff(moment(), "month")) >= 1;

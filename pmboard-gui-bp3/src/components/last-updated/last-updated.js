@@ -8,7 +8,7 @@ import {Icon, Intent} from "@blueprintjs/core";
 export default class LastUpdated extends React.PureComponent {
     render() {
         const {dateStr, ...others} = this.props;
-        const formattedDate = getDateFromStringWithTime(new Date(dateStr));
+        const formattedDate = getDateFromStringWithTime(dateStr);
         const isNotUpdatedForLong = isDateLateForOneMonth(dateStr);
         const title = "Last time updated more than 1 month ago";
         const classes = classNames(styles.margin_right, {[styles.red]: isNotUpdatedForLong});
@@ -16,7 +16,7 @@ export default class LastUpdated extends React.PureComponent {
             <div {...others}>
                 <span className={classes}>{formattedDate}</span>
                 {isNotUpdatedForLong &&
-                <span title={title}>
+                    <span title={title}>
                         <Icon icon={"warning-sign"} intent={Intent.DANGER}/>
                     </span>
                 }

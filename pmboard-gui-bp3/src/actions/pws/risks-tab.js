@@ -8,6 +8,7 @@ export const RISKS_UPLOAD = "RISKS_UPLOAD";
 export const RISKS_UPLOAD_SUCCESS = "RISKS_UPLOAD_SUCCESS";
 export const RISKS_ERRORS_SHOWED = "RISKS_ERRORS_SHOWED";
 export const RISKS_DOWNLOAD = "RISKS_DOWNLOAD";
+export const RISKS_GET_LAST_UPLOADED = "RISKS_GET_LAST_UPLOADED";
 export const RISK_RESET = "RISK_RESET";
 
 export const loadRisks = (projectId) => ({
@@ -58,6 +59,12 @@ export const setErrorsShowedTrue = () => ({
 
 export const downloadRisks = (projectId, projectName) => ({
     type: RISKS_DOWNLOAD,
+    projectId,
+    projectName
+});
+
+export const getLastUploadedRisks = (projectId, projectName) => ({
+    type: RISKS_GET_LAST_UPLOADED,
     projectId,
     projectName
 });

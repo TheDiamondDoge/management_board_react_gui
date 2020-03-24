@@ -1,6 +1,6 @@
 import {connect} from "react-redux";
 import {
-    downloadRisks,
+    downloadRisks, getLastUploadedRisks,
     loadRisks,
     resetState,
     saveRisk,
@@ -24,6 +24,7 @@ function mapDispatchToProps(dispatch) {
         saveRisk: (projectId, data) => dispatch(saveRisk(projectId, data)),
         uploadRisksFile: (projectId, data) => dispatch(uploadRisks(projectId, data)),
         downloadRisks: (projectId, projectName) => dispatch(downloadRisks(projectId, projectName)),
+        getLastUploadedFile: (projectId, projectName) => dispatch(getLastUploadedRisks(projectId, projectName)),
         setErrorsShowedTrue: () => dispatch(setErrorsShowedTrue())
     }
 }

@@ -136,6 +136,14 @@ export const getContribTable = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/contrib`)
 );
 
+export const getRisksLastUploadedFile = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/risks/lastUploaded`, {responseType: "blob"})
+);
+
+export const getCostLastUploadedFile = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/cost/lastUploaded`, {responseType: "blob"})
+);
+
 export const getProjectDefaults = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/defaults`)
 );

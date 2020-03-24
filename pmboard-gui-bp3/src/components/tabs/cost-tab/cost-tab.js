@@ -9,6 +9,7 @@ import LastUpdated from "../../last-updated/last-updated";
 import SafeUrl from "../../safe-url/safe-url";
 import UploadFileControlsHidden from "../../upload-file-controls/upload-file-controls-hidden";
 import {Button, Intent} from "@blueprintjs/core";
+import LastUpdatedLabel from "../../last-updated-label/last-updated-label";
 
 export default class CostTab extends React.Component {
     constructor(props) {
@@ -31,14 +32,17 @@ export default class CostTab extends React.Component {
         if (loading) {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
-            const {updated, charged, capex} = this.props.cost.payload;
-            const {uploadCost} = this.props;
-            const {projectId} = this.props.defaults.payload;
+            const {updated, charged, capex, fileExists} = this.props.cost.payload;
+            const {uploadCost, getLastUploadedFile} = this.props;
+            const {projectId, projectName} = this.props.defaults.payload;
             return (
                 <>
                     <CustomCard>
                         <div>
-                            Last updated:
+                            <LastUpdatedLabel label={"Last uploaded:"}
+                                              isFileExists={fileExists}
+                                              onClick={() => getLastUploadedFile(projectId, projectName)}
+                            />
                             <LastUpdated className={styles.last_updated} dateStr={updated}/>
                         </div>
                     </CustomCard>
@@ -88,5 +92,6 @@ CostTab.propTypes = {
         loading: PropTypes.bool.isRequired,
         payload: CostTabTypes
     }),
+    getLastUploadedFile: PropTypes.func.isRequired,
     uploadCost: PropTypes.func.isRequired,
 };
