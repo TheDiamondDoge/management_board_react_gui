@@ -19,6 +19,7 @@ import * as report from "../../actions/pws/report-tab";
 import * as userReport from "../../actions/pws/user-reports";
 import * as contribTable from "../../actions/pws/contrib-table";
 import * as defaults from "../../actions/pws/default";
+import * as pptExport from "../../actions/pws/ppt-export";
 
 function* watchSummaryTabLoad() {
     yield takeEvery(summaryTab.SUMMARY_LOAD, sagas.loadSummaryTab);
@@ -168,6 +169,10 @@ function* watchProjectDefaultsLoad() {
     yield takeLatest(defaults.PROJECT_DEFAULTS_LOAD, sagas.loadProjectDefaults)
 }
 
+function* watchCustomPptFile() {
+    yield takeLeading(pptExport.EXPORT_PPT, sagas.loadPptFile)
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
@@ -205,7 +210,8 @@ const exportSagas = [
     fork(watchContibTableLoad),
     fork(watchGetLastUploadedCost),
     fork(watchGetLastUploadedRisks),
-    fork(watchProjectDefaultsLoad)
+    fork(watchProjectDefaultsLoad),
+    fork(watchCustomPptFile),
 ];
 
 export default exportSagas;

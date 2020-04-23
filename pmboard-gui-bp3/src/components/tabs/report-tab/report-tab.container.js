@@ -4,13 +4,15 @@ import ReportTab from "./report-tab";
 import {resetRequirements} from "../../../actions/pws/requirements-tab";
 import {loadUserReports, resetUserReports, saveUserReport} from "../../../actions/pws/user-reports";
 import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
+import {exportPpt} from "../../../actions/pws/ppt-export";
 
 function mapStateToProps(state) {
     return {
         defaults: state.pws.defaults,
         report: state.pws.reportTab,
         rqs: state.pws.requirementsTab,
-        userReports: state.pws.userReports
+        userReports: state.pws.userReports,
+        pptLoading: state.pws.pptReport.loading,
     }
 }
 
@@ -23,7 +25,8 @@ function mapDispatchToProps(dispatch) {
             dispatch(resetUserReports())
         },
         saveData: (projectId, data) => dispatch(saveUserReport(projectId, data)),
-        reloadUserReports: (projectId) => dispatch(loadUserReports(projectId))
+        reloadUserReports: (projectId) => dispatch(loadUserReports(projectId)),
+        downloadPptReport: (projectId, pptType) => dispatch(exportPpt(projectId, pptType)),
     }
 }
 

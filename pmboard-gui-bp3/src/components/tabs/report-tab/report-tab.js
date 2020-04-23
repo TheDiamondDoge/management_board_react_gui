@@ -125,7 +125,7 @@ export default class ReportTab extends React.Component {
     }
 
     onUserReportSaveFactory(type, submitFunc) {
-        return function(value) {
+        return function (value) {
             submitFunc({
                 type: type,
                 data: value
@@ -141,22 +141,26 @@ export default class ReportTab extends React.Component {
         return riskObj;
     }
 
-    pptMenu = (
-        <Menu>
-            <MenuItem text={"PowerPoint, program template"}/>
-            <MenuItem text={"PowerPoint, multi-page & customizable"}/>
-            <MenuItem text={"PowerPoint, multi-page & indicators"}/>
-            <MenuItem text={"PowerPoint Exec review"}/>
-            <Divider/>
-            <MenuItem text={"Snapshot at 2019-12-09"} icon={"archive"}/>
-            <MenuItem text={"Snapshot at 2019-12-08"} icon={"archive"}/>
-            <MenuItem text={"Snapshot at 2019-12-07"} icon={"archive"}/>
-            <MenuItem text={"Snapshot at 2019-12-06"} icon={"archive"}/>
-        </Menu>
-    );
+    pptMenu() {
+        const projectId = this.props.defaults.payload.projectId;
+        const onClick = this.props.downloadPptReport;
+        return (
+            <Menu>
+                <MenuItem disabled text={"PowerPoint, program template"}/>
+                <MenuItem text={"PowerPoint, multi-page & customizable"} onClick={() => onClick(projectId, "custom")}/>
+                <MenuItem text={"PowerPoint, multi-page & indicators"} onClick={() => onClick(projectId, "indicators")}/>
+                <MenuItem text={"PowerPoint Exec review"} onClick={() => onClick(projectId, "review")}/>
+                <Divider/>
+                <MenuItem text={"Snapshot at 2019-12-09"} icon={"archive"}/>
+                <MenuItem text={"Snapshot at 2019-12-08"} icon={"archive"}/>
+                <MenuItem text={"Snapshot at 2019-12-07"} icon={"archive"}/>
+                <MenuItem text={"Snapshot at 2019-12-06"} icon={"archive"}/>
+            </Menu>
+        )
+    }
 
     pptExportButton = (
-        <Popover content={this.pptMenu} position={Position.BOTTOM}>
+        <Popover content={this.pptMenu()} position={Position.BOTTOM}>
             <Button
                 large
                 minimal
@@ -183,6 +187,7 @@ ReportTab.propTypes = {
     }).isRequired,
     reloadUserReports: PropTypes.func.isRequired,
     saveData: PropTypes.func.isRequired,
+    downloadPptReport: PropTypes.func,
     report: PropTypes.shape({
         loading: PropTypes.bool.isRequired,
         payload: PropTypes.shape({

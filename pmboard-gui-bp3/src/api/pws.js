@@ -147,3 +147,7 @@ export const getCostLastUploadedFile = (projectID) => (
 export const getProjectDefaults = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/defaults`)
 );
+
+export const getPptCustomFile = (projectID, type) => (
+    axios.get(`http://localhost:8080/api/export/ppt/${type}/${projectID}`)
+);

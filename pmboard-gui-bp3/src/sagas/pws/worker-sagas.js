@@ -22,9 +22,8 @@ import * as report from "../../actions/pws/report-tab";
 import * as userReports from "../../actions/pws/user-reports";
 import * as contribTable from "../../actions/pws/contrib-table";
 import * as defaults from "../../actions/pws/default";
+import * as exportPpt from "../../actions/pws/ppt-export";
 import {addDangerToast, addSuccessToast} from "../../actions/app/toaster";
-import {costError} from "../../actions/pws/cost-tab";
-import {riskError} from "../../actions/pws/risks-tab";
 
 export function* loadSummaryTab({projectId}) {
     try {
@@ -188,7 +187,9 @@ export function* uploadRisksFile({projectId, data}) {
 export function* downloadRisksFile({projectId, projectName}) {
     try {
         const data = yield call(api.downloadRisksFile, projectId);
-        yield call(FileSaver.saveAs, new Blob([data.data]), `${projectName}_risks.xlsx`);
+        // yield call(FileSaver.saveAs, new Blob([data.data]), `${projectName}_risks.xlsx`);
+        console.log("DATA", data);
+
         yield put(addSuccessToast("Risk file downloaded"))
     } catch(e) {
         yield put(risks.riskError(e));
@@ -232,7 +233,7 @@ export function* uploadCostFile({projectId, data}) {
         yield call(loadCost, {projectId});
         yield put(addSuccessToast("File uploaded"));
     } catch (e) {
-        yield put(costError(e));
+        yield put(cost.costError(e));
         yield put(addDangerToast(`'Cost' upload failed. ${e.response.data.message}`));
     }
 }
@@ -405,7 +406,7 @@ export function* getLastUploadedCost({projectId, projectName}) {
         const data = yield call(api.getCostLastUploadedFile, projectId);
         yield call(FileSaver.saveAs, new Blob([data.data]), `${projectName}_cost.xlsx`);
     } catch (e) {
-        yield put(costError(e));
+        yield put(cost.costError(e));
         yield put(addDangerToast("Error. Can`t get last updated cost file."));
     }
 }
@@ -415,7 +416,7 @@ export function* getLastUploadedRisks({projectId, projectName}) {
         const data = yield call(api.getRisksLastUploadedFile, projectId);
         yield call(FileSaver.saveAs, new Blob([data.data]), `${projectName}_risks.xlsx`);
     } catch (e) {
-        yield put(riskError(e));
+        yield put(risks.riskError(e));
         yield put(addDangerToast("Error. Can`t get last updated risks file"));
     }
 }
@@ -427,5 +428,16 @@ export function* loadProjectDefaults({projectId}) {
     } catch (e) {
         yield put(defaults.errorProjectDefaults(e));
         yield put(addDangerToast("'Project defaults' load failed. Please try again"));
+    }
+}
+
+export function* loadPptFile({projectId, pptType}) {
+    try {
+        const file = yield call(api.getPptCustomFile, projectId, pptType);
+        yield call(FileSaver.saveAs, new Blob([file.data]), `${projectId}_${pptType}.pptx`);
+        console.log("DATA", file);
+    } catch (e) {
+        yield put(exportPpt.exportFailed());
+        yield put(addDangerToast("PowerPoint export failed. Please try again"));
     }
 }

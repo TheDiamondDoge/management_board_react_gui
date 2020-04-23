@@ -20,6 +20,7 @@ import report from "./report-tab";
 import userReports from "./user-reports";
 import contribTable from "./contrib-table";
 import defaults from "./default";
+import pptExport from "./ppt-export";
 
 export default function pwsReducers() {
     return combineReducers({
@@ -43,6 +44,7 @@ export default function pwsReducers() {
         reportTab: report,
         userReports: userReports,
         contribTable: contribTable,
-        defaults: defaults
+        defaults: defaults,
+        pptReport: pptExport,
     })
 }
