@@ -187,8 +187,7 @@ export function* uploadRisksFile({projectId, data}) {
 export function* downloadRisksFile({projectId, projectName}) {
     try {
         const data = yield call(api.downloadRisksFile, projectId);
-        // yield call(FileSaver.saveAs, new Blob([data.data]), `${projectName}_risks.xlsx`);
-        console.log("DATA", data);
+        yield call(FileSaver.saveAs, new Blob([data.data]), `${projectName}_risks.xlsx`);
 
         yield put(addSuccessToast("Risk file downloaded"))
     } catch(e) {
@@ -435,7 +434,6 @@ export function* loadPptFile({projectId, pptType}) {
     try {
         const file = yield call(api.getPptCustomFile, projectId, pptType);
         yield call(FileSaver.saveAs, new Blob([file.data]), `${projectId}_${pptType}.pptx`);
-        console.log("DATA", file);
     } catch (e) {
         yield put(exportPpt.exportFailed());
         yield put(addDangerToast("PowerPoint export failed. Please try again"));

@@ -149,5 +149,5 @@ export const getProjectDefaults = (projectID) => (
 );
 
 export const getPptCustomFile = (projectID, type) => (
-    axios.get(`http://localhost:8080/api/export/ppt/${type}/${projectID}`)
+    axios.get(`http://localhost:8080/api/export/ppt/${type}/${projectID}`, {responseType: "blob"})
 );
