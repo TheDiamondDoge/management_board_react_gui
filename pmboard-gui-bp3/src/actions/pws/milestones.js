@@ -4,8 +4,9 @@ export const MILESTONES_LOAD_SUCCESS = "MILESTONES_LOAD_SUCCESS";
 export const MILESTONES_ERROR = "MILESTONES_ERROR";
 export const MILESTONES_RESET = "MILESTONES_RESET";
 
-export const milestonesLoad = (projectId) => ({
+export const milestonesLoad = (projectId, isShown) => ({
     type: MILESTONES_LOAD,
+    isShown,
     projectId
 });
 

@@ -30,7 +30,7 @@ export function* loadSummaryTab({projectId}) {
         const data = yield call(api.getSummaryInfo, projectId);
         yield put(summaryTab.summaryLoadSuccess(data));
         yield call(loadHealthIndicators, {projectId});
-        yield call(loadMilestones, {projectId});
+        yield call(loadMilestones, {projectId, isShown: true});
     } catch (e) {
         yield put(summaryTab.summaryError(e));
         yield put(addDangerToast("'Summary' load failed. Please try again"));
@@ -39,7 +39,7 @@ export function* loadSummaryTab({projectId}) {
 
 export function* loadIndicatorsTab({projectId}) {
     try {
-        yield call(loadMilestones, {projectId});
+        yield call(loadMilestones, {projectId, isShown: true});
         yield call(loadHealthIndicators, {projectId});
         yield call(loadIndicatorsRqs, {projectId});
         yield call(loadMilestonesKpi, {projectId});
@@ -91,9 +91,9 @@ export function* loadHealthIndicators({projectId}) {
     }
 }
 
-export function* loadMilestones({projectId}) {
+export function* loadMilestones({projectId, isShown}) {
     try {
-        const data = yield call(api.getMilestones, projectId);
+        const data = yield call(api.getMilestones, projectId, !!isShown);
         yield put(milestones.milestonesLoadSuccess(data));
     } catch (e) {
         yield put(milestones.milestonesError(e));

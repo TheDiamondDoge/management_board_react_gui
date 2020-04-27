@@ -20,7 +20,7 @@ function mapDispatchToProps(dispatch) {
         saveMilestones: (projectId, date) => dispatch(milestonesSave(projectId, date)),
         loadData: (projectId) => {
             dispatch(infoLoad(projectId));
-            dispatch(milestonesLoad(projectId));
+            dispatch(milestonesLoad(projectId, false));
             dispatch(contribLoad(projectId))
         },
         resetData: () => {

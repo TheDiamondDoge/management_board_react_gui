@@ -12,8 +12,8 @@ export const saveHealthIndicatorsPost = (projectID, payload) => (
     axios.post(`http://localhost:8080/api/health/${projectID}`, payload)
 );
 
-export const getMilestones = (projectID) => (
-    axios.get(`http://localhost:8080/api/milestones/${projectID}`)
+export const getMilestones = (projectID, isShown) => (
+    axios.get(`http://localhost:8080/api/milestones/${projectID}?isShown=${isShown}`)
 );
 
 export const saveMilestones = (projectID, payload) => (
