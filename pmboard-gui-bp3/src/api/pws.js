@@ -128,6 +128,10 @@ export const getReportTab = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/report`)
 );
 
+export const getSnapshotsData = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/snapshots_info`)
+);
+
 export const getUserReports = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/user_reports`)
 );
@@ -152,6 +156,10 @@ export const getProjectDefaults = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/defaults`)
 );
 
-export const getPptCustomFile = (projectID, type) => (
-    axios.get(`http://localhost:8080/api/export/ppt/${type}/${projectID}`, {responseType: "blob"})
-);
+export const getPptCustomFile = (projectID, type, snapshotId) => {
+    let param = "";
+    if (snapshotId) {
+        param = `?reportId=${snapshotId}`;
+    }
+    return axios.get(`http://localhost:8080/api/export/ppt/${type}/${projectID}${param}`, {responseType: "blob"})
+};

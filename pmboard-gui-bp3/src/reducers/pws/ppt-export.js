@@ -2,7 +2,7 @@ import {EXPORT_PPT, EXPORT_FAILED, EXPORT_SUCCESS} from "../../actions/pws/ppt-e
 
 const initialState = {
     loading: false,
-    type: ""
+    type: "",
 };
 
 export default (state, action) => {
@@ -15,7 +15,8 @@ export default (state, action) => {
             return {
                 ...state,
                 loading: true,
-                type: action.pptType
+                type: action.pptType,
+                snapshotId: action.snapshotId
             };
         case EXPORT_SUCCESS:
             return {

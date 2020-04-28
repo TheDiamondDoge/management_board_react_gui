@@ -5,7 +5,7 @@ import UpdatedInfo from "../../updated-info/updated-info";
 import styles from "./report-tab.module.css";
 import Timeline from "../../timeline/timeline";
 import classNames from "classnames";
-import {Button, Divider, Intent, Menu, MenuItem, Popover, Position} from "@blueprintjs/core";
+import {Divider} from "@blueprintjs/core";
 import HealthIndicatorsMinimal from "../../health-indicators-minimal/health-indicators-minimal";
 import RisksList from "../../risks-list/risks-list";
 import TwoItemsLiner from "../../two-items-liner/two-items-liner";
@@ -19,6 +19,7 @@ import {
 } from "../../../util/custom-types";
 import RqsReportList from "../../rqs-report-list/rqs-report-list";
 import ReportQuillsForm from "./report-quills-form/report-quills-form";
+import ExportMenu from "./export-menu/export-menu";
 
 //TODO populate snapshots in popover
 export default class ReportTab extends React.Component {
@@ -34,11 +35,9 @@ export default class ReportTab extends React.Component {
             const {payload: indicators, loading: indLoading} = this.props.indicators;
             const uploadClasses = classNames(styles.inline_block, styles.float_right, styles.health_minimal);
             const risksObj = this.getRiskObj(risks);
-
-            const rqsLoading = this.props.rqs.loading;
-            const rqsPayload = this.props.rqs.payload;
-
+            const {loading: rqsLoading, payload: rqsPayload} = this.props.rqs;
             const {loading: userReportsLoading, payload: userReportsPayload} = this.props.userReports;
+            const {snapshots, snapshotLoading} = this.props.report;
             return (
                 <>
                     <CustomCard>
@@ -48,7 +47,12 @@ export default class ReportTab extends React.Component {
                             <TwoItemsLiner first={"Project manager:"} second={<b>{projectManager}</b>}/>
                         </div>
                         <div className={uploadClasses}>
-                            {this.pptExportButton}
+                            <ExportMenu
+                                projectId={this.projectId}
+                                onClickElement={this.props.downloadPptReport}
+                                snapshots={snapshots}
+                                snapshotLoading={snapshotLoading}
+                            />
                         </div>
                         {indLoading
                             ? <LoadingSpinner/>
@@ -71,7 +75,7 @@ export default class ReportTab extends React.Component {
                                 data={userReportsPayload}
                                 onCancel={this.handleUserReportReload}
                                 onSubmit={this.handleSaveData}
-                              />
+                            />
                         }
                     </CustomCard>
                     <br/>
@@ -112,8 +116,6 @@ export default class ReportTab extends React.Component {
         }
     }
 
-
-
     onUserReportSaveFactory(type, submitFunc) {
         return function (value) {
             submitFunc({
@@ -130,37 +132,6 @@ export default class ReportTab extends React.Component {
         riskObj.high = risks.filter(risk => risk.rating > 10);
         return riskObj;
     }
-
-    pptMenu() {
-        const projectId = this.props.defaults.payload.projectId;
-        const onClick = this.props.downloadPptReport;
-        return (
-            <Menu>
-                <MenuItem disabled text={"PowerPoint, program template"}/>
-                <MenuItem text={"PowerPoint, multi-page & customizable"} onClick={() => onClick(projectId, "custom")}/>
-                <MenuItem text={"PowerPoint, multi-page & indicators"}
-                          onClick={() => onClick(projectId, "indicators")}/>
-                <MenuItem text={"PowerPoint Exec review"} onClick={() => onClick(projectId, "review")}/>
-                <Divider/>
-                <MenuItem text={"Snapshot at 2019-12-09"} icon={"archive"}/>
-                <MenuItem text={"Snapshot at 2019-12-08"} icon={"archive"}/>
-                <MenuItem text={"Snapshot at 2019-12-07"} icon={"archive"}/>
-                <MenuItem text={"Snapshot at 2019-12-06"} icon={"archive"}/>
-            </Menu>
-        )
-    }
-
-    pptExportButton = (
-        <Popover content={this.pptMenu()} position={Position.BOTTOM}>
-            <Button
-                large
-                minimal
-                icon={"download"}
-                intent={Intent.PRIMARY}
-                text={"PPT Upload"}
-            />
-        </Popover>
-    );
 
     handleSaveData = (data) => {
         this.props.saveData(this.projectId, data);

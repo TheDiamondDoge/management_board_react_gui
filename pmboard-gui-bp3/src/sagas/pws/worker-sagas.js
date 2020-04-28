@@ -270,6 +270,7 @@ export function* loadDefectsChart({projectId}) {
 export function* loadReportTab({projectId}) {
     try {
         const data = yield call(api.getReportTab, projectId);
+        yield call(loadReportSnapshotsData, {projectId});
         yield call(loadMilestones, {projectId, isShown: true});
         yield call(loadHealthIndicators, {projectId});
         yield call(loadRisks, {projectId, mini: true});
@@ -433,12 +434,23 @@ export function* loadProjectDefaults({projectId}) {
     }
 }
 
-export function* loadPptFile({projectId, pptType}) {
+export function* loadPptFile({projectId, pptType, snapshotId}) {
     try {
-        const file = yield call(api.getPptCustomFile, projectId, pptType);
-        yield call(FileSaver.saveAs, new Blob([file.data]), `${projectId}_${pptType}.pptx`);
+        const file = yield call(api.getPptCustomFile, projectId, pptType, snapshotId);
+        const snapshotName = snapshotId ? `_snapshot_${snapshotId}` : "";
+        yield call(FileSaver.saveAs, new Blob([file.data]), `${projectId}_${pptType}${snapshotName}.pptx`);
     } catch (e) {
         yield put(exportPpt.exportFailed());
         yield put(addDangerToast("PowerPoint export failed. Please try again"));
+    }
+}
+
+export function* loadReportSnapshotsData({projectId}) {
+    try {
+        const data = yield call(api.getSnapshotsData, projectId);
+        yield put(report.loadSnapshotSuccess(data));
+    } catch (e) {
+        yield put(report.errorReport(e));
+        yield put(addDangerToast("'Report snapshots' load failed."));
     }
 }

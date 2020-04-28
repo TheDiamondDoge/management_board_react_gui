@@ -173,6 +173,10 @@ function* watchCustomPptFile() {
     yield takeLeading(pptExport.EXPORT_PPT, sagas.loadPptFile)
 }
 
+function* watchSnapshotsDataLoad() {
+    yield takeEvery(report.SNAPSHOT_LOAD, sagas.loadReportSnapshotsData);
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
@@ -212,6 +216,7 @@ const exportSagas = [
     fork(watchGetLastUploadedRisks),
     fork(watchProjectDefaultsLoad),
     fork(watchCustomPptFile),
+    fork(watchSnapshotsDataLoad),
 ];
 
 export default exportSagas;

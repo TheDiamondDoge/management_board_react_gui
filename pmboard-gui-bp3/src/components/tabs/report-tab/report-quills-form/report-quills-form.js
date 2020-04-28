@@ -4,6 +4,7 @@ import FormikInput from "../../../controls/util-renderers";
 import styles from "../report-tab.module.css";
 import {Formik} from "formik";
 import {getQuillModuleToolbar} from "../../../../util/util";
+import PropTypes from "prop-types";
 
 export default class ReportQuillsForm extends React.Component {
     constructor(props) {
@@ -99,3 +100,14 @@ export default class ReportQuillsForm extends React.Component {
         }
     }
 }
+
+ReportQuillsForm.propTypes = {
+    data: PropTypes.shape({
+        schedule: PropTypes.number,
+        scope: PropTypes.number,
+        quality: PropTypes.number,
+        cost: PropTypes.number
+    }),
+    onCancel: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func.isRequired,
+};

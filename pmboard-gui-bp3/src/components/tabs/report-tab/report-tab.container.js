@@ -35,7 +35,7 @@ function mapDispatchToProps(dispatch) {
         },
         saveData: (projectId, data) => dispatch(saveUserReport(projectId, data)),
         reloadUserReports: (projectId) => dispatch(loadUserReports(projectId)),
-        downloadPptReport: (projectId, pptType) => dispatch(exportPpt(projectId, pptType)),
+        downloadPptReport: (projectId, pptType, snapshotId) => dispatch(exportPpt(projectId, pptType, snapshotId)),
     }
 }
 
