@@ -151,9 +151,9 @@ export function* loadBlcTab({projectId}) {
     }
 }
 
-export function* loadRisks({projectId}) {
+export function* loadRisks({projectId, mini}) {
     try {
-        const data = yield call(api.getRisks, projectId);
+        const data = yield call(api.getRisks, projectId, !!mini);
         yield put(risks.loadSuccess(data));
     } catch (e) {
         yield put(risks.riskError(e));
@@ -270,6 +270,9 @@ export function* loadDefectsChart({projectId}) {
 export function* loadReportTab({projectId}) {
     try {
         const data = yield call(api.getReportTab, projectId);
+        yield call(loadMilestones, {projectId, isShown: true});
+        yield call(loadHealthIndicators, {projectId});
+        yield call(loadRisks, {projectId, mini: true});
         yield put(report.loadReportSuccess(data));
         yield call(loadRequirements, {projectId});
         yield call(loadUserReports, {projectId});
@@ -285,7 +288,7 @@ export function* loadUserReports({projectId}) {
         yield put(userReports.loadUserReportsSuccess(data));
     } catch(e) {
         yield put(userReports.errorUserReports(e));
-        yield put(addDangerToast("Save failed. Please try again"));
+        yield put(addDangerToast("Save failed. Please try again!111ASD" + e.response.data.message));
     }
 }
 

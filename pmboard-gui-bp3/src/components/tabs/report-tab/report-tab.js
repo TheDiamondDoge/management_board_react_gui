@@ -7,16 +7,20 @@ import Timeline from "../../timeline/timeline";
 import classNames from "classnames";
 import {Button, Divider, Intent, Menu, MenuItem, Popover, Position} from "@blueprintjs/core";
 import HealthIndicatorsMinimal from "../../health-indicators-minimal/health-indicators-minimal";
-import CustomQuill from "../../custom-quill/custom-quill";
 import RisksList from "../../risks-list/risks-list";
 import TwoItemsLiner from "../../two-items-liner/two-items-liner";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
-import {MilestoneShape, ProjectDefaults, RiskReportType} from "../../../util/custom-types";
+import {
+    HealthIndicatorsShape,
+    MilestoneShape,
+    ProjectDefaults,
+    RiskMinimal,
+    RiskReportType
+} from "../../../util/custom-types";
 import RqsReportList from "../../rqs-report-list/rqs-report-list";
-import {ReportTypes} from "../../../util/constants";
+import ReportQuillsForm from "./report-quills-form/report-quills-form";
 
 //TODO populate snapshots in popover
-//TODO reload summary/flags when save or cancel
 export default class ReportTab extends React.Component {
     render() {
         const {loading} = this.props.report;
@@ -24,16 +28,17 @@ export default class ReportTab extends React.Component {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             this.projectId = this.props.defaults.payload.projectId;
-            const {updatedOn, projectName, projectManager, indicators, milestones, risks} = this.props.report.payload;
+            const {updatedOn, projectName, projectManager} = this.props.report.payload;
+            const {payload: risks, loading: risksLoading} = this.props.risks;
+            const {payload: milestones, loading: milestonesLoading} = this.props.milestones;
+            const {payload: indicators, loading: indLoading} = this.props.indicators;
             const uploadClasses = classNames(styles.inline_block, styles.float_right, styles.health_minimal);
             const risksObj = this.getRiskObj(risks);
 
             const rqsLoading = this.props.rqs.loading;
             const rqsPayload = this.props.rqs.payload;
 
-            const userReportsLoading = this.props.userReports.loading;
-            const userReportsPayload = this.props.userReports.payload;
-            const {details, green, orange, red, summary} = userReportsPayload;
+            const {loading: userReportsLoading, payload: userReportsPayload} = this.props.userReports;
             return (
                 <>
                     <CustomCard>
@@ -45,50 +50,29 @@ export default class ReportTab extends React.Component {
                         <div className={uploadClasses}>
                             {this.pptExportButton}
                         </div>
-                        <HealthIndicatorsMinimal indicators={indicators} className={uploadClasses}/>
+                        {indLoading
+                            ? <LoadingSpinner/>
+                            : <HealthIndicatorsMinimal indicators={indicators.statuses.current}
+                                                       className={uploadClasses}/>
+                        }
                         <br/>
                         <br/>
                         <br/>
-                        <Timeline milestones={milestones}/>
+                        {milestonesLoading
+                            ? <LoadingSpinner/>
+                            : <Timeline milestones={milestones}/>
+                        }
                     </CustomCard>
                     <br/>
                     <CustomCard>
-                        <CustomQuill value={summary}
-                                     header={<h3>Executive Status Summary</h3>}
-                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.SUMMARY, this.handleSaveData)}
-                                     onCancel={this.handleUserReportReload}
-                                     loading={userReportsLoading}
-                        />
-                        <br/>
-                        <CustomQuill value={red}
-                                     header={<h3 className={styles.red}>Red Flag (executive action needed)</h3>}
-                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.RED_FLAG, this.handleSaveData)}
-                                     onCancel={this.handleUserReportReload}
-                                     loading={userReportsLoading}
-                        />
-                        <br/>
-                        <CustomQuill value={orange}
-                                     header={<h3 className={styles.orange}>Orange Flag (core team action needed)</h3>}
-                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.ORANGE_FLAG, this.handleSaveData)}
-                                     onCancel={this.handleUserReportReload}
-                                     loading={userReportsLoading}
-                        />
-                        <br/>
-                        <CustomQuill value={green}
-                                     header={<h3 className={styles.green}>Green Flag</h3>}
-                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.GREEN_FLAG, this.handleSaveData)}
-                                     onCancel={this.handleUserReportReload}
-                                     loading={userReportsLoading}
-                        />
-                    </CustomCard>
-                    <br/>
-                    <CustomCard>
-                        <CustomQuill value={details}
-                                     header={<h3>Current Project Details</h3>}
-                                     onSubmit={this.onUserReportSaveFactory(ReportTypes.DETAILS, this.handleSaveData)}
-                                     onCancel={this.handleUserReportReload}
-                                     loading={userReportsLoading}
-                        />
+                        {userReportsLoading
+                            ? <LoadingSpinner/>
+                            : <ReportQuillsForm
+                                data={userReportsPayload}
+                                onCancel={this.handleUserReportReload}
+                                onSubmit={this.handleSaveData}
+                              />
+                        }
                     </CustomCard>
                     <br/>
                     <CustomCard>
@@ -102,27 +86,33 @@ export default class ReportTab extends React.Component {
                     <CustomCard>
                         <h3>Risks</h3>
                         <Divider/>
-                        <div>
-                            <div className={styles.risk_block}>
-                                <h4 className={styles.red}>High</h4>
-                                <RisksList data={risksObj.high}/>
+                        {risksLoading
+                            ? <LoadingSpinner/>
+                            :
+                            <div>
+                                <div className={styles.risk_block}>
+                                    <h4 className={styles.red}>High</h4>
+                                    <RisksList data={risksObj.high}/>
+                                </div>
+                                <div className={styles.risk_block}>
+                                    <Divider/>
+                                    <h4 className={styles.orange}>Moderate</h4>
+                                    <RisksList data={risksObj.mod}/>
+                                </div>
+                                <div className={styles.risk_block}>
+                                    <Divider/>
+                                    <h4 className={styles.green}>Low</h4>
+                                    <RisksList data={risksObj.low}/>
+                                </div>
                             </div>
-                            <div className={styles.risk_block}>
-                                <Divider/>
-                                <h4 className={styles.orange}>Moderate</h4>
-                                <RisksList data={risksObj.mod}/>
-                            </div>
-                            <div className={styles.risk_block}>
-                                <Divider/>
-                                <h4 className={styles.green}>Low</h4>
-                                <RisksList data={risksObj.low}/>
-                            </div>
-                        </div>
+                        }
                     </CustomCard>
                 </>
             );
         }
     }
+
+
 
     onUserReportSaveFactory(type, submitFunc) {
         return function (value) {
@@ -148,7 +138,8 @@ export default class ReportTab extends React.Component {
             <Menu>
                 <MenuItem disabled text={"PowerPoint, program template"}/>
                 <MenuItem text={"PowerPoint, multi-page & customizable"} onClick={() => onClick(projectId, "custom")}/>
-                <MenuItem text={"PowerPoint, multi-page & indicators"} onClick={() => onClick(projectId, "indicators")}/>
+                <MenuItem text={"PowerPoint, multi-page & indicators"}
+                          onClick={() => onClick(projectId, "indicators")}/>
                 <MenuItem text={"PowerPoint Exec review"} onClick={() => onClick(projectId, "review")}/>
                 <Divider/>
                 <MenuItem text={"Snapshot at 2019-12-09"} icon={"archive"}/>
@@ -185,6 +176,18 @@ ReportTab.propTypes = {
         payload: ProjectDefaults.isRequired,
         loading: PropTypes.bool.isRequired,
     }).isRequired,
+    milestones: PropTypes.shape({
+        payload: PropTypes.arrayOf(MilestoneShape).isRequired,
+        loading: PropTypes.bool,
+    }),
+    indicators: PropTypes.shape({
+        payload: HealthIndicatorsShape,
+        loading: PropTypes.bool,
+    }),
+    risks: PropTypes.shape({
+        payload: PropTypes.arrayOf(RiskMinimal).isRequired,
+        loading: PropTypes.bool,
+    }),
     reloadUserReports: PropTypes.func.isRequired,
     saveData: PropTypes.func.isRequired,
     downloadPptReport: PropTypes.func,

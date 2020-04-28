@@ -5,6 +5,9 @@ import {resetRequirements} from "../../../actions/pws/requirements-tab";
 import {loadUserReports, resetUserReports, saveUserReport} from "../../../actions/pws/user-reports";
 import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 import {exportPpt} from "../../../actions/pws/ppt-export";
+import {milestonesReset} from "../../../actions/pws/milestones";
+import {healthReset} from "../../../actions/pws/health-indicators";
+import {resetState} from "../../../actions/pws/risks-tab";
 
 function mapStateToProps(state) {
     return {
@@ -12,6 +15,9 @@ function mapStateToProps(state) {
         report: state.pws.reportTab,
         rqs: state.pws.requirementsTab,
         userReports: state.pws.userReports,
+        milestones: state.pws.milestones,
+        indicators: state.pws.healthIndicators,
+        risks: state.pws.risks,
         pptLoading: state.pws.pptReport.loading,
     }
 }
@@ -22,7 +28,10 @@ function mapDispatchToProps(dispatch) {
         resetData: () => {
             dispatch(resetReport());
             dispatch(resetRequirements());
-            dispatch(resetUserReports())
+            dispatch(resetUserReports());
+            dispatch(milestonesReset());
+            dispatch(healthReset());
+            dispatch(resetState());
         },
         saveData: (projectId, data) => dispatch(saveUserReport(projectId, data)),
         reloadUserReports: (projectId) => dispatch(loadUserReports(projectId)),

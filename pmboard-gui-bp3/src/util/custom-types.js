@@ -164,6 +164,13 @@ export const RisksTabRisk = PropTypes.shape({
     report: PropTypes.bool
 });
 
+export const RiskMinimal = PropTypes.shape({
+    rating: PropTypes.number,
+    riskDescription: PropTypes.string,
+    impactDescription: PropTypes.string,
+    mitigation: PropTypes.string,
+});
+
 export const RisksTab = PropTypes.shape({
     risks: PropTypes.arrayOf(RisksTabRisk),
     fileExists: PropTypes.bool

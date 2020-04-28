@@ -69,3 +69,22 @@ export function getUrlParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     return  urlParams.get(param);
 }
+
+export function getQuillModuleToolbar() {
+    return [
+        ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+        [{'color': []}, {'background': []}],              // dropdown with defaults from theme
+        [{'size': ['small', false, 'large', 'huge']}],    // custom dropdown
+        [{'header': [1, 2, 3, 4, 5, 6, false]}],
+        ['blockquote', 'code-block'],
+        [{'header': 1}, {'header': 2}],                   // custom button values
+        [{'list': 'ordered'}, {'list': 'bullet'}],
+        [{'script': 'sub'}, {'script': 'super'}],         // superscript/subscript
+        [{'indent': '-1'}, {'indent': '+1'}],             // outdent/indent
+        [{'direction': 'rtl'}],                           // text direction
+        [{'font': []}],
+        [{'align': []}],
+        ['link'],
+        ['clean']                                         // remove formatting button
+    ];
+}

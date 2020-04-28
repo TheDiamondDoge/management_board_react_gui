@@ -4,6 +4,7 @@ import styles from './custom-card.module.css';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import {getWorkingAreaWidth} from "../../util/util";
+import ErrorBoundary from "../error-boundary/error-boundary";
 
 export default class CustomCard extends React.PureComponent {
     constructor(props) {
@@ -53,14 +54,16 @@ export default class CustomCard extends React.PureComponent {
         let classes = classNames(className, styles.custom_card);
         // const style = this.getStyleProp(autosize);
         return (
-            <Card
-                interactive={false}
-                elevation={Elevation.THREE}
-                className={classes}
-                // style={style}
-            >
-                {children}
-            </Card>
+            <ErrorBoundary>
+                <Card
+                    interactive={false}
+                    elevation={Elevation.THREE}
+                    className={classes}
+                    // style={style}
+                >
+                    {children}
+                </Card>
+            </ErrorBoundary>
         )
     }
 };
