@@ -2,6 +2,7 @@ import React from "react";
 import {Button, Divider, Intent, Menu, MenuItem, Popover, Position} from "@blueprintjs/core";
 import LoadingSpinner from "../../../loading-spinner/loading-spinner";
 import PropTypes from "prop-types";
+import {getDateFromStringWithTime} from "../../../../util/transform-funcs";
 
 export default class ExportMenu extends React.Component {
     render() {
@@ -23,16 +24,24 @@ export default class ExportMenu extends React.Component {
         return (
             <Menu>
                 <MenuItem disabled text={"PowerPoint, program template"}/>
-                <MenuItem text={"PowerPoint, multi-page & customizable"} onClick={() => onClickElement(projectId, "custom")}/>
+                <MenuItem text={"PowerPoint, multi-page & customizable"}
+                          onClick={() => onClickElement(projectId, "custom")}/>
                 <MenuItem text={"PowerPoint, multi-page & indicators"}
                           onClick={() => onClickElement(projectId, "indicators")}/>
-                <MenuItem text={"PowerPoint Exec review"} onClick={() => onClickElement(projectId, "review")}/>
+                <MenuItem text={"PowerPoint Exec review"}
+                          onClick={() => onClickElement(projectId, "review")}/>
                 <Divider/>
                 {snapshotLoading
                     ? <LoadingSpinner/>
-                    : snapshots.map(snap => (
-                        <MenuItem key={snap.reportId} text={`Snapshot at ${snap.timestamp}`} icon={"archive"} onClick={() => onClickElement(projectId, "custom", snap.reportId)}/>
-                    ))
+                    : snapshots.map(snap => {
+                        const strTimestamp = getDateFromStringWithTime(snap.timestamp);
+                        return(
+                        <MenuItem key={snap.reportId}
+                                  text={`Snapshot at ${strTimestamp}`}
+                                  icon={"archive"}
+                                  onClick={() => onClickElement(projectId, "custom", snap.reportId)}
+                        />
+                    )})
                 }
             </Menu>
         )

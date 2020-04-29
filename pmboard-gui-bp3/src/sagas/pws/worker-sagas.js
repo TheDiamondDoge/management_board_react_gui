@@ -270,7 +270,6 @@ export function* loadDefectsChart({projectId}) {
 export function* loadReportTab({projectId}) {
     try {
         const data = yield call(api.getReportTab, projectId);
-        yield call(loadReportSnapshotsData, {projectId});
         yield call(loadMilestones, {projectId, isShown: true});
         yield call(loadHealthIndicators, {projectId});
         yield call(loadRisks, {projectId, mini: true});
@@ -287,6 +286,7 @@ export function* loadUserReports({projectId}) {
     try {
         const data = yield call(api.getUserReports, projectId);
         yield put(userReports.loadUserReportsSuccess(data));
+        yield call(loadReportSnapshotsData, {projectId});
     } catch(e) {
         yield put(userReports.errorUserReports(e));
         yield put(addDangerToast("Save failed. Please try again!111ASD" + e.response.data.message));
