@@ -35,7 +35,7 @@ export default class Risks extends React.Component {
             const {projectName} = this.props.defaults.payload;
             const {errors} = this.props.risks;
 
-            const picklists = createEnchantedTableFilters(payload);
+            const picklists = createEnchantedTableFilters(payload.risks);
             return (
                 <>
                     <CustomCard>
