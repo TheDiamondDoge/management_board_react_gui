@@ -45,6 +45,18 @@
     margin-bottom: 20px;
 }
 
+.red {
+    color: #db3737;
+}
+
+.orange {
+    color: #bf7326;
+}
+
+.green {
+    color: #0d8050;
+}
+
 @media (max-width: 1140px) {
     .data_container {
         grid-template-columns: 100%;

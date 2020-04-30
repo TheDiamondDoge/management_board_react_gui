@@ -97,14 +97,16 @@ export default class SummaryTab extends React.Component {
                     <CustomCard className={styles.data_container}>
                         <div className="left_part">
                             {
-                                Object.keys(status).map((obj) => (
+                                Object.keys(status).map((obj) => {
+                                    const flagClassColor = this.getClassForFlag(obj);
+                                    return (
                                     renderHelper.displayOrNot(obj, validationParams) && (
                                         <div key={obj} className={styles.executive_block}>
-                                            <FieldName name={renderHelper.getLabelById(obj)}/>
+                                            <FieldName name={renderHelper.getLabelById(obj)} className={flagClassColor}/>
                                             <ReactQuill defaultValue={status[obj]} modules={{toolbar: null}} readOnly/>
                                         </div>
                                     )
-                                ))
+                                )})
                             }
                         </div>
                         <div className={styles.right_part}>
@@ -177,6 +179,19 @@ export default class SummaryTab extends React.Component {
             return <LastUpdated dateStr={data}/>
         } else {
             return <FieldValue value={data}/>
+        }
+    }
+
+    getClassForFlag(attrName) {
+        switch (attrName) {
+            case "redFlag":
+                return styles.red;
+            case "orangeFlag":
+                return styles.orange;
+            case "greenFlag":
+                return styles.green;
+            default:
+                return "";
         }
     }
 
