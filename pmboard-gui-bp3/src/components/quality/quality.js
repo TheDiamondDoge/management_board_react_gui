@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import {FieldArray, Formik} from "formik";
 import FormikInput, {RenderControls} from "../controls/util-renderers";
 import HelpIcon from "../help-icon/help-icon";
-import {dateFormatToString, getDateFromStringWithTime} from "../../util/transform-funcs";
+import {getDateFromStringWithTime} from "../../util/transform-funcs";
 import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/custom-types";
 import FieldValue from "../field-value/field-value";
 import {formikFieldHandleChange} from "../../util/util";
@@ -171,12 +171,14 @@ export default class Quality extends React.Component {
                                 (i === 0) &&
                                 <>
                                     <td rowSpan={rowSpan}>
-                                        <FieldName name={rowTitle}/>
-                                        {
+                                        <div className={styles.row_name_container}>
+                                            <FieldName name={rowTitle}/>
+                                        </div>
+                                        <div className={styles.help_container}>
                                             <Tooltip content={help} position={Position.TOP}>
                                                 <HelpIcon className={styles.help_icon}/>
                                             </Tooltip>
-                                        }
+                                        </div>
                                     </td>
                                     <td rowSpan={rowSpan}>
                                         {
@@ -184,6 +186,7 @@ export default class Quality extends React.Component {
                                             <RenderControls
                                                 type="add"
                                                 onClick={() => arrayHelpers.push(this.getEmptyRowObject(comment))}
+                                                className={styles.controls}
                                             />
                                         }
                                     </td>
@@ -195,6 +198,7 @@ export default class Quality extends React.Component {
                                     <RenderControls
                                         type="delete"
                                         onClick={() => this.removeRow(values[field], arrayHelpers, i)}
+                                        className={styles.controls}
                                     />
                                 }
                             </td>

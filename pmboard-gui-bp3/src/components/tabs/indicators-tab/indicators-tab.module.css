@@ -1,36 +1,36 @@
-.data_grid {
-    display: grid;
-    grid-template-areas:
-        "timeline timeline timeline"
-        "health health health"
-        "req milestones dr4_kpi"
-        "quality quality quality"
-    ;
-    grid-template-rows: auto minmax(250px, auto) auto minmax(250px, auto);
-    grid-template-columns: minmax(300px, 1fr) minmax(330px, 1fr) 1fr;
-    grid-gap: 18px;
+.card {
+    margin-bottom: 15px;
 }
 
-.timeline {
-    grid-area: timeline;
+.kpi_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-.health {
-    grid-area: health;
+.rqs_kpi {
+    width: 30%;
+    min-width: 300px;
 }
 
-.req {
-    grid-area: req;
-}
-
-.milestones {
-    grid-area: milestones;
+.milestones_kpi {
+    width: 30%;
+    min-width: 300px;
 }
 
 .dr4_kpi {
-    grid-area: dr4_kpi;
+    width: 30%;
+    min-width: 400px;
 }
 
-.quality {
-    grid-area: quality;
+@media screen and (max-width: 1370px){
+    .kpi_container {
+        flex-direction: column;
+    }
+
+    .rqs_kpi,
+    .milestones_kpi,
+    .dr4_kpi {
+        width: 100%;
+    }
 }

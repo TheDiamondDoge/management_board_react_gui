@@ -4,7 +4,7 @@ import 'react-app-polyfill/stable';
 import './util/prototypes';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/app/App';
+import App from './components/app/app.container';
 import {applyMiddleware, createStore} from "redux";
 import {createBrowserHistory} from 'history';
 import {Provider} from "react-redux";

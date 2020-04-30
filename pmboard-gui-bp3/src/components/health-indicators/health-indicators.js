@@ -7,7 +7,6 @@ import PropTypes from "prop-types";
 import EditSaveControls from "../controls/edit-save-controls";
 import {dateFormatToString, getIndicatorsColor} from "../../util/transform-funcs";
 import {Field, Formik} from "formik";
-import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import HelpIcon from "../help-icon/help-icon";
 import {healthStatusHelp} from "../../util/global-helps";
 import TooltipContent from "../tooltip-content/tooltip-content";
@@ -81,7 +80,7 @@ export default class HealthIndicators extends React.Component {
                     <col className={styles.status_col}/>
                     <col className={styles.prev_column}/>
                     <col className={styles.cur_column}/>
-                    <col/>
+                    {isSummaryMode || <col/>}
                 </colgroup>
                 <thead>
                 <tr>
@@ -109,11 +108,11 @@ export default class HealthIndicators extends React.Component {
                         }
                     </th>
                     <th className={styles.column_align_center}>
-                        <FieldName name={"Previous"}/>
+                        <FieldName name={"Previous"}/><br/>
                         <FieldName name={dateFormatToString(new Date(prevStatusSet))}/>
                     </th>
                     <th className={styles.column_align_center}>
-                        <FieldName name={"Current"}/>
+                        <FieldName name={"Current "}/><br/>
                         <FieldName name={dateFormatToString(new Date(currentStatusSet))}/>
                     </th>
 

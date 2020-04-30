@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from "classnames";
 import Timeline from "../../timeline/timeline";
 import CustomCard from "../../card/custom-card";
 import HealthIndicators from "../../health-indicators/health-indicators";
@@ -32,8 +33,8 @@ export default class IndicatorsTab extends React.Component {
         const overall = getPropFromStringPath(healthIndicators, "payload.statuses.current.overall");
         const overallIndicator = getIndicatorsColor(overall);
         return (
-            <div className={styles.data_grid}>
-                <CustomCard className={styles.timeline}>
+            <div>
+                <CustomCard className={styles.card}>
                     {
                         milestones.loading
                             ? <LoadingSpinner/>
@@ -44,7 +45,7 @@ export default class IndicatorsTab extends React.Component {
                             )
                     }
                 </CustomCard>
-                <CustomCard className={styles.health}>
+                <CustomCard className={styles.card}>
                     <h3>Health</h3>
                     {
                         healthIndicators.loading
@@ -62,51 +63,53 @@ export default class IndicatorsTab extends React.Component {
                             )
                     }
                 </CustomCard>
-                <CustomCard className={styles.req}>
-                    <h3>Requirements</h3>
-                    {
-                        requirements.loading
-                            ? <LoadingSpinner/>
-                            : (
-                                <ErrorBoundary>
-                                    <Requirements
-                                        requirements={requirements.payload}
-                                        fieldsToRender={fieldsRequirements}
-                                        rqsSubmit={this.handleRqsSubmit}
-                                        rqsReload={this.handleRqsReload}
-                                    />
-                                </ErrorBoundary>
-                            )
-                    }
-                </CustomCard>
-                <CustomCard className={styles.milestones}>
-                    <h3>Milestones</h3>
-                    {
-                        milestonesKpi.loading
-                            ? <LoadingSpinner/>
-                            : (
-                                <ErrorBoundary>
-                                    <MilestonesKpi milestonesKpi={milestonesKpi.payload}/>
-                                </ErrorBoundary>
-                            )
-                    }
-                </CustomCard>
-                <CustomCard className={styles.dr4_kpi}>
-                    <h3>Project DR4 KPI</h3>
-                    {
-                        dr4Kpi.loading
-                            ? <LoadingSpinner/>
-                            : (
-                                <ErrorBoundary>
-                                    <Kpi
-                                        dr4Kpi={dr4Kpi.payload}
-                                        fieldsToRender={kpiFields}
-                                    />
-                                </ErrorBoundary>
-                            )
-                    }
-                </CustomCard>
-                <CustomCard className={styles.quality}>
+                <div className={styles.kpi_container}>
+                    <CustomCard className={classNames(styles.rqs_kpi, styles.card)}>
+                        <h3>Requirements</h3>
+                        {
+                            requirements.loading
+                                ? <LoadingSpinner/>
+                                : (
+                                    <ErrorBoundary>
+                                        <Requirements
+                                            requirements={requirements.payload}
+                                            fieldsToRender={fieldsRequirements}
+                                            rqsSubmit={this.handleRqsSubmit}
+                                            rqsReload={this.handleRqsReload}
+                                        />
+                                    </ErrorBoundary>
+                                )
+                        }
+                    </CustomCard>
+                    <CustomCard className={classNames(styles.milestones_kpi, styles.card)}>
+                        <h3>Milestones</h3>
+                        {
+                            milestonesKpi.loading
+                                ? <LoadingSpinner/>
+                                : (
+                                    <ErrorBoundary>
+                                        <MilestonesKpi milestonesKpi={milestonesKpi.payload}/>
+                                    </ErrorBoundary>
+                                )
+                        }
+                    </CustomCard>
+                    <CustomCard className={classNames(styles.dr4_kpi, styles.card)}>
+                        <h3>Project DR4 KPI</h3>
+                        {
+                            dr4Kpi.loading
+                                ? <LoadingSpinner/>
+                                : (
+                                    <ErrorBoundary>
+                                        <Kpi
+                                            dr4Kpi={dr4Kpi.payload}
+                                            fieldsToRender={kpiFields}
+                                        />
+                                    </ErrorBoundary>
+                                )
+                        }
+                    </CustomCard>
+                </div>
+                <CustomCard className={classNames(styles.quality, styles.card)}>
                     <h3>Quality</h3>
                     {
                         qualityKpi.loading

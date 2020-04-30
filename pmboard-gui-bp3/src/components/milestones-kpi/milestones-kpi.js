@@ -13,7 +13,7 @@ export default class MilestonesKpi extends React.Component {
         return (
             <HTMLTable
                 className={styles.mil_table}
-                striped={true}
+                striped
             >
                 <colgroup>
                     <col className={styles.mil_col}/>

@@ -4,8 +4,9 @@ import styles from "./kpi.module.css";
 import classNames from "classnames";
 import FieldName from "../field-name/field-name";
 import PropTypes from "prop-types";
-import {nullToNA, toPercents} from "../../util/transform-funcs";
+import {toPercents} from "../../util/transform-funcs";
 import HelpIcon from "../help-icon/help-icon";
+import FieldValue from "../field-value/field-value";
 
 export default class Kpi extends React.Component {
     render() {
@@ -20,18 +21,18 @@ export default class Kpi extends React.Component {
             >
                 <colgroup>
                     <col className={styles.name_col}/>
-                    <col className={styles.help_col}/>
                     <col className={styles.value_col}/>
                 </colgroup>
                 <thead>
                 <tr>
-                    <td colSpan={2}>
+                    <td>
                         <FieldName name={label}/>
                     </td>
                     <td>{year}</td>
                 </tr>
                 <tr>
-                    <td colSpan={3} className={headerClasses}>COMMITTED vs ACTUAL</td>
+                    <td className={headerClasses}/>
+                    <td className={headerClasses}>COMMITTED vs ACTUAL</td>
                 </tr>
                 </thead>
                 <tbody>
@@ -47,16 +48,15 @@ export default class Kpi extends React.Component {
                             <tr key={field}>
                                 <td>
                                     <FieldName name={label}/>
-                                </td>
-                                <td>
                                     <Tooltip
                                         content={help}
                                         position={Position.TOP}
+                                        className={styles.help}
                                     >
                                         <HelpIcon />
                                     </Tooltip>
                                 </td>
-                                <td>{value}</td>
+                                <td><FieldValue value={value} className={styles.value_col}/></td>
                             </tr>
                         )
                     })

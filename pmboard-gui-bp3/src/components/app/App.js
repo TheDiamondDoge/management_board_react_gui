@@ -1,4 +1,5 @@
 import React, {Suspense} from 'react';
+import PropTypes from "prop-types";
 import LeftMenu from '../left-menu/left-menu';
 import WorkingArea from '../working-area/working-area';
 import styles from './app.module.css';
@@ -17,9 +18,17 @@ const Test = React.lazy(() => import("../test_comps/test"));
 const suspenseFallback = <StatusContainer><LoadingStatus/></StatusContainer>;
 
 //TODO: Adaptive
-export default function App() {
+export default function App(props) {
+    const {isNavMenuExpanded} = props.appSettings;
+    const leftMenuSize = isNavMenuExpanded ? 230 : 60;
+    const containerStyle = {gridTemplateColumns: `${leftMenuSize}px calc(100% - ${leftMenuSize}px)`};
+
+    console.log("NAV",isNavMenuExpanded);
+
     return (
-        <div className={styles.container}>
+        <div className={styles.container}
+             style={containerStyle}
+        >
             <LeftMenu className={styles.leftMenu}/>
             <NavigationBar className={styles.header}/>
             <WorkingArea className={styles.page}>
@@ -34,4 +43,10 @@ export default function App() {
             <AppToaster/>
         </div>
     );
+}
+
+App.propTypes = {
+    appSettings: PropTypes.shape({
+        isNavMenuExpanded: PropTypes.bool,
+    })
 }

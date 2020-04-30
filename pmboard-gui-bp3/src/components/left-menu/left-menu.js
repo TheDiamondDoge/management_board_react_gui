@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './left-menu.module.css';
-import MenuNavigation from "../menu-navigation/menu-navigation";
+import MenuNavigation from "../menu-navigation/menu-navigation.container";
 import { MENU_ITEMS_ARRAY } from "../menu-navigation/menu-navigation-object";
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
@@ -12,7 +12,7 @@ export default class LeftMenu extends React.Component {
 
         return (
             <div className={classes}>
-                <MenuNavigation menuNavigationObjects={MENU_ITEMS_ARRAY}/>
+                <MenuNavigation menuNavigationObjects={MENU_ITEMS_ARRAY} />
             </div>
         )
     }

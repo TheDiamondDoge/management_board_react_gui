@@ -13,3 +13,12 @@
     margin: 10px auto 10px auto;
     border-radius: 4px;
 }
+
+.expand_toggle_icon {
+    color: white !important;
+}
+
+.expand_toggle_button {
+    width: 45px;
+    margin: 20px auto;
+}

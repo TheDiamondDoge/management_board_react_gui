@@ -44,3 +44,13 @@
 .bottom_margin {
     margin-bottom: 20px;
 }
+
+@media (max-width: 1140px) {
+    .data_container {
+        grid-template-columns: 100%;
+    }
+
+    .right_part {
+        margin: 0;
+    }
+}

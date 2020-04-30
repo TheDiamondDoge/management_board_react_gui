@@ -20,7 +20,7 @@
 }
 
 .descr_col {
-    width: 245px;
+    width: 200px;
 }
 
 .controls_col {
@@ -37,5 +37,20 @@
 }
 
 .help_icon {
-    margin-left: 10px;
+    margin: auto;
+}
+
+.row_name_container {
+    width: 90%;
+    display: inline-block;
+}
+
+.help_container {
+    width: 10%;
+    display: inline-block;
+}
+
+.controls {
+    /* to compensate tablecell padding */
+    margin-left: -10px;
 }

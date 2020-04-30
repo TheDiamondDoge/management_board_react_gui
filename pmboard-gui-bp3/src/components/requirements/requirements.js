@@ -108,15 +108,15 @@ export default class Requirements extends React.Component {
         const value = values[propName];
         switch (propName) {
             case "dr1Actual":
-                return <FieldValue value={dateFormatToString(dr1)}/>;
+                return <FieldValue value={dateFormatToString(dr1)} className={styles.column_align_center}/>;
             case "sum":
-                return <FieldValue value={sum}/>;
+                return <FieldValue value={sum} className={styles.column_align_center}/>;
             default: {
                 if (this.state.editMode) {
                     return <FormikInput type="numeric" name={propName}
                                         onValueChange={this.updateFieldHandler(propName)}/>;
                 } else {
-                    return <FieldValue value={value}/>
+                    return <FieldValue value={value} className={styles.column_align_center}/>
                 }
             }
         }

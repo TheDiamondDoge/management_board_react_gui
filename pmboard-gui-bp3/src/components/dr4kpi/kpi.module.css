@@ -12,14 +12,15 @@
 }
 
 .name_col {
-    width: 130px;
+    width: 200px;
 }
 
-.help_col {
-    width: 32px;
+.help {
+    float: right;
 }
 
 .value_col {
-    width: 131px;
+    text-align: center !important;
+    /*width: 131px;*/
 }
 
