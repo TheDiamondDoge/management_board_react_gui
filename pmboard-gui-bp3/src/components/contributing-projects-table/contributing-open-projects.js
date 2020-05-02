@@ -7,11 +7,13 @@ import FieldName from "../field-name/field-name";
 import {ContribTable} from "../../util/custom-types";
 import {dateFormatToString} from "../../util/transform-funcs";
 
-//TODO: last approved DR
+//TODO: last approved DR (check on back - wrong milestone)
 //TODO: Sticky left part??? (absolute)
 export default class ContributingOpenProjects extends React.Component {
     render() {
-        const {projectName: offerName} = this.props.offer;
+        console.log(this.props)
+
+        const {projectName: offerName, lastApproved: approvedOffer} = this.props.offer;
         const {maxDate, minDate} = this.props;
 
         const max = moment(maxDate);
@@ -57,7 +59,7 @@ export default class ContributingOpenProjects extends React.Component {
                     <tr>
                         <td><b>{offerName}</b></td>
                         <td className={styles.td_style}>
-                            DR1
+                            {approvedOffer.label}
                         </td>
                         {this.renderMilestonesTds(offer, currentMonthIndex)}
                     </tr>
@@ -68,9 +70,9 @@ export default class ContributingOpenProjects extends React.Component {
                                     {prjName}
                                 </td>
                                 <td className={styles.td_style}>
-                                    DR1
+                                    {products[prjName].lastApproved}
                                 </td>
-                                {this.renderMilestonesTds(products[prjName], currentMonthIndex)}
+                                {this.renderMilestonesTds(products[prjName].milestones, currentMonthIndex)}
                             </tr>
                         )
                     )}
@@ -141,8 +143,12 @@ export default class ContributingOpenProjects extends React.Component {
         let products = {};
         const contributed = this.props.contributed || [];
         for (let i = 0; i < contributed.length; i++) {
-            const {projectName, milestones, projectState} = contributed[i];
-            products[projectName] = this.getMilestonesPerMonth(monthsBetween, min, milestones, projectState);
+            const {projectName, milestones, projectState, lastApproved} = contributed[i];
+            const lastApprovedLabel = lastApproved ? lastApproved.label : "";
+            products[projectName] = {
+                milestones: this.getMilestonesPerMonth(monthsBetween, min, milestones, projectState),
+                lastApproved: lastApprovedLabel
+            };
         }
 
         return products;
