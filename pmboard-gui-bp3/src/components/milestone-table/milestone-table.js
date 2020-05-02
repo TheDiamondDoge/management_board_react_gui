@@ -24,24 +24,32 @@ export default class MilestoneTable extends React.Component {
         return (
             <div>
                 <HTMLTable striped className={styles.table}>
+                    <colgroup>
+                        <col className={styles.label}/>
+                        <col className={styles.actual}/>
+                        <col className={styles.baseline}/>
+                        <col className={styles.completion}/>
+                        <col className={styles.timeline}/>
+                        <col className={styles.minutes}/>
+                    </colgroup>
                     <thead>
                     <tr>
-                        <th className={styles.label}>
+                        <th>
                             <FieldName name={"Project Milestone Label"}/>
                         </th>
-                        <th className={styles.actual}>
+                        <th className={styles.align_center}>
                             <FieldName name={"Actual/Forecast Date"}/>
                         </th>
-                        <th className={styles.baseline}>
+                        <th className={styles.align_center}>
                             <FieldName name={"Baseline Date"}/>
                         </th>
-                        <th className={styles.completion}>
+                        <th className={styles.align_center}>
                             <FieldName name={"Milestone Completion (%)"}/>
                         </th>
-                        <th className={styles.timeline}>
+                        <th className={styles.align_center}>
                             <FieldName name={"Shown in Timeline"}/>
                         </th>
-                        <th className={styles.minutes}>
+                        <th className={styles.align_center}>
                             <FieldName name={"Milestone meeting minutes"}/>
                         </th>
                     </tr>

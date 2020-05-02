@@ -6,29 +6,32 @@
 }
 
 .table {
+    table-layout: fixed;
     width: 100%;
 }
 
 .label {
-    min-width: 90px !important;
-    max-width: 90px !important;
+    width: 80px;
 }
 
 .actual {
-    min-width: 130px !important;
+    width: 115px;
 }
 
 .baseline {
-    min-width: 130px !important;
+    width: 115px;
 }
 
 .completion {
-    min-width: 120px;
-
+    width: 90px;
 }
 
 .timeline {
-    min-width: 90px;
+    width: 90px;
+}
+
+.minutes {
+
 }
 
 .align_center {

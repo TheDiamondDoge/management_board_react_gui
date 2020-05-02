@@ -171,13 +171,15 @@ export default class Quality extends React.Component {
                                 (i === 0) &&
                                 <>
                                     <td rowSpan={rowSpan}>
-                                        <div className={styles.row_name_container}>
-                                            <FieldName name={rowTitle}/>
-                                        </div>
-                                        <div className={styles.help_container}>
-                                            <Tooltip content={help} position={Position.TOP}>
-                                                <HelpIcon className={styles.help_icon}/>
-                                            </Tooltip>
+                                        <div className={styles.title_container}>
+                                            <div className={styles.row_name_container}>
+                                                <FieldName name={rowTitle}/>
+                                            </div>
+                                            <div className={styles.help_container}>
+                                                <Tooltip content={help} position={Position.TOP}>
+                                                    <HelpIcon className={styles.help_icon}/>
+                                                </Tooltip>
+                                            </div>
                                         </div>
                                     </td>
                                     <td rowSpan={rowSpan}>

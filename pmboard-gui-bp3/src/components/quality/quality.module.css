@@ -47,7 +47,12 @@
 
 .help_container {
     width: 10%;
+    height: 100%;
     display: inline-block;
+}
+
+.title_container {
+    display: flex;
 }
 
 .controls {

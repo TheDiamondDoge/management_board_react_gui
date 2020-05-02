@@ -74,7 +74,7 @@ export default class World extends React.Component {
                     </Dialog>
                 </div>
                 <LoadingSpinner/>
-                <NavLink exact to="/pws">
+                <NavLink exact to="/pws?projectId=1">
                     <button>PWS</button>
                 </NavLink>
                 <div>
