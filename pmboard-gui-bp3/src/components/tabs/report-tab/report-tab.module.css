@@ -1,9 +1,22 @@
 .health_minimal {
     margin-right: 20px;
+    float: right;
+    display: inline-block;
+    margin-bottom: 20px;
 }
 
 .risk_block {
     padding-left: 10px;
+}
+
+.export_button {
+    float: right;
+    display: inline-block;
+}
+
+.project_info {
+    display: inline-block;
+    margin-bottom: 20px;
 }
 
 .inline_block {
@@ -29,4 +42,11 @@
 .scope_definition {
     height: 250px;
     overflow-y: auto;
+}
+
+@media (max-width: 1140px) {
+    .health_minimal {
+        float: unset;
+        display: block;
+    }
 }

@@ -4,7 +4,6 @@ import CustomCard from "../../card/custom-card";
 import UpdatedInfo from "../../updated-info/updated-info";
 import styles from "./report-tab.module.css";
 import Timeline from "../../timeline/timeline";
-import classNames from "classnames";
 import {Divider} from "@blueprintjs/core";
 import HealthIndicatorsMinimal from "../../health-indicators-minimal/health-indicators-minimal";
 import RisksList from "../../risks-list/risks-list";
@@ -20,6 +19,7 @@ import {
 import RqsReportList from "../../rqs-report-list/rqs-report-list";
 import ReportQuillsForm from "./report-quills-form/report-quills-form";
 import ExportMenu from "./export-menu/export-menu";
+import {getIndicatorsColor} from "../../../util/transform-funcs";
 
 //TODO populate snapshots in popover
 export default class ReportTab extends React.Component {
@@ -33,20 +33,20 @@ export default class ReportTab extends React.Component {
             const {payload: risks, loading: risksLoading} = this.props.risks;
             const {payload: milestones, loading: milestonesLoading} = this.props.milestones;
             const {payload: indicators, loading: indLoading} = this.props.indicators;
-            const uploadClasses = classNames(styles.inline_block, styles.float_right, styles.health_minimal);
             const risksObj = this.getRiskObj(risks);
             const {loading: rqsLoading, payload: rqsPayload} = this.props.rqs;
             const {loading: userReportsLoading, payload: userReportsPayload} = this.props.userReports;
             const {snapshots, snapshotLoading} = this.props.report;
+            console.log(indicators);
             return (
                 <>
                     <CustomCard>
-                        <div className={styles.inline_block}>
+                        <div className={styles.project_info}>
                             <UpdatedInfo date={updatedOn}/>
                             <TwoItemsLiner first={"Project Name:"} second={<b>{projectName}</b>}/>
                             <TwoItemsLiner first={"Project manager:"} second={<b>{projectManager}</b>}/>
                         </div>
-                        <div className={uploadClasses}>
+                        <div className={styles.export_button}>
                             <ExportMenu
                                 projectId={this.projectId}
                                 onClickElement={this.props.downloadPptReport}
@@ -57,11 +57,12 @@ export default class ReportTab extends React.Component {
                         {indLoading
                             ? <LoadingSpinner/>
                             : <HealthIndicatorsMinimal indicators={indicators.statuses.current}
-                                                       className={uploadClasses}/>
+                                                       className={styles.health_minimal}/>
                         }
-                        {milestonesLoading
+                        {milestonesLoading || indLoading
                             ? <LoadingSpinner/>
-                            : <Timeline milestones={milestones}/>
+                            : <Timeline milestones={milestones}
+                                        status={getIndicatorsColor(indicators.statuses.current.overall)}/>
                         }
                     </CustomCard>
                     <CustomCard>

@@ -1,7 +1,7 @@
 import React from "react";
-import EditSaveControls from "../../../controls/edit-save-controls";
+import EditSaveControls from "../../../controls/edit-save-controls/edit-save-controls";
 import FormikInput from "../../../controls/util-renderers";
-import styles from "../report-tab.module.css";
+import styles from "./report-quills-form.module.css";
 import {Formik} from "formik";
 import {getQuillModuleToolbar} from "../../../../util/util";
 import PropTypes from "prop-types";
@@ -29,6 +29,8 @@ export default class ReportQuillsForm extends React.Component {
         return (
             <>
                 <EditSaveControls
+                    sticky
+                    className={styles.controls}
                     onClick={this.toggleEditMode}
                     editMode={this.state.editMode}
                     onCancel={() => {

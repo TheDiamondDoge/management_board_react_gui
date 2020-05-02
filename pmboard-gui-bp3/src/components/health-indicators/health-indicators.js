@@ -4,7 +4,7 @@ import {HTMLTable, Position, Tooltip} from "@blueprintjs/core";
 import styles from "./health-indicators.module.css";
 import StatusIndicator from "../status-indicator/status-indicator";
 import PropTypes from "prop-types";
-import EditSaveControls from "../controls/edit-save-controls";
+import EditSaveControls from "../controls/edit-save-controls/edit-save-controls";
 import {dateFormatToString, getIndicatorsColor} from "../../util/transform-funcs";
 import {Field, Formik} from "formik";
 import HelpIcon from "../help-icon/help-icon";

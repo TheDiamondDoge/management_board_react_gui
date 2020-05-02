@@ -2,6 +2,10 @@
     display: inline-block;
 }
 
+.col_width {
+    width: 79px;
+}
+
 .td_style {
     text-align: center !important;
 }

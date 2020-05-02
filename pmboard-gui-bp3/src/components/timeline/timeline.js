@@ -10,6 +10,7 @@ import {milestonesCompare} from "../../util/comparators";
 import {MilestoneShape} from "../../util/custom-types";
 import SafeUrl from "../safe-url/safe-url";
 
+//TODO indicators colors as Constants
 export default class Timeline extends React.Component {
     constructor(props) {
         super(props);

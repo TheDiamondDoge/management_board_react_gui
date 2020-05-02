@@ -1,13 +1,5 @@
 /*TODO: What about media queries? (expand description more than 700px)*/
 
-.sticky_controlls {
-    position: sticky;
-    top: -21px;
-    background-color: #f8f9fc;
-    margin-left: 3px;
-    z-index: 1;
-}
-
 .data_container {
     display: grid;
     grid-template-columns: 200px auto;

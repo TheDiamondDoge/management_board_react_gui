@@ -1,5 +1,7 @@
 import React from 'react';
 import {Button, Intent} from "@blueprintjs/core";
+import styles from "./edit-save-controls.module.css";
+import classNames from "classnames";
 import PropTypes from "prop-types";
 
 export default class EditSaveControls extends React.PureComponent {
@@ -10,11 +12,12 @@ export default class EditSaveControls extends React.PureComponent {
     }
 
     renderElements = () => {
-        let {className, smallSize, loading, editMode, onSubmit, onCancel, onClick} = this.props;
+        let {className, smallSize, loading, editMode, onSubmit, onCancel, onClick, sticky} = this.props;
         let condProps = this.getButtonProps(smallSize);
+        const classes = classNames(className, {[styles.sticky_controls]: sticky})
         if (editMode) {
             return (
-                <div className={className}>
+                <div className={classes}>
                     <Button
                         text={"Save"}
                         minimal={true}
@@ -38,7 +41,7 @@ export default class EditSaveControls extends React.PureComponent {
                 condProps.text = "Edit";
             }
             return (
-                <div className={className}>
+                <div className={classes}>
                     <Button
                         minimal={true}
                         icon={"edit"}
@@ -72,5 +75,6 @@ EditSaveControls.propTypes = {
     editMode: PropTypes.bool,
     smallSize: PropTypes.bool,
     className: PropTypes.string,
-    loading: PropTypes.bool
+    loading: PropTypes.bool,
+    sticky: PropTypes.bool
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import CustomCard from "../../card/custom-card";
 import MilestoneTable from "../../milestone-table/milestone-table";
 import FieldName from "../../field-name/field-name";
-import EditSaveControls from "../../controls/edit-save-controls";
+import EditSaveControls from "../../controls/edit-save-controls/edit-save-controls";
 import styles from './info-tab.module.css'
 import PropTypes from 'prop-types';
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
@@ -97,7 +97,7 @@ export default class InfoTab extends React.Component {
                             return (
                                 <div>
                                     <EditSaveControls
-                                        className={styles.sticky_controlls}
+                                        sticky
                                         onClick={this.editClickHandle}
                                         onSubmit={this.submitForm}
                                         onCancel={this.cancelInput}

@@ -1,0 +1,7 @@
+.sticky_controls {
+    position: sticky;
+    top: -21px;
+    background-color: #f8f9fc;
+    margin-left: 3px;
+    z-index: 1;
+}

@@ -10,37 +10,52 @@ export default class HealthIndicatorsMinimal extends React.PureComponent {
         const {indicators, className} = this.props;
         const {schedule, scope, quality, cost} = indicators;
         return (
-            <HTMLTable
-                striped
-                bordered
-                condensed
-                className={className}
-            >
-                <thead>
-                <tr>
-                    <th>Schedule</th>
-                    <th>Scope</th>
-                    <th>Quality</th>
-                    <th>Cost</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td className={styles.td_style}>
-                        <StatusIndicator status={getIndicatorsColor(schedule)} className={styles.status_icon}/>
-                    </td>
-                    <td className={styles.td_style}>
-                        <StatusIndicator status={getIndicatorsColor(scope)} className={styles.status_icon}/>
-                    </td>
-                    <td className={styles.td_style}>
-                        <StatusIndicator status={getIndicatorsColor(quality)} className={styles.status_icon}/>
-                    </td>
-                    <td className={styles.td_style}>
-                        <StatusIndicator status={getIndicatorsColor(cost)} className={styles.status_icon}/>
-                    </td>
-                </tr>
-                </tbody>
-            </HTMLTable>
+            <div className={className}>
+                <HTMLTable
+                    striped
+                    bordered
+                    condensed
+                >
+                    <colgroup>
+                        <col className={styles.col_width}/>
+                        <col className={styles.col_width}/>
+                        <col className={styles.col_width}/>
+                        <col className={styles.col_width}/>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th className={styles.td_style}>
+                            Schedule
+                        </th>
+                        <th className={styles.td_style}>
+                            Scope
+                        </th>
+                        <th className={styles.td_style}>
+                            Quality
+                        </th>
+                        <th className={styles.td_style}>
+                            Cost
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td className={styles.td_style}>
+                            <StatusIndicator status={getIndicatorsColor(schedule)} className={styles.status_icon}/>
+                        </td>
+                        <td className={styles.td_style}>
+                            <StatusIndicator status={getIndicatorsColor(scope)} className={styles.status_icon}/>
+                        </td>
+                        <td className={styles.td_style}>
+                            <StatusIndicator status={getIndicatorsColor(quality)} className={styles.status_icon}/>
+                        </td>
+                        <td className={styles.td_style}>
+                            <StatusIndicator status={getIndicatorsColor(cost)} className={styles.status_icon}/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </HTMLTable>
+            </div>
         )
     }
 }
