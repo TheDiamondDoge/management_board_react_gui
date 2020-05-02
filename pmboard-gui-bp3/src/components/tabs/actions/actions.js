@@ -26,7 +26,7 @@ export default class Actions extends React.Component {
             let editDynamicInputVals = {relatedRisks: relatedRisks};
 
             return (
-                <CustomCard autosize>
+                <CustomCard autosize yCardStart={225}>
                     <EnchantedTable
                         data={payload}
                         columns={tableConfig}

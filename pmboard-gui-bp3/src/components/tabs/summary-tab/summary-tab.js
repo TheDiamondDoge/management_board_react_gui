@@ -62,7 +62,6 @@ export default class SummaryTab extends React.Component {
                                 )
                         }
                     </CustomCard>
-                    <br/>
                     <CustomCard className={styles.data_container}>
                         <div className="left_part">
                             {
@@ -91,9 +90,6 @@ export default class SummaryTab extends React.Component {
                             }
                         </div>
                     </CustomCard>
-
-                    <br/>
-
                     <CustomCard className={styles.data_container}>
                         <div className="left_part">
                             {
@@ -122,9 +118,6 @@ export default class SummaryTab extends React.Component {
                             }
                         </div>
                     </CustomCard>
-
-                    <br/>
-
                     <CustomCard className={styles.pws_data_container}>
                         <div>
                             {
@@ -139,9 +132,6 @@ export default class SummaryTab extends React.Component {
                             }
                         </div>
                     </CustomCard>
-
-                    <br/>
-
                     <CustomCard>
                         {contribTable.loading
                             ? (<LoadingSpinner/>)

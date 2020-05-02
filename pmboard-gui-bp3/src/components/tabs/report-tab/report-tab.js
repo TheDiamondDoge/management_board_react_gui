@@ -59,15 +59,11 @@ export default class ReportTab extends React.Component {
                             : <HealthIndicatorsMinimal indicators={indicators.statuses.current}
                                                        className={uploadClasses}/>
                         }
-                        <br/>
-                        <br/>
-                        <br/>
                         {milestonesLoading
                             ? <LoadingSpinner/>
                             : <Timeline milestones={milestones}/>
                         }
                     </CustomCard>
-                    <br/>
                     <CustomCard>
                         {userReportsLoading
                             ? <LoadingSpinner/>
@@ -78,7 +74,6 @@ export default class ReportTab extends React.Component {
                             />
                         }
                     </CustomCard>
-                    <br/>
                     <CustomCard>
                         <h3>Scope Definition</h3>
                         {rqsLoading
@@ -86,7 +81,6 @@ export default class ReportTab extends React.Component {
                             : <RqsReportList data={rqsPayload} className={styles.scope_definition}/>
                         }
                     </CustomCard>
-                    <br/>
                     <CustomCard>
                         <h3>Risks</h3>
                         <Divider/>

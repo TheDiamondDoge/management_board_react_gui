@@ -16,7 +16,7 @@ export default class RequirementsTab extends React.Component {
             this.projectId = this.props.defaults.payload.projectId;
             const {payload} = this.props.rqs;
             return (
-                <CustomCard autosize>
+                <CustomCard autosize yCardStart={225}>
                     <EnchantedTable
                         striped
                         interactive

@@ -27,11 +27,12 @@ export default class CustomCard extends React.PureComponent {
         })
     };
 
-    getStyleProp(autosize) {
+    getStyleProp(autosize, yCardStart) {
+        const y = yCardStart ? yCardStart : 0;
         const {height} = this.state;
         if (autosize) {
             return {
-                height: (height - 240) || ""
+                height: (height - y) || ""
             };
         } else {
             return {};
@@ -39,15 +40,16 @@ export default class CustomCard extends React.PureComponent {
     };
 
     render() {
-        const {className, autosize, children} = this.props;
+        const {className, autosize, children, yCardStart} = this.props;
         let classes = classNames(className, styles.custom_card);
+        let height = this.getStyleProp(autosize, yCardStart);
         return (
             <ErrorBoundary>
                 <Card
                     interactive={false}
                     elevation={Elevation.THREE}
                     className={classes}
-                    // style={style}
+                    style={height}
                 >
                     {children}
                 </Card>
@@ -59,7 +61,6 @@ export default class CustomCard extends React.PureComponent {
 CustomCard.propTypes = {
     className: PropTypes.string,
     children: PropTypes.node,
-    autosize: PropTypes.oneOf([
-        true, false, "y"
-    ]),
+    autosize: PropTypes.bool,
+    yCardStart: PropTypes.number,
 };

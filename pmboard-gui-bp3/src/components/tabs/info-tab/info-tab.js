@@ -106,9 +106,6 @@ export default class InfoTab extends React.Component {
                                     <CustomCard>
                                         {this.mainRows(formikProps.values.general, "general")}
                                     </CustomCard>
-
-                                    <br/>
-
                                     <CustomCard>
                                         {
                                             <MilestoneTable
@@ -119,9 +116,6 @@ export default class InfoTab extends React.Component {
                                             />
                                         }
                                     </CustomCard>
-
-                                    <br/>
-
                                     <CustomCard>
                                         {this.mainRows(formikProps.values.urls, "urls")}
                                     </CustomCard>

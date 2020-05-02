@@ -46,7 +46,6 @@ export default class CostTab extends React.Component {
                             <LastUpdated className={styles.last_updated} dateStr={updated}/>
                         </div>
                     </CustomCard>
-                    <br/>
                     <CustomCard>
                         <Button text={"Import Cost File"}
                                 icon={"import"}
@@ -54,16 +53,11 @@ export default class CostTab extends React.Component {
                                 intent={Intent.PRIMARY}
                                 minimal
                         />
-                        <br/>
-                        <br/>
                         <CostTable tableName={"Effort"} data={charged}/>
                     </CustomCard>
-                    <br/>
                     <CustomCard>
                         <CostTable tableName={"CAPEX/OPEX"} data={capex}/>
                     </CustomCard>
-
-                    <br/>
                     <CustomCard>
                         <SafeUrl label={"Get template for upload"}
                                  url={"http://www.google.com"}

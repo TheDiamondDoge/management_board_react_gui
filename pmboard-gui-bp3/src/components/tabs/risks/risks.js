@@ -47,8 +47,7 @@ export default class Risks extends React.Component {
                             <LastUpdated className={styles.last_updated} dateStr={"2010-10-10"}/>
                         </div>
                     </CustomCard>
-                    <br/>
-                    <CustomCard autosize>
+                    <CustomCard autosize yCardStart={305}>
                         <EnchantedTable
                             data={payload.risks}
                             columns={colSettings}
