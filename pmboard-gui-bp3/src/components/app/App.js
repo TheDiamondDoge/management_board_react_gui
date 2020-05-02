@@ -23,8 +23,6 @@ export default function App(props) {
     const leftMenuSize = isNavMenuExpanded ? 230 : 60;
     const containerStyle = {gridTemplateColumns: `${leftMenuSize}px calc(100% - ${leftMenuSize}px)`};
 
-    console.log("NAV",isNavMenuExpanded);
-
     return (
         <div className={styles.container}
              style={containerStyle}
