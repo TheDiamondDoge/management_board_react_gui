@@ -63,7 +63,7 @@ export default class BlcDashboard extends React.Component {
             const showSubmitCancel = this.shouldShowEditControls();
             return (
                 <>
-                    <CustomCard autosize={"x"}>
+                    <CustomCard>
                         <Button intent={Intent.SUCCESS}
                                 className={Classes.MINIMAL}
                                 icon={"upload"}

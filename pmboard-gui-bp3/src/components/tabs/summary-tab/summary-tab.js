@@ -142,7 +142,7 @@ export default class SummaryTab extends React.Component {
 
                     <br/>
 
-                    <CustomCard autosize={"x"}>
+                    <CustomCard>
                         {contribTable.loading
                             ? (<LoadingSpinner/>)
                             : (

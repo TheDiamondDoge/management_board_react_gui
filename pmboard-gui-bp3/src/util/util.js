@@ -23,12 +23,6 @@ export function getPropFromStringPath(obj, path) {
     }
 }
 
-export function getWorkingAreaWidth(viewportSizePx) {
-    const sidebarWidth = 230;
-    const rightMargin = 80;
-    return (viewportSizePx - sidebarWidth - rightMargin);
-}
-
 export function createEnchantedTableFilters(data) {
     if (!data.length) {
         return {};
