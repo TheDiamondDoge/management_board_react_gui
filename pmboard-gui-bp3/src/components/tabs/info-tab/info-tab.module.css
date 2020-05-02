@@ -1,9 +1,17 @@
 /*TODO: What about media queries? (expand description more than 700px)*/
+
+.sticky_controlls {
+    position: sticky;
+    top: -20px;
+    background-color: #f8f9fc;
+    margin-left: 3px;
+    z-index: 1;
+}
+
 .data_container {
     display: grid;
     grid-template-columns: 200px auto;
     grid-template-rows: auto 1em;
-    /*grid-auto-rows: auto;*/
 }
 
 .data_container_comment {

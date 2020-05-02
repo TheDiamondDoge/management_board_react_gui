@@ -97,6 +97,7 @@ export default class InfoTab extends React.Component {
                             return (
                                 <div>
                                     <EditSaveControls
+                                        className={styles.sticky_controlls}
                                         onClick={this.editClickHandle}
                                         onSubmit={this.submitForm}
                                         onCancel={this.cancelInput}
