@@ -42,7 +42,6 @@ export default class MilestonesKpi extends React.Component {
                 </thead>
                 <tbody>
                 {
-                    //TODO: Round at backend
                     milestonesKpi
                         .filter((obj) => !(obj.adherence === 0 && obj.delay === 0 && obj.duration === 0))
                         .map((obj, i) => (

@@ -1,5 +1,3 @@
-/*TODO: What about media queries? (expand description more than 700px)*/
-
 .data_container {
     display: grid;
     grid-template-columns: 200px auto;

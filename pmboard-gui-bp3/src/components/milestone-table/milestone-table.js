@@ -9,7 +9,6 @@ import FormikInput, {ArrayErrors, RenderControls} from "../controls/util-rendere
 import {boolToYesNo, dateFormatToString} from "../../util/transform-funcs";
 import {MilestoneShape} from "../../util/custom-types";
 
-//TODO: continue here
 export default class MilestoneTable extends React.Component {
     constructor(props) {
         super(props);

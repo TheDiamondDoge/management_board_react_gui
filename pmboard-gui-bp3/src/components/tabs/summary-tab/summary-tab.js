@@ -29,7 +29,6 @@ import {getPropFromStringPath} from "../../../util/util";
 import {getIndicatorsColor} from "../../../util/transform-funcs";
 
 import 'react-quill/dist/quill.snow.css';
-//TODO ContribTable - populate LC(AD)
 export default class SummaryTab extends React.Component {
     render() {
         const {loading} = this.props.summaryData;

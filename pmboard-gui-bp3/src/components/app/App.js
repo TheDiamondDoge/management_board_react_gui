@@ -17,7 +17,6 @@ const World = React.lazy(() => import("../test_comps/world"));
 const Test = React.lazy(() => import("../test_comps/test"));
 const suspenseFallback = <StatusContainer><LoadingStatus/></StatusContainer>;
 
-//TODO: Adaptive
 export default function App(props) {
     const {isNavMenuExpanded} = props.appSettings;
     const leftMenuSize = isNavMenuExpanded ? 230 : 60;

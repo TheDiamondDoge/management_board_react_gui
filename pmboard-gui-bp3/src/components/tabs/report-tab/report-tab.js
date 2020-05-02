@@ -21,7 +21,6 @@ import ReportQuillsForm from "./report-quills-form/report-quills-form";
 import ExportMenu from "./export-menu/export-menu";
 import {getIndicatorsColor} from "../../../util/transform-funcs";
 
-//TODO populate snapshots in popover
 export default class ReportTab extends React.Component {
     render() {
         const {loading} = this.props.report;

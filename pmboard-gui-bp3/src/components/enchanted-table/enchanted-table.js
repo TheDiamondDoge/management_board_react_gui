@@ -12,9 +12,9 @@ import AddEditDialog from "./comp/add-edit-dialog/add-edit-dialog";
 import {removeSelectedObjByLabel, renderValue} from "./util";
 import EnchantedRow from "./comp/enchanted-row/enchanted-row";
 
+//TODO: need to limit width of tds
 //TODO: "no data" message/state
 //TODO: need small delay on typing in search field?
-//TODO: sort selects should be sorted???
 export default class EnchantedTable extends React.Component {
     constructor(props) {
         super(props);

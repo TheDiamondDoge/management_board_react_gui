@@ -65,8 +65,6 @@ export default class SelectList extends React.Component {
     }
 }
 
-/*TODO: ???? */
-
 // PropTypes.any in order to handle nulls
 SelectList.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({
