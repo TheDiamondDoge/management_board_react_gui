@@ -7,10 +7,12 @@ import FieldName from "../field-name/field-name";
 import {ContribTable} from "../../util/custom-types";
 import {dateFormatToString} from "../../util/transform-funcs";
 import Legend from "../legend/legend";
+import SafeUrl from "../safe-url/safe-url";
 
+//TODO is this the way like you want to add urls here?
 export default class ContributingOpenProjects extends React.Component {
     render() {
-        const {projectName: offerName, lastApproved: approvedOffer} = this.props.offer;
+        const {projectId: offerId, projectName: offerName, lastApproved: approvedOffer} = this.props.offer;
         const showLegend = !!this.props.offer;
         const {maxDate, minDate} = this.props;
 
@@ -70,7 +72,13 @@ export default class ContributingOpenProjects extends React.Component {
                         </thead>
                         <tbody>
                         <tr>
-                            <td className={styles.sticky_first}><b>{offerName}</b></td>
+                            <td className={styles.sticky_first}>
+                                <b>
+                                    <SafeUrl url={`http://localhost:3000/pws?projectId=${offerId}`}
+                                             label={offerName}
+                                    />
+                                </b>
+                            </td>
                             <td className={classNames(styles.td_style, styles.sticky_second)}>
                                 {approvedOffer.label}
                             </td>
@@ -80,7 +88,9 @@ export default class ContributingOpenProjects extends React.Component {
                             (
                                 <tr key={prjName}>
                                     <td className={classNames(styles.products_name, styles.sticky_first)}>
-                                        {prjName}
+                                        <SafeUrl url={`http://localhost:3000/pws?projectId=${products[prjName].projectId}`}
+                                                 label={prjName}
+                                        />
                                     </td>
                                     <td className={classNames(styles.td_style, styles.sticky_second)}>
                                         {products[prjName].lastApproved}
@@ -169,9 +179,10 @@ export default class ContributingOpenProjects extends React.Component {
         let products = {};
         const contributed = this.props.contributed || [];
         for (let i = 0; i < contributed.length; i++) {
-            const {projectName, milestones, projectState, lastApproved} = contributed[i];
+            const {projectName, projectId, milestones, projectState, lastApproved} = contributed[i];
             const lastApprovedLabel = lastApproved ? lastApproved.label : "";
             products[projectName] = {
+                projectId,
                 milestones: this.getMilestonesPerMonth(monthsBetween, min, milestones, projectState),
                 lastApproved: lastApprovedLabel
             };
