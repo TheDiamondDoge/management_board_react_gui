@@ -21,7 +21,6 @@ import {
 import ErrorBoundary from "../../error-boundary/error-boundary";
 import ReactQuill from "react-quill";
 import ContributingOpenProjects from "../../contributing-projects-table/contributing-open-projects";
-import Legend from "../../legend/legend";
 import OfferProductTitle from "../../contributing-projects-table/components/offer-product-title/offer-product-title";
 import {ProjectTypes} from "../../../util/constants";
 import LastUpdated from "../../last-updated/last-updated";
@@ -29,6 +28,7 @@ import {getPropFromStringPath} from "../../../util/util";
 import {getIndicatorsColor} from "../../../util/transform-funcs";
 
 import 'react-quill/dist/quill.snow.css';
+
 export default class SummaryTab extends React.Component {
     render() {
         const {loading} = this.props.summaryData;
@@ -95,13 +95,16 @@ export default class SummaryTab extends React.Component {
                                 Object.keys(status).map((obj) => {
                                     const flagClassColor = this.getClassForFlag(obj);
                                     return (
-                                    renderHelper.displayOrNot(obj, validationParams) && (
-                                        <div key={obj} className={styles.executive_block}>
-                                            <FieldName name={renderHelper.getLabelById(obj)} className={flagClassColor}/>
-                                            <ReactQuill defaultValue={status[obj]} modules={{toolbar: null}} readOnly/>
-                                        </div>
+                                        renderHelper.displayOrNot(obj, validationParams) && (
+                                            <div key={obj} className={styles.executive_block}>
+                                                <FieldName name={renderHelper.getLabelById(obj)}
+                                                           className={flagClassColor}/>
+                                                <ReactQuill defaultValue={status[obj]} modules={{toolbar: null}}
+                                                            readOnly/>
+                                            </div>
+                                        )
                                     )
-                                )})
+                                })
                             }
                         </div>
                         <div className={styles.right_part}>
@@ -143,20 +146,17 @@ export default class SummaryTab extends React.Component {
                                     />
                                     {contribTable.payload.offer &&
                                     <ErrorBoundary>
-                                        <div className={styles.overflow_x}>
-                                            <ContributingOpenProjects
-                                                offer={contribTable.payload.offer}
-                                                contributed={contribTable.payload.products}
-                                                minDate={contribTable.payload.minDate}
-                                                maxDate={contribTable.payload.maxDate}
-                                            />
-                                        </div>
+                                        <ContributingOpenProjects
+                                            offer={contribTable.payload.offer}
+                                            contributed={contribTable.payload.products}
+                                            minDate={contribTable.payload.minDate}
+                                            maxDate={contribTable.payload.maxDate}
+                                        />
                                     </ErrorBoundary>
                                     }
                                 </>
                             )
                         }
-                        {contribTable.payload.offer && <Legend/>}
                     </CustomCard>
                 </div>
             )
@@ -187,7 +187,7 @@ export default class SummaryTab extends React.Component {
     getContribTitleClasses(contribTable, projectType) {
         if (!contribTable.loading) {
             return classNames({
-                [styles.bottom_margin] : (projectType === ProjectTypes.OFFER || !!contribTable.payload.offer)
+                [styles.bottom_margin]: (projectType === ProjectTypes.OFFER || !!contribTable.payload.offer)
             });
         }
     }

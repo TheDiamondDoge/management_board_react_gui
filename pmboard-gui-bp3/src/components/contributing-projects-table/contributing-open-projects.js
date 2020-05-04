@@ -6,14 +6,12 @@ import classNames from "classnames";
 import FieldName from "../field-name/field-name";
 import {ContribTable} from "../../util/custom-types";
 import {dateFormatToString} from "../../util/transform-funcs";
+import Legend from "../legend/legend";
 
-//TODO: last approved DR (check on back - wrong milestone)
-//TODO: Sticky left part??? (absolute)
 export default class ContributingOpenProjects extends React.Component {
     render() {
-        console.log(this.props)
-
         const {projectName: offerName, lastApproved: approvedOffer} = this.props.offer;
+        const showLegend = !!this.props.offer;
         const {maxDate, minDate} = this.props;
 
         const max = moment(maxDate);
@@ -27,57 +25,74 @@ export default class ContributingOpenProjects extends React.Component {
         const products = this.getMilestonesPerMonthForProducts(monthsBetween, min);
 
         const lastComplTh = classNames(styles.last_compl_col, styles.th_style);
-        const yearTh = classNames(styles.year_left_border, styles.th_style);
         return (
-            <div className={styles.table_margin}>
-                <HTMLTable
-                    bordered
-                >
-                    <thead>
-                    <tr>
-                        <th colSpan={2}/>
-                        {years.map((year) => (
-                            <th key={year}
-                                colSpan={tdForYear[year]}
-                                className={yearTh}
-                            >
-                                {<FieldName name={year}/>}
+            <div className={styles.table_container}>
+                <div className={styles.overflow_x}>
+                    <HTMLTable
+                        className={styles.table_class}
+                        bordered
+                    >
+                        <colgroup>
+                            <col className={styles.name_col_size}/>
+                            <col className={styles.last_dr_col_size}/>
+                            {
+                                Array(monthsBetween).fill(0).map(() => <col className={styles.mils_col_size}/>)
+                            }
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th colSpan={2}
+                                className={styles.sticky_colspan2}
+                            />
+                            {years.map((year, i) => (
+                                <th key={year}
+                                    colSpan={tdForYear[year]}
+                                    className={
+                                        classNames(
+                                            {[styles.year_left_border]: i !== 0},
+                                            styles.th_style
+                                        )
+                                    }
+                                >
+                                    {<FieldName name={year}/>}
+                                </th>
+                            ))}
+                        </tr>
+                        <tr>
+                            <th className={classNames(styles.th_style, styles.sticky_first)}>
+                                <FieldName name="Offer"/>
                             </th>
-                        ))}
-                    </tr>
-                    <tr>
-                        <th className={styles.th_style}>
-                            <FieldName name="Offer"/>
-                        </th>
-                        <th className={lastComplTh}>
-                            <FieldName name="Last completed (Approved DR)"/>
-                        </th>
-                        {this.getMonthsTds(offer, min, currentMonthIndex)}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td><b>{offerName}</b></td>
-                        <td className={styles.td_style}>
-                            {approvedOffer.label}
-                        </td>
-                        {this.renderMilestonesTds(offer, currentMonthIndex)}
-                    </tr>
-                    {Object.keys(products).map(prjName =>
-                        (
-                            <tr key={prjName}>
-                                <td className={styles.products_name}>
-                                    {prjName}
-                                </td>
-                                <td className={styles.td_style}>
-                                    {products[prjName].lastApproved}
-                                </td>
-                                {this.renderMilestonesTds(products[prjName].milestones, currentMonthIndex)}
-                            </tr>
-                        )
-                    )}
-                    </tbody>
-                </HTMLTable>
+                            <th className={classNames(lastComplTh, styles.sticky_second)}>
+                                <FieldName name="Last completed (Approved DR)"/>
+                            </th>
+                            {this.getMonthsTds(offer, min, currentMonthIndex)}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td className={styles.sticky_first}><b>{offerName}</b></td>
+                            <td className={classNames(styles.td_style, styles.sticky_second)}>
+                                {approvedOffer.label}
+                            </td>
+                            {this.renderMilestonesTds(offer, currentMonthIndex)}
+                        </tr>
+                        {Object.keys(products).map(prjName =>
+                            (
+                                <tr key={prjName}>
+                                    <td className={classNames(styles.products_name, styles.sticky_first)}>
+                                        {prjName}
+                                    </td>
+                                    <td className={classNames(styles.td_style, styles.sticky_second)}>
+                                        {products[prjName].lastApproved}
+                                    </td>
+                                    {this.renderMilestonesTds(products[prjName].milestones, currentMonthIndex)}
+                                </tr>
+                            )
+                        )}
+                        </tbody>
+                    </HTMLTable>
+                </div>
+                {showLegend && <Legend/>}
             </div>
         );
     }
@@ -110,28 +125,39 @@ export default class ContributingOpenProjects extends React.Component {
         let tds = new Array(monthsBetween).fill(0);
         const isCommitted = projectState.toUpperCase() === "COMMITTED";
         let prevYear = -1;
-        for (let i = 0; i < monthsBetween; i++) {
+        for (let i = 0; i <= monthsBetween; i++) {
             const startDate = min.clone();
             const datePlusMonths = startDate.add(i, "month");
             const month = datePlusMonths.month();
             const year = datePlusMonths.year();
             const filteredMils = milestones.filter((milestone) => {
-                const date = milestone.actualDate || milestone.baselineDate;
+                const date = milestone.actualDate;
                 return (
                     moment(date).year() === year && moment(date).month() === month
                 )
             });
 
-
             let needYearBorder = false;
             if (year !== prevYear) {
-                needYearBorder = true;
                 prevYear = year;
+                if (i !== 0) {
+                    needYearBorder = true;
+                }
             }
 
             tds[i] = {milestones: filteredMils, needYearBorder, isCommitted}
         }
-        return tds;
+
+        return this.removeLastTdIfNoMils(tds);
+    }
+
+    removeLastTdIfNoMils(tds) {
+        if (tds.length <= 0) return tds;
+        if (!tds[tds.length - 1]) return tds;
+        if (!tds[tds.length - 1].milestones) return tds;
+        if (tds[tds.length - 1].milestones.length !== 0) return tds;
+
+        return tds.slice(0, tds.length - 1);
     }
 
     getMilestonesPerMonthForOffers(monthsBetween, min) {
@@ -206,7 +232,7 @@ export default class ContributingOpenProjects extends React.Component {
             styles.label
         );
 
-        const dateStr = milestone.actualDate || milestone.baselineDate;
+        const dateStr = milestone.actualDate;
         const title = dateFormatToString(new Date(dateStr));
         return (
             <div key={milestone.label}

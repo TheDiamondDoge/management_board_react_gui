@@ -1,9 +1,53 @@
+.table_container {
+    position: relative;
+}
+
+.name_col_size {
+    width: 120px;
+    max-width: 120px;
+}
+
+.last_dr_col_size {
+    width: 90px;
+    max-width: 90px;
+}
+
+.mils_col_size {
+    width: 60px;
+}
+
+.sticky_colspan2,
+.sticky_first,
+.sticky_second {
+    position: sticky;
+    background-color: white;
+}
+
+.sticky_colspan2,
+.sticky_first {
+    left: 0;
+}
+
+.sticky_colspan2 {
+    border-right: 2px solid black;
+}
+
+.sticky_second {
+    left: 120px;
+    border-right: 2px solid black;
+}
+
+.overflow_x {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
 .products_name {
     padding-left: 30px !important;
 }
 
 .last_compl_col {
-    width: 70px;
+    border-right: 2px solid black;
 }
 
 .th_style {
@@ -37,6 +81,7 @@
     padding: 5px;
 }
 
-.table_margin {
-    margin-bottom: 20px;
+.table_class {
+    table-layout: fixed;
+    width: 100%;
 }
