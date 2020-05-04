@@ -143,8 +143,9 @@ export default class InfoTab extends React.Component {
 
     mainRows = (values, stateBranch) => {
         const renderHelper = new RenderFieldHelper(infoFieldsToRender);
-        return (Object.keys(values).map((obj) => {
-            return this.renderRow(renderHelper, obj, stateBranch, values);
+        return (Object.keys(infoFieldsToRender).map((key) => {
+            if (values[key] === undefined) return true;
+            return this.renderRow(renderHelper, key, stateBranch, values);
         }))
     };
 
