@@ -108,6 +108,7 @@ export default class ContributingOpenProjects extends React.Component {
 
     getMilestonesPerMonth(monthsBetween, min, milestones, projectState) {
         let tds = new Array(monthsBetween).fill(0);
+        const isCommitted = projectState.toUpperCase() === "COMMITTED";
         let prevYear = -1;
         for (let i = 0; i < monthsBetween; i++) {
             const startDate = min.clone();
@@ -128,7 +129,6 @@ export default class ContributingOpenProjects extends React.Component {
                 prevYear = year;
             }
 
-            const isCommitted = projectState.toUpperCase() === "COMMITTED";
             tds[i] = {milestones: filteredMils, needYearBorder, isCommitted}
         }
         return tds;
@@ -200,18 +200,12 @@ export default class ContributingOpenProjects extends React.Component {
     renderMilestoneLabel(milestone, isCommitted, currentDate) {
         const {completion, actualDate} = milestone;
         const isLate = currentDate.diff(moment(actualDate)) > 0;
-        let classes;
-        if (isCommitted) {
-            classes = classNames(
-                {[styles.bkground_grey]: isLate && completion !== 100 && isCommitted},
-                styles.label
-            )
-        } else {
-            classes = classNames(
-                {[styles.bkground_red]: isLate && completion !== 100},
-                styles.label
-            );
-        }
+        let classes = classNames(
+            {[styles.bkground_red]: isLate && completion !== 100},
+            {[styles.bkground_grey]: isLate && completion === 100 && isCommitted},
+            styles.label
+        );
+
         const dateStr = milestone.actualDate || milestone.baselineDate;
         const title = dateFormatToString(new Date(dateStr));
         return (
