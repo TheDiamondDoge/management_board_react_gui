@@ -1,7 +1,8 @@
 .actual,
 .baseline,
 .completion,
-.timeline {
+.timeline,
+.minutes {
     text-align: center !important;
 }
 

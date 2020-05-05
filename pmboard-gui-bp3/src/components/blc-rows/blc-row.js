@@ -13,14 +13,14 @@ export default class BlcRow extends React.Component {
         const {
             roleName, lastUpdatedBy, updatedOn,
             rowValues, comment,
-            onClickEdit, isValuesEdit, isCommentsEdit, isControlsHidden
+            onClickEdit, isValuesEdit, isCommentsEdit
         } = this.props;
         const tdClasses = classNames(style.column_align_center, style.word_break);
         const commentName = `${this.props.rowName}.comment`;
         const isEditShown = this.shouldShowEditButton();
         return (
             <tr>
-                <td>
+                <td className={style.sticky_white}>
                     <div>
                         <div className={style.inline_block}>
                             {

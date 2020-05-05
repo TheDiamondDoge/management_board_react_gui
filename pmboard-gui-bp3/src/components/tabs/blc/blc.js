@@ -136,57 +136,59 @@ export default class BlcDashboard extends React.Component {
         const thCommentClasses = classNames(styles.column_align_center);
         const {pm, pmo, sales} = formikProps.values;
         return (
-            <div className={styles.overflow_wrapper}>
-                <HTMLTable
-                    bordered
-                    striped
-                    className={styles.blc_table}
-                >
-                    {this.renderColGroup()}
-                    {this.renderHeader(thClasses, thCommentClasses)}
+            <div style={{position: "relative"}}>
+                <div className={styles.overflow_wrapper}>
+                    <HTMLTable
+                        bordered
+                        striped
+                        className={styles.blc_table}
+                    >
+                        {this.renderColGroup()}
+                        {this.renderHeader(thClasses, thCommentClasses)}
 
-                    <tbody>
-                    <BlcRow
-                        rowName={"pm"}
-                        roleName={"Program Manager"}
-                        lastUpdatedBy={pm.csl}
-                        updatedOn={pm.updatedOn}
-                        rowValues={pm.indicators}
-                        comment={pm.comment}
-                        onClickEdit={() => (this.onClickEdit("isPmRow"))}
-                        onChange={this.handleChange}
-                        isValuesEdit={this.state.isPmRow}
-                        isCommentsEdit={this.state.isCommentsEdit}
-                        isControlsHidden={this.isInEditMode()}
-                    />
-                    <BlcRow
-                        rowName={"pmo"}
-                        roleName={"PMO - Quality"}
-                        lastUpdatedBy={pmo.csl}
-                        updatedOn={pmo.updatedOn}
-                        rowValues={pmo.indicators}
-                        comment={pmo.comment}
-                        onClickEdit={() => (this.onClickEdit("isPmoRow"))}
-                        onChange={this.handleChange}
-                        isValuesEdit={this.state.isPmoRow}
-                        isCommentsEdit={this.state.isCommentsEdit}
-                        isControlsHidden={this.isInEditMode()}
-                    />
-                    <BlcRow
-                        rowName={"sales"}
-                        roleName={"Sales"}
-                        lastUpdatedBy={sales.csl}
-                        updatedOn={sales.updatedOn}
-                        rowValues={sales.indicators}
-                        comment={sales.comment}
-                        onClickEdit={() => (this.onClickEdit("isSalesRow"))}
-                        onChange={this.handleChange}
-                        isValuesEdit={this.state.isSalesRow}
-                        isCommentsEdit={this.state.isCommentsEdit}
-                        isControlsHidden={this.isInEditMode()}
-                    />
-                    </tbody>
-                </HTMLTable>
+                        <tbody>
+                        <BlcRow
+                            rowName={"pm"}
+                            roleName={"Program Manager"}
+                            lastUpdatedBy={pm.csl}
+                            updatedOn={pm.updatedOn}
+                            rowValues={pm.indicators}
+                            comment={pm.comment}
+                            onClickEdit={() => (this.onClickEdit("isPmRow"))}
+                            onChange={this.handleChange}
+                            isValuesEdit={this.state.isPmRow}
+                            isCommentsEdit={this.state.isCommentsEdit}
+                            isControlsHidden={this.isInEditMode()}
+                        />
+                        <BlcRow
+                            rowName={"pmo"}
+                            roleName={"PMO - Quality"}
+                            lastUpdatedBy={pmo.csl}
+                            updatedOn={pmo.updatedOn}
+                            rowValues={pmo.indicators}
+                            comment={pmo.comment}
+                            onClickEdit={() => (this.onClickEdit("isPmoRow"))}
+                            onChange={this.handleChange}
+                            isValuesEdit={this.state.isPmoRow}
+                            isCommentsEdit={this.state.isCommentsEdit}
+                            isControlsHidden={this.isInEditMode()}
+                        />
+                        <BlcRow
+                            rowName={"sales"}
+                            roleName={"Sales"}
+                            lastUpdatedBy={sales.csl}
+                            updatedOn={sales.updatedOn}
+                            rowValues={sales.indicators}
+                            comment={sales.comment}
+                            onClickEdit={() => (this.onClickEdit("isSalesRow"))}
+                            onChange={this.handleChange}
+                            isValuesEdit={this.state.isSalesRow}
+                            isCommentsEdit={this.state.isCommentsEdit}
+                            isControlsHidden={this.isInEditMode()}
+                        />
+                        </tbody>
+                    </HTMLTable>
+                </div>
             </div>
         );
     };
@@ -217,7 +219,7 @@ export default class BlcDashboard extends React.Component {
         return (
             <thead>
             <tr>
-                <th className={thClasses} rowSpan={2}>Role</th>
+                <th className={classNames(thClasses, style.sticky_white)} rowSpan={2}>Role</th>
                 <th className={thClasses} rowSpan={2}>Who</th>
                 <th className={thClasses} rowSpan={2}>Updated On</th>
                 <th className={thClasses} rowSpan={2}>Opportunity Review</th>

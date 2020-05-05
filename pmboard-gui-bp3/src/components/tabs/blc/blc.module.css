@@ -60,3 +60,12 @@
 .comment {
     width: 400px;
 }
+
+.sticky_white {
+    position: sticky;
+    left: 0;
+}
+
+.sticky_white {
+    background-color: white;
+}
