@@ -74,9 +74,9 @@ export const infoFieldsToRender = {
     },
     ecmaBacklogTarget: {
         label: "ECMA Backlog Target",
-        allowedIf: {
-            projectType: [ProjectTypes.OFFER]
-        }
+        // allowedIf: {
+        //     projectType: [ProjectTypes.OFFER]
+        // }
     },
     maintenance: {
         label: "Maintenance Project",
