@@ -12,19 +12,16 @@ import SafeUrl from "../safe-url/safe-url";
 //TODO is this the way like you want to add urls here?
 export default class ContributingOpenProjects extends React.Component {
     render() {
-        const {projectId: offerId, projectName: offerName, lastApproved: approvedOffer} = this.props.offer;
-        const showLegend = !!this.props.offer;
-        const {maxDate, minDate} = this.props;
-
-        const max = moment(maxDate);
-        const min = moment(minDate);
+        const {maxDate, minDate, offer, contributed} = this.props;
+        const {min, max} = this.getMinMaxDates(minDate, maxDate);
         const monthsBetween = Math.ceil(max.diff(min, "months", true));
 
         const {tdForYear, currentMonthIndex} = this.calculateTdsForYear(monthsBetween, min);
         const years = Object.keys(tdForYear);
 
-        const offer = this.getMilestonesPerMonthForOffers(monthsBetween, min);
-        const products = this.getMilestonesPerMonthForProducts(monthsBetween, min);
+        const monthsHeaderObjs = this.getMonthsHeader(monthsBetween, min, offer);
+        const offers = this.getMilestonesPerMonthForProducts(monthsBetween, min, offer);
+        const products = this.getMilestonesPerMonthForProducts(monthsBetween, min, contributed);
 
         const lastComplTh = classNames(styles.last_compl_col, styles.th_style);
         return (
@@ -36,14 +33,17 @@ export default class ContributingOpenProjects extends React.Component {
                     >
                         <colgroup>
                             <col className={styles.name_col_size}/>
+                            <col className={styles.type_size}/>
                             <col className={styles.last_dr_col_size}/>
                             {
-                                Array(monthsBetween).fill(0).map(() => <col className={styles.mils_col_size}/>)
+                                Array(monthsBetween).fill(0).map((x, i) =>
+                                    <col key={i} className={styles.mils_col_size}/>
+                                )
                             }
                         </colgroup>
                         <thead>
                         <tr>
-                            <th colSpan={2}
+                            <th colSpan={3}
                                 className={styles.sticky_colspan2}
                             />
                             {years.map((year, i) => (
@@ -64,33 +64,48 @@ export default class ContributingOpenProjects extends React.Component {
                             <th className={classNames(styles.th_style, styles.sticky_first)}>
                                 <FieldName name="Offer"/>
                             </th>
+                            <th className={classNames(styles.th_style, styles.sticky_third)}>
+                                <FieldName name="Type"/>
+                            </th>
                             <th className={classNames(lastComplTh, styles.sticky_second)}>
                                 <FieldName name="Last completed (Approved DR)"/>
                             </th>
-                            {this.getMonthsTds(offer, min, currentMonthIndex)}
+                            {this.getMonthsTds(monthsHeaderObjs, min, currentMonthIndex)}
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td className={styles.sticky_first}>
-                                <b>
-                                    <SafeUrl url={`http://localhost:3000/pws?projectId=${offerId}`}
-                                             label={offerName}
-                                    />
-                                </b>
-                            </td>
-                            <td className={classNames(styles.td_style, styles.sticky_second)}>
-                                {approvedOffer.label}
-                            </td>
-                            {this.renderMilestonesTds(offer, currentMonthIndex)}
-                        </tr>
+                        {Object.keys(offers).map(prjName =>
+                            (
+                                <tr key={prjName}>
+                                    <td className={classNames(styles.sticky_first, styles.word_wrap)}>
+                                        <b>
+                                            <SafeUrl
+                                                url={`http://localhost:3000/pws?projectId=${offers[prjName].projectId}`}
+                                                label={prjName}
+                                            />
+                                        </b>
+                                    </td>
+                                    <td className={classNames(styles.td_style, styles.sticky_third, styles.word_wrap)}>
+                                        {offers[prjName].projectType}
+                                    </td>
+                                    <td className={classNames(styles.td_style, styles.sticky_second)}>
+                                        {offers[prjName].lastApproved}
+                                    </td>
+                                    {this.renderMilestonesTds(offers[prjName].milestones, currentMonthIndex)}
+                                </tr>
+                            )
+                        )}
                         {Object.keys(products).map(prjName =>
                             (
                                 <tr key={prjName}>
-                                    <td className={classNames(styles.products_name, styles.sticky_first)}>
-                                        <SafeUrl url={`http://localhost:3000/pws?projectId=${products[prjName].projectId}`}
-                                                 label={prjName}
+                                    <td className={classNames(styles.products_name, styles.sticky_first, styles.word_wrap)}>
+                                        <SafeUrl
+                                            url={`http://localhost:3000/pws?projectId=${products[prjName].projectId}`}
+                                            label={prjName}
                                         />
+                                    </td>
+                                    <td className={classNames(styles.td_style, styles.sticky_third, styles.word_wrap)}>
+                                        {products[prjName].projectType}
                                     </td>
                                     <td className={classNames(styles.td_style, styles.sticky_second)}>
                                         {products[prjName].lastApproved}
@@ -102,9 +117,23 @@ export default class ContributingOpenProjects extends React.Component {
                         </tbody>
                     </HTMLTable>
                 </div>
-                {showLegend && <Legend/>}
+                <Legend/>
             </div>
         );
+    }
+
+    getMinMaxDates(minDate, maxDate) {
+        return {
+            min: getDateIgnoringDay(minDate),
+            max: getDateIgnoringDay(maxDate).add(1, "month")
+        }
+
+        function getDateIgnoringDay(date) {
+            const x = moment(date);
+            let year = x.year();
+            let month = x.month();
+            return moment([year, month, 1]);
+        }
     }
 
     calculateTdsForYear(monthsBetween, min) {
@@ -170,19 +199,20 @@ export default class ContributingOpenProjects extends React.Component {
         return tds.slice(0, tds.length - 1);
     }
 
-    getMilestonesPerMonthForOffers(monthsBetween, min) {
-        const {milestones, projectState} = this.props.offer;
+    getMonthsHeader(monthsBetween, min, offers) {
+        const {milestones, projectState} = offers[Object.keys(offers)[0]];
         return this.getMilestonesPerMonth(monthsBetween, min, milestones, projectState);
     }
 
-    getMilestonesPerMonthForProducts(monthsBetween, min) {
+    getMilestonesPerMonthForProducts(monthsBetween, min, projectsData) {
         let products = {};
-        const contributed = this.props.contributed || [];
-        for (let i = 0; i < contributed.length; i++) {
-            const {projectName, projectId, milestones, projectState, lastApproved} = contributed[i];
+        const projects = projectsData || [];
+        for (let i = 0; i < projects.length; i++) {
+            const {projectName, projectId, projectType, milestones, projectState, lastApproved} = projects[i];
             const lastApprovedLabel = lastApproved ? lastApproved.label : "";
             products[projectName] = {
                 projectId,
+                projectType,
                 milestones: this.getMilestonesPerMonth(monthsBetween, min, milestones, projectState),
                 lastApproved: lastApprovedLabel
             };
@@ -240,6 +270,7 @@ export default class ContributingOpenProjects extends React.Component {
         let classes = classNames(
             {[styles.bkground_red]: isLate && completion !== 100},
             {[styles.bkground_grey]: isLate && completion === 100 && isCommitted},
+            [styles.word_wrap],
             styles.label
         );
 

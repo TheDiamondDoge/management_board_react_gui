@@ -3,8 +3,8 @@
 }
 
 .name_col_size {
-    width: 120px;
-    max-width: 120px;
+    width: 170px;
+    max-width: 170px;
 }
 
 .last_dr_col_size {
@@ -12,15 +12,25 @@
     max-width: 90px;
 }
 
+.type_size {
+    width: 70px;
+    max-width: 70px;
+}
+
 .mils_col_size {
-    width: 60px;
+    width: 80px;
 }
 
 .sticky_colspan2,
 .sticky_first,
-.sticky_second {
+.sticky_second,
+.sticky_third {
     position: sticky;
     background-color: white;
+}
+
+.sticky_third {
+    left: 170px;
 }
 
 .sticky_colspan2,
@@ -33,7 +43,7 @@
 }
 
 .sticky_second {
-    left: 120px;
+    left: 240px;
     border-right: 2px solid black;
 }
 
@@ -84,4 +94,8 @@
 .table_class {
     table-layout: fixed;
     width: 100%;
+}
+
+.word_wrap {
+    word-wrap: break-word;
 }
