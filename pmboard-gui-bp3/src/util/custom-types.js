@@ -59,8 +59,8 @@ export const MilestoneKpiShape = PropTypes.shape({
 });
 
 const QualityRow = PropTypes.shape({
-    actual: PropTypes.number,
-    objective: PropTypes.number,
+    actual: PropTypes.string,
+    objective: PropTypes.string,
     comment: PropTypes.string,
     rowNumber: PropTypes.number,
 });
