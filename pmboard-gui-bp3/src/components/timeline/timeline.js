@@ -9,6 +9,7 @@ import {dateFormatToString} from "../../util/transform-funcs";
 import {milestonesCompare} from "../../util/comparators";
 import {MilestoneShape} from "../../util/custom-types";
 import SafeUrl from "../safe-url/safe-url";
+import {isUrl} from "../../util/util";
 
 //TODO indicators colors as Constants
 export default class Timeline extends React.Component {
@@ -33,9 +34,9 @@ export default class Timeline extends React.Component {
                         {
                             milestones.map((milestone, key) => {
                                 const url = milestone.meetingMinutes;
-                                let content = <SafeUrl url={url} label={milestone.label} />;
-                                if (content === url) {
-                                    content = milestone.label;
+                                let content = milestone.label;
+                                if (isUrl(url)) {
+                                    content = <SafeUrl url={url} label={milestone.label}/>;
                                 }
                                 return this.createContentCell(content, key)
                             })
