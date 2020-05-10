@@ -13,8 +13,8 @@
 }
 
 .type_size {
-    width: 70px;
-    max-width: 70px;
+    width: 75px;
+    max-width: 75px;
 }
 
 .mils_col_size {
@@ -43,7 +43,7 @@
 }
 
 .sticky_second {
-    left: 240px;
+    left: 245px;
     border-right: 2px solid black;
 }
 
