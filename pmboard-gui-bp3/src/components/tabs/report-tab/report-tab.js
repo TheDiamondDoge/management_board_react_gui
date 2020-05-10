@@ -36,7 +36,6 @@ export default class ReportTab extends React.Component {
             const {loading: rqsLoading, payload: rqsPayload} = this.props.rqs;
             const {loading: userReportsLoading, payload: userReportsPayload} = this.props.userReports;
             const {snapshots, snapshotLoading} = this.props.report;
-            console.log(indicators);
             return (
                 <>
                     <CustomCard>
