@@ -20,7 +20,8 @@ export default class Timeline extends React.Component {
     }
 
     render() {
-        const milestones = this.filterMilestones(this.props.milestones);
+        let milestones = this.filterMilestones(this.props.milestones);
+        milestones = this.setOrIfNeeded(milestones);
         const containerClasses = classNames(this.props.className, styles.container);
         return (
             <div className={containerClasses}>
@@ -81,6 +82,22 @@ export default class Timeline extends React.Component {
         let result = milestones.filter(milestone => milestone.shown && milestone.actualDate);
         return result.sort(milestonesCompare);
     };
+
+    setOrIfNeeded = (milestones) => {
+        const emptyOr = {label: "OR", completion: 0, actualDate: null, baselineDate: null};
+        const orIndex = milestones.findIndex(m => m.label === "OR");
+        if (orIndex === -1) {
+            return [emptyOr, ...milestones];
+        }
+        // questionable functionality
+        /*else if (orIndex !== 0) {
+            return [milestones[orIndex], ...milestones.splice(0, orIndex), ...milestones.splice(orIndex)];
+        } */
+        else {
+            return [...milestones];
+        }
+
+    }
 
     createCell = (i, pos, marginLeft) => {
         marginLeft = marginLeft || 0.5;
