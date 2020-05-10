@@ -29,10 +29,10 @@ export default class ReportTab extends React.Component {
         } else {
             this.projectId = this.props.defaults.payload.projectId;
             const {updatedOn, projectName, projectManager} = this.props.report.payload;
-            const {payload: risks, loading: risksLoading} = this.props.risks;
+            const {payload: data, loading: risksLoading} = this.props.risks;
             const {payload: milestones, loading: milestonesLoading} = this.props.milestones;
             const {payload: indicators, loading: indLoading} = this.props.indicators;
-            const risksObj = this.getRiskObj(risks);
+            const risksObj = this.getRiskObj(data.risks);
             const {loading: rqsLoading, payload: rqsPayload} = this.props.rqs;
             const {loading: userReportsLoading, payload: userReportsPayload} = this.props.userReports;
             const {snapshots, snapshotLoading} = this.props.report;

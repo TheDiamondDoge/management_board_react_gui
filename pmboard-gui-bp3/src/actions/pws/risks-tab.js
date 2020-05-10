@@ -69,7 +69,7 @@ export const getLastUploadedRisks = (projectId, projectName) => ({
     projectName
 });
 
-export const resetState = () => ({
+export const resetRisks = () => ({
     type: RISK_RESET
 });
 
