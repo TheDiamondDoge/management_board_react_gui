@@ -100,12 +100,13 @@ export default class BlcDashboard extends React.Component {
                         />
                     </CustomCard>
                     {showSubmitCancel &&
-                    <EditSaveControls editMode={true}
+                    <EditSaveControls editMode
                                       onCancel={() => {
                                           this.cancelEdit();
                                           this.props.loadData(this.props.defaults.payload.projectId);
                                       }}
                                       onSubmit={this.submitForm}
+                                      className={styles.controls}
                     />
                     }
                 </>

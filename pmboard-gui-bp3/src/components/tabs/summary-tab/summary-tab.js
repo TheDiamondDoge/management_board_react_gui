@@ -28,6 +28,7 @@ import {getPropFromStringPath} from "../../../util/util";
 import {getIndicatorsColor} from "../../../util/transform-funcs";
 
 import 'react-quill/dist/quill.snow.css';
+import Comment from "../../comment/comment";
 
 export default class SummaryTab extends React.Component {
     render() {
@@ -68,7 +69,10 @@ export default class SummaryTab extends React.Component {
                                     renderHelper.displayOrNot(obj, validationParams) && (
                                         <div key={obj} className={mainCardStyle}>
                                             <FieldName name={renderHelper.getLabelById(obj)}/>
-                                            <FieldValue value={general[obj]}/>
+                                            {obj === "projectDescription"
+                                                ? <Comment value={general[obj]}/>
+                                                : <FieldValue value={general[obj]}/>
+                                            }
                                         </div>
                                     )
                                 ))

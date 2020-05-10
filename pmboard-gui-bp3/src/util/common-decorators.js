@@ -1,6 +1,7 @@
 import React from "react";
 import {dateFormatToString} from "./transform-funcs";
 import {Icon, Intent} from "@blueprintjs/core";
+import Comment from "../components/comment/comment";
 
 export function arrayDecorator(arr) {
     return Array.isArray(arr) ? arr.join("; ") : arr;
@@ -44,6 +45,10 @@ export function errorDisplayDecorator(value) {
     } else {
         return value;
     }
+}
+
+export function preDecorator(value) {
+    return <Comment value={value} />
 }
 
 function ErrorDecorator({value}) {

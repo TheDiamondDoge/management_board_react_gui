@@ -2,7 +2,7 @@ import {boolToYesNo} from "../../../util/transform-funcs";
 import {
     dateDecorator,
     errorDisplayDecorator,
-    impactDecorator,
+    impactDecorator, preDecorator,
     probabilityDecorator
 } from "../../../util/common-decorators";
 
@@ -96,7 +96,10 @@ export default [
             }
         },
         searchType: "input",
-        decorator: errorDisplayDecorator
+        decorator: (value) => {
+            let result = errorDisplayDecorator(value);
+            return preDecorator(result);
+        }
     },
     {
         id: "impactDescription", headerName: "Impact Description",
@@ -109,7 +112,10 @@ export default [
             }
         },
         searchType: "input",
-        decorator: errorDisplayDecorator
+        decorator: (value) => {
+            let result = errorDisplayDecorator(value);
+            return preDecorator(result);
+        }
     },
     {
         id: "businessImpact", headerName: "Business Impact",
@@ -122,7 +128,10 @@ export default [
             }
         },
         searchType: "input",
-        decorator: errorDisplayDecorator
+        decorator: (value) => {
+            let result = errorDisplayDecorator(value);
+            return preDecorator(result);
+        }
     },
     {
         id: "riskResponse", headerName: "Risk Response",
@@ -132,7 +141,10 @@ export default [
             },
         },
         searchType: "input",
-        decorator: errorDisplayDecorator
+        decorator: (value) => {
+            let result = errorDisplayDecorator(value);
+            return preDecorator(result);
+        }
     },
     {
         id: "mitigation", headerName: "Mitigation Plan Description",
@@ -142,7 +154,10 @@ export default [
             },
         },
         searchType: "input",
-        decorator: errorDisplayDecorator
+        decorator: (value) => {
+            let result = errorDisplayDecorator(value);
+            return preDecorator(result);
+        }
     },
     {
         id: "decisionDate", headerName: "Decision Date",

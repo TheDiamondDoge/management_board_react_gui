@@ -15,7 +15,7 @@ export default class MilestoneTable extends React.Component {
         this.state = {
             milestonesRendered: [],
             withoutBaselineDate: ["OR", "DR0", "DR1"],
-            blockedActual: ["OR"]
+            excluded: ["OR"]
         };
     }
 
@@ -76,12 +76,13 @@ export default class MilestoneTable extends React.Component {
                                 milestonesData.map((milestone, key) => {
                                     const shownString = boolToYesNo(milestone.shown);
                                     const hasBaseline = this.hasBaseline(milestone);
-                                    const hasActual = this.hasActual(milestone);
+                                    const shouldBeExcluded = this.shouldBeExcluded(milestone);
                                     const labelEditable = this.isLabelEditable(milestone, renderedMilestones);
                                     const name = `milestones[${key}].label`;
 
                                     renderedMilestones.push(milestone.label);
                                     return (
+                                        shouldBeExcluded ||
                                         <tr key={key}>
                                             <td className={styles.label}>
                                                 {
@@ -100,7 +101,7 @@ export default class MilestoneTable extends React.Component {
                                             </td>
                                             <td className={styles.actual}>
                                                 {
-                                                    editMode && hasActual
+                                                    editMode
                                                         ? <FormikInput
                                                             type="date"
                                                             name={`milestones[${key}].actualDate`}
@@ -181,8 +182,8 @@ export default class MilestoneTable extends React.Component {
         )
     };
 
-    hasActual = (milestone) => (
-        !this.state.blockedActual.includes(milestone.label.toUpperCase())
+    shouldBeExcluded = (milestone) => (
+        this.state.excluded.includes(milestone.label.toUpperCase())
     );
 
     hasBaseline = (milestone) => (

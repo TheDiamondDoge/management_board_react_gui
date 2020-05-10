@@ -47,12 +47,14 @@ export default class CostTab extends React.Component {
                         </div>
                     </CustomCard>
                     <CustomCard>
-                        <Button text={"Import Cost File"}
-                                icon={"import"}
-                                onClick={this.openFileUploadDialog}
-                                intent={Intent.PRIMARY}
-                                minimal
-                        />
+                        <div className={styles.import_container}>
+                            <Button text={"Import Cost File"}
+                                    icon={"import"}
+                                    onClick={this.openFileUploadDialog}
+                                    intent={Intent.PRIMARY}
+                                    minimal
+                            />
+                        </div>
                         <CostTable tableName={"Effort"} data={charged}/>
                     </CustomCard>
                     <CustomCard>

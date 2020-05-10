@@ -1,4 +1,4 @@
-import {dateDecorator, arrayDecorator} from "../../../util/common-decorators";
+import {dateDecorator, arrayDecorator, preDecorator} from "../../../util/common-decorators";
 
 export default [
     {
@@ -100,7 +100,8 @@ export default [
             }
         },
         inputType: "textarea",
-        searchType: "input"
+        searchType: "input",
+        decorator: preDecorator
     },
     {
         id: "dueDate",
@@ -125,7 +126,8 @@ export default [
             }
         },
         inputType: "textarea",
-        searchType: "input"
+        searchType: "input",
+        decorator: preDecorator
     },
     {
         id: "status",
@@ -137,7 +139,8 @@ export default [
             }
         },
         inputType: "textarea",
-        searchType: "input"
+        searchType: "input",
+        decorator: preDecorator
     },
     {
         id: "createdDate",

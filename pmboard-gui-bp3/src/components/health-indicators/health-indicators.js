@@ -12,6 +12,7 @@ import {healthStatusHelp} from "../../util/global-helps";
 import TooltipContent from "../tooltip-content/tooltip-content";
 import {FieldsToRenderShape, HealthIndicatorsShape} from "../../util/custom-types";
 import FormikInput from "../controls/util-renderers";
+import Comment from "../comment/comment";
 
 export default class HealthIndicators extends React.Component {
     constructor(props) {
@@ -183,7 +184,7 @@ export default class HealthIndicators extends React.Component {
         } else {
             return (
                 <td className={styles.column_align_center}>
-                    {comment}
+                    <Comment value={comment} />
                 </td>
             )
         }

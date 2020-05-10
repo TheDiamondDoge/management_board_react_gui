@@ -7,6 +7,7 @@ import {Button} from "@blueprintjs/core";
 import {blcNumberToState, getDateFromStringWithTime} from "../../util/transform-funcs";
 import {FastField} from "formik";
 import FormikInput from "../controls/util-renderers";
+import Comment from "../comment/comment";
 
 export default class BlcRow extends React.Component {
     render() {
@@ -59,7 +60,8 @@ export default class BlcRow extends React.Component {
                                         fill
                                         name={commentName}
                         />)
-                        : comment}
+                        : <Comment value={comment}/>
+                    }
                 </td>
             </tr>
         )

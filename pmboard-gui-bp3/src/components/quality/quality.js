@@ -12,6 +12,7 @@ import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/custom-typ
 import FieldValue from "../field-value/field-value";
 import {formikFieldHandleChange} from "../../util/util";
 import getValidationSchema from "./validation-schema";
+import Comment from "../comment/comment";
 
 export default class Quality extends React.Component {
     constructor(props) {
@@ -235,7 +236,7 @@ export default class Quality extends React.Component {
                                                 type="textarea"
                                                 name={`${field}[${i}].comment`}
                                             />
-                                            : <FieldValue value={comment}/>
+                                            : <Comment value={comment}/>
                                     }
                                 </td>
                             }

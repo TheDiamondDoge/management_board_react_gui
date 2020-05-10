@@ -69,3 +69,7 @@
 .sticky_white {
     background-color: white;
 }
+
+.controls {
+    margin-top: -10px;
+}

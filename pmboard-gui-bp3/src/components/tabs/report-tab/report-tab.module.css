@@ -27,6 +27,18 @@
     float: right;
 }
 
+.red {
+    color: #db3737;
+}
+
+.orange {
+    color: #bf7326;
+}
+
+.green {
+    color: #0d8050;
+}
+
 .scope_definition {
     height: 250px;
     overflow-y: auto;

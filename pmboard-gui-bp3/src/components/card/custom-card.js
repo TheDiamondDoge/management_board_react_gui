@@ -60,7 +60,7 @@ export default class CustomCard extends React.PureComponent {
 
 CustomCard.propTypes = {
     className: PropTypes.string,
-    children: PropTypes.node,
+    children: PropTypes.any,
     autosize: PropTypes.bool,
     yCardStart: PropTypes.number,
 };

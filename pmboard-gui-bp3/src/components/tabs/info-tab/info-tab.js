@@ -19,6 +19,7 @@ import {isBoolean} from "../../../util/comparators";
 import {boolToYesNo} from "../../../util/transform-funcs";
 import {MenuItem} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
+import Comment from "../../comment/comment";
 
 
 export default class InfoTab extends React.Component {
@@ -185,11 +186,17 @@ export default class InfoTab extends React.Component {
                             {...formikProps}
                             name={`${stateBranch}.${obj}`}
                         />
-                        : <FieldValue value={displayValue}/>
+                        : this.renderComment(obj, displayValue)
                 }
             </div>
         )
     };
+
+    renderComment(attrName, value) {
+        if (attrName === "projectDescription") return <Comment value={value}/>
+
+        return <FieldValue value={value}/>
+    }
 
     renderRowWithComment = (renderHelper, obj, stateBranch, value) => {
         const {editMode} = this.state;
@@ -221,7 +228,7 @@ export default class InfoTab extends React.Component {
                             name={`${stateBranch}.${obj}.comment`}
                             className={styles.comment_row_comment_value}
                         />
-                        : <FieldValue value={value.comment} className={styles.comment_row_comment_value}/>
+                        : <Comment value={value.comment} className={styles.comment_row_comment_value}/>
                 }
             </div>
         )

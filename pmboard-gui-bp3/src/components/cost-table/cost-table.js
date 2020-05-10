@@ -3,6 +3,7 @@ import {HTMLTable} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import styles from "./cost-table.module.css";
 import {nanToEmptyString, toTwoTrailingDigits} from "../../util/transform-funcs";
+import Comment from "../comment/comment";
 
 export default class CostTable extends React.Component {
     render() {
@@ -34,12 +35,12 @@ export default class CostTable extends React.Component {
                 <tr>
                     <td>Committed at {committed.milestone}</td>
                     <td className={styles.column_align_center}>{committedValue}</td>
-                    <td>{committed.comment}</td>
+                    <td><Comment value={committed.comment}/></td>
                 </tr>
                 <tr>
                     <td>Released at {realized.milestone}</td>
                     <td className={styles.column_align_center}>{realizedValue}</td>
-                    <td>{realized.comment}</td>
+                    <td><Comment value={realized.comment}/></td>
                 </tr>
                 </tbody>
             </HTMLTable>

@@ -1,12 +1,14 @@
 import React from "react";
 import styles from "./comment.module.css";
 import PropTypes from "prop-types";
+import classNames from "classnames";
 
 export default class Comment extends React.PureComponent {
     render() {
-        const {value} = this.props;
+        const {value, className} = this.props;
+        const containerClasses = classNames(className, styles.container);
         return (
-            <div className={styles.container}>
+            <div className={containerClasses}>
                 <pre className={styles.pre}>
                     {value}
                 </pre>
@@ -16,5 +18,6 @@ export default class Comment extends React.PureComponent {
 }
 
 Comment.propTypes = {
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    className: PropTypes.string
 };
