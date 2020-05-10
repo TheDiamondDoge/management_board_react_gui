@@ -4,7 +4,7 @@ import StatusIndicator from "../status-indicator/status-indicator";
 import classNames from "classnames";
 import style from "./blc-row.module.css";
 import {Button} from "@blueprintjs/core";
-import {blcNumberToState, dateFormatToString} from "../../util/transform-funcs";
+import {blcNumberToState, getDateFromStringWithTime} from "../../util/transform-funcs";
 import {FastField} from "formik";
 import FormikInput from "../controls/util-renderers";
 
@@ -39,7 +39,7 @@ export default class BlcRow extends React.Component {
                     </div>
                 </td>
                 <td className={tdClasses}>{lastUpdatedBy}</td>
-                <td className={tdClasses}>{dateFormatToString(new Date(updatedOn))}</td>
+                <td className={tdClasses}>{getDateFromStringWithTime(updatedOn)}</td>
 
                 {Object.keys(rowValues).map((key) => (
                     <td key={key} className={tdClasses}>

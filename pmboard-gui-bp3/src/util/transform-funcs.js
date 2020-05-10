@@ -36,19 +36,24 @@ export const dateFormatToString = (date) => {
 };
 
 export const getDateFromStringWithTime = (str) => {
+    if (str === "" || str == "null") return str;
     const dateInSeconds = Date.parse(str);
     if (isNaN(dateInSeconds)) return "";
 
     const date = new Date(dateInSeconds);
-    let day = date.getDate();
-    let month = MONTHS_NAMES[date.getMonth()];
-    let year = date.getFullYear().toString();
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let seconds = date.getSeconds();
+    const day = date.getDate();
+    const month = MONTHS_NAMES[date.getMonth()];
+    const year = date.getFullYear().toString().slice(2);
+    const hours = doubleDigitTimeUnit(date.getHours());
+    const minutes = doubleDigitTimeUnit(date.getMinutes());
+    const seconds = doubleDigitTimeUnit(date.getSeconds());
 
     return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
 };
+
+function doubleDigitTimeUnit(num) {
+    return num < 10 ? "0" + num : num;
+}
 
 function isDate(date) {
     return typeof date.getMonth === "function";
