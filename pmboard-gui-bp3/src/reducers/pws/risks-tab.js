@@ -10,7 +10,7 @@ import {
 
 const initState = {
     loading: true,
-    payload: [],
+    payload: {},
     riskIDs: [],
     error: "",
     errorListShowed: false

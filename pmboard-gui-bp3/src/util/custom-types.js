@@ -144,11 +144,11 @@ export const EnchantedTableColsConfig = PropTypes.shape({
 
 export const RisksTabRisk = PropTypes.shape({
     riskId: PropTypes.number,
-    impact: PropTypes.number,
-    probability: PropTypes.number,
+    impact: PropTypes.string,
+    probability: PropTypes.string,
     rating: PropTypes.number,
-    previous: PropTypes.number,
-    initial: PropTypes.number,
+    previous: PropTypes.string,
+    initial: PropTypes.string,
     riskDescription: PropTypes.string,
     impactDescription: PropTypes.string,
     businessImpact: PropTypes.string,

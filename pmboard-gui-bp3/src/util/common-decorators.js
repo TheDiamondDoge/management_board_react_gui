@@ -35,7 +35,7 @@ export function probabilityDecorator(value) {
     } else if (value == -1) {
         return <ErrorDecorator/>
     } else {
-        return `${value * 100}%`;
+        return value;
     }
 }
 
