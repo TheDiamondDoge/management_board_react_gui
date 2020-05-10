@@ -1,4 +1,5 @@
 .sticky_controls {
+    border-radius: 5px;
     position: sticky;
     top: -21px;
     background-color: #f8f9fc;
