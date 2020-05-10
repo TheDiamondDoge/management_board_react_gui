@@ -57,3 +57,8 @@
 .prj_margin {
     margin-bottom: 1em;
 }
+
+.multiselect {
+    height: 200px;
+    overflow-y: auto;
+}

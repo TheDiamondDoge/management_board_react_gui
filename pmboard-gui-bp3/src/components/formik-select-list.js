@@ -1,6 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import SelectList from "./controls/select-list";
+import SelectList from "./controls/select-list/select-list";
 
 //TODO: add <div> for errors
 //TODO: Is this actually needed?

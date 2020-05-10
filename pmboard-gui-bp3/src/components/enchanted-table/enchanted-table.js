@@ -6,7 +6,7 @@ import {EnchantedTableColsConfig} from "../../util/custom-types";
 import styles from "./enchanted-table.module.css";
 import classNames from 'classnames';
 import {ResizableContainer} from "./comp/container/resizable-container";
-import SelectList from "../controls/select-list";
+import SelectList from "../controls/select-list/select-list";
 import {SearchInput} from "../controls/search-input";
 import AddEditDialog from "./comp/add-edit-dialog/add-edit-dialog";
 import {removeSelectedObjByLabel, renderValue} from "./util";

@@ -328,6 +328,9 @@ export default class InfoTab extends React.Component {
                                 }
                             }
                         }
+                        popoverProps={{
+                            popoverClassName: styles.multiselect
+                        }}
                     />
                 }
                 {
