@@ -3,7 +3,8 @@ import {isBoolean, picklistObjectsCompare} from "./comparators";
 
 export function formikFieldHandleChange(form) {
     return function (name) {
-        return function (value) {
+        return function (val) {
+            const value = Number.isNaN(val) ? 0 : val;
             form.setFieldValue(name, value);
         }
     }
