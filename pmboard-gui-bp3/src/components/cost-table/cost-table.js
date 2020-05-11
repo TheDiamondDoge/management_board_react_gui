@@ -27,7 +27,7 @@ export default class CostTable extends React.Component {
                 <thead>
                 <tr>
                     <th>{tableName}</th>
-                    <th className={styles.column_align_center}>Value ($)</th>
+                    <th className={styles.column_align_center}>Value (k&euro;)</th>
                     <th>Comment</th>
                 </tr>
                 </thead>
