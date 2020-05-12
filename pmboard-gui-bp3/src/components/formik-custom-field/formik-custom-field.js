@@ -7,7 +7,6 @@ import styles from "./formik-custom-field.module.css";
 import {Field} from "formik";
 import PropTypes from "prop-types";
 import FormikSelectList from "../formik-select-list";
-import CustomQuill from "../custom-quill/custom-quill";
 import ReactQuill from "react-quill";
 
 export default class FormikCustomField extends React.Component {
@@ -48,7 +47,7 @@ export default class FormikCustomField extends React.Component {
         type = type || "";
         switch (type.toLowerCase()) {
             case "textarea":
-                return (<TextArea fill={true} {...field} {...props} />);
+                return (<TextArea fill {...field} {...props} />);
             case "date":
                 const date = transformDateForInput(field.value);
                 const {min, max} = this.state.dateRange;

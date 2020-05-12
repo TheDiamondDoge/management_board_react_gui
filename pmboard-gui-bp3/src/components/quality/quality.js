@@ -10,7 +10,7 @@ import HelpIcon from "../help-icon/help-icon";
 import {getDateFromStringWithTime} from "../../util/transform-funcs";
 import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/custom-types";
 import FieldValue from "../field-value/field-value";
-import {formikFieldHandleChange} from "../../util/util";
+import {formikFieldHandleChange, getSpecialNumericRegexp} from "../../util/util";
 import getValidationSchema from "./validation-schema";
 import Comment from "../comment/comment";
 
@@ -23,7 +23,7 @@ export default class Quality extends React.Component {
     }
 
     onSubmitForm = null;
-    updateFieldHandler = null;
+    updateNumericHandler = null;
 
     bindFormSubmission = (formikSubmit) => {
         this.onSubmitForm = formikSubmit;
@@ -68,7 +68,7 @@ export default class Quality extends React.Component {
                 render={
                     (formikProps) => {
                         this.bindFormSubmission(formikProps.submitForm);
-                        this.updateFieldHandler = formikFieldHandleChange(formikProps);
+                        this.updateNumericHandler = formikFieldHandleChange(formikProps);
                         return this.renderQualityForm(formikProps.values);
                     }
                 }
@@ -139,7 +139,6 @@ export default class Quality extends React.Component {
                                     return this.renderComplexRows(values, field, true);
                                 } else {
                                     return this.renderComplexRows(values, field, false);
-
                                 }
                             }
                         )
@@ -165,87 +164,96 @@ export default class Quality extends React.Component {
                         indicators = [this.getEmptyRowObject("")];
                     }
                     const comment = indicators[0].comment;
-                    const isObjEditable = this.isEditable(field);
-                    return indicators.map((row, i) => (
-                        <tr key={`${field}_${i}`}>
-                            {
-                                (i === 0) &&
-                                <>
-                                    <td rowSpan={rowSpan}>
-                                        <div className={styles.title_container}>
-                                            <div className={styles.row_name_container}>
-                                                <FieldName name={rowTitle}/>
+                    const isActualEditable = this.isEditable(field);
+                    return indicators.map((row, i) => {
+                        const inputAttrs = {};
+                        if (isControlled) {
+                            const regexp = getSpecialNumericRegexp();
+                            inputAttrs.onChange = this.updateNumericHandler(`${field}[${i}].objective`, regexp);
+                            inputAttrs.type = "text";
+                        } else {
+                            inputAttrs.onValueChange = this.updateNumericHandler(`${field}[${i}].objective`);
+                            inputAttrs.type = "numeric";
+                        }
+                        return (
+                            <tr key={`${field}_${i}`}>
+                                {
+                                    (i === 0) &&
+                                    <>
+                                        <td rowSpan={rowSpan}>
+                                            <div className={styles.title_container}>
+                                                <div className={styles.row_name_container}>
+                                                    <FieldName name={rowTitle}/>
+                                                </div>
+                                                <div className={styles.help_container}>
+                                                    <Tooltip content={help} position={Position.TOP}>
+                                                        <HelpIcon className={styles.help_icon}/>
+                                                    </Tooltip>
+                                                </div>
                                             </div>
-                                            <div className={styles.help_container}>
-                                                <Tooltip content={help} position={Position.TOP}>
-                                                    <HelpIcon className={styles.help_icon}/>
-                                                </Tooltip>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td rowSpan={rowSpan}>
-                                        {
-                                            this.state.editMode && isControlled &&
-                                            <RenderControls
-                                                type="add"
-                                                onClick={() => arrayHelpers.push(this.getEmptyRowObject(comment))}
-                                                className={styles.controls}
-                                            />
-                                        }
-                                    </td>
-                                </>
-                            }
-                            <td>
-                                {
-                                    this.state.editMode && isControlled &&
-                                    <RenderControls
-                                        type="delete"
-                                        onClick={() => this.removeRow(values[field], arrayHelpers, i)}
-                                        className={styles.controls}
-                                    />
+                                        </td>
+                                        <td rowSpan={rowSpan}>
+                                            {
+                                                this.state.editMode && isControlled &&
+                                                <RenderControls
+                                                    type="add"
+                                                    onClick={() => arrayHelpers.push(this.getEmptyRowObject(comment))}
+                                                    className={styles.controls}
+                                                />
+                                            }
+                                        </td>
+                                    </>
                                 }
-                            </td>
-                            <td className={styles.column_align_center}>
-                                {
-                                    isObjEditable
-                                        ? <FormikInput
-                                            type="numeric"
-                                            name={`${field}[${i}].objective`}
-                                            onValueChange={this.updateFieldHandler(`${field}[${i}].objective`)}
+                                <td>
+                                    {
+                                        this.state.editMode && isControlled &&
+                                        <RenderControls
+                                            type="delete"
+                                            onClick={() => this.removeRow(values[field], arrayHelpers, i)}
+                                            className={styles.controls}
                                         />
-                                        : <FieldValue value={row.objective}/>
-                                }
-                            </td>
-                            <td className={styles.column_align_center}>
-                                {
-                                    this.state.editMode
-                                        ? <FormikInput
-                                            type="numeric"
-                                            name={`${field}[${i}].actual`}
-                                            onValueChange={this.updateFieldHandler(`${field}[${i}].actual`)}
-                                        />
-                                        : <FieldValue value={row.actual}/>
-                                }
-                            </td>
-                            {
-                                (i === 0) &&
-                                <td rowSpan={rowSpan} className={styles.column_align_center}>
+                                    }
+                                </td>
+                                <td className={styles.column_align_center}>
                                     {
                                         this.state.editMode
                                             ? <FormikInput
-                                                type="textarea"
-                                                name={`${field}[${i}].comment`}
+                                                name={`${field}[${i}].objective`}
+                                                {...inputAttrs}
                                             />
-                                            : <Comment value={comment}/>
+                                            : <FieldValue value={this.emptyToZero(row.objective)}/>
                                     }
                                 </td>
-                            }
-                        </tr>
-                    ))
+                                <td className={styles.column_align_center}>
+                                    {
+                                        isActualEditable
+                                            ? <FormikInput
+                                                type="text"
+                                                name={`${field}[${i}].actual`}
+                                            />
+                                            : <FieldValue value={this.emptyToZero(row.actual)}/>
+                                    }
+                                </td>
+                                {
+                                    (i === 0) &&
+                                    <td rowSpan={rowSpan} className={styles.column_align_center}>
+                                        {
+                                            this.state.editMode
+                                                ? <FormikInput
+                                                    type="textarea"
+                                                    name={`${field}[${i}].comment`}
+                                                />
+                                                : <Comment value={comment}/>
+                                        }
+                                    </td>
+                                }
+                            </tr>
+                        )
+                    })
                 }
                 }/>
         )
-    };
+    }
 
     isEditable = (field) => {
         if (field === "quality" || field === "defects" || field === "backlog") {
@@ -254,6 +262,10 @@ export default class Quality extends React.Component {
             return this.state.editMode;
         }
     };
+
+    emptyToZero = (value) => {
+        return value === "" ? 0 : value;
+    }
 
     getEmptyRowObject = (comment) => ({
         rowNumber: 0,

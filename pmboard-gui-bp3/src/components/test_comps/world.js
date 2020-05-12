@@ -2,7 +2,19 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import PropTypes from 'prop-types';
 import {Formik, Field, Form, ErrorMessage} from "formik";
-import {HTMLTable, MenuItem, Popover, Position, Button, Menu, Dialog, Intent, Toast, Toaster} from "@blueprintjs/core";
+import {
+    HTMLTable,
+    MenuItem,
+    Popover,
+    Position,
+    Button,
+    Menu,
+    Dialog,
+    Intent,
+    Toast,
+    Toaster,
+    NumericInput
+} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import {Rnd} from "react-rnd";
@@ -216,6 +228,8 @@ export default class World extends React.Component {
                 <br/>
                 <br/>
                 <Button intent={Intent.DANGER} text={"Lol"} onClick={this.addToast}/>
+                <br/>
+                <NumericInput allowNumericCharactersOnly/>
             </>
         );
     }

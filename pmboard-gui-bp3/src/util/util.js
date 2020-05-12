@@ -2,10 +2,19 @@ import {boolToYesNo, dateFormatToString} from "./transform-funcs";
 import {isBoolean, picklistObjectsCompare} from "./comparators";
 
 export function formikFieldHandleChange(form) {
-    return function (name) {
+    return function (name, optionalRegexTest) {
         return function (val) {
-            const value = Number.isNaN(val) ? 0 : val;
-            form.setFieldValue(name, value);
+            let value = (typeof val === "object")
+                ? val.target.value
+                : val;
+
+            value = Number.isNaN(value) ? 0 : value;
+
+            if (optionalRegexTest && optionalRegexTest.test(String(value))) {
+                form.setFieldValue(name, value);
+            } else if (!optionalRegexTest) {
+                form.setFieldValue(name, value);
+            }
         }
     }
 }
@@ -93,3 +102,5 @@ export const isUrl = (value) => {
         return false;
     }
 };
+
+export const getSpecialNumericRegexp = () => /^([1-9]\d*%?)$|^0$|^\s$|^$/;
