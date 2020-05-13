@@ -2,6 +2,7 @@ import {Field} from "formik";
 import FormikCustomField from "../formik-custom-field/formik-custom-field";
 import React from "react";
 import {Button, Intent} from "@blueprintjs/core";
+import {getPropFromStringPath} from "../../util/util";
 
 export default function FormikInput(props) {
     return <Field {...props} component={FormikCustomField}/>;
@@ -41,6 +42,11 @@ export const MiniButton = React.memo((props) => (
     />
 ));
 
-export const ArrayErrors = ({errors, name}) => (
-    typeof errors[name] === 'string' ? <div style={{color: "red"}}>{errors[name]}</div> : null
-);
+export const ArrayErrors = ({errors, name}) => {
+    const error = getPropFromStringPath(errors, name);
+    return (
+        typeof error === 'string'
+            ? <div style={{color: "red"}}>{error}</div>
+            : null
+    );
+}

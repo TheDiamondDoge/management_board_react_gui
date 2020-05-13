@@ -93,9 +93,10 @@ export default () => {
                 .nullable(),
             ecmaBacklogTarget: Yup.array().of(
                 Yup.object().shape({
+                    milestone: Yup.string(),
                     value: nullableInteger(9999)
                 })
-            ),
+            ).unique("Duplicated milestone", a => a.milestone.toUpperCase()),
             projectCollabUrl: Yup.string()
                 .max(512, ValidationErrors.string.MAX)
                 .nullable(),

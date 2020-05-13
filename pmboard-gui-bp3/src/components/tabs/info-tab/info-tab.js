@@ -6,8 +6,8 @@ import EditSaveControls from "../../controls/edit-save-controls/edit-save-contro
 import styles from './info-tab.module.css'
 import PropTypes from 'prop-types';
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
-import {Field, Formik} from "formik";
-import FormikInput from "../../controls/util-renderers";
+import {Field, FieldArray, Formik} from "formik";
+import FormikInput, {ArrayErrors} from "../../controls/util-renderers";
 import FieldValue from "../../field-value/field-value";
 import {MilestoneShape, ProjectDefaults} from "../../../util/custom-types";
 import {formikFieldHandleChange} from "../../../util/util";
@@ -89,7 +89,7 @@ export default class InfoTab extends React.Component {
                         }
                     }
                     validationSchema={
-                        getValidationSchema
+                        getValidationSchema()
                     }
                     render={
                         (formikProps) => {
@@ -234,62 +234,70 @@ export default class InfoTab extends React.Component {
         )
     };
 
-    renderEcmaBacklogRow = (renderHelper, obj, stateBranch, value) => {
+    renderEcmaBacklogRow = (renderHelper, obj, stateBranch) => {
         const {editMode} = this.state;
         const {validationParams} = this.props.information.payload;
         return (
             renderHelper.displayOrNot(obj, validationParams) &&
-            <div key={obj} className={styles.data_container}>
-                <FieldName name={renderHelper.getLabelById(obj)}/>
-                <div className={styles.ecma_backlog_row}>
-                    {
-                        Object.keys(value).map((key, i) => {
-                                const milestoneSelectName = `${stateBranch}.${obj}.${key}.milestone`;
-                                const valueInputName = `${stateBranch}.${obj}.${key}.value`;
-                                return (
-                                    <React.Fragment key={key}>
-                                        <FieldName
-                                            key={`milestone_${i}`}
-                                            name={"Milestone"}
-                                        />
-                                        {
-                                            editMode
-                                                ? <Field key={`mil_val_${i}`}
-                                                         component="select"
-                                                         name={milestoneSelectName}
-                                                >
-                                                    <option value="">&nbsp;</option>
-                                                    <option value="CI">CI</option>
-                                                    <option value="TR">TR</option>
-                                                    <option value="DR4">DR4</option>
-                                                    <option value="DR5">DR5</option>
-                                                </Field>
-                                                : <FieldValue key={`mil_val_${i}`}
-                                                              value={value[key]["milestone"]}
-                                                />
-                                        }
-                                        <FieldName key={`value_${i}`}
-                                                   name={"Value"}
-                                                   className={styles.value_label}
-                                        />
-                                        {
-                                            editMode
-                                                ? <FormikInput key={`val_val_${i}`}
-                                                               type="numeric"
-                                                               onValueChange={this.handleChange(valueInputName)}
-                                                               name={valueInputName}
-                                                />
-                                                : <FieldValue key={`val_val_${i}`}
-                                                              value={value[key]["value"]}
-                                                />
-                                        }
-                                    </React.Fragment>
-                                )
-                            }
-                        )
-                    }
-                </div>
-            </div>
+            <FieldArray
+                name={`${stateBranch}.${obj}`}
+                render={(arrayHelpers) => {
+                    const value = arrayHelpers.form.values[stateBranch][obj];
+                    return (
+                        <div key={obj} className={styles.data_container}>
+                            <FieldName name={renderHelper.getLabelById(obj)}/>
+                                <div className={styles.ecma_backlog_row}>
+                                    {
+                                        Object.keys(value).map((key, i) => {
+                                                const milestoneSelectName = `${stateBranch}.${obj}.${key}.milestone`;
+                                                const valueInputName = `${stateBranch}.${obj}.${key}.value`;
+                                                return (
+                                                    <React.Fragment key={key}>
+                                                        <FieldName
+                                                            key={`milestone_${i}`}
+                                                            name={"Milestone"}
+                                                        />
+                                                        {
+                                                            editMode
+                                                                ? <Field key={`mil_val_${i}`}
+                                                                         component="select"
+                                                                         name={milestoneSelectName}
+                                                                >
+                                                                    <option value="">&nbsp;</option>
+                                                                    <option value="CI">CI</option>
+                                                                    <option value="TR">TR</option>
+                                                                    <option value="DR4">DR4</option>
+                                                                    <option value="DR5">DR5</option>
+                                                                </Field>
+                                                                : <FieldValue key={`mil_val_${i}`}
+                                                                              value={value[key]["milestone"]}
+                                                                />
+                                                        }
+                                                        <FieldName key={`value_${i}`}
+                                                                   name={"Value"}
+                                                                   className={styles.value_label}
+                                                        />
+                                                        {
+                                                            editMode
+                                                                ? <FormikInput key={`val_val_${i}`}
+                                                                               type="numeric"
+                                                                               onValueChange={this.handleChange(valueInputName)}
+                                                                               name={valueInputName}
+                                                                />
+                                                                : <FieldValue key={`val_val_${i}`}
+                                                                              value={value[key]["value"]}
+                                                                />
+                                                        }
+                                                    </React.Fragment>
+                                                )
+                                            }
+                                        )
+                                    }
+                                    <ArrayErrors name={`${stateBranch}.${obj}`} errors={arrayHelpers.form.errors}/>
+                            </div>
+                        </div>
+                    )
+                }}/>
         )
     };
 
