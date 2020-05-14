@@ -11,9 +11,9 @@ import {SearchInput} from "../controls/search-input";
 import AddEditDialog from "./comp/add-edit-dialog/add-edit-dialog";
 import {removeSelectedObjByLabel, renderValue} from "./util";
 import EnchantedRow from "./comp/enchanted-row/enchanted-row";
+import FieldName from "../field-name/field-name";
 
 //TODO: need to limit width of tds
-//TODO: "no data" message/state
 //TODO: need small delay on typing in search field?
 export default class EnchantedTable extends React.Component {
     constructor(props) {
@@ -34,6 +34,7 @@ export default class EnchantedTable extends React.Component {
         let {renderFooter, contextMenu, ...others} = otherProps;
         const tableClasses = classNames(className, styles.table_style);
         const isDialogOpen = this.state.editDialog.isOpen;
+        const colsAmount = columns.length;
         let filteredData = this.filter(data);
         filteredData = this.sortData(filteredData);
 
@@ -80,28 +81,34 @@ export default class EnchantedTable extends React.Component {
                         </thead>
 
                         <tbody>
-                        {filteredData.map((row, i) => {
-                            const rowKey = `row_${i}`;
-                            const contextMenuParams = this.getContextMenuParams(filteredData[i]);
-                            const menu = contextMenu ? contextMenu(contextMenuParams) : null;
-                            return (
-                                <EnchantedRow
-                                    key={rowKey}
-                                    contextMenu={menu}
-                                >
-                                    {columns.map((col) => {
-                                        const styles = this.getTdStyle(col, "column");
-                                        const colId = col.id || "";
-                                        const decorator = col.decorator;
+                        {
+                            filteredData.length > 0
+                                ? (
+                                    filteredData.map((row, i) => {
+                                        const rowKey = `row_${i}`;
+                                        const contextMenuParams = this.getContextMenuParams(filteredData[i]);
+                                        const menu = contextMenu ? contextMenu(contextMenuParams) : null;
                                         return (
-                                            <td key={colId} style={styles}>
-                                                {renderValue(row[colId], decorator, row)}
-                                            </td>
+                                            <EnchantedRow
+                                                key={rowKey}
+                                                contextMenu={menu}
+                                            >
+                                                {columns.map((col) => {
+                                                    const styles = this.getTdStyle(col, "column");
+                                                    const colId = col.id || "";
+                                                    const decorator = col.decorator;
+                                                    return (
+                                                        <td key={colId} style={styles}>
+                                                            {renderValue(row[colId], decorator, row)}
+                                                        </td>
+                                                    )
+                                                })}
+                                            </EnchantedRow>
                                         )
-                                    })}
-                                </EnchantedRow>
-                            )
-                        })}
+                                    })
+                                )
+                                : <tr><td colSpan={colsAmount}><FieldName name={"No data found"}/></td></tr>
+                        }
                         </tbody>
                     </HTMLTable>
                 </div>
