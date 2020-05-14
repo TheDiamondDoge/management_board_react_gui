@@ -11,7 +11,7 @@ export default {
     charter: {label: "Charter"},
     orBusinessPlan: {label: "OR Business Plan"},
     updatedBusinessPlan: {label: "Updated Business Plan"},
-    drChecklist: {label: "Tailored DR-checklist"},
+    drChecklist: {label: "Tailoring"},
     lessonsLearned: {label: "Lessons learned"},
     sponsor: {label: "Sponsor"},
     businessDivision: {label: "Business Division"},
@@ -39,8 +39,8 @@ export default {
     collabSite: {label: "Project Collaboration Site"},
     epmPwaSite: {
         label: "EPM project PWA Site:",
-        notAllowedIf: {
-            isEpm: [false],
+        allowedIf: {
+            isEpm: [true],
         }
     },
     documentationRepo: {label: "Project Documentation Repository"},
@@ -54,15 +54,10 @@ export default {
     activeActions: {label: "Active Actions"},
     epmLastSavedDate: {
         label: "EPM Last Saved",
-        notAllowedIf: {
-            isEpm: [false],
-        }
-    },
-    pwsLastUpdatedDate: {
-        label: "PWS Last Updated",
-        notAllowedIf: {
+        allowedIf: {
             isEpm: [true],
         }
     },
+    pwsLastUpdatedDate: {label: "PWS Last Updated"},
     pwsLastUpdatedBy: {label: "PWS Last Updated By"},
 };

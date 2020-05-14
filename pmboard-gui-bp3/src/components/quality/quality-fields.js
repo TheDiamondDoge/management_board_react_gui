@@ -1,10 +1,21 @@
+import {ProjectStates} from "../../util/constants";
+
 export default {
+    controls: {
+        label: "Sync Button",
+        allowedIf: {
+            workspaceStatus: [ProjectStates.ENABLED]
+        }
+    },
     quality: {
         label: "Quality KPI",
         help: "Help for quality"
     },
     defects: {
         label: "New Open Defects",
+        allowedIf: {
+            maintenance: [false],
+        },
         help: "Help for defects"
     },
     backlog: {

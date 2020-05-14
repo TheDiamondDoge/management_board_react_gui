@@ -96,7 +96,11 @@ export default () => {
                     milestone: Yup.string(),
                     value: nullableInteger(9999)
                 })
-            ).unique("Duplicated milestone", a => a.milestone.toUpperCase()),
+            ).nullable(),
+                // .unique("Duplicated milestone", a => console.log(a)),
+                // .unique("Duplicated milestone", a => {
+                //     return a.milestone != null ? a.milestone.toUpperCase() : null
+                // }),
             projectCollabUrl: Yup.string()
                 .max(512, ValidationErrors.string.MAX)
                 .nullable(),
@@ -128,6 +132,7 @@ export default () => {
                     .max(512, ValidationErrors.string.MAX)
                     .nullable(),
             })
-        ).unique("Duplicated label", a => a.label.toUpperCase())
+        )
+            .unique("Duplicated label", a => a.label.toUpperCase())
     })
 }

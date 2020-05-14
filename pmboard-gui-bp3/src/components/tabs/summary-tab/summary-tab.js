@@ -33,11 +33,12 @@ import Comment from "../../comment/comment";
 export default class SummaryTab extends React.Component {
     render() {
         const {loading} = this.props.summaryData;
-        const renderHelper = new RenderFieldHelper(summaryFieldsToRender);
+        const {payload: validationParams} = this.props.defaults;
+        const renderHelper = new RenderFieldHelper(summaryFieldsToRender, validationParams);
         if (loading) {
             return (<LoadingSpinner/>);
         } else {
-            const {general, status, links, pwsInfo, validationParams} = this.props.summaryData.payload;
+            const {general, status, links, pwsInfo} = this.props.summaryData.payload;
             const milestones = this.props.milestones;
             const healthIndicators = this.props.healthIndicators;
             const contribTable = this.props.contribTable;
@@ -66,7 +67,7 @@ export default class SummaryTab extends React.Component {
                         <div className="left_part">
                             {
                                 Object.keys(general).map((obj) => (
-                                    renderHelper.displayOrNot(obj, validationParams) && (
+                                    renderHelper.displayOrNot(obj) && (
                                         <div key={obj} className={mainCardStyle}>
                                             <FieldName name={renderHelper.getLabelById(obj)}/>
                                             {obj === "projectDescription"
@@ -99,7 +100,7 @@ export default class SummaryTab extends React.Component {
                                 Object.keys(status).map((obj) => {
                                     const flagClassColor = this.getClassForFlag(obj);
                                     return (
-                                        renderHelper.displayOrNot(obj, validationParams) && (
+                                        renderHelper.displayOrNot(obj) && (
                                             <div key={obj} className={styles.executive_block}>
                                                 <FieldName name={renderHelper.getLabelById(obj)}
                                                            className={flagClassColor}/>
@@ -114,7 +115,7 @@ export default class SummaryTab extends React.Component {
                         <div className={styles.right_part}>
                             {
                                 Object.keys(links).map((obj) => (
-                                    renderHelper.displayOrNot(obj, validationParams) && (
+                                    renderHelper.displayOrNot(obj) && (
                                         <div key={obj} className={secondaryCardStyle}>
                                             <FieldName name={renderHelper.getLabelById(obj)}/>
                                             <FieldValue value={`${links[obj]}`}/>
@@ -128,7 +129,7 @@ export default class SummaryTab extends React.Component {
                         <div>
                             {
                                 Object.keys(pwsInfo).map((obj) => (
-                                    renderHelper.displayOrNot(obj, validationParams) && (
+                                    renderHelper.displayOrNot(obj) && (
                                         <div key={obj} className={styles.data_fields}>
                                             <FieldName name={renderHelper.getLabelById(obj)}/>
                                             {this.renderHelper(obj, pwsInfo[obj])}

@@ -1,18 +1,20 @@
 export default class RenderFieldHelper {
-    constructor(fieldsObjects) {
+    constructor(fieldsObjects, validationParams) {
         this._fieldsToRender = fieldsObjects;
+        this._validationParams = validationParams;
     }
     
     _allowedIf = "allowedIf";
     _notAllowedIf = "notAllowedIf";
 
-    displayOrNot(id, options) {
+    displayOrNot(id) {
         if (!this.isLabelExists(id)) return false;
+        if (!this._fieldsToRender[id]) return false;
 
         if (this._fieldsToRender[id].hasOwnProperty(this._allowedIf)) {
-            return this._shouldRender(this._allowedIf, options, id);
+            return this._shouldRender(this._allowedIf, id);
         } else if (this._fieldsToRender[id].hasOwnProperty(this._notAllowedIf)) {
-            return this._shouldRender(this._notAllowedIf, options, id);
+            return this._shouldRender(this._notAllowedIf, id);
         }
 
         return true;
@@ -46,22 +48,22 @@ export default class RenderFieldHelper {
         }
     }
 
-    _shouldRender(fieldOptions, options, id) {
+    _shouldRender(fieldOptions, id) {
         if (this._fieldsToRender[id].hasOwnProperty(fieldOptions)) {
             let fieldProps = this._fieldsToRender[id][fieldOptions];
             let props = Object.keys(fieldProps);
             for (let i = 0; i < props.length; i++) {
                 const prop = props[i];
-                if (options[prop] !== undefined) {
+                if (this._validationParams[prop] !== undefined) {
                     for (let i = 0; i < fieldProps[prop].length; i++) {
                         if (fieldOptions === "allowedIf") {
-                            if (fieldProps[prop][i] === options[prop]) {
+                            if (fieldProps[prop][i] === this._validationParams[prop]) {
                                 return true;
                             }
                         }
 
                         if (fieldOptions === "notAllowedIf") {
-                            if (fieldProps[prop][i] !== options[prop]) {
+                            if (fieldProps[prop][i] !== this._validationParams[prop]) {
                                 return true;
                             }
                         }

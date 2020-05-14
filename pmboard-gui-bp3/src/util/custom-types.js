@@ -85,7 +85,6 @@ export const SummaryShape = PropTypes.shape({
     links: PropTypes.object,
     pwsInfo: PropTypes.object,
     status: PropTypes.object,
-    validationParams: PropTypes.object,
 });
 
 const BlcIndicators = PropTypes.shape({

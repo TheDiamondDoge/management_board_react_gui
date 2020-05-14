@@ -143,7 +143,8 @@ export default class InfoTab extends React.Component {
     };
 
     mainRows = (values, stateBranch) => {
-        const renderHelper = new RenderFieldHelper(infoFieldsToRender);
+        const {validationParams} = this.props.information.payload;
+        const renderHelper = new RenderFieldHelper(infoFieldsToRender, validationParams);
         return (Object.keys(infoFieldsToRender).map((key) => {
             if (values[key] === undefined) return true;
             return this.renderRow(renderHelper, key, stateBranch, values);
@@ -172,12 +173,11 @@ export default class InfoTab extends React.Component {
 
     renderSimpleRow = (renderHelper, obj, stateBranch, value) => {
         const {editMode} = this.state;
-        const {validationParams} = this.props.information.payload;
         const style = this.selectClass(stateBranch);
         const formikProps = renderHelper.getFieldProps(obj, value);
         const displayValue = isBoolean(value) ? boolToYesNo(value) : value;
         return (
-            renderHelper.displayOrNot(obj, validationParams) &&
+            renderHelper.displayOrNot(obj) &&
             <div key={obj} className={style}>
                 <FieldName name={renderHelper.getLabelById(obj)}/>
                 {
@@ -200,10 +200,9 @@ export default class InfoTab extends React.Component {
 
     renderRowWithComment = (renderHelper, obj, stateBranch, value) => {
         const {editMode} = this.state;
-        const {validationParams} = this.props.information.payload;
         const formikProps = renderHelper.getFieldProps(obj, value);
         return (
-            renderHelper.displayOrNot(obj, validationParams) &&
+            renderHelper.displayOrNot(obj) &&
             <div key={obj} className={styles.data_container_comment}>
                 <div className={styles.comment_row_label}>
                     <FieldName name={renderHelper.getLabelById(obj)}/>
@@ -236,9 +235,8 @@ export default class InfoTab extends React.Component {
 
     renderEcmaBacklogRow = (renderHelper, obj, stateBranch) => {
         const {editMode} = this.state;
-        const {validationParams} = this.props.information.payload;
         return (
-            renderHelper.displayOrNot(obj, validationParams) &&
+            renderHelper.displayOrNot(obj) &&
             <FieldArray
                 name={`${stateBranch}.${obj}`}
                 render={(arrayHelpers) => {
@@ -304,12 +302,11 @@ export default class InfoTab extends React.Component {
     renderContributingProjectsRow = (renderHelper, obj, stateBranch, value, isComposite) => {
         const {loading, payload} = this.props.contrib;
         const {editMode} = this.state;
-        const {validationParams} = this.props.information.payload;
         const valueStrings = value.map((val) => val.projectName);
         const editProjectList = this.handleChange(`${stateBranch}.${obj}`);
         const style = this.selectClass(stateBranch);
         return (
-            renderHelper.displayOrNot(obj, validationParams) && isComposite &&
+            renderHelper.displayOrNot(obj) && isComposite &&
             <div key={obj} className={style}>
                 <FieldName name={renderHelper.getLabelById(obj)}/>
                 {

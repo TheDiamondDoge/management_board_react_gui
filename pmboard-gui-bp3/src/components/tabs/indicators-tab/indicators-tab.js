@@ -24,11 +24,15 @@ import {
 import ErrorBoundary from "../../error-boundary/error-boundary";
 import {getPropFromStringPath} from "../../../util/util";
 import {getIndicatorsColor} from "../../../util/transform-funcs";
+import RenderFieldHelper from "../../../util/render-field-helper";
+import fieldsParams from "./indicators-fields";
 
 export default class IndicatorsTab extends React.Component {
     //TODO: use render-helper class
     render() {
         this.projectId = this.props.defaults.payload.projectId;
+        const validationParams = this.props.defaults.payload;
+        const renderHelper = new RenderFieldHelper(fieldsParams, validationParams);
         const {milestones, healthIndicators, requirements, milestonesKpi, dr4Kpi, qualityKpi} = this.props;
         const overall = getPropFromStringPath(healthIndicators, "payload.statuses.current.overall");
         const overallIndicator = getIndicatorsColor(overall);
@@ -74,6 +78,7 @@ export default class IndicatorsTab extends React.Component {
                                         <Requirements
                                             requirements={requirements.payload}
                                             fieldsToRender={fieldsRequirements}
+                                            fieldsRenderValidation={validationParams}
                                             rqsSubmit={this.handleRqsSubmit}
                                             rqsReload={this.handleRqsReload}
                                         />
@@ -109,23 +114,27 @@ export default class IndicatorsTab extends React.Component {
                         }
                     </CustomCard>
                 </div>
-                <CustomCard className={classNames(styles.quality, styles.card)}>
-                    <h3>Quality</h3>
-                    {
-                        qualityKpi.loading
-                            ? <LoadingSpinner/>
-                            : (
-                                <ErrorBoundary>
-                                    <Quality
-                                        qualityKpi={qualityKpi.payload}
-                                        fieldsToRender={qualityFields}
-                                        onSubmit={this.handleQualitySubmit}
-                                        onCancel={this.handleQualityReload}
-                                    />
-                                </ErrorBoundary>
-                            )
-                    }
-                </CustomCard>
+                {
+                    renderHelper.displayOrNot("quality") &&
+                    <CustomCard className={classNames(styles.quality, styles.card)}>
+                        <h3>Quality</h3>
+                        {
+                            qualityKpi.loading
+                                ? <LoadingSpinner/>
+                                : (
+                                    <ErrorBoundary>
+                                        <Quality
+                                            qualityKpi={qualityKpi.payload}
+                                            fieldsToRender={qualityFields}
+                                            fieldsRenderValidation={validationParams}
+                                            onSubmit={this.handleQualitySubmit}
+                                            onCancel={this.handleQualityReload}
+                                        />
+                                    </ErrorBoundary>
+                                )
+                        }
+                    </CustomCard>
+                }
             </div>
         )
     }

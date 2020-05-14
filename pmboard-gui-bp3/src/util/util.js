@@ -4,14 +4,15 @@ import {isBoolean, picklistObjectsCompare} from "./comparators";
 export function formikFieldHandleChange(form) {
     return function (name, optionalRegexTest) {
         return function (val) {
-            let value = (typeof val === "object")
-                ? val.target.value
-                : val;
+            let value = Number.isNaN(val) ? 0 : val;
 
-            value = Number.isNaN(value) ? 0 : value;
-
-            if (optionalRegexTest && optionalRegexTest.test(String(value))) {
-                form.setFieldValue(name, value);
+            if (optionalRegexTest) {
+                value = (typeof val === "object" && val != null)
+                    ? val.target.value
+                    : val;
+                if (optionalRegexTest.test(String(value))) {
+                    form.setFieldValue(name, value);
+                }
             } else if (!optionalRegexTest) {
                 form.setFieldValue(name, value);
             }

@@ -9,9 +9,10 @@ import PropTypes from 'prop-types';
 import {dateFormatToString} from "../../util/transform-funcs";
 import {Formik} from "formik";
 import FormikInput from "../controls/util-renderers";
-import {FieldsToRenderShape, RequirementsShape} from "../../util/custom-types";
+import {FieldsToRenderShape, ProjectDefaults, RequirementsShape} from "../../util/custom-types";
 import {formikFieldHandleChange} from "../../util/util";
 import getValidationSchema from "./validation-schema";
+import RenderFieldHelper from "../../util/render-field-helper";
 
 export default class Requirements extends React.Component {
     constructor(props) {
@@ -63,34 +64,48 @@ export default class Requirements extends React.Component {
     renderRqsTable = (values) => {
         let valueColumnClasses = classNames(styles.value_col, styles.column_align_center);
         const {rqsReload, fieldsToRender} = this.props;
+        const {fieldsRenderValidation} = this.props;
+        const renderHelper = new RenderFieldHelper(fieldsToRender, fieldsRenderValidation);
         return (
             <HTMLTable
                 className={styles.req_table}
-                striped={true}
+                striped
             >
                 <colgroup>
                     <col className={styles.title_col}/>
                     <col className={valueColumnClasses}/>
                 </colgroup>
                 <thead>
-                <tr>
-                    <th className={styles.table_header} colSpan={2}>
-                        <EditSaveControls smallSize
-                                          onClick={this.onClickEdit}
-                                          editMode={this.state.editMode}
-                                          onSubmit={this.onSubmit}
-                                          onCancel={rqsReload}
-                        />
-                    </th>
-                </tr>
+                {
+                    renderHelper.displayOrNot("controls") &&
+                    <tr>
+                        <th className={styles.table_header} colSpan={2}>
+                            <EditSaveControls smallSize
+                                              onClick={this.onClickEdit}
+                                              editMode={this.state.editMode}
+                                              onSubmit={this.onSubmit}
+                                              onCancel={rqsReload}
+                            />
+                        </th>
+                    </tr>
+                }
                 </thead>
                 <tbody>
                 {
+                    renderHelper.displayOrNot("note") &&
+                    <tr>
+                        <td colSpan={2}>
+                            <FieldName name={renderHelper.getLabelById("note")}/>
+                        </td>
+                    </tr>
+                }
+                {
                     Object.keys(fieldsToRender).map((field) => {
-                        const label = fieldsToRender[field].label;
+                        if (field === "note" && field === "controls") return true;
                         return (
+                            renderHelper.displayOrNot(field) &&
                             <tr key={field}>
-                                <td><FieldName name={label}/></td>
+                                <td><FieldName name={renderHelper.getLabelById(field)}/></td>
                                 <td>{this.renderValueField(field, values)}</td>
                             </tr>
                         )
@@ -102,6 +117,7 @@ export default class Requirements extends React.Component {
     };
 
     renderValueField = (propName, values) => {
+        console.log(values)
         const {dr1Actual} = this.props.requirements;
         const dr1 = (dr1Actual === null || dr1Actual === "") ? "" : new Date(dr1Actual);
         const {sum} = this.props.requirements;
@@ -127,6 +143,7 @@ export default class Requirements extends React.Component {
 Requirements.propTypes = {
     requirements: RequirementsShape.isRequired,
     fieldsToRender: FieldsToRenderShape.isRequired,
+    fieldsRenderValidation: ProjectDefaults,
     rqsSubmit: PropTypes.func,
     rqsReload: PropTypes.func
 };

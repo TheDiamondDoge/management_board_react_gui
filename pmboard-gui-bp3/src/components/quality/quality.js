@@ -8,11 +8,12 @@ import {FieldArray, Formik} from "formik";
 import FormikInput, {RenderControls} from "../controls/util-renderers";
 import HelpIcon from "../help-icon/help-icon";
 import {getDateFromStringWithTime} from "../../util/transform-funcs";
-import {FieldsToRenderShape, QualityIndicatorsShape} from "../../util/custom-types";
+import {FieldsToRenderShape, ProjectDefaults, QualityIndicatorsShape} from "../../util/custom-types";
 import FieldValue from "../field-value/field-value";
 import {formikFieldHandleChange, getSpecialNumericRegexp} from "../../util/util";
 import getValidationSchema from "./validation-schema";
 import Comment from "../comment/comment";
+import RenderFieldHelper from "../../util/render-field-helper";
 
 export default class Quality extends React.Component {
     constructor(props) {
@@ -85,29 +86,43 @@ export default class Quality extends React.Component {
     };
 
     renderQualityForm = (values) => {
+        const controlsAttrName = "controls";
         const {syncDate} = this.props.qualityKpi;
-        const {fieldsToRender, onCancel} = this.props;
-
+        const {fieldsToRender, onCancel, fieldsRenderValidation} = this.props;
+        const renderHelper = new RenderFieldHelper(fieldsToRender, fieldsRenderValidation);
+        const controlsRendered = renderHelper.displayOrNot(controlsAttrName);
+        const editBtnProps = {};
+        if (!fieldsRenderValidation.dr1Actual) {
+            editBtnProps.disabled = true;
+            editBtnProps.title = "Set DR1 date to enable syncro";
+        }
         return (
             <>
                 <div>
                     <div className={styles.float_left}>
-                        <Button
-                            minimal
-                            intent={"primary"}
-                        >
-                            <Icon icon={"refresh"}/>
-                        </Button>
+                        {
+                            controlsRendered &&
+                            <Button
+                                minimal
+                                intent={"primary"}
+                                {...editBtnProps}
+                            >
+                                <Icon icon={"refresh"}/>
+                            </Button>
+                        }
                         Last synchro:
                         <span className={styles.sync_date}>{getDateFromStringWithTime(syncDate)}</span>
                     </div>
-                    <EditSaveControls
-                        className={styles.float_right}
-                        onClick={this.onClickEdit}
-                        onSubmit={this.onSubmitForm}
-                        editMode={this.state.editMode}
-                        onCancel={onCancel}
-                    />
+                    {
+                        controlsRendered &&
+                        <EditSaveControls
+                            className={styles.float_right}
+                            onClick={this.onClickEdit}
+                            onSubmit={this.onSubmitForm}
+                            editMode={this.state.editMode}
+                            onCancel={onCancel}
+                        />
+                    }
                 </div>
                 <HTMLTable
                     striped
@@ -133,13 +148,17 @@ export default class Quality extends React.Component {
                     </thead>
                     <tbody>
                     {
-                        //TODO: render-helper-class
                         Object.keys(fieldsToRender).map(field => {
-                                if (field === "testExecution" || field === "testRate") {
-                                    return this.renderComplexRows(values, field, true);
-                                } else {
-                                    return this.renderComplexRows(values, field, false);
+                                if (field === controlsAttrName) return true;
+                                if (renderHelper.displayOrNot(field)) {
+                                    if (field === "testExecution" || field === "testRate") {
+                                        return this.renderComplexRows(values, field, true);
+                                    } else {
+                                        return this.renderComplexRows(values, field, false);
+                                    }
                                 }
+
+                                return true;
                             }
                         )
                     }
@@ -287,6 +306,7 @@ export default class Quality extends React.Component {
 Quality.propTypes = {
     fieldsToRender: FieldsToRenderShape,
     qualityKpi: QualityIndicatorsShape,
+    fieldsRenderValidation: ProjectDefaults,
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
 };

@@ -1,7 +1,21 @@
+import {ProjectStates, ProjectTypes} from "../../util/constants";
+
 export default {
-   dr1Actual: {
-       label: "DR1 date (actual)",
-   },
+    controls: {
+        label: "Controls",
+        allowedIf: {
+            workspaceStatus: [ProjectStates.ENABLED]
+        }
+    },
+    note: {
+        label: "* For Offer Program, Requirement means 'Commercial deliverable'",
+        allowedIf: {
+            projectType: [ProjectTypes.OFFER]
+        }
+    },
+    dr1Actual: {
+        label: "DR1 date (actual)",
+    },
     committedAtDr1: {
         label: "# Requirements committed (baseline) at DR1",
     },

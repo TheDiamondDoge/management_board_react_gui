@@ -22,8 +22,8 @@ export const PWSTabs = {
 };
 
 export const ProjectStates = {
-    ENABLED: "ENABLED",
-    DISABLED: "DISABLED"
+    ENABLED: "Enabled",
+    DISABLED: "Disabled"
 };
 
 export const ValidationErrors = {
