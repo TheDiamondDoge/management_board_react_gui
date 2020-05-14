@@ -8,7 +8,9 @@ import {createEnchantedTableFilters} from "../../../util/util";
 import TableFooter from "./components/tableFooter";
 import ContextMenu from "./components/contextMenu";
 import validationSchema from "./validation-schema";
+import renderFields from "./fields";
 import {ProjectDefaults} from "../../../util/custom-types";
+import RenderFieldHelper from "../../../util/render-field-helper";
 
 export default class Actions extends React.Component {
     render() {
@@ -17,6 +19,8 @@ export default class Actions extends React.Component {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             this.projectId = this.props.defaults.payload.projectId;
+            const validationParams = this.props.defaults.payload;
+            const renderHelper = new RenderFieldHelper(renderFields, validationParams);
             const {payload} = this.props.actions;
             const filters = createEnchantedTableFilters(payload);
             let relatedRisks = this.props.relatedRisks;
@@ -38,21 +42,42 @@ export default class Actions extends React.Component {
                         interactive
                         bordered
                         validationSchema={validationSchema}
-                        contextMenu={
-                            (menuFuncs) =>
-                                <ContextMenu onEdit={menuFuncs.editRow}
-                                             onDelete={() => this.handleDeleteAction(menuFuncs.getRow().uid)}
-                                />
-                        }
-                        renderFooter={
-                            (tableFuncs) =>
-                                <TableFooter onRefresh={this.handleLoadData} onAdd={tableFuncs.dialogOpen}/>
-                        }
+                        contextMenu={this.getContextMenu(renderHelper)}
+                        renderFooter={this.getTableFooter(renderHelper)}
                     />
                 </CustomCard>
             )
         }
     }
+
+    getTableFooter = (renderHelper) => {
+        const renderable = renderHelper.displayOrNot("controls");
+        const props = {
+            onRefresh: this.handleLoadData
+        };
+        return (
+            (tableFuncs) => {
+                if (renderable) {
+                    props.onAdd = tableFuncs.dialogOpen;
+                }
+                return <TableFooter {...props}/>
+            }
+        )
+    }
+
+
+    getContextMenu = (renderHelper) => {
+        if (renderHelper.displayOrNot("controls")) {
+            return (
+                (menuFuncs) =>
+                    <ContextMenu onEdit={menuFuncs.editRow}
+                                 onDelete={() => this.handleDeleteAction(menuFuncs.getRow().uid)}
+                    />
+            )
+        }
+
+        return null;
+    };
 
     handleSaveAction = (data) => {
         this.props.saveAction(this.projectId, data);

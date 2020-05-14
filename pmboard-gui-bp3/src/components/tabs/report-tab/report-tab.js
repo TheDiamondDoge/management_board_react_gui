@@ -20,6 +20,8 @@ import RqsReportList from "../../rqs-report-list/rqs-report-list";
 import ReportQuillsForm from "./report-quills-form/report-quills-form";
 import ExportMenu from "./export-menu/export-menu";
 import {getIndicatorsColor} from "../../../util/transform-funcs";
+import renderFields from "./fields";
+import RenderFieldHelper from "../../../util/render-field-helper";
 
 export default class ReportTab extends React.Component {
     render() {
@@ -28,6 +30,8 @@ export default class ReportTab extends React.Component {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             this.projectId = this.props.defaults.payload.projectId;
+            const validationParams = this.props.defaults.payload;
+            const renderHelper = new RenderFieldHelper(renderFields, validationParams);
             const {updatedOn, projectName, projectManager} = this.props.report.payload;
             const {payload: data, loading: risksLoading} = this.props.risks;
             const {payload: milestones, loading: milestonesLoading} = this.props.milestones;
@@ -70,6 +74,7 @@ export default class ReportTab extends React.Component {
                                 data={userReportsPayload}
                                 onCancel={this.handleUserReportReload}
                                 onSubmit={this.handleSaveData}
+                                blocked={!renderHelper.displayOrNot("controls")}
                             />
                         }
                     </CustomCard>

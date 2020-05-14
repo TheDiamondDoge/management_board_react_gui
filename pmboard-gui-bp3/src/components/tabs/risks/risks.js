@@ -13,6 +13,8 @@ import ImportErrorsDialog from "../../import-errors-dialog/import-errors-dialog"
 import LastUpdatedLabel from "../../last-updated-label/last-updated-label";
 import LastUpdated from "../../last-updated/last-updated";
 import styles from "../cost-tab/cost-tab.module.css";
+import renderFields from "./fields";
+import RenderFieldHelper from "../../../util/render-field-helper";
 
 export default class Risks extends React.Component {
     constructor(props) {
@@ -30,9 +32,12 @@ export default class Risks extends React.Component {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             const {payload, errorListShowed} = this.props.risks;
-            const {uploadRisksFile, setErrorsShowedTrue, getLastUploadedFile, downloadRisks} = this.props;
+            const {uploadRisksFile, setErrorsShowedTrue, getLastUploadedFile} = this.props;
             this.projectId = this.props.defaults.payload.projectId;
             const {projectName} = this.props.defaults.payload;
+            const validationParams = this.props.defaults.payload;
+            const renderHelper = new RenderFieldHelper(renderFields, validationParams);
+
             const {errors} = this.props.risks;
 
             const picklists = createEnchantedTableFilters(payload.risks);
@@ -57,14 +62,8 @@ export default class Risks extends React.Component {
                             interactive
                             bordered
                             editable
-                            contextMenu={
-                                (menuFuncs) => <ContextMenu onEdit={menuFuncs.editRow}/>
-                            }
-                            renderFooter={() => (
-                                <TableFooter onExcelExport={() => downloadRisks(this.projectId, projectName)}
-                                             onExcelImport={this.openFileUploadDialog}
-                                />
-                            )}
+                            contextMenu={this.getContextMenu(renderHelper)}
+                            renderFooter={this.getTableFooter(renderHelper)}
                         />
                         <UploadFileControlsHidden uploadRef={this.uploadRef}
                                                   onSubmit={(file) => uploadRisksFile(this.projectId, file)}
@@ -77,6 +76,32 @@ export default class Risks extends React.Component {
                 </>
             );
         }
+    }
+
+    getContextMenu = (renderHelper) => {
+        if (renderHelper.displayOrNot("controls")) {
+            return (
+                (menuFuncs) => <ContextMenu onEdit={menuFuncs.editRow}/>
+            )
+        }
+
+        return null;
+    }
+
+    getTableFooter = (renderHelper) => {
+        const downloadRisks = this.props.downloadRisks;
+        const {projectName} = this.props.defaults.payload;
+        const footerProps = {
+            onExcelExport: () => downloadRisks(this.projectId, projectName)
+        }
+
+        if (renderHelper.displayOrNot("controls")) {
+            footerProps.onExcelImport = this.openFileUploadDialog;
+        }
+
+        return (
+            () => <TableFooter {...footerProps}/>
+        )
     }
 
     openFileUploadDialog = () => {

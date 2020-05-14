@@ -18,3 +18,7 @@
 .inline_block {
     display: inline-block;
 }
+
+.updated_block {
+    margin-bottom: 17px;
+}

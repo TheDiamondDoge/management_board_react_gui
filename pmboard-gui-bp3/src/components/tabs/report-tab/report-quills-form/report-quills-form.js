@@ -24,21 +24,24 @@ export default class ReportQuillsForm extends React.Component {
     submitForm = null;
 
     render() {
-        const {data, onCancel, onSubmit} = this.props;
+        const {data, onCancel, onSubmit, blocked} = this.props;
         const formikNames = ["summary", "red", "orange", "green", "details"];
         return (
             <>
-                <EditSaveControls
-                    sticky
-                    className={styles.controls}
-                    onClick={this.toggleEditMode}
-                    editMode={this.state.editMode}
-                    onCancel={() => {
-                        onCancel();
-                        this.toggleEditMode();
-                    }}
-                    onSubmit={this.submitForm}
-                />
+                {
+                    blocked ||
+                    <EditSaveControls
+                        sticky
+                        className={styles.controls}
+                        onClick={this.toggleEditMode}
+                        editMode={this.state.editMode}
+                        onCancel={() => {
+                            onCancel();
+                            this.toggleEditMode();
+                        }}
+                        onSubmit={this.submitForm}
+                    />
+                }
                 <Formik
                     enableReinitialize
                     onSubmit={(values, formikActions) => {
@@ -110,6 +113,11 @@ ReportQuillsForm.propTypes = {
         quality: PropTypes.number,
         cost: PropTypes.number
     }),
+    blocked: PropTypes.bool,
     onCancel: PropTypes.func.isRequired,
     onSubmit: PropTypes.func.isRequired,
 };
+
+ReportQuillsForm.defaultProps = {
+    blocked: false
+}

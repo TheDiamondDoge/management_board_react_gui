@@ -10,6 +10,8 @@ import SafeUrl from "../../safe-url/safe-url";
 import UploadFileControlsHidden from "../../upload-file-controls/upload-file-controls-hidden";
 import {Button, Intent} from "@blueprintjs/core";
 import LastUpdatedLabel from "../../last-updated-label/last-updated-label";
+import renderFields from "./fields";
+import RenderFieldHelper from "../../../util/render-field-helper";
 
 export default class CostTab extends React.Component {
     constructor(props) {
@@ -35,6 +37,8 @@ export default class CostTab extends React.Component {
             const {updated, charged, capex, fileExists} = this.props.cost.payload;
             const {uploadCost, getLastUploadedFile} = this.props;
             const {projectId, projectName} = this.props.defaults.payload;
+            const validationParams = this.props.defaults.payload;
+            const renderHelper = new RenderFieldHelper(renderFields, validationParams);
             return (
                 <>
                     <CustomCard>
@@ -47,14 +51,17 @@ export default class CostTab extends React.Component {
                         </div>
                     </CustomCard>
                     <CustomCard>
-                        <div className={styles.import_container}>
-                            <Button text={"Import Cost File"}
-                                    icon={"import"}
-                                    onClick={this.openFileUploadDialog}
-                                    intent={Intent.PRIMARY}
-                                    minimal
-                            />
-                        </div>
+                        {
+                            renderHelper.displayOrNot("controls") &&
+                            <div className={styles.import_container}>
+                                <Button text={"Import Cost File"}
+                                        icon={"import"}
+                                        onClick={this.openFileUploadDialog}
+                                        intent={Intent.PRIMARY}
+                                        minimal
+                                />
+                            </div>
+                        }
                         <CostTable tableName={"Effort"} data={charged}/>
                     </CustomCard>
                     <CustomCard>

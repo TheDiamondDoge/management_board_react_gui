@@ -11,8 +11,7 @@ import {BacklogDefectsTypes} from "../../../util/custom-types";
 export default class BacklogDefectsPage extends React.Component {
     render() {
         const payload = this.props.data;
-        const {updatedOn, header, tooltip, onUpdate, onCurrentClick} = this.props;
-        const currentWeekClasses = classNames(styles.float_right, styles.inline_block);
+        const {updatedOn, header, tooltip} = this.props;
         return (
             <>
                 <div className={styles.header_container}>
@@ -28,9 +27,24 @@ export default class BacklogDefectsPage extends React.Component {
                 </div>
                 <BarChart data={payload}/>
                 <br/>
-                <UpdatedInfo date={updatedOn}/>
-                <br/>
-                <div>
+                <UpdatedInfo date={updatedOn} className={styles.updated_block}/>
+                {this.getFooter()}
+            </>
+        );
+    }
+
+    getFooter = () => {
+        const {onUpdate, blocked, onCurrentClick} = this.props;
+        const currentWeekClasses = classNames(
+            {[styles.float_right]: !blocked},
+            styles.inline_block
+        );
+
+        const uploadLabel = blocked ? "Last week" : "Current week";
+        return (
+            <div>
+                {
+                    blocked ||
                     <div className={styles.inline_block}>
                         <Button
                             minimal
@@ -40,17 +54,17 @@ export default class BacklogDefectsPage extends React.Component {
                             onClick={onUpdate}
                         />
                     </div>
-                    <div className={currentWeekClasses}>
-                        <Button
-                            minimal
-                            icon={"download"}
-                            intent={Intent.PRIMARY}
-                            text="Current week"
-                            onClick={onCurrentClick}
-                        />
-                    </div>
+                }
+                <div className={currentWeekClasses}>
+                    <Button
+                        minimal
+                        icon={"download"}
+                        intent={Intent.PRIMARY}
+                        text={uploadLabel}
+                        onClick={onCurrentClick}
+                    />
                 </div>
-            </>
+            </div>
         );
     }
 }
@@ -62,4 +76,5 @@ BacklogDefectsPage.propTypes = {
     onCurrentClick: PropTypes.func.isRequired,
     updatedOn: PropTypes.string,
     tooltip: PropTypes.element,
+    blocked: PropTypes.bool
 };

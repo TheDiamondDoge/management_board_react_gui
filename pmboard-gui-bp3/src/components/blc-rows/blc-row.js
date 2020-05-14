@@ -68,7 +68,7 @@ export default class BlcRow extends React.Component {
     }
 
     shouldShowEditButton() {
-        return !this.props.isValuesEdit && !this.props.isCommentsEdit && !this.props.isControlsHidden
+        return !this.props.isValuesEdit && !this.props.isCommentsEdit && !this.props.isControlsHidden && !this.props.blocked
     }
 
     selectElement = (num, key) => {
@@ -100,4 +100,5 @@ BlcRow.propTypes = {
     isControlsHidden: PropTypes.bool,
     rowValues: PropTypes.object.isRequired,
     comment: PropTypes.string,
+    blocked: PropTypes.bool,
 };

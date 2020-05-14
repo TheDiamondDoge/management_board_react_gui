@@ -11,6 +11,8 @@ import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {Formik} from "formik";
 import {formikFieldHandleChange} from "../../../util/util";
 import {BlcTab, ProjectDefaults} from "../../../util/custom-types";
+import renderFields from "./fields";
+import RenderFieldHelper from "../../../util/render-field-helper";
 
 export default class BlcDashboard extends React.Component {
     constructor(props) {
@@ -26,52 +28,27 @@ export default class BlcDashboard extends React.Component {
     submitForm = null;
     handleChange = null;
 
-    bindFormSubmission = (formikSubmitFunc) => {
-        this.submitForm = formikSubmitFunc;
-    };
-
-    onClickEdit = (row) => {
-        this.setState((prevState) => ({
-                [row]: !prevState[row]
-            }
-        ))
-    };
-
-    onClickCommentsEdit = () => {
-        this.setState({
-            isCommentsEdit: true
-        })
-    };
-
-    cancelEdit = () => {
-        this.setState({
-            isPmRow: false,
-            isPmoRow: false,
-            isSalesRow: false,
-            isCommentsEdit: false,
-        });
-    };
-
     render() {
         const {loading} = this.props.blcTab;
-
         if (loading) {
             return <LoadingSpinner/>
         } else {
             this.projectId = this.props.defaults.payload.projectId;
+            const validationParams = this.props.defaults.payload;
+            this.renderHelper = new RenderFieldHelper(renderFields, validationParams);
             const {pm, pmo, sales, rowToSave} = this.props.blcTab.payload;
-            const showSubmitCancel = this.shouldShowEditControls();
+            const showSubmitCancel = this.shouldShowEditControls() && this.renderHelper.displayOrNot("controls");
             return (
                 <>
                     <CustomCard>
-                        <Button intent={Intent.SUCCESS}
-                                className={Classes.MINIMAL}
-                                icon={"upload"}
-                                text={"Publish Dashboard"}
-                        />
-                        <br/>
-                        <br/>
-
+                        {
+                            this.renderHelper.displayOrNot("controls") &&
+                            <Button intent={Intent.SUCCESS}
+                                    className={classNames(Classes.MINIMAL, styles.publish_btn)}
+                                    icon={"upload"}
+                                    text={"Publish Dashboard"}
+                            />
+                        }
                         <Formik
                             onSubmit={(values, formikActions) => {
                                 formikActions.setSubmitting(false);
@@ -114,6 +91,32 @@ export default class BlcDashboard extends React.Component {
         }
     }
 
+    bindFormSubmission = (formikSubmitFunc) => {
+        this.submitForm = formikSubmitFunc;
+    };
+
+    onClickEdit = (row) => {
+        this.setState((prevState) => ({
+                [row]: !prevState[row]
+            }
+        ))
+    };
+
+    onClickCommentsEdit = () => {
+        this.setState({
+            isCommentsEdit: true
+        })
+    };
+
+    cancelEdit = () => {
+        this.setState({
+            isPmRow: false,
+            isPmoRow: false,
+            isSalesRow: false,
+            isCommentsEdit: false,
+        });
+    };
+
     shouldShowEditControls() {
         return this.state.isPmoRow || this.state.isPmRow || this.state.isSalesRow || this.state.isCommentsEdit;
     }
@@ -135,6 +138,7 @@ export default class BlcDashboard extends React.Component {
     renderBlcTab = (formikProps) => {
         const thClasses = classNames(styles.column_align_center, styles.border_right);
         const thCommentClasses = classNames(styles.column_align_center);
+        const controlsAllowed = this.renderHelper.displayOrNot("controls");
         const {pm, pmo, sales} = formikProps.values;
         return (
             <div style={{position: "relative"}}>
@@ -145,12 +149,12 @@ export default class BlcDashboard extends React.Component {
                         className={styles.blc_table}
                     >
                         {this.renderColGroup()}
-                        {this.renderHeader(thClasses, thCommentClasses)}
+                        {this.renderHeader(thClasses, thCommentClasses, controlsAllowed)}
 
                         <tbody>
                         <BlcRow
                             rowName={"pm"}
-                            roleName={"Program Manager"}
+                            roleName={this.renderHelper.getLabelById("pm")}
                             lastUpdatedBy={pm.csl}
                             updatedOn={pm.updatedOn}
                             rowValues={pm.indicators}
@@ -160,33 +164,39 @@ export default class BlcDashboard extends React.Component {
                             isValuesEdit={this.state.isPmRow}
                             isCommentsEdit={this.state.isCommentsEdit}
                             isControlsHidden={this.isInEditMode()}
+                            blocked={!controlsAllowed}
                         />
                         <BlcRow
                             rowName={"pmo"}
-                            roleName={"PMO - Quality"}
+                            roleName={this.renderHelper.getLabelById("pmo")}
                             lastUpdatedBy={pmo.csl}
                             updatedOn={pmo.updatedOn}
                             rowValues={pmo.indicators}
                             comment={pmo.comment}
                             onClickEdit={() => (this.onClickEdit("isPmoRow"))}
                             onChange={this.handleChange}
-                            isValuesEdit={this.state.isPmoRow}
-                            isCommentsEdit={this.state.isCommentsEdit}
+                            isValuesEdit={this.state.isPmoRow && controlsAllowed}
+                            isCommentsEdit={this.state.isCommentsEdit && controlsAllowed}
                             isControlsHidden={this.isInEditMode()}
+                            blocked={!controlsAllowed}
                         />
-                        <BlcRow
-                            rowName={"sales"}
-                            roleName={"Sales"}
-                            lastUpdatedBy={sales.csl}
-                            updatedOn={sales.updatedOn}
-                            rowValues={sales.indicators}
-                            comment={sales.comment}
-                            onClickEdit={() => (this.onClickEdit("isSalesRow"))}
-                            onChange={this.handleChange}
-                            isValuesEdit={this.state.isSalesRow}
-                            isCommentsEdit={this.state.isCommentsEdit}
-                            isControlsHidden={this.isInEditMode()}
-                        />
+                        {
+                            this.renderHelper.displayOrNot("sales") &&
+                            <BlcRow
+                                rowName={"sales"}
+                                roleName={this.renderHelper.getLabelById("sales")}
+                                lastUpdatedBy={sales.csl}
+                                updatedOn={sales.updatedOn}
+                                rowValues={sales.indicators}
+                                comment={sales.comment}
+                                onClickEdit={() => (this.onClickEdit("isSalesRow"))}
+                                onChange={this.handleChange}
+                                isValuesEdit={this.state.isSalesRow}
+                                isCommentsEdit={this.state.isCommentsEdit}
+                                isControlsHidden={this.isInEditMode()}
+                                blocked={!controlsAllowed}
+                            />
+                        }
                         </tbody>
                     </HTMLTable>
                 </div>
@@ -215,8 +225,8 @@ export default class BlcDashboard extends React.Component {
         </colgroup>
     );
 
-    renderHeader = (thClasses, thCommentClasses) => {
-        const isEditButton = this.shouldShowEditButton();
+    renderHeader = (thClasses, thCommentClasses, allowed) => {
+        const isEditButton = this.shouldShowEditButton() && allowed;
         return (
             <thead>
             <tr>

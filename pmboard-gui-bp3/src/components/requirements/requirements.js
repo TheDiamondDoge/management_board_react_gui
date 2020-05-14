@@ -115,7 +115,6 @@ export default class Requirements extends React.Component {
     };
 
     renderValueField = (propName, values) => {
-        console.log(values)
         const {dr1Actual} = this.props.requirements;
         const dr1 = (dr1Actual === null || dr1Actual === "") ? "" : new Date(dr1Actual);
         const {sum} = this.props.requirements;

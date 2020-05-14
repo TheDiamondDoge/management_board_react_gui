@@ -8,7 +8,6 @@ export default class RenderFieldHelper {
     _notAllowedIf = "notAllowedIf";
 
     displayOrNot(id) {
-        if (!this.isLabelExists(id)) return false;
         if (!this._fieldsToRender[id]) return false;
 
         if (this._fieldsToRender[id].hasOwnProperty(this._allowedIf)) {
@@ -70,6 +69,7 @@ export default class RenderFieldHelper {
                     }
                 }
             }
+            return false;
         }
     }
 

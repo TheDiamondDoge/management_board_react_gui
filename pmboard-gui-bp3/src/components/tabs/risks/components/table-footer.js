@@ -7,18 +7,24 @@ export default class TableFooter extends React.PureComponent {
         const {onExcelExport, onExcelImport} = this.props;
         return (
             <>
-                <Button text={"Export to Excel"}
-                        icon={"export"}
-                        onClick={onExcelExport}
-                        intent={Intent.PRIMARY}
-                        minimal
-                />
-                <Button text={"Import Excel"}
-                        icon={"import"}
-                        onClick={onExcelImport}
-                        intent={Intent.PRIMARY}
-                        minimal
-                />
+                {
+                    onExcelExport &&
+                    <Button text={"Export to Excel"}
+                            icon={"export"}
+                            onClick={onExcelExport}
+                            intent={Intent.PRIMARY}
+                            minimal
+                    />
+                }
+                {
+                    onExcelImport &&
+                    <Button text={"Import Excel"}
+                            icon={"import"}
+                            onClick={onExcelImport}
+                            intent={Intent.PRIMARY}
+                            minimal
+                    />
+                }
             </>
         )
     }

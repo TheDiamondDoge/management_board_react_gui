@@ -5,7 +5,6 @@ const initState = {
 };
 
 export default (state, action) => {
-    console.log("APP REDUCER", state)
     if (state === undefined) {
         return initState;
     }

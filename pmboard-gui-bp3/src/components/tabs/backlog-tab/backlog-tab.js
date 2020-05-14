@@ -5,6 +5,8 @@ import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import TooltipContent from "../../tooltip-content/tooltip-content";
 import BacklogDefectsPage from "../backlog-defects-page/backlog-defects-page";
 import {BacklogDefectsTypes, ProjectDefaults} from "../../../util/custom-types";
+import renderFields from "./fields";
+import RenderFieldHelper from "../../../util/render-field-helper";
 
 export default class BacklogTab extends React.Component {
     render() {
@@ -12,6 +14,8 @@ export default class BacklogTab extends React.Component {
         if (loading) {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
+            const validationParams = this.props.defaults.payload;
+            const renderHelper = new RenderFieldHelper(renderFields, validationParams);
             const {payload} = this.props.backlog;
             const {updatedOn, ...data} = payload;
             return (
@@ -23,6 +27,7 @@ export default class BacklogTab extends React.Component {
                         onCurrentClick={() => alert("Current week")}
                         updatedOn={updatedOn}
                         tooltip={<TooltipContent title={"Tips are"} content={"Here"}/>}
+                        blocked={!renderHelper.displayOrNot("controls")}
                     />
                 </CustomCard>
             );

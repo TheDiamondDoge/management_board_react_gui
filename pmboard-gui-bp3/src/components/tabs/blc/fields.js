@@ -1,7 +1,11 @@
-import {ProjectTypes} from "../../../util/constants";
+import {ProjectStates, ProjectTypes} from "../../../util/constants";
 
-//TODO: think how to use it because blc do not get 'offer' from server (pws data???)
-export default () => ({
+export default {
+    controls: {
+        allowedIf: {
+            workspaceStatus: [ProjectStates.ENABLED]
+        }
+    },
     pm: {
         label: "Program Manager"
     },
@@ -14,4 +18,4 @@ export default () => ({
             projectType: [ProjectTypes.OFFER]
         }
     }
-})
+}
