@@ -186,13 +186,13 @@ export default class InfoTab extends React.Component {
                             {...formikProps}
                             name={`${stateBranch}.${obj}`}
                         />
-                        : this.renderComment(obj, displayValue)
+                        : this.renderValue(obj, displayValue)
                 }
             </div>
         )
     };
 
-    renderComment(attrName, value) {
+    renderValue(attrName, value) {
         if (attrName === "projectDescription") return <Comment value={value}/>
 
         return <FieldValue value={value}/>

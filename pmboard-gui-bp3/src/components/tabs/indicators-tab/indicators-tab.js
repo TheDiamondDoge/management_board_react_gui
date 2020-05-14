@@ -28,10 +28,10 @@ import RenderFieldHelper from "../../../util/render-field-helper";
 import fieldsParams from "./indicators-fields";
 
 export default class IndicatorsTab extends React.Component {
-    //TODO: use render-helper class
     render() {
         this.projectId = this.props.defaults.payload.projectId;
         const validationParams = this.props.defaults.payload;
+        const rqsRenderHelper = new RenderFieldHelper(fieldsRequirements, validationParams);
         const renderHelper = new RenderFieldHelper(fieldsParams, validationParams);
         const {milestones, healthIndicators, requirements, milestonesKpi, dr4Kpi, qualityKpi} = this.props;
         const overall = getPropFromStringPath(healthIndicators, "payload.statuses.current.overall");
@@ -77,6 +77,7 @@ export default class IndicatorsTab extends React.Component {
                                     <ErrorBoundary>
                                         <Requirements
                                             requirements={requirements.payload}
+                                            renderHelper={rqsRenderHelper}
                                             fieldsToRender={fieldsRequirements}
                                             fieldsRenderValidation={validationParams}
                                             rqsSubmit={this.handleRqsSubmit}

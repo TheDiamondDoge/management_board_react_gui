@@ -9,10 +9,9 @@ import PropTypes from 'prop-types';
 import {dateFormatToString} from "../../util/transform-funcs";
 import {Formik} from "formik";
 import FormikInput from "../controls/util-renderers";
-import {FieldsToRenderShape, ProjectDefaults, RequirementsShape} from "../../util/custom-types";
+import {RequirementsShape} from "../../util/custom-types";
 import {formikFieldHandleChange} from "../../util/util";
 import getValidationSchema from "./validation-schema";
-import RenderFieldHelper from "../../util/render-field-helper";
 
 export default class Requirements extends React.Component {
     constructor(props) {
@@ -64,8 +63,7 @@ export default class Requirements extends React.Component {
     renderRqsTable = (values) => {
         let valueColumnClasses = classNames(styles.value_col, styles.column_align_center);
         const {rqsReload, fieldsToRender} = this.props;
-        const {fieldsRenderValidation} = this.props;
-        const renderHelper = new RenderFieldHelper(fieldsToRender, fieldsRenderValidation);
+        const renderHelper = this.props.renderHelper;
         return (
             <HTMLTable
                 className={styles.req_table}
@@ -101,7 +99,7 @@ export default class Requirements extends React.Component {
                 }
                 {
                     Object.keys(fieldsToRender).map((field) => {
-                        if (field === "note" && field === "controls") return true;
+                        if (field === "note" || field === "controls") return true;
                         return (
                             renderHelper.displayOrNot(field) &&
                             <tr key={field}>
@@ -142,8 +140,7 @@ export default class Requirements extends React.Component {
 
 Requirements.propTypes = {
     requirements: RequirementsShape.isRequired,
-    fieldsToRender: FieldsToRenderShape.isRequired,
-    fieldsRenderValidation: ProjectDefaults,
+    renderHelper: PropTypes.func.isRequired,
     rqsSubmit: PropTypes.func,
     rqsReload: PropTypes.func
 };
