@@ -2,7 +2,7 @@ import React from "react";
 import {HTMLTable} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import styles from "./cost-table.module.css";
-import {nanToEmptyString, toTwoTrailingDigits} from "../../util/transform-funcs";
+import {nanToEmptyString} from "../../util/transform-funcs";
 import Comment from "../comment/comment";
 
 export default class CostTable extends React.Component {
@@ -12,8 +12,8 @@ export default class CostTable extends React.Component {
         if (committed == null) committed = {};
         if (realized == null) realized = {};
 
-        const committedValue = nanToEmptyString(toTwoTrailingDigits(committed.value));
-        const realizedValue = nanToEmptyString(toTwoTrailingDigits(realized.value));
+        const committedValue = nanToEmptyString(committed.value);
+        const realizedValue = nanToEmptyString(realized.value);
         return (
             <HTMLTable
                 striped

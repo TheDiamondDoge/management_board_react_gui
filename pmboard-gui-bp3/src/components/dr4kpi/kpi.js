@@ -4,7 +4,7 @@ import styles from "./kpi.module.css";
 import classNames from "classnames";
 import FieldName from "../field-name/field-name";
 import PropTypes from "prop-types";
-import {toPercents} from "../../util/transform-funcs";
+import {toPercentsOrNA} from "../../util/transform-funcs";
 import HelpIcon from "../help-icon/help-icon";
 import FieldValue from "../field-value/field-value";
 
@@ -41,8 +41,8 @@ export default class Kpi extends React.Component {
                         if (field === "year") return true;
 
                         const label = fieldsToRender[field].label;
-                        let value = toPercents(dr4Kpi[field]);
-                        value = Number.isNaN(value) ? value : `${value}%`;
+                        let value = toPercentsOrNA(dr4Kpi[field]);
+                        value = value === "N/A" ? value : `${value}%`;
                         const help = fieldsToRender[field].help;
                         return (
                             <tr key={field}>

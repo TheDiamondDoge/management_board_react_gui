@@ -99,9 +99,14 @@ export const getIndicatorsColor = (number) => {
 };
 
 export const toPercents = (value) => {
-    return Math.round((value + Number.EPSILON) * 100) / 100 * 100;
+    return +(value * 100).toFixed(0);
 };
 
+export const toPercentsOrNA = (value) => {
+    if (value === null) return "N/A";
+    return toPercents(value);
+}
+
 export const toTwoTrailingDigits = (value) => {
-    return Math.round((value + Number.EPSILON) * 100) / 100;
+    return +(+value).toFixed(2);
 };
