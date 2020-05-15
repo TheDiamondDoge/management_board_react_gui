@@ -98,7 +98,7 @@ export const isUrl = (value) => {
     if (typeof value === "string") {
         const expr = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.?[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/gi;
         const regExp = new RegExp(expr);
-        return !!String(value).match(regExp);
+        return regExp.test(String(value));
     } else {
         return false;
     }
