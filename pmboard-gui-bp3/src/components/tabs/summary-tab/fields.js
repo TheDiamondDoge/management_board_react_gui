@@ -1,7 +1,7 @@
 import {ProjectStates, ProjectTypes} from "../../../util/constants";
 
 export default {
-    projectName: {label: "Project Name"},
+    productName: {label: "Product Name"},
     projectDescription: {label: "Project Description"},
     projectManager: {label: "Project Manager"},
     businessLineManager: {label: "Business Line Manager"},

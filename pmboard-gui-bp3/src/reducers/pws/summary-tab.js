@@ -36,7 +36,7 @@ export default (state, action) => {
 
 let dataComposer = (data) => ({
     general: {
-        projectName: data.projectName,
+        productName: data.productName,
         projectDescription: data.projectDescription,
         projectManager: data.projectManager,
         businessLineManager: data.businessLineManager,
