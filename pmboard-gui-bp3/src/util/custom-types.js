@@ -70,7 +70,9 @@ export const QualityIndicatorsShape = PropTypes.shape({
     defects: PropTypes.arrayOf(QualityRow),
     quality: PropTypes.arrayOf(QualityRow),
     testExecution: PropTypes.arrayOf(QualityRow),
-    testRate: PropTypes.arrayOf(QualityRow)
+    testRate: PropTypes.arrayOf(QualityRow),
+    syncDate: PropTypes.string,
+    updateInProcess: PropTypes.bool
 });
 
 export const FieldsToRenderShape = PropTypes.objectOf(

@@ -7,13 +7,13 @@ import PropTypes from "prop-types";
 import {FieldArray, Formik} from "formik";
 import FormikInput, {RenderControls} from "../controls/util-renderers";
 import HelpIcon from "../help-icon/help-icon";
-import {getDateFromStringWithTime} from "../../util/transform-funcs";
 import {FieldsToRenderShape, ProjectDefaults, QualityIndicatorsShape} from "../../util/custom-types";
 import FieldValue from "../field-value/field-value";
 import {formikFieldHandleChange, getSpecialNumericRegexp} from "../../util/util";
 import getValidationSchema from "./validation-schema";
 import Comment from "../comment/comment";
 import RenderFieldHelper from "../../util/render-field-helper";
+import LastUpdated from "../last-updated/last-updated";
 
 export default class Quality extends React.Component {
     constructor(props) {
@@ -87,7 +87,7 @@ export default class Quality extends React.Component {
 
     renderQualityForm = (values) => {
         const controlsAttrName = "controls";
-        const {syncDate} = this.props.qualityKpi;
+        const {syncDate, updateInProcess} = this.props.qualityKpi;
         const {fieldsToRender, onCancel, fieldsRenderValidation} = this.props;
         const renderHelper = new RenderFieldHelper(fieldsToRender, fieldsRenderValidation);
         const controlsRendered = renderHelper.displayOrNot(controlsAttrName);
@@ -96,6 +96,8 @@ export default class Quality extends React.Component {
             editBtnProps.disabled = true;
             editBtnProps.title = "Set DR1 date to enable syncro";
         }
+        editBtnProps.loading = updateInProcess;
+
         return (
             <>
                 <div>
@@ -111,7 +113,10 @@ export default class Quality extends React.Component {
                             </Button>
                         }
                         Last synchro:
-                        <span className={styles.sync_date}>{getDateFromStringWithTime(syncDate)}</span>
+                        <LastUpdated
+                            className={styles.sync_date}
+                            dateStr={syncDate}
+                        />
                     </div>
                     {
                         controlsRendered &&
