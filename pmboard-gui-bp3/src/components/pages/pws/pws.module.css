@@ -1,3 +1,16 @@
 .center {
     justify-content: center;
 }
+
+.pws_container {
+    height: calc(100%);
+}
+
+.tab_container {
+    height: calc(100%);
+}
+
+.tabs {
+    justify-content: center;
+    height: calc(100% - 150px);
+}

@@ -3,6 +3,19 @@
     text-align: center;
 }
 
+.card_container {
+    height: 100%;
+}
+
+.chart_container {
+    max-height: 100%;
+    height: calc(100% - 120px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .center {
     display: inline;
 }

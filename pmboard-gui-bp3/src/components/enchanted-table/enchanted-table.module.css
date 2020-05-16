@@ -5,7 +5,7 @@
 .table_container {
     position: relative;
     overflow: auto;
-    height: 95%;
+    height: calc(100% - 20px);
 }
 
 .table_style {

@@ -12,7 +12,7 @@ import UploadFileControlsHidden from "../../upload-file-controls/upload-file-con
 import ImportErrorsDialog from "../../import-errors-dialog/import-errors-dialog";
 import LastUpdatedLabel from "../../last-updated-label/last-updated-label";
 import LastUpdated from "../../last-updated/last-updated";
-import styles from "../cost-tab/cost-tab.module.css";
+import styles from "./risk.module.css";
 import renderFields from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
 
@@ -42,9 +42,9 @@ export default class Risks extends React.Component {
 
             const picklists = createEnchantedTableFilters(payload.risks);
             return (
-                <>
+                <div className={styles.container}>
                     <CustomCard>
-                        <div>
+                        <div className={styles.last_updated_container}>
                             <LastUpdatedLabel isFileExists={payload.fileExists}
                                               onClick={() => getLastUploadedFile(this.projectId, projectName)}
                                               label={"Last uploaded:"}
@@ -52,7 +52,7 @@ export default class Risks extends React.Component {
                             <LastUpdated className={styles.last_updated} dateStr={"2010-10-10"}/>
                         </div>
                     </CustomCard>
-                    <CustomCard autosize yCardStart={345}>
+                    <CustomCard className={styles.table_container}>
                         <EnchantedTable
                             data={payload.risks}
                             columns={colSettings}
@@ -73,7 +73,7 @@ export default class Risks extends React.Component {
                                             errors={errors}
                         />
                     </CustomCard>
-                </>
+                </div>
             );
         }
     }

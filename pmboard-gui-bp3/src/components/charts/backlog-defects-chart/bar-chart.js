@@ -2,7 +2,7 @@ import React from "react";
 import Chart from "chart.js";
 import "chartjs-plugin-annotation";
 import PropTypes from "prop-types";
-import styles from "./backlog-defects-chart.module.css";
+import styles from "./bar-chart.module.css";
 import {RangeSlider} from "@blueprintjs/core";
 
 export default class BarChart extends React.Component {
@@ -44,8 +44,9 @@ export default class BarChart extends React.Component {
             initialRange = [Number(min), Number(max) - 2];
             labelsAmount = labels.length || 1;
         }
+        const classes = this.props.className;
         return (
-            <div>
+            <div className={classes}>
                 <canvas id="myChart" className={styles.canvas} ref={this.chartRef}/>
                 <RangeSlider
                     min={initialRange[0]}
@@ -173,4 +174,5 @@ export default class BarChart extends React.Component {
 
 BarChart.propTypes = {
     data: PropTypes.object.isRequired,
+    className: PropTypes.string,
 };

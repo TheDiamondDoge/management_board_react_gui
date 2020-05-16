@@ -1,3 +1,22 @@
-.stretched {
-    width: 100%
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.last_updated_container {
+    height: 17px;
+}
+
+.table_container {
+    height: calc(100% - 80px);
+    min-height: 220px;
+}
+
+.last_updated {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.import_container {
+    margin-bottom: 17px;
 }

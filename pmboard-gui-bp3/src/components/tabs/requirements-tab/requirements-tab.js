@@ -6,6 +6,7 @@ import tableConfig from './table-config';
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {ProjectDefaults, RqsTabRq} from "../../../util/custom-types";
 import TableFooter from "./components/table-footer";
+import styles from "./requirements-tab.module.css";
 
 export default class RequirementsTab extends React.Component {
     render() {
@@ -16,7 +17,7 @@ export default class RequirementsTab extends React.Component {
             this.projectId = this.props.defaults.payload.projectId;
             const {payload} = this.props.rqs;
             return (
-                <CustomCard autosize yCardStart={260}>
+                <CustomCard className={styles.table_container}>
                     <EnchantedTable
                         striped
                         interactive

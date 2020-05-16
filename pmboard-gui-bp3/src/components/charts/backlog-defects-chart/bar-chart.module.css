@@ -1,4 +1,5 @@
 /* This allows canvas to shrink back after page resizing */
 .canvas {
-    width: 100% !important;
+    width: auto !important;
+    height: 100% !important;
 }

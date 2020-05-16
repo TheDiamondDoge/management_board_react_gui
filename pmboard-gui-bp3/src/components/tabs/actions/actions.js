@@ -11,6 +11,7 @@ import validationSchema from "./validation-schema";
 import renderFields from "./fields";
 import {ProjectDefaults} from "../../../util/custom-types";
 import RenderFieldHelper from "../../../util/render-field-helper";
+import styles from "./actions.module.css";
 
 export default class Actions extends React.Component {
     render() {
@@ -30,7 +31,7 @@ export default class Actions extends React.Component {
             let editDynamicInputVals = {relatedRisks: relatedRisks};
 
             return (
-                <CustomCard autosize yCardStart={260}>
+                <CustomCard className={styles.table_container}>
                     <EnchantedTable
                         data={payload}
                         columns={tableConfig}

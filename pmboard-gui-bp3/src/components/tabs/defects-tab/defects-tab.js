@@ -8,6 +8,7 @@ import {BacklogDefectsTypes, ProjectDefaults} from "../../../util/custom-types";
 //TODO rename to 'config'
 import renderFields from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
+import styles from "./defects-tab.module.css";
 
 export default class DefectsTab extends React.Component {
     render() {
@@ -20,7 +21,7 @@ export default class DefectsTab extends React.Component {
             const renderHelper = new RenderFieldHelper(renderFields, validationParams);
             const {updatedOn, ...data} = payload;
             return (
-                <CustomCard>
+                <CustomCard className={styles.chart_container}>
                     <BacklogDefectsPage
                         data={data}
                         header="New Open Defects (ECMA CRs)"

@@ -7,6 +7,7 @@ import BacklogDefectsPage from "../backlog-defects-page/backlog-defects-page";
 import {BacklogDefectsTypes, ProjectDefaults} from "../../../util/custom-types";
 import renderFields from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
+import styles from "./backlog-tab.module.css";
 
 export default class BacklogTab extends React.Component {
     render() {
@@ -19,7 +20,7 @@ export default class BacklogTab extends React.Component {
             const {payload} = this.props.backlog;
             const {updatedOn, ...data} = payload;
             return (
-                <CustomCard>
+                <CustomCard className={styles.chart_container}>
                     <BacklogDefectsPage
                         data={data}
                         header="Defects backlog (ECMA CRs)"

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BarChart from "../../charts/backlog-defects-chart/backlog-defects-chart";
+import BarChart from "../../charts/backlog-defects-chart/bar-chart";
 import styles from "./backlog-defects-page.module.css";
 import {Button, Intent, Position, Tooltip} from "@blueprintjs/core";
 import HelpIcon from "../../help-icon/help-icon";
@@ -13,7 +13,7 @@ export default class BacklogDefectsPage extends React.Component {
         const payload = this.props.data;
         const {updatedOn, header, tooltip} = this.props;
         return (
-            <>
+            <div className={styles.card_container}>
                 <div className={styles.header_container}>
                     <h4 className={styles.center}>
                         {header}
@@ -25,11 +25,11 @@ export default class BacklogDefectsPage extends React.Component {
                         <HelpIcon className={styles.tooltip}/>
                     </Tooltip>
                 </div>
-                <BarChart data={payload}/>
+                <BarChart data={payload} className={styles.chart_container}/>
                 <br/>
                 <UpdatedInfo date={updatedOn} className={styles.updated_block}/>
                 {this.getFooter()}
-            </>
+            </div>
         );
     }
 

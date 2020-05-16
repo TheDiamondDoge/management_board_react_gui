@@ -4,7 +4,6 @@
         "nav header"
         "nav page";
     grid-template-rows: 50px calc(100% - 50px);
-    /*grid-template-columns: 230px calc(100% - 230px);*/
     grid-gap: 0;
     height: 100%;
 }
@@ -20,7 +19,6 @@
 
 .page {
     grid-area: page;
-    /*height: calc(100% - 50px);*/
     height: 100%;
     overflow-y: auto;
 }
