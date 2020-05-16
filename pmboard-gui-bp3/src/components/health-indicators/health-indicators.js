@@ -71,7 +71,7 @@ export default class HealthIndicators extends React.Component {
 
     getHealthIndicatorsTable = (values, isSummaryMode) => {
         const {prevStatusSet, currentStatusSet} = values;
-        const {onCancel, fieldsToRender} = this.props;
+        const {onCancel, fieldsToRender, blocked} = this.props;
         return (
             <HTMLTable
                 striped
@@ -97,7 +97,7 @@ export default class HealthIndicators extends React.Component {
                             <HelpIcon className={styles.help_icon}/>
                         </Tooltip>
                         {
-                            !isSummaryMode && !this.state.editCommentMode &&
+                            !isSummaryMode && !blocked && !this.state.editCommentMode &&
                             <EditSaveControls
                                 smallSize
                                 className={styles.inline_block}
@@ -122,7 +122,7 @@ export default class HealthIndicators extends React.Component {
                         <th className={styles.column_align_center}>
                             <FieldName name={"Comments"}/>
                             {
-                                !this.state.editStatusMode &&
+                                !this.state.editStatusMode && !blocked &&
                                 <EditSaveControls
                                     smallSize
                                     className={styles.inline_block}
@@ -233,4 +233,5 @@ HealthIndicators.propTypes = {
     onIndicatorsSubmit: PropTypes.func,
     onCommentsSubmit: PropTypes.func,
     onCancel: PropTypes.func,
+    blocked: PropTypes.bool,
 };

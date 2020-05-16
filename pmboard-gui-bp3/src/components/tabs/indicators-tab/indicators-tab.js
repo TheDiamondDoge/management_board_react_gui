@@ -62,6 +62,7 @@ export default class IndicatorsTab extends React.Component {
                                         onIndicatorsSubmit={this.handleHealthIndicatorsSubmit}
                                         onCommentsSubmit={this.handleHealthCommentsSubmit}
                                         onCancel={this.handleHealthReload}
+                                        blocked={renderHelper.displayOrNot("controls")}
                                     />
                                 </ErrorBoundary>
                             )
