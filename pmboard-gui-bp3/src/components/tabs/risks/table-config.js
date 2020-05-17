@@ -251,7 +251,7 @@ export default [
         decorator: dateDecorator
     },
     {
-        id: "imported", headerName: "Imported On",
+        id: "updatedOn", headerName: "Updated On",
         style: {
             header: {
                 width: "90px"
@@ -264,7 +264,7 @@ export default [
         decorator: dateDecorator
     },
     {
-        id: "by", headerName: "Imported by",
+        id: "updatedBy", headerName: "Updated By",
         style: {
             header: {
                 width: "90px"

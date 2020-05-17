@@ -174,7 +174,8 @@ export const RiskMinimal = PropTypes.shape({
 
 export const RisksTab = PropTypes.shape({
     risks: PropTypes.arrayOf(RisksTabRisk),
-    fileExists: PropTypes.bool
+    fileExists: PropTypes.bool,
+    lastUploaded: PropTypes.string
 });
 
 export const RqsTabRq = PropTypes.arrayOf(

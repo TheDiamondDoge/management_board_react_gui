@@ -29,7 +29,7 @@ export default class InfoTab extends React.Component {
             editMode: false
         };
 
-        this.mandatoryMilestones = ["OR", "DR0", "DR1", "DR2", "DR3", "DR4", "OBR", "CI"];
+        this.mandatoryMilestones = ["OR", "DR0", "DR1", "DR2", "DR3", "TR", "DR4", "DR5", "OBR", "CI"];
     }
 
     submitForm = null;

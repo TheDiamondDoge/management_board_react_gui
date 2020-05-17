@@ -15,43 +15,72 @@ export const infoFieldsToRender = {
         label: "Product Release",
         allowedIf: {
             epm: [false]
-        }
+        },
+        editable: false,
     },
     projectType: {
         label: "Project Type",
         allowedIf: {
             epm: [false]
-        }
+        },
+        editable: false,
     },
     projectRigor: {
         label: "Project Rigor",
         allowedIf: {
             epm: [false]
-        }
+        },
+        editable: false,
     },
     projectState: {
         label: "Project State",
         allowedIf: {
             epm: [false]
-        }
+        },
+        editable: false,
     },
-    businessDivision: {label: "Business Division"},
-    businessUnit: {label: "Business Unit"},
-    productLine: {label: "Product Line"},
-    productName: {label: "Product Name"},
-    sponsor: {label: "Sponsor"},
-    businessLineManager: {label: "Business Line Manager"},
-    productLineManager: {label: "Product Line Manager"},
+    businessDivision: {
+        label: "Business Division",
+        editable: false,
+    },
+    businessUnit: {
+        label: "Business Unit",
+        editable: false,
+    },
+    productLine: {
+        label: "Product Line",
+        editable: false,
+    },
+    productName: {
+        label: "Product Name",
+        editable: false,
+    },
+    sponsor: {
+        label: "Sponsor",
+        editable: false,
+    },
+    businessLineManager: {
+        label: "Business Line Manager",
+        editable: false,
+    },
+    productLineManager: {
+        label: "Product Line Manager",
+        editable: false,
+    },
     projectManager: {
         label: "Project Manager",
         allowedIf: {
             epm: [false]
-        }
+        },
+        editable: false,
     },
     charter: {label: "Charter"},
-    orBusinessPlan: {label: "OR Business Plan"},
+    orBusinessPlan: {
+        label: "OR Business Plan",
+        editable: false,
+    },
     updatedBusinessPlan: {label: "Updated Business Plan"},
-    drChecklist: {label: "Tailored DR-checklist"},
+    drChecklist: {label: "Tailoring"},
     lessonsLearned: {label: "Lessons learned"},
     projectPlan: {label: "Project Plan"},
     launchingPlan: {
@@ -62,13 +91,13 @@ export const infoFieldsToRender = {
     },
     metricsScope: {
         label: "Metrics Scope",
-        allowedIf: {
+        notAllowedIf: {
             projectType: [ProjectTypes.OFFER]
         }
     },
     rqRelease: {
         label: "RQ Release Name (JIRA)",
-        allowedIf: {
+        notAllowedIf: {
             projectType: [ProjectTypes.OFFER]
         }
     },
@@ -99,7 +128,7 @@ export const infoFieldsToRender = {
     projectPWASiteUrl: {
         label: "Project PWA Site",
         allowedIf: {
-            epm: [false]
+            epm: [true]
         }
     },
     docRepositoryUrl: {label: "Project Documentation Repository"},

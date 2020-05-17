@@ -15,6 +15,7 @@ import LastUpdated from "../../last-updated/last-updated";
 import styles from "./risk.module.css";
 import renderFields from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
+import SafeUrl from "../../safe-url/safe-url";
 
 export default class Risks extends React.Component {
     constructor(props) {
@@ -49,7 +50,7 @@ export default class Risks extends React.Component {
                                               onClick={() => getLastUploadedFile(this.projectId, projectName)}
                                               label={"Last uploaded:"}
                             />
-                            <LastUpdated className={styles.last_updated} dateStr={"2010-10-10"}/>
+                            <LastUpdated className={styles.last_updated} dateStr={payload.lastUploaded}/>
                         </div>
                     </CustomCard>
                     <CustomCard className={styles.table_container}>
@@ -71,6 +72,11 @@ export default class Risks extends React.Component {
                         <ImportErrorsDialog isOpen={!errorListShowed && !!errors}
                                             onClose={setErrorsShowedTrue}
                                             errors={errors}
+                        />
+                    </CustomCard>
+                    <CustomCard>
+                        <SafeUrl label={"Get template for upload"}
+                                 url={"http://google.com"}
                         />
                     </CustomCard>
                 </div>

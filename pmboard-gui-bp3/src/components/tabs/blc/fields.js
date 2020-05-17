@@ -14,7 +14,7 @@ export default {
     },
     sales: {
         label: "Sales",
-        notAllowedIf: {
+        allowedIf: {
             projectType: [ProjectTypes.OFFER]
         }
     }
