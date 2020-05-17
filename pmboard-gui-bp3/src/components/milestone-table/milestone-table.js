@@ -15,6 +15,7 @@ export default class MilestoneTable extends React.Component {
         this.state = {
             milestonesRendered: [],
             withoutBaselineDate: ["OR", "DR0", "DR1"],
+            shownAlwaysTrue: ["DR1", "DR4"],
             excluded: ["OR"]
         };
     }
@@ -64,7 +65,7 @@ export default class MilestoneTable extends React.Component {
     }
 
     renderBody = () => {
-        const {milestonesData, onDateChangeFactory, editMode} = this.props;
+        const {onDateChangeFactory, editMode} = this.props;
         return (
             <FieldArray
                 name="milestones"
@@ -73,11 +74,12 @@ export default class MilestoneTable extends React.Component {
                     return (
                         <>
                             {
-                                milestonesData.map((milestone, key) => {
+                                arrayHelpers.form.values.milestones.map((milestone, key) => {
                                     const shownString = boolToYesNo(milestone.shown);
                                     const hasBaseline = this.hasBaseline(milestone);
                                     const shouldBeExcluded = this.shouldBeExcluded(milestone);
                                     const labelEditable = this.isLabelEditable(milestone, renderedMilestones);
+                                    const shouldBeShown = this.shownShouldBeLocked(milestone);
                                     const name = `milestones[${key}].label`;
 
                                     renderedMilestones.push(milestone.label);
@@ -136,7 +138,7 @@ export default class MilestoneTable extends React.Component {
                                             </td>
                                             <td className={styles.timeline}>
                                                 {
-                                                    editMode
+                                                    editMode && !shouldBeShown
                                                         ? <FormikInput
                                                             type="checkbox"
                                                             name={`milestones[${key}].shown`}
@@ -199,6 +201,10 @@ export default class MilestoneTable extends React.Component {
     isMandatory = (label) => {
         return this.props.mandatoryMilestones.includes(label.toUpperCase())
     };
+
+    shownShouldBeLocked = (milestone) => (
+        this.state.shownAlwaysTrue.includes(milestone.label.toUpperCase())
+    );
 
     rowRemoveControls = (remove) => (
         <RenderControls type={"delete"} onClick={remove}/>
