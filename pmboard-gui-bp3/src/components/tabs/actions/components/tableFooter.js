@@ -24,6 +24,12 @@ export default function TableFooter(props) {
                          onClick={onAdd}
                 />
             }
+            <Button text={"Export to Excel"}
+                    icon={"export"}
+                    onClick={() => alert("Export!")}
+                    intent={Intent.PRIMARY}
+                    minimal
+            />
         </div>
     );
 }
