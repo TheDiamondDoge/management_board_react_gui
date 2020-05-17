@@ -19,6 +19,9 @@ export default class EnchantedTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            defaults: {
+                noDataMessage: "No data found"
+            },
             filters: {},
             width: {},
             sort: {},
@@ -42,6 +45,7 @@ export default class EnchantedTable extends React.Component {
             dialogOpen: this.dialogOpen
         };
         const footer = renderFooter ? renderFooter(renderFooterParam) : null;
+        const noDataMessage = this.props.noDataMessage || this.state.defaults.noDataMessage;
 
         return (
             <div className={styles.container}>
@@ -107,7 +111,7 @@ export default class EnchantedTable extends React.Component {
                                         )
                                     })
                                 )
-                                : <tr><td colSpan={colsAmount}><FieldName name={"No data found"}/></td></tr>
+                                : <tr><td colSpan={colsAmount}><FieldName name={noDataMessage}/></td></tr>
                         }
                         </tbody>
                     </HTMLTable>
@@ -300,6 +304,7 @@ EnchantedTable.propTypes = {
     editable: PropTypes.bool,
     validationSchema: PropTypes.object,
     onSubmit: PropTypes.func,
+    noDataMessage: PropTypes.string,
     //Render prop: {dialogOpen: func}
     renderFooter: PropTypes.func,
     //Render prop: {editRow: func, getRow: func}

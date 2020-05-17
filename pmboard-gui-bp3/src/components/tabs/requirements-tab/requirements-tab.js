@@ -22,6 +22,7 @@ export default class RequirementsTab extends React.Component {
                         striped
                         interactive
                         bordered
+                        noDataMessage={"No data found. Check 'Requirements(JIRA)' and 'RQ Release Name(JIRA)' fields"}
                         data={payload}
                         columns={tableConfig}
                         renderFooter={() => (
