@@ -85,11 +85,6 @@ let dataComposer = (data) => ({
         requirementsUrl: data.requirementsUrl,
         cisUrl: data.cisUrl,
     },
-    validationParams: {
-        projectType: data.projectType,
-        composite: data.composite,
-        epm: data.epm,
-    }
 });
 
 let getEcmaObject = (obj) => {
