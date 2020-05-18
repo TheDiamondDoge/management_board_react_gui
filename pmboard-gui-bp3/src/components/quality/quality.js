@@ -87,16 +87,11 @@ export default class Quality extends React.Component {
 
     renderQualityForm = (values) => {
         const controlsAttrName = "controls";
-        const {syncDate, updateInProcess} = this.props.qualityKpi;
+        const {syncDate} = this.props.qualityKpi;
         const {fieldsToRender, onCancel, fieldsRenderValidation} = this.props;
         const renderHelper = new RenderFieldHelper(fieldsToRender, fieldsRenderValidation);
         const controlsRendered = renderHelper.displayOrNot(controlsAttrName);
-        const editBtnProps = {};
-        if (!fieldsRenderValidation.dr1Actual) {
-            editBtnProps.disabled = true;
-            editBtnProps.title = "Set DR1 date to enable syncro";
-        }
-        editBtnProps.loading = updateInProcess;
+        const editBtnProps = this.getSyncButtonProps(!!fieldsRenderValidation.dr1Actual);
 
         return (
             <>
@@ -154,7 +149,6 @@ export default class Quality extends React.Component {
                     <tbody>
                     {
                         Object.keys(fieldsToRender).map(field => {
-                                if (field === controlsAttrName) return true;
                                 if (renderHelper.displayOrNot(field)) {
                                     if (field === "testExecution" || field === "testRate") {
                                         return this.renderComplexRows(values, field, true);
@@ -190,15 +184,11 @@ export default class Quality extends React.Component {
                     const comment = indicators[0].comment;
                     const isActualEditable = this.isEditable(field);
                     return indicators.map((row, i) => {
-                        const inputAttrs = {};
-                        if (isControlled) {
-                            const regexp = getSpecialNumericRegexp();
-                            inputAttrs.onChange = this.updateNumericHandler(`${field}[${i}].objective`, regexp);
-                            inputAttrs.type = "text";
-                        } else {
-                            inputAttrs.onValueChange = this.updateNumericHandler(`${field}[${i}].objective`);
-                            inputAttrs.type = "numeric";
-                        }
+                        const inputAttrs = this.getInputAttrs(isControlled, field, i);
+                        const isRenderControlsNeeded = this.state.editMode && isControlled;
+                        const objectiveName = `${field}[${i}].objective`;
+                        const actualName = `${field}[${i}].actual`;
+                        const commentName = `${field}[${i}].comment`;
                         return (
                             <tr key={`${field}_${i}`}>
                                 {
@@ -218,7 +208,7 @@ export default class Quality extends React.Component {
                                         </td>
                                         <td rowSpan={rowSpan}>
                                             {
-                                                this.state.editMode && isControlled &&
+                                                isRenderControlsNeeded &&
                                                 <RenderControls
                                                     type="add"
                                                     onClick={() => arrayHelpers.push(this.getEmptyRowObject(comment))}
@@ -230,7 +220,7 @@ export default class Quality extends React.Component {
                                 }
                                 <td>
                                     {
-                                        this.state.editMode && isControlled &&
+                                        isRenderControlsNeeded &&
                                         <RenderControls
                                             type="delete"
                                             onClick={() => this.removeRow(values[field], arrayHelpers, i)}
@@ -241,32 +231,41 @@ export default class Quality extends React.Component {
                                 <td className={styles.column_align_center}>
                                     {
                                         this.state.editMode
-                                            ? <FormikInput
-                                                name={`${field}[${i}].objective`}
-                                                {...inputAttrs}
-                                            />
+                                            ? (
+                                                <FormikInput
+                                                    name={objectiveName}
+                                                    {...inputAttrs}
+                                                />
+                                            )
                                             : <FieldValue value={this.emptyToZero(row.objective)}/>
                                     }
                                 </td>
                                 <td className={styles.column_align_center}>
                                     {
                                         isActualEditable
-                                            ? <FormikInput
-                                                type="text"
-                                                name={`${field}[${i}].actual`}
-                                            />
+                                            ? (
+                                                <FormikInput
+                                                    type="text"
+                                                    name={actualName}
+                                                />
+                                            )
                                             : <FieldValue value={this.emptyToZero(row.actual)}/>
                                     }
                                 </td>
                                 {
                                     (i === 0) &&
-                                    <td rowSpan={rowSpan} className={styles.column_align_center}>
+                                    <td
+                                        rowSpan={rowSpan}
+                                        className={styles.column_align_center}
+                                    >
                                         {
                                             this.state.editMode
-                                                ? <FormikInput
-                                                    type="textarea"
-                                                    name={`${field}[${i}].comment`}
-                                                />
+                                                ? (
+                                                    <FormikInput
+                                                        type="textarea"
+                                                        name={commentName}
+                                                    />
+                                                )
                                                 : <Comment value={comment}/>
                                         }
                                     </td>
@@ -306,6 +305,33 @@ export default class Quality extends React.Component {
             arrayHelpers.remove(i);
         }
     };
+
+    getSyncButtonProps(isDr1ActualExists) {
+        const {updateInProcess} = this.props.qualityKpi;
+        const editBtnProps = {};
+        if (isDr1ActualExists) {
+            editBtnProps.disabled = true;
+            editBtnProps.title = "Set DR1 date to enable syncro";
+        }
+        editBtnProps.loading = updateInProcess;
+
+        return editBtnProps;
+    }
+
+    getInputAttrs(isControlled, fieldName, i) {
+        const inputAttrs = {};
+        const name = `${fieldName}[${i}].objective`;
+        if (isControlled) {
+            const regexp = getSpecialNumericRegexp();
+            inputAttrs.onChange = this.updateNumericHandler(name, regexp);
+            inputAttrs.type = "text";
+        } else {
+            inputAttrs.onValueChange = this.updateNumericHandler(name);
+            inputAttrs.type = "numeric";
+        }
+
+        return inputAttrs;
+    }
 }
 
 Quality.propTypes = {
@@ -314,4 +340,9 @@ Quality.propTypes = {
     fieldsRenderValidation: ProjectDefaults,
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
+};
+
+Quality.defaultProps = {
+    onSubmit: () => {},
+    onCancel: () => {},
 };

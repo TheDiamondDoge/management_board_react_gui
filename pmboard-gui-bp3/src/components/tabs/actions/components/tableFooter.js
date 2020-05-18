@@ -8,27 +8,30 @@ export default function TableFooter(props) {
         <div {...containerProps}>
             {
                 onRefresh &&
-                <Button minimal
-                        large
-                        icon={"refresh"}
-                        intent={Intent.PRIMARY}
-                        onClick={onRefresh}
+                <Button
+                    minimal
+                    large
+                    icon={"refresh"}
+                    intent={Intent.PRIMARY}
+                    onClick={onRefresh}
                 />
             }
             {
                 onAdd &&
-                < Button minimal
-                         large
-                         icon={"add"}
-                         intent={Intent.PRIMARY}
-                         onClick={onAdd}
+                <Button
+                    minimal
+                    large
+                    icon={"add"}
+                    intent={Intent.PRIMARY}
+                    onClick={onAdd}
                 />
             }
-            <Button text={"Export to Excel"}
-                    icon={"export"}
-                    onClick={() => alert("Export!")}
-                    intent={Intent.PRIMARY}
-                    minimal
+            <Button
+                text={"Export to Excel"}
+                icon={"export"}
+                onClick={() => alert("Export!")}
+                intent={Intent.PRIMARY}
+                minimal
             />
         </div>
     );

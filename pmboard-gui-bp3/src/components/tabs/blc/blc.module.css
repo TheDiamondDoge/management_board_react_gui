@@ -1,3 +1,7 @@
+.relative_wrapper {
+    position: relative;
+}
+
 .overflow_wrapper {
     width: 100%;
     overflow-x: auto;

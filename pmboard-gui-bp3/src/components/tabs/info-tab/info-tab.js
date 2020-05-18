@@ -11,7 +11,7 @@ import FormikInput, {ArrayErrors} from "../../controls/util-renderers";
 import FieldValue from "../../field-value/field-value";
 import {MilestoneShape, ProjectDefaults} from "../../../util/custom-types";
 import {formikFieldHandleChange} from "../../../util/util";
-import {infoFieldsToRender} from "./fields";
+import infoFieldsToRender from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
 import getValidationSchema from "./validation-schema";
 import HelpIcon from "../../help-icon/help-icon";
@@ -20,6 +20,7 @@ import {boolToYesNo} from "../../../util/transform-funcs";
 import {MenuItem} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 import Comment from "../../comment/comment";
+import {CommonMilestonesLabels} from "../../../util/constants";
 
 
 export default class InfoTab extends React.Component {
@@ -29,7 +30,12 @@ export default class InfoTab extends React.Component {
             editMode: false
         };
 
-        this.mandatoryMilestones = ["OR", "DR0", "DR1", "DR2", "DR3", "TR", "DR4", "DR5", "OBR", "CI"];
+        this.mandatoryMilestones = [
+            CommonMilestonesLabels.OR, CommonMilestonesLabels.DR0, CommonMilestonesLabels.DR1,
+            CommonMilestonesLabels.DR2, CommonMilestonesLabels.DR3, CommonMilestonesLabels.TR,
+            CommonMilestonesLabels.DR4, CommonMilestonesLabels.DR5, CommonMilestonesLabels.OBR,
+            CommonMilestonesLabels.CI
+        ];
     }
 
     submitForm = null;
@@ -62,8 +68,8 @@ export default class InfoTab extends React.Component {
 
     render() {
 
-        const {information, milestones} = this.props;
-        if (information.loading || milestones.loading) {
+        const {information} = this.props;
+        if (information.loading) {
             return (<LoadingSpinner/>)
         } else {
             const {general, urls} = information.payload;
@@ -75,7 +81,6 @@ export default class InfoTab extends React.Component {
             const validationParams = this.props.defaults.payload;
             this.renderHelper = new RenderFieldHelper(infoFieldsToRender, validationParams);
             const showEditControls = this.renderHelper.displayOrNot("controls");
-            console.log(showEditControls);
             return (
                 <Formik
                     enableReinitialize
@@ -116,12 +121,16 @@ export default class InfoTab extends React.Component {
                                     </CustomCard>
                                     <CustomCard>
                                         {
-                                            <MilestoneTable
-                                                editMode={this.state.editMode}
-                                                milestonesData={formikProps.values.milestones}
-                                                onDateChangeFactory={formikFieldHandleChange(formikProps)}
-                                                mandatoryMilestones={this.mandatoryMilestones}
-                                            />
+                                            milestones.loading
+                                                ? <LoadingSpinner/>
+                                                : (
+                                                    <MilestoneTable
+                                                        editMode={this.state.editMode}
+                                                        milestonesData={formikProps.values.milestones}
+                                                        onDateChangeFactory={formikFieldHandleChange(formikProps)}
+                                                        mandatoryMilestones={this.mandatoryMilestones}
+                                                    />
+                                                )
                                         }
                                     </CustomCard>
                                     <CustomCard>
@@ -151,13 +160,12 @@ export default class InfoTab extends React.Component {
 
     mainRows = (values, stateBranch) => {
         return (Object.keys(infoFieldsToRender).map((key) => {
-            if (key === "controls") return true;
             if (values[key] === undefined) return true;
-            return this.renderRow(this.renderHelper, key, stateBranch, values);
+            return this.renderRow(key, stateBranch, values);
         }))
     };
 
-    renderRow = (renderHelper, obj, stateBranch, values) => {
+    renderRow = (obj, stateBranch, values) => {
         const value = values[obj];
         switch (obj) {
             case "lessonsLearned":
@@ -165,33 +173,43 @@ export default class InfoTab extends React.Component {
             case "drChecklist":
             case "launchingPlan":
             case "projectPlan":
-                return this.renderRowWithComment(renderHelper, obj, stateBranch, value);
+                return this.renderRowWithComment(obj, stateBranch, value);
             case "ecmaBacklogTarget":
-                return this.renderEcmaBacklogRow(renderHelper, obj, stateBranch, value);
+                return this.renderEcmaBacklogRow(obj, stateBranch, value);
             case "contributingProjects": {
                 const isComposite = values.composite;
-                return this.renderContributingProjectsRow(renderHelper, obj, stateBranch, value, isComposite);
+                return this.renderContributingProjectsRow(obj, stateBranch, value, isComposite);
             }
             default:
-                return this.renderSimpleRow(renderHelper, obj, stateBranch, value);
+                return this.renderSimpleRow(obj, stateBranch, value);
         }
     };
 
-    renderSimpleRow = (renderHelper, obj, stateBranch, value) => {
+    renderSimpleRow = (obj, stateBranch, value) => {
         const {editMode} = this.state;
         const style = this.selectClass(stateBranch);
-        const formikProps = renderHelper.getFieldProps(obj, value);
+        const formikProps = this.renderHelper.getFieldProps(obj, value);
         const displayValue = isBoolean(value) ? boolToYesNo(value) : value;
+        const shouldRender = this.renderHelper.displayOrNot(obj);
+        const label = this.renderHelper.getLabelById(obj);
+        const editForm = editMode && this.renderHelper.isEditable(obj);
+        const fieldName = `${stateBranch}.${obj}`;
+
         return (
-            renderHelper.displayOrNot(obj) &&
-            <div key={obj} className={style}>
-                <FieldName name={renderHelper.getLabelById(obj)}/>
+            shouldRender &&
+            <div
+                key={obj}
+                className={style}
+            >
+                <FieldName name={label}/>
                 {
-                    editMode && renderHelper.isEditable(obj)
-                        ? <FormikInput
-                            {...formikProps}
-                            name={`${stateBranch}.${obj}`}
-                        />
+                    editForm
+                        ? (
+                            <FormikInput
+                                {...formikProps}
+                                name={fieldName}
+                            />
+                        )
                         : this.renderValue(obj, displayValue)
                 }
             </div>
@@ -204,57 +222,90 @@ export default class InfoTab extends React.Component {
         return <FieldValue value={value}/>
     }
 
-    renderRowWithComment = (renderHelper, obj, stateBranch, value) => {
+    renderRowWithComment = (obj, stateBranch, value) => {
         const {editMode} = this.state;
-        const formikProps = renderHelper.getFieldProps(obj, value);
+        const formikProps = this.renderHelper.getFieldProps(obj, value);
+        const shouldRender = this.renderHelper.displayOrNot(obj);
+        const label = this.renderHelper.getLabelById(obj);
+        const editForm = editMode && this.renderHelper.isEditable(obj);
+        const fieldName = `${stateBranch}.${obj}.value`;
+        const commentFieldName = `${stateBranch}.${obj}.comment`;
         return (
-            renderHelper.displayOrNot(obj) &&
-            <div key={obj} className={styles.data_container_comment}>
+            shouldRender &&
+            <div
+                key={obj}
+                className={styles.data_container_comment}
+            >
                 <div className={styles.comment_row_label}>
-                    <FieldName name={renderHelper.getLabelById(obj)}/>
+                    <FieldName name={label}/>
                 </div>
                 {
-                    editMode && renderHelper.isEditable(obj)
-                        ? <FormikInput
-                            {...formikProps}
-                            name={`${stateBranch}.${obj}.value`}
-                            className={styles.comment_row_value}
-                        />
-                        : <FieldValue value={value.value} className={styles.comment_row_value}/>
+                    editForm
+                        ? (
+                            <FormikInput
+                                {...formikProps}
+                                name={fieldName}
+                                className={styles.comment_row_value}
+                            />
+                        )
+                        : (
+                            <FieldValue
+                                value={value.value}
+                                className={styles.comment_row_value}
+                            />
+                        )
                 }
                 <div className={styles.comment_row_comment}>
-                    <FieldName name={"Comment"}/><HelpIcon className={styles.help_icon}/>
+                    <FieldName name={"Comment"}/>
+                    <HelpIcon className={styles.help_icon}/>
                 </div>
 
                 {
                     editMode
-                        ? <FormikInput
-                            type="textarea"
-                            name={`${stateBranch}.${obj}.comment`}
-                            className={styles.comment_row_comment_value}
-                        />
-                        : <Comment value={value.comment} className={styles.comment_row_comment_value}/>
+                        ? (
+                            <FormikInput
+                                type="textarea"
+                                name={commentFieldName}
+                                className={styles.comment_row_comment_value}
+                            />
+                        )
+                        : (
+                            <Comment
+                                value={value.comment}
+                                className={styles.comment_row_comment_value}
+                            />
+                        )
                 }
             </div>
         )
     };
 
-    renderEcmaBacklogRow = (renderHelper, obj, stateBranch) => {
+    renderEcmaBacklogRow = (obj, stateBranch) => {
         const {editMode} = this.state;
+        const shouldRender = this.renderHelper.displayOrNot(obj);
+        const arrayName = `${stateBranch}.${obj}`;
+        const label = this.renderHelper.getLabelById(obj);
         return (
-            renderHelper.displayOrNot(obj) &&
+            shouldRender &&
             <FieldArray
-                name={`${stateBranch}.${obj}`}
+                name={arrayName}
                 render={(arrayHelpers) => {
                     const value = arrayHelpers.form.values[stateBranch][obj];
+                    const arrayErrorName = `${stateBranch}.${obj}`;
+                    const errors = arrayHelpers.form.errors;
                     return (
-                        <div key={obj} className={styles.data_container}>
-                            <FieldName name={renderHelper.getLabelById(obj)}/>
+                        <div
+                            key={obj}
+                            className={styles.data_container}
+                        >
+                            <FieldName name={label}/>
                             <div className={styles.ecma_backlog_row}>
                                 {
                                     Object.keys(value).map((key, i) => {
                                             const milestoneSelectName = `${stateBranch}.${obj}.${key}.milestone`;
                                             const valueInputName = `${stateBranch}.${obj}.${key}.value`;
+                                            const milestoneValue = value[key]["milestone"];
+                                            const backlogValue = value[key]["value"];
                                             return (
                                                 <React.Fragment key={key}>
                                                     <FieldName
@@ -263,60 +314,87 @@ export default class InfoTab extends React.Component {
                                                     />
                                                     {
                                                         editMode
-                                                            ? <Field key={`mil_val_${i}`}
-                                                                     component="select"
-                                                                     name={milestoneSelectName}
-                                                            >
-                                                                <option value="">&nbsp;</option>
-                                                                <option value="CI">CI</option>
-                                                                <option value="TR">TR</option>
-                                                                <option value="DR4">DR4</option>
-                                                                <option value="DR5">DR5</option>
-                                                            </Field>
-                                                            : <FieldValue key={`mil_val_${i}`}
-                                                                          value={value[key]["milestone"]}
-                                                            />
+                                                            ? this.getMilestoneSelector(milestoneSelectName, `mil_val_${i}`)
+                                                            : (
+                                                                <FieldValue
+                                                                    key={`mil_val_${i}`}
+                                                                    value={milestoneValue}
+                                                                />
+                                                            )
                                                     }
-                                                    <FieldName key={`value_${i}`}
-                                                               name={"Value"}
-                                                               className={styles.value_label}
+                                                    <FieldName
+                                                        key={`value_${i}`}
+                                                        name={"Value"}
+                                                        className={styles.value_label}
                                                     />
                                                     {
                                                         editMode
-                                                            ? <FormikInput key={`val_val_${i}`}
-                                                                           type="numeric"
-                                                                           onValueChange={this.handleChange(valueInputName)}
-                                                                           name={valueInputName}
-                                                            />
-                                                            : <FieldValue key={`val_val_${i}`}
-                                                                          value={value[key]["value"]}
-                                                            />
+                                                            ? (
+                                                                <FormikInput
+                                                                    key={`val_val_${i}`}
+                                                                    type="numeric"
+                                                                    onValueChange={this.handleChange(valueInputName)}
+                                                                    name={valueInputName}
+                                                                />
+                                                            )
+                                                            : (
+                                                                <FieldValue
+                                                                    key={`val_val_${i}`}
+                                                                    value={backlogValue}
+                                                                />
+                                                            )
                                                     }
                                                 </React.Fragment>
                                             )
                                         }
                                     )
                                 }
-                                <ArrayErrors name={`${stateBranch}.${obj}`} errors={arrayHelpers.form.errors}/>
+                                <ArrayErrors
+                                    name={arrayErrorName}
+                                    errors={errors}
+                                />
                             </div>
                         </div>
                     )
-                }}/>
+                }}
+            />
         )
     };
 
-    renderContributingProjectsRow = (renderHelper, obj, stateBranch, value, isComposite) => {
+    getMilestoneSelector(name, key) {
+        return (
+            <Field key={key}
+                   component="select"
+                   name={name}
+            >
+                <option value="">&nbsp;</option>
+                <option value="CI">CI</option>
+                <option value="TR">TR</option>
+                <option value="DR4">DR4</option>
+                <option value="DR5">DR5</option>
+            </Field>
+        )
+    }
+
+    renderContributingProjectsRow = (obj, stateBranch, value, isComposite) => {
         const {loading, payload} = this.props.contrib;
         const {editMode} = this.state;
         const valueStrings = value.map((val) => val.projectName);
         const editProjectList = this.handleChange(`${stateBranch}.${obj}`);
         const style = this.selectClass(stateBranch);
+
+        const shouldRender = this.renderHelper.displayOrNot(obj) && isComposite;
+        const shouldMultiselectRender = !loading && editMode && this.renderHelper.isEditable(obj);
+        const label = this.renderHelper.getLabelById(obj);
         return (
-            renderHelper.displayOrNot(obj) && isComposite &&
-            <div key={obj} className={style}>
-                <FieldName name={renderHelper.getLabelById(obj)}/>
+            shouldRender &&
+            <div
+                key={obj}
+                className={style}
+            >
+                <FieldName name={label}/>
                 {
-                    !loading && editMode && renderHelper.isEditable(obj) &&
+                    shouldMultiselectRender &&
                     <MultiSelect
                         items={payload}
                         itemRenderer={(item, {handleClick}) =>
@@ -350,7 +428,10 @@ export default class InfoTab extends React.Component {
                         {
                             valueStrings.map((name) => (
                                 <React.Fragment key={name}>
-                                    <FieldValue className={styles.prj_margin} value={name}/>
+                                    <FieldValue
+                                        className={styles.prj_margin}
+                                        value={name}
+                                    />
                                 </React.Fragment>
                             ))
                         }

@@ -36,6 +36,13 @@ export default class IndicatorsTab extends React.Component {
         const {milestones, healthIndicators, requirements, milestonesKpi, dr4Kpi, qualityKpi} = this.props;
         const overall = getPropFromStringPath(healthIndicators, "payload.statuses.current.overall");
         const overallIndicator = getIndicatorsColor(overall);
+        const isControlsBlocked = renderHelper.displayOrNot("controls");
+        const isQualityShowed = renderHelper.displayOrNot("quality");
+
+        const rqsCardClasses = classNames(styles.rqs_kpi, styles.card);
+        const milestonesKpiClasses = classNames(styles.milestones_kpi, styles.card);
+        const dr4KpiClasses = classNames(styles.dr4_kpi, styles.card);
+        const qualityClasses = classNames(styles.quality, styles.card);
         return (
             <div>
                 <CustomCard className={styles.card}>
@@ -44,7 +51,10 @@ export default class IndicatorsTab extends React.Component {
                             ? <LoadingSpinner/>
                             : (
                                 <ErrorBoundary>
-                                    <Timeline milestones={milestones.payload} status={overallIndicator}/>
+                                    <Timeline
+                                        milestones={milestones.payload}
+                                        status={overallIndicator}
+                                    />
                                 </ErrorBoundary>
                             )
                     }
@@ -62,14 +72,14 @@ export default class IndicatorsTab extends React.Component {
                                         onIndicatorsSubmit={this.handleHealthIndicatorsSubmit}
                                         onCommentsSubmit={this.handleHealthCommentsSubmit}
                                         onCancel={this.handleHealthReload}
-                                        blocked={renderHelper.displayOrNot("controls")}
+                                        blocked={isControlsBlocked}
                                     />
                                 </ErrorBoundary>
                             )
                     }
                 </CustomCard>
                 <div className={styles.kpi_container}>
-                    <CustomCard className={classNames(styles.rqs_kpi, styles.card)}>
+                    <CustomCard className={rqsCardClasses}>
                         <h3>Requirements</h3>
                         {
                             requirements.loading
@@ -88,7 +98,7 @@ export default class IndicatorsTab extends React.Component {
                                 )
                         }
                     </CustomCard>
-                    <CustomCard className={classNames(styles.milestones_kpi, styles.card)}>
+                    <CustomCard className={milestonesKpiClasses}>
                         <h3>Milestones</h3>
                         {
                             milestonesKpi.loading
@@ -100,7 +110,7 @@ export default class IndicatorsTab extends React.Component {
                                 )
                         }
                     </CustomCard>
-                    <CustomCard className={classNames(styles.dr4_kpi, styles.card)}>
+                    <CustomCard className={dr4KpiClasses}>
                         <h3>Project DR4 KPI</h3>
                         {
                             dr4Kpi.loading
@@ -117,8 +127,8 @@ export default class IndicatorsTab extends React.Component {
                     </CustomCard>
                 </div>
                 {
-                    renderHelper.displayOrNot("quality") &&
-                    <CustomCard className={classNames(styles.quality, styles.card)}>
+                    isQualityShowed &&
+                    <CustomCard className={qualityClasses}>
                         <h3>Quality</h3>
                         {
                             qualityKpi.loading

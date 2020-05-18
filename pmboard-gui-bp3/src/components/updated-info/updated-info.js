@@ -9,7 +9,10 @@ export default class UpdatedInfo extends React.PureComponent {
         return (
             <div {...others}>
                 Updated On:
-                <LastUpdated className={styles.updated} dateStr={date}/>
+                <LastUpdated
+                    className={styles.updated}
+                    dateStr={date}
+                />
             </div>
         )
     }

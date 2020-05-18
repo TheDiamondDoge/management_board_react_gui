@@ -28,7 +28,7 @@ export default class PWS extends React.Component {
         this.state = {
             selectedId: "",
             defaults: {
-                defaultSelectedTab: "summary",
+                defaultSelectedTab: PWSTabs.SUMMARY,
                 defaultTabNames: this.getDefaultTabNames()
             }
         };
@@ -53,6 +53,7 @@ export default class PWS extends React.Component {
         } else {
             const tabName = this.getActiveTabName();
             const {projectName} = this.props.defaults.payload;
+            const selectedTabId = this.state.selectedId || tabName;
             return (
                 <div className={styles.pws_container}>
                     <h1>Project {projectName}</h1>
@@ -60,32 +61,110 @@ export default class PWS extends React.Component {
                         id="pws_tabs"
                         large
                         renderActiveTabPanelOnly
-                        selectedTabId={this.state.selectedId || tabName}
+                        selectedTabId={selectedTabId}
                         className={styles.tabs}
                         onChange={this.onChange}
                     >
-                        <Tab id={PWSTabs.SUMMARY} title="Summary" className={styles.tab_container}
-                             panel={<ErrorBoundary><SummaryTab tabId={PWSTabs.SUMMARY}/></ErrorBoundary>}/>
-                        <Tab id={PWSTabs.INDICATORS} title="Indicators" className={styles.tab_container}
-                             panel={<ErrorBoundary><IndicatorsTab tabId={PWSTabs.INDICATORS}/></ErrorBoundary>}/>
-                        <Tab id={PWSTabs.INFORMATION} title="Information" className={styles.tab_container}
-                             panel={<ErrorBoundary><InfoTab tabId={PWSTabs.INFORMATION}/></ErrorBoundary>}/>
-                        <Tab id={PWSTabs.ACTIONS} title="Actions" className={styles.tab_container}
-                             panel={<ErrorBoundary><Actions tabId={PWSTabs.ACTIONS}/></ErrorBoundary>}/>
-                        <Tab id={PWSTabs.RISKS} title="Risks" className={styles.tab_container}
-                             panel={<ErrorBoundary><Risks tabId={PWSTabs.RISKS}/></ErrorBoundary>}/>
-                        <Tab id={PWSTabs.COST} title="Cost" className={styles.tab_container}
-                             panel={<ErrorBoundary><CostTab tabId={PWSTabs.COST}/></ErrorBoundary>}/>
-                        <Tab id={PWSTabs.REPORT} title="Report" className={styles.tab_container}
-                             panel={<ErrorBoundary><Report tabId={PWSTabs.REPORT}/></ErrorBoundary>}/>
-                        <Tab id={PWSTabs.REQUIREMENTS} title="Requirements" className={styles.tab_container}
-                             panel={<ErrorBoundary><Requirements tabId={PWSTabs.REQUIREMENTS}/></ErrorBoundary>}/>
-                        <Tab id={PWSTabs.BACKLOG} title="Backlog" className={styles.tab_container}
-                             panel={<ErrorBoundary><BacklogTab tabId={PWSTabs.BACKLOG}/></ErrorBoundary>}/>
-                        <Tab id={PWSTabs.DEFECTS} title="Defects" className={styles.tab_container}
-                             panel={<ErrorBoundary><DefectsTab tabId={PWSTabs.DEFECTS}/></ErrorBoundary>}/>
-                        <Tab id={PWSTabs.BLC} title="BLC Dashboard" className={styles.tab_container}
-                             panel={<ErrorBoundary><BlcDashboard tabId={PWSTabs.BLC}/></ErrorBoundary>}/>
+                        <Tab
+                            id={PWSTabs.SUMMARY}
+                            title="Summary"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <SummaryTab tabId={PWSTabs.SUMMARY}/>
+                                </ErrorBoundary>
+                            )}
+                        />
+                        <Tab
+                            id={PWSTabs.INDICATORS}
+                            title="Indicators"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <IndicatorsTab tabId={PWSTabs.INDICATORS}/>
+                                </ErrorBoundary>
+                            )}/>
+                        <Tab
+                            id={PWSTabs.INFORMATION}
+                            title="Information"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <InfoTab tabId={PWSTabs.INFORMATION}/>
+                                </ErrorBoundary>
+                            )}/>
+                        <Tab
+                            id={PWSTabs.ACTIONS}
+                            title="Actions"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <Actions tabId={PWSTabs.ACTIONS}/>
+                                </ErrorBoundary>
+                            )}/>
+                        <Tab
+                            id={PWSTabs.RISKS}
+                            title="Risks"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <Risks tabId={PWSTabs.RISKS}/>
+                                </ErrorBoundary>
+                            )}/>
+                        <Tab
+                            id={PWSTabs.COST}
+                            title="Cost"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <CostTab tabId={PWSTabs.COST}/>
+                                </ErrorBoundary>
+                            )}/>
+                        <Tab
+                            id={PWSTabs.REPORT}
+                            title="Report"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <Report tabId={PWSTabs.REPORT}/>
+                                </ErrorBoundary>
+                            )}/>
+                        <Tab
+                            id={PWSTabs.REQUIREMENTS}
+                            title="Requirements"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <Requirements tabId={PWSTabs.REQUIREMENTS}/>
+                                </ErrorBoundary>
+                            )}/>
+                        <Tab
+                            id={PWSTabs.BACKLOG}
+                            title="Backlog"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <BacklogTab tabId={PWSTabs.BACKLOG}/>
+                                </ErrorBoundary>
+                            )}/>
+                        <Tab
+                            id={PWSTabs.DEFECTS}
+                            title="Defects"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <DefectsTab tabId={PWSTabs.DEFECTS}/>
+                                </ErrorBoundary>
+                            )}/>
+                        <Tab
+                            id={PWSTabs.BLC}
+                            title="BLC Dashboard"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <BlcDashboard tabId={PWSTabs.BLC}/>
+                                </ErrorBoundary>
+                            )}/>
                     </Tabs>
                 </div>
             );

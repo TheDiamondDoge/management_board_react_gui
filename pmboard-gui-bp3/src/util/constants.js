@@ -56,3 +56,22 @@ export const ReportTypes = {
     GREEN_FLAG: "green",
     DETAILS: "details",
 };
+
+export const CommonMilestonesLabels = {
+    OR: "OR",
+    DR0: "DR0",
+    DR1: "DR1",
+    DR2: "DR2",
+    DR3: "DR3",
+    TR: "TR",
+    DR4: "DR4",
+    DR5: "DR5",
+    OBR: "OBR",
+    CI: "CI"
+};
+
+export const BlcRowNames = {
+    PM: "pm",
+    PMO: "pmo",
+    SALES: "sales"
+};

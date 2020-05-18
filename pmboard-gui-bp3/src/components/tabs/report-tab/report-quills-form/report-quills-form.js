@@ -5,6 +5,7 @@ import styles from "./report-quills-form.module.css";
 import {Formik} from "formik";
 import {getQuillModuleToolbar} from "../../../../util/util";
 import PropTypes from "prop-types";
+import {ReportTypes} from "../../../../util/constants";
 
 export default class ReportQuillsForm extends React.Component {
     constructor(props) {
@@ -25,7 +26,9 @@ export default class ReportQuillsForm extends React.Component {
 
     render() {
         const {data, onCancel, onSubmit, blocked} = this.props;
-        const formikNames = ["summary", "red", "orange", "green", "details"];
+        const formikNames = [
+            ReportTypes.SUMMARY, ReportTypes.RED_FLAG, ReportTypes.ORANGE_FLAG, ReportTypes.GREEN_FLAG, ReportTypes.DETAILS
+        ];
         return (
             <>
                 {
@@ -56,18 +59,20 @@ export default class ReportQuillsForm extends React.Component {
                         const headers = this.getHeaders();
                         return (
                             <>
-                                {headers.map((elem, i) => (
-                                    <React.Fragment key={formikNames[i]}>
+                                {headers.map((elem, i) => {
+                                    const quillName = formikNames[i];
+                                    return (
+                                    <React.Fragment key={quillName}>
                                         <div>{headers[i]}</div>
                                         <FormikInput
                                             type="quill"
-                                            name={formikNames[i]}
+                                            name={quillName}
                                             readOnly={readOnly}
                                             modules={modules}
+                                            className={styles.quill_margin}
                                         />
-                                        <br/>
                                     </React.Fragment>
-                                ))}
+                                )})}
                             </>
                         )
                     }}

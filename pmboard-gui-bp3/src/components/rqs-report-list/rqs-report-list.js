@@ -8,7 +8,7 @@ export default class RqsReportList extends React.PureComponent {
         super(props);
 
         this.state = {
-            url: "https://jira.com/browse/"
+            baseUrl: "https://jira.com/browse/"
         }
     }
 
@@ -19,17 +19,22 @@ export default class RqsReportList extends React.PureComponent {
                 <ul className={styles.list}>
                     {data.map(rq => {
                         const id = rq.reqId;
-                        const url = this.state.url + `/${id}`;
+                        const url = this.state.baseUrl + `${id}`;
+                        const headline = rq.headline;
+                        const status = rq.status;
                         return (
-                            <li key={id} className={styles.list_item}>
+                            <li
+                                key={id}
+                                className={styles.list_item}
+                            >
                                 <div>
                                     <SafeUrl label={id}
                                              url={url}
                                              className={styles.url}
                                     />
                                 </div>
-                                <div>{rq.headline}</div>
-                                <div><u>Status</u>: {rq.status}</div>
+                                <div>{headline}</div>
+                                <div><u>Status</u>: {status}</div>
                             </li>
                         )
                     })}
@@ -48,5 +53,10 @@ RqsReportList.propTypes = {
         })
     ),
     className: PropTypes.string
+};
+
+RqsReportList.defaultProps = {
+    data: [],
+    className: ''
 };
 

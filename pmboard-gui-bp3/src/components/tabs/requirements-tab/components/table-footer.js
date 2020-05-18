@@ -7,11 +7,12 @@ export default class TableFooter extends React.PureComponent {
         const {onRefresh, ...containerProps} = this.props;
         return (
             <div {...containerProps}>
-                <Button minimal
-                        large
-                        icon={"refresh"}
-                        intent={Intent.PRIMARY}
-                        onClick={onRefresh}
+                <Button
+                    minimal
+                    large
+                    icon={"refresh"}
+                    intent={Intent.PRIMARY}
+                    onClick={onRefresh}
                 />
             </div>
         );

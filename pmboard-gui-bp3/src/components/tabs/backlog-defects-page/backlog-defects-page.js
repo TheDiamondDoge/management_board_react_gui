@@ -25,9 +25,14 @@ export default class BacklogDefectsPage extends React.Component {
                         <HelpIcon className={styles.tooltip}/>
                     </Tooltip>
                 </div>
-                <BarChart data={payload} className={styles.chart_container}/>
-                <br/>
-                <UpdatedInfo date={updatedOn} className={styles.updated_block}/>
+                <BarChart
+                    data={payload}
+                    className={styles.chart_container}
+                />
+                <UpdatedInfo
+                    date={updatedOn}
+                    className={styles.updated_block}
+                />
                 {this.getFooter()}
             </div>
         );
@@ -41,6 +46,7 @@ export default class BacklogDefectsPage extends React.Component {
         );
 
         const uploadLabel = blocked ? "Last week" : "Current week";
+        const updateLabel = "Update Grid";
         return (
             <div>
                 {
@@ -50,7 +56,7 @@ export default class BacklogDefectsPage extends React.Component {
                             minimal
                             icon={"refresh"}
                             intent={Intent.PRIMARY}
-                            text="Update Grid"
+                            text={updateLabel}
                             onClick={onUpdate}
                         />
                     </div>
@@ -77,4 +83,10 @@ BacklogDefectsPage.propTypes = {
     updatedOn: PropTypes.string,
     tooltip: PropTypes.element,
     blocked: PropTypes.bool
+};
+
+BacklogDefectsPage.defaultProps = {
+    updatedOn: '',
+    tooltip: '',
+    blocked: false
 };

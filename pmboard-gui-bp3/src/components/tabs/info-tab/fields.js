@@ -2,7 +2,7 @@ import {WorkspaceStatus, ProjectTypes} from "../../../util/constants";
 
 //Props mandatory: label,
 //Props not mandatory: type, notAllowedIf, allowedIf, editable
-export const infoFieldsToRender = {
+let config = {
     controls: {
         allowedIf: {
             workspaceStatus: [WorkspaceStatus.ENABLED]
@@ -156,3 +156,9 @@ export const infoFieldsToRender = {
         }
     },
 };
+
+Object.defineProperty(config, "controls", {
+   enumerable: false, configurable: true, writable: true
+});
+
+export default config;

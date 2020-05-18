@@ -5,11 +5,13 @@ import PropTypes from 'prop-types';
 export default class ContextMenu extends React.PureComponent {
     render() {
         const {onEdit, ...menuProps} = this.props;
+        const editLabel = "Edit 'Reported' flag";
         return (
             <Menu {...menuProps}>
-                <MenuItem icon={"edit"}
-                          text="Edit 'Reported' flag"
-                          onClick={onEdit}
+                <MenuItem
+                    icon={"edit"}
+                    text={editLabel}
+                    onClick={onEdit}
                 />
             </Menu>
         )

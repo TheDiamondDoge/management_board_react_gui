@@ -58,7 +58,10 @@ export default class SummaryTab extends React.Component {
                                 ? <LoadingSpinner/>
                                 : (
                                     <ErrorBoundary>
-                                        <Timeline milestones={milestones.payload} status={overallIndicator}/>
+                                        <Timeline
+                                            milestones={milestones.payload}
+                                            status={overallIndicator}
+                                        />
                                     </ErrorBoundary>
                                 )
                         }
@@ -66,17 +69,24 @@ export default class SummaryTab extends React.Component {
                     <CustomCard className={styles.data_container}>
                         <div className="left_part">
                             {
-                                Object.keys(general).map((obj) => (
-                                    renderHelper.displayOrNot(obj) && (
-                                        <div key={obj} className={mainCardStyle}>
-                                            <FieldName name={renderHelper.getLabelById(obj)}/>
-                                            {obj === "projectDescription"
-                                                ? <Comment value={general[obj]}/>
-                                                : <FieldValue value={general[obj]}/>
-                                            }
-                                        </div>
+                                Object.keys(general).map((obj) => {
+                                    const fieldLabel = renderHelper.getLabelById(obj);
+                                    const shouldRender = renderHelper.displayOrNot(obj);
+                                    return (
+                                        shouldRender && (
+                                            <div
+                                                key={obj}
+                                                className={mainCardStyle}
+                                            >
+                                                <FieldName name={fieldLabel}/>
+                                                {obj === "projectDescription"
+                                                    ? <Comment value={general[obj]}/>
+                                                    : <FieldValue value={general[obj]}/>
+                                                }
+                                            </div>
+                                        )
                                     )
-                                ))
+                                })
                             }
                         </div>
                         <div className={styles.right_part}>
@@ -85,7 +95,7 @@ export default class SummaryTab extends React.Component {
                                 : (
                                     <ErrorBoundary>
                                         <HealthIndicators
-                                            isSummaryMode={true}
+                                            isSummaryMode
                                             indicators={healthIndicators.payload}
                                             fieldsToRender={fieldsToRender}
                                         />
@@ -99,13 +109,24 @@ export default class SummaryTab extends React.Component {
                             {
                                 Object.keys(status).map((obj) => {
                                     const flagClassColor = this.getClassForFlag(obj);
+                                    const shouldRender = renderHelper.displayOrNot(obj);
+                                    const fieldLabel = renderHelper.getLabelById(obj);
+                                    const quillModules = {toolbar: null};
                                     return (
-                                        renderHelper.displayOrNot(obj) && (
-                                            <div key={obj} className={styles.executive_block}>
-                                                <FieldName name={renderHelper.getLabelById(obj)}
-                                                           className={flagClassColor}/>
-                                                <ReactQuill defaultValue={status[obj]} modules={{toolbar: null}}
-                                                            readOnly/>
+                                        shouldRender && (
+                                            <div
+                                                key={obj}
+                                                className={styles.executive_block}
+                                            >
+                                                <FieldName
+                                                    name={fieldLabel}
+                                                    className={flagClassColor}
+                                                />
+                                                <ReactQuill
+                                                    defaultValue={status[obj]}
+                                                    modules={quillModules}
+                                                    readOnly
+                                                />
                                             </div>
                                         )
                                     )
@@ -114,28 +135,44 @@ export default class SummaryTab extends React.Component {
                         </div>
                         <div className={styles.right_part}>
                             {
-                                Object.keys(links).map((obj) => (
-                                    renderHelper.displayOrNot(obj) && (
-                                        <div key={obj} className={secondaryCardStyle}>
-                                            <FieldName name={renderHelper.getLabelById(obj)}/>
-                                            <FieldValue value={`${links[obj]}`}/>
-                                        </div>
+                                Object.keys(links).map((obj) => {
+                                    const shouldRender = renderHelper.displayOrNot(obj);
+                                    const label = renderHelper.getLabelById(obj);
+                                    const value = `${links[obj]}`;
+                                    return (
+                                        shouldRender && (
+                                            <div
+                                                key={obj}
+                                                className={secondaryCardStyle}
+                                            >
+                                                <FieldName name={label}/>
+                                                <FieldValue value={value}/>
+                                            </div>
+                                        )
                                     )
-                                ))
+                                })
                             }
                         </div>
                     </CustomCard>
                     <CustomCard className={styles.pws_data_container}>
                         <div>
                             {
-                                Object.keys(pwsInfo).map((obj) => (
-                                    renderHelper.displayOrNot(obj) && (
-                                        <div key={obj} className={styles.data_fields}>
-                                            <FieldName name={renderHelper.getLabelById(obj)}/>
-                                            {this.renderHelper(obj, pwsInfo[obj])}
-                                        </div>
+                                Object.keys(pwsInfo).map((obj) => {
+                                    const shouldRender = renderHelper.displayOrNot(obj);
+                                    const label = renderHelper.getLabelById(obj);
+                                    const value = pwsInfo[obj];
+                                    return (
+                                        shouldRender && (
+                                            <div
+                                                key={obj}
+                                                className={styles.data_fields}
+                                            >
+                                                <FieldName name={label}/>
+                                                {this.renderHelper(obj, value)}
+                                            </div>
+                                        )
                                     )
-                                ))
+                                })
                             }
                         </div>
                     </CustomCard>

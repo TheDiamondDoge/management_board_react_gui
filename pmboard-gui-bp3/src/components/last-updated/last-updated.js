@@ -14,10 +14,15 @@ export default class LastUpdated extends React.PureComponent {
         const classes = classNames(styles.margin_right, {[styles.red]: isNotUpdatedForLong});
         return (
             <div {...others}>
-                <span className={classes}>{formattedDate}</span>
+                <span className={classes}>
+                    {formattedDate}
+                </span>
                 {isNotUpdatedForLong &&
                     <span title={title}>
-                        <Icon icon={"warning-sign"} intent={Intent.DANGER}/>
+                        <Icon
+                            icon={"warning-sign"}
+                            intent={Intent.DANGER}
+                        />
                     </span>
                 }
             </div>

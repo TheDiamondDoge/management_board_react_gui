@@ -58,24 +58,34 @@ export default class ReportTab extends React.Component {
                         </div>
                         {indLoading
                             ? <LoadingSpinner/>
-                            : <HealthIndicatorsMinimal indicators={indicators.statuses.current}
-                                                       className={styles.health_minimal}/>
+                            : (
+                                <HealthIndicatorsMinimal
+                                    indicators={indicators.statuses.current}
+                                    className={styles.health_minimal}
+                                />
+                            )
                         }
                         {milestonesLoading || indLoading
                             ? <LoadingSpinner/>
-                            : <Timeline milestones={milestones}
-                                        status={getIndicatorsColor(indicators.statuses.current.overall)}/>
+                            : (
+                                <Timeline
+                                    milestones={milestones}
+                                    status={getIndicatorsColor(indicators.statuses.current.overall)}
+                                />
+                            )
                         }
                     </CustomCard>
                     <CustomCard>
                         {userReportsLoading
                             ? <LoadingSpinner/>
-                            : <ReportQuillsForm
-                                data={userReportsPayload}
-                                onCancel={this.handleUserReportReload}
-                                onSubmit={this.handleSaveData}
-                                blocked={!renderHelper.displayOrNot("controls")}
-                            />
+                            : (
+                                <ReportQuillsForm
+                                    data={userReportsPayload}
+                                    onCancel={this.handleUserReportReload}
+                                    onSubmit={this.handleSaveData}
+                                    blocked={!renderHelper.displayOrNot("controls")}
+                                />
+                            )
                         }
                     </CustomCard>
                     <CustomCard>
@@ -90,23 +100,24 @@ export default class ReportTab extends React.Component {
                         <Divider/>
                         {risksLoading
                             ? <LoadingSpinner/>
-                            :
-                            <div>
-                                <div className={styles.risk_block}>
-                                    <h4 className={styles.red}>High</h4>
-                                    <RisksList data={risksObj.high}/>
+                            : (
+                                <div>
+                                    <div className={styles.risk_block}>
+                                        <h4 className={styles.red}>High</h4>
+                                        <RisksList data={risksObj.high}/>
+                                    </div>
+                                    <div className={styles.risk_block}>
+                                        <Divider/>
+                                        <h4 className={styles.orange}>Moderate</h4>
+                                        <RisksList data={risksObj.mod}/>
+                                    </div>
+                                    <div className={styles.risk_block}>
+                                        <Divider/>
+                                        <h4 className={styles.green}>Low</h4>
+                                        <RisksList data={risksObj.low}/>
+                                    </div>
                                 </div>
-                                <div className={styles.risk_block}>
-                                    <Divider/>
-                                    <h4 className={styles.orange}>Moderate</h4>
-                                    <RisksList data={risksObj.mod}/>
-                                </div>
-                                <div className={styles.risk_block}>
-                                    <Divider/>
-                                    <h4 className={styles.green}>Low</h4>
-                                    <RisksList data={risksObj.low}/>
-                                </div>
-                            </div>
+                            )
                         }
                     </CustomCard>
                 </>

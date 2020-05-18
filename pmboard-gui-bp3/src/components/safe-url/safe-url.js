@@ -5,11 +5,12 @@ export default class SafeUrl extends React.PureComponent {
     render() {
         const {url, className, label, ...others} = this.props;
         return (
-            <a href={url}
-               target="_blank"
-               rel="noopener noreferrer"
-               className={className}
-               {...others}
+            <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={className}
+                {...others}
             >
                 {label}
             </a>
@@ -18,11 +19,12 @@ export default class SafeUrl extends React.PureComponent {
 }
 
 SafeUrl.propTypes = {
-    url: PropTypes.string,
+    url: PropTypes.string.isRequired,
     className: PropTypes.string,
     label: PropTypes.string
 };
 
 SafeUrl.defaultProps = {
-    label: "Click here"
+    label: "Click here",
+    className: ''
 };

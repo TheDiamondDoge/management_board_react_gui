@@ -14,3 +14,11 @@
 .green {
     color: #0d8050;
 }
+
+.no_border {
+    border: none !important;
+}
+
+.quill_margin {
+    margin-bottom: 17px;
+}

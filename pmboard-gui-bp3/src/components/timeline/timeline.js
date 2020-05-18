@@ -25,7 +25,10 @@ export default class Timeline extends React.Component {
         const containerClasses = classNames(this.props.className, styles.container);
         return (
             <div className={containerClasses}>
-                <table id={"timeline"} className={styles.timeline_table}>
+                <table
+                    id={"timeline"}
+                    className={styles.timeline_table}
+                >
                     <tbody>
 
                     {this.createMileStatusRow(milestones)}
@@ -35,10 +38,15 @@ export default class Timeline extends React.Component {
                         {
                             milestones.map((milestone, key) => {
                                 const url = milestone.meetingMinutes;
-                                let content = milestone.label;
-                                if (isUrl(url)) {
-                                    content = <SafeUrl url={url} label={milestone.label}/>;
-                                }
+                                let content = isUrl(url)
+                                    ? (
+                                        <SafeUrl
+                                            url={url}
+                                            label={milestone.label}
+                                        />
+                                    )
+                                    : milestone.label;
+
                                 return this.createContentCell(content, key)
                             })
                         }
@@ -48,28 +56,36 @@ export default class Timeline extends React.Component {
                     {this.createTimelineRow(milestones)}
                     {this.createDecorativeRow(milestones)}
 
-                    <tr><td>&nbsp;</td></tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
                     <tr>
                         <td className={styles.legend}>
                             <FieldName name={"Committed (Baseline)"}/>
                         </td>
                         {
-                            milestones.map((milestone, key) => (
-                                this.createContentCell(dateFormatToString(new Date(milestone.baselineDate)), key)
-                            ))
+                            milestones.map((milestone, key) => {
+                                const date = new Date(milestone.baselineDate);
+                                const dateStr = dateFormatToString(date);
+                                return this.createContentCell(dateStr, key);
+                            })
                         }
                     </tr>
 
-                    <tr><td>&nbsp;</td></tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
 
                     <tr>
                         <td className={styles.legend}>
                             <FieldName name={"Actual / Forecast"}/>
                         </td>
                         {
-                            milestones.map((milestone, key) => (
-                                this.createContentCell(dateFormatToString(new Date(milestone.actualDate)), key)
-                            ))
+                            milestones.map((milestone, key) => {
+                                const date = new Date(milestone.actualDate);
+                                const dateStr = dateFormatToString(date);
+                                return this.createContentCell(dateStr, key);
+                            })
                         }
                     </tr>
                     </tbody>
@@ -89,10 +105,11 @@ export default class Timeline extends React.Component {
         if (orIndex === -1) {
             return [emptyOr, ...milestones];
         }
-        // questionable functionality
+            // questionable functionality
         /*else if (orIndex !== 0) {
             return [milestones[orIndex], ...milestones.splice(0, orIndex), ...milestones.splice(orIndex)];
         } */
+
         else {
             return [...milestones];
         }
@@ -104,17 +121,20 @@ export default class Timeline extends React.Component {
         const timelineIndClasses = classNames(styles.indicator);
         const fullMargin = `calc(${marginLeft * 100}% - 13px)`;
         return (
-            <td key={i} className={styles.line}>
+            <td
+                key={i}
+                className={styles.line}
+            >
                 {
                     (i === pos) &&
-                         (
-                            <div
-                                className={timelineIndClasses}
-                                style={{marginLeft: fullMargin}}
-                            >
-                                <StatusIndicator status={this.props.status}/>
-                            </div>
-                        )
+                    (
+                        <div
+                            className={timelineIndClasses}
+                            style={{marginLeft: fullMargin}}
+                        >
+                            <StatusIndicator status={this.props.status}/>
+                        </div>
+                    )
                 }
             </td>
         )
@@ -231,7 +251,10 @@ export default class Timeline extends React.Component {
                 <td/>
                 {
                     milestones.map((obj, i) => (
-                        <td key={i + "_status"} className={iconsStyle}>
+                        <td
+                            key={i + "_status"}
+                            className={iconsStyle}
+                        >
                             {this.getMilestoneStatusIcon(obj)}
                         </td>
                     ))
@@ -241,9 +264,10 @@ export default class Timeline extends React.Component {
     };
 
     getMilestoneStatusIcon = (milestone) => {
-        if(milestone.completion === 100) {
+        const actualDate = new Date(milestone.actualDate);
+        if (milestone.completion === 100) {
             return <Icon icon={"tick"} intent={Intent.SUCCESS}/>
-        } else if (new Date(milestone.actualDate) < this.currentDate) {
+        } else if (actualDate < this.currentDate) {
             return <Icon icon={"cross"} intent={Intent.DANGER}/>;
         } else {
             return "";
@@ -303,4 +327,9 @@ Timeline.propTypes = {
     milestones: PropTypes.arrayOf(MilestoneShape).isRequired,
     status: PropTypes.oneOf(["red", "green", "yellow", "blank"]),
     classNames: PropTypes.string
+};
+
+Timeline.defaultProps = {
+    className: '',
+    status: 'blank'
 };

@@ -24,11 +24,7 @@ export default class Actions extends React.Component {
             const renderHelper = new RenderFieldHelper(renderFields, validationParams);
             const {payload} = this.props.actions;
             const filters = createEnchantedTableFilters(payload);
-            let relatedRisks = this.props.relatedRisks;
-            if (relatedRisks !== undefined) {
-                relatedRisks = relatedRisks.map((number) => ({value: number, label: `${number}`}))
-            }
-            let editDynamicInputVals = {relatedRisks: relatedRisks};
+            let editDynamicInputVals = {relatedRisks: this.getDynamicInputRisks()};
 
             return (
                 <CustomCard className={styles.table_container}>
@@ -51,6 +47,11 @@ export default class Actions extends React.Component {
         }
     }
 
+    getDynamicInputRisks() {
+        const {relatedRisks} = this.props;
+        return relatedRisks !== undefined ? relatedRisks.map((number) => ({value: number, label: `${number}`})) : [];
+    }
+
     getTableFooter = (renderHelper) => {
         const renderable = renderHelper.displayOrNot("controls");
         const props = {
@@ -71,8 +72,9 @@ export default class Actions extends React.Component {
         if (renderHelper.displayOrNot("controls")) {
             return (
                 (menuFuncs) =>
-                    <ContextMenu onEdit={menuFuncs.editRow}
-                                 onDelete={() => this.handleDeleteAction(menuFuncs.getRow().uid)}
+                    <ContextMenu
+                        onEdit={menuFuncs.editRow}
+                        onDelete={() => this.handleDeleteAction(menuFuncs.getRow().uid)}
                     />
             )
         }

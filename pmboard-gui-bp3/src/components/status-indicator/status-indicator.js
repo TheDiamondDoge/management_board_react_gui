@@ -6,13 +6,13 @@ import styles from './status-indicator.module.css';
 export default class StatusIndicator extends React.PureComponent {
     render() {
         const {className, status} = this.props;
-        let classes = classNames(className, styles.indicator, styles[this.getClassName(status)]);
-
+        const classes = classNames(className, styles.indicator, styles[this.getClassName(status)]);
+        const indicatorSymbol = this.getIndicatorSymbol(status);
         return (
             <>
                 <div className={classes}>
                     <span className={styles.text_container}>
-                    {this.getIndicatorSymbol(status)}
+                        {indicatorSymbol}
                     </span>
                 </div>
             </>
@@ -53,3 +53,8 @@ StatusIndicator.propTypes = {
     classNames: PropTypes.string,
     status: PropTypes.string,
 };
+
+StatusIndicator.defaultProps = {
+    status: '',
+    className: ''
+}

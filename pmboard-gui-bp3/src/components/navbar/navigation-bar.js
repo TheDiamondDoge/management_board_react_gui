@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import {CustomBreadcrumbs} from "../breadcrumbs/breadcrumbs";
 
-export default class NavigationBar extends React.Component {
+export default class NavigationBar extends React.PureComponent {
     render() {
         const {className} = this.props;
         const style = classNames(styles.container, className);
@@ -18,8 +18,15 @@ export default class NavigationBar extends React.Component {
                     <NavbarGroup align={Alignment.RIGHT}>
                         <NavbarHeading>PM BOARD</NavbarHeading>
                         <NavbarDivider/>
-                        <Button className={Classes.MINIMAL} icon="home"/>
-                        <Button className={Classes.MINIMAL} icon="document" text="Files"/>
+                        <Button
+                            className={Classes.MINIMAL}
+                            icon="home"
+                        />
+                        <Button
+                            className={Classes.MINIMAL}
+                            icon="document"
+                            text="Files"
+                        />
                     </NavbarGroup>
                 </Navbar>
             </nav>
@@ -29,4 +36,8 @@ export default class NavigationBar extends React.Component {
 
 NavigationBar.propTypes = {
     className: PropTypes.string,
+};
+
+NavigationBar.defaultProps = {
+    className: ''
 };

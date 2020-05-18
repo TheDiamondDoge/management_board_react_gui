@@ -1,6 +1,6 @@
 import {WorkspaceStatus} from "../../util/constants";
 
-export default {
+let config = {
     controls: {
         label: "Sync Button",
         allowedIf: {
@@ -30,4 +30,10 @@ export default {
         label: "Test pass (rate or number)",
         help: "Help for pass"
     }
-}
+};
+
+Object.defineProperty(config, "controls", {
+    enumerable: false, configurable: true, writable: true
+});
+
+export default config;

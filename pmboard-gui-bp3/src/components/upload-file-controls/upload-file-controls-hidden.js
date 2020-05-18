@@ -17,12 +17,17 @@ export default class UploadFileControlsHidden extends React.PureComponent {
         return (
             <div>
                 <form onSubmit={this.handleFormSubmit}>
-                    <input ref={uploadRef}
-                           type="file"
-                           onChange={this.onFilePick}
-                           className={styles.hidden}
+                    <input
+                        ref={uploadRef}
+                        type="file"
+                        onChange={this.onFilePick}
+                        className={styles.hidden}
                     />
-                    <input ref={this.submitRef} type="submit" className={styles.hidden}/>
+                    <input
+                        ref={this.submitRef}
+                        type="submit"
+                        className={styles.hidden}
+                    />
                 </form>
             </div>
         );

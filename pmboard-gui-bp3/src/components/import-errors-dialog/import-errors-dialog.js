@@ -11,15 +11,16 @@ export default class ImportErrorsDialog extends React.PureComponent {
         const message = "Excel file uploaded with following errors:";
         const dialogTitle = "Warning";
         return (
-            <Dialog isOpen={isOpen}
-                    title={dialogTitle}
-                    icon={
-                        <Icon
-                            icon={"warning-sign"}
-                            intent={Intent.WARNING}
-                        />
-                    }
-                    onClose={onClose}
+            <Dialog
+                isOpen={isOpen}
+                title={dialogTitle}
+                icon={
+                    <Icon
+                        icon={"warning-sign"}
+                        intent={Intent.WARNING}
+                    />
+                }
+                onClose={onClose}
             >
                 <div className={Classes.DIALOG_BODY}>
                     {message}

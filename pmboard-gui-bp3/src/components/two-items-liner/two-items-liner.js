@@ -21,3 +21,9 @@ TwoItemsLiner.propTypes = {
     second: PropTypes.node,
     className: PropTypes.string,
 };
+
+TwoItemsLiner.defaultProps = {
+    first: '',
+    second: '',
+    className: ''
+};

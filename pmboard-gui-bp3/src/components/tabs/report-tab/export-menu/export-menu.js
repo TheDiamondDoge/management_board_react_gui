@@ -6,14 +6,18 @@ import {getDateFromStringWithTime} from "../../../../util/transform-funcs";
 
 export default class ExportMenu extends React.Component {
     render() {
+        const exportButtonTitle = "PPT Upload";
         return (
-            <Popover content={this.pptMenu()} position={Position.BOTTOM}>
+            <Popover
+                content={this.pptMenu()}
+                position={Position.BOTTOM}
+            >
                 <Button
                     large
                     minimal
                     icon={"download"}
                     intent={Intent.PRIMARY}
-                    text={"PPT Upload"}
+                    text={exportButtonTitle}
                 />
             </Popover>
         );
@@ -23,25 +27,37 @@ export default class ExportMenu extends React.Component {
         const {snapshots, snapshotLoading, projectId, onClickElement} = this.props;
         return (
             <Menu>
-                <MenuItem disabled text={"PowerPoint, program template"}/>
-                <MenuItem text={"PowerPoint, multi-page & customizable"}
-                          onClick={() => onClickElement(projectId, "custom")}/>
-                <MenuItem text={"PowerPoint, multi-page & indicators"}
-                          onClick={() => onClickElement(projectId, "indicators")}/>
-                <MenuItem text={"PowerPoint Exec review"}
-                          onClick={() => onClickElement(projectId, "review")}/>
+                <MenuItem
+                    disabled
+                    text={"PowerPoint, program template"}
+                />
+                <MenuItem
+                    text={"PowerPoint, multi-page & customizable"}
+                    onClick={() => onClickElement(projectId, "custom")}
+                />
+                <MenuItem
+                    text={"PowerPoint, multi-page & indicators"}
+                    onClick={() => onClickElement(projectId, "indicators")}
+                />
+                <MenuItem
+                    text={"PowerPoint Exec review"}
+                    onClick={() => onClickElement(projectId, "review")}
+                />
                 <Divider/>
                 {snapshotLoading
                     ? <LoadingSpinner/>
                     : snapshots.map(snap => {
                         const strTimestamp = getDateFromStringWithTime(snap.timestamp);
-                        return(
-                        <MenuItem key={snap.reportId}
-                                  text={`Snapshot at ${strTimestamp}`}
-                                  icon={"archive"}
-                                  onClick={() => onClickElement(projectId, "custom", snap.reportId)}
-                        />
-                    )})
+                        const menuItemName = `Snapshot at ${strTimestamp}`;
+                        return (
+                            <MenuItem
+                                key={snap.reportId}
+                                text={menuItemName}
+                                icon={"archive"}
+                                onClick={() => onClickElement(projectId, "custom", snap.reportId)}
+                            />
+                        )
+                    })
                 }
             </Menu>
         )

@@ -8,7 +8,6 @@ import {BacklogDefectsTypes, ProjectDefaults} from "../../../util/custom-types";
 //TODO rename to 'config'
 import renderFields from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
-import styles from "./defects-tab.module.css";
 
 export default class DefectsTab extends React.Component {
     render() {
@@ -20,16 +19,27 @@ export default class DefectsTab extends React.Component {
             const validationParams = this.props.defaults.payload;
             const renderHelper = new RenderFieldHelper(renderFields, validationParams);
             const {updatedOn, ...data} = payload;
+            const title = "New Open Defects (ECMA CRs)";
+
+            const tooltipTitle = "Tips are";
+            const tooltipContent = "Here";
+
+            const isBlocked = !renderHelper.displayOrNot("controls");
             return (
-                <CustomCard className={styles.chart_container}>
+                <CustomCard>
                     <BacklogDefectsPage
                         data={data}
-                        header="New Open Defects (ECMA CRs)"
+                        header={title}
                         onUpdate={() => alert("Updated")}
                         onCurrentClick={() => alert("Current week")}
                         updatedOn={updatedOn}
-                        tooltip={<TooltipContent title={"Tips are"} content={"Here"}/>}
-                        blocked={!renderHelper.displayOrNot("controls")}
+                        tooltip={(
+                            <TooltipContent
+                                title={tooltipTitle}
+                                content={tooltipContent}
+                            />
+                        )}
+                        blocked={isBlocked}
                     />
                 </CustomCard>
             );

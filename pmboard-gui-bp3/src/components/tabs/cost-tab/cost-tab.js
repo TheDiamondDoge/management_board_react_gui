@@ -18,6 +18,7 @@ export default class CostTab extends React.Component {
         super(props);
         this.state = {
             editMode: false,
+            templateUrl: "http://www.google.com"
         };
 
         this.uploadRef = React.createRef();
@@ -39,26 +40,36 @@ export default class CostTab extends React.Component {
             const {projectId, projectName} = this.props.defaults.payload;
             const validationParams = this.props.defaults.payload;
             const renderHelper = new RenderFieldHelper(renderFields, validationParams);
+            const showControls = renderHelper.displayOrNot("controls");
+
+            const lastUploadedLabel = "Last uploaded:";
+            const importLabel = "Import Cost File";
+            const uploadTemplateLabel = "Get template for upload";
             return (
                 <>
                     <CustomCard>
                         <div>
-                            <LastUpdatedLabel label={"Last uploaded:"}
-                                              isFileExists={fileExists}
-                                              onClick={() => getLastUploadedFile(projectId, projectName)}
+                            <LastUpdatedLabel
+                                label={lastUploadedLabel}
+                                isFileExists={fileExists}
+                                onClick={() => getLastUploadedFile(projectId, projectName)}
                             />
-                            <LastUpdated className={styles.last_updated} dateStr={updated}/>
+                            <LastUpdated
+                                className={styles.last_updated}
+                                dateStr={updated}
+                            />
                         </div>
                     </CustomCard>
                     <CustomCard>
                         {
-                            renderHelper.displayOrNot("controls") &&
+                            showControls &&
                             <div className={styles.import_container}>
-                                <Button text={"Import Cost File"}
-                                        icon={"import"}
-                                        onClick={this.openFileUploadDialog}
-                                        intent={Intent.PRIMARY}
-                                        minimal
+                                <Button
+                                    text={importLabel}
+                                    icon={"import"}
+                                    onClick={this.openFileUploadDialog}
+                                    intent={Intent.PRIMARY}
+                                    minimal
                                 />
                             </div>
                         }
@@ -68,13 +79,15 @@ export default class CostTab extends React.Component {
                         <CostTable tableName={"CAPEX/OPEX"} data={capex}/>
                     </CustomCard>
                     <CustomCard>
-                        <SafeUrl label={"Get template for upload"}
-                                 url={"http://www.google.com"}
+                        <SafeUrl
+                            label={uploadTemplateLabel}
+                            url={this.state.template}
                         />
                     </CustomCard>
 
-                    <UploadFileControlsHidden uploadRef={this.uploadRef}
-                                              onSubmit={(file) => uploadCost(projectId, file)}
+                    <UploadFileControlsHidden
+                        uploadRef={this.uploadRef}
+                        onSubmit={(file) => uploadCost(projectId, file)}
                     />
                 </>
             )

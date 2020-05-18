@@ -13,6 +13,7 @@ import {formikFieldHandleChange} from "../../../util/util";
 import {BlcTab, ProjectDefaults} from "../../../util/custom-types";
 import renderFields from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
+import {BlcRowNames} from "../../../util/constants";
 
 export default class BlcDashboard extends React.Component {
     constructor(props) {
@@ -37,16 +38,19 @@ export default class BlcDashboard extends React.Component {
             const validationParams = this.props.defaults.payload;
             this.renderHelper = new RenderFieldHelper(renderFields, validationParams);
             const {pm, pmo, sales, rowToSave} = this.props.blcTab.payload;
-            const showSubmitCancel = this.shouldShowEditControls() && this.renderHelper.displayOrNot("controls");
+            const showSubmitCancel = this.shouldShowSubmitCancel();
+            const showControls = this.renderHelper.displayOrNot("controls");
+            const publishDashboardLabel = "Publish Dashboard";
             return (
                 <>
                     <CustomCard>
                         {
-                            this.renderHelper.displayOrNot("controls") &&
-                            <Button intent={Intent.SUCCESS}
-                                    className={classNames(Classes.MINIMAL, styles.publish_btn)}
-                                    icon={"upload"}
-                                    text={"Publish Dashboard"}
+                            showControls &&
+                            <Button
+                                intent={Intent.SUCCESS}
+                                className={classNames(Classes.MINIMAL, styles.publish_btn)}
+                                icon={"upload"}
+                                text={publishDashboardLabel}
                             />
                         }
                         <Formik
@@ -69,26 +73,27 @@ export default class BlcDashboard extends React.Component {
                                 (formikProps) => {
                                     this.bindFormSubmission(formikProps.submitForm);
                                     this.handleChange = formikFieldHandleChange(formikProps);
-                                    return (
-                                        this.renderBlcTab(formikProps)
-                                    )
+                                    return this.renderBlcTab(formikProps);
                                 }
                             }
                         />
                     </CustomCard>
                     {showSubmitCancel &&
-                    <EditSaveControls editMode
-                                      onCancel={() => {
-                                          this.cancelEdit();
-                                          this.props.loadData(this.props.defaults.payload.projectId);
-                                      }}
-                                      onSubmit={this.submitForm}
-                                      className={styles.controls}
+                    <EditSaveControls
+                        editMode
+                        onCancel={this.handleCancel}
+                        onSubmit={this.submitForm}
+                        className={styles.controls}
                     />
                     }
                 </>
             )
         }
+    }
+
+    handleCancel = () => {
+        this.cancelEdit();
+        this.props.loadData(this.props.defaults.payload.projectId);
     }
 
     bindFormSubmission = (formikSubmitFunc) => {
@@ -117,6 +122,10 @@ export default class BlcDashboard extends React.Component {
         });
     };
 
+    shouldShowSubmitCancel() {
+        return this.shouldShowEditControls() && this.renderHelper.displayOrNot("controls");
+    }
+
     shouldShowEditControls() {
         return this.state.isPmoRow || this.state.isPmRow || this.state.isSalesRow || this.state.isCommentsEdit;
     }
@@ -136,12 +145,12 @@ export default class BlcDashboard extends React.Component {
     };
 
     renderBlcTab = (formikProps) => {
-        const thClasses = classNames(styles.column_align_center, styles.border_right);
+        const thClasses = styles.column_align_center;
         const thCommentClasses = classNames(styles.column_align_center);
         const controlsAllowed = this.renderHelper.displayOrNot("controls");
         const {pm, pmo, sales} = formikProps.values;
         return (
-            <div style={{position: "relative"}}>
+            <div className={styles.relative_wrapper}>
                 <div className={styles.overflow_wrapper}>
                     <HTMLTable
                         bordered
@@ -153,8 +162,8 @@ export default class BlcDashboard extends React.Component {
 
                         <tbody>
                         <BlcRow
-                            rowName={"pm"}
-                            roleName={this.renderHelper.getLabelById("pm")}
+                            rowName={BlcRowNames.PM}
+                            roleName={this.renderHelper.getLabelById(BlcRowNames.PM)}
                             lastUpdatedBy={pm.csl}
                             updatedOn={pm.updatedOn}
                             rowValues={pm.indicators}
@@ -167,24 +176,24 @@ export default class BlcDashboard extends React.Component {
                             blocked={!controlsAllowed}
                         />
                         <BlcRow
-                            rowName={"pmo"}
-                            roleName={this.renderHelper.getLabelById("pmo")}
+                            rowName={BlcRowNames.PMO}
+                            roleName={this.renderHelper.getLabelById(BlcRowNames.PMO)}
                             lastUpdatedBy={pmo.csl}
                             updatedOn={pmo.updatedOn}
                             rowValues={pmo.indicators}
                             comment={pmo.comment}
                             onClickEdit={() => (this.onClickEdit("isPmoRow"))}
                             onChange={this.handleChange}
-                            isValuesEdit={this.state.isPmoRow && controlsAllowed}
-                            isCommentsEdit={this.state.isCommentsEdit && controlsAllowed}
+                            isValuesEdit={this.state.isPmoRow}
+                            isCommentsEdit={this.state.isCommentsEdit}
                             isControlsHidden={this.isInEditMode()}
                             blocked={!controlsAllowed}
                         />
                         {
-                            this.renderHelper.displayOrNot("sales") &&
+                            this.renderHelper.displayOrNot(BlcRowNames.SALES) &&
                             <BlcRow
-                                rowName={"sales"}
-                                roleName={this.renderHelper.getLabelById("sales")}
+                                rowName={BlcRowNames.SALES}
+                                roleName={this.renderHelper.getLabelById(BlcRowNames.SALES)}
                                 lastUpdatedBy={sales.csl}
                                 updatedOn={sales.updatedOn}
                                 rowValues={sales.indicators}
@@ -227,21 +236,45 @@ export default class BlcDashboard extends React.Component {
 
     renderHeader = (thClasses, thCommentClasses, allowed) => {
         const isEditButton = this.shouldShowEditButton() && allowed;
+        const roleClasses = classNames(thClasses, style.sticky_white);
         return (
             <thead>
             <tr>
-                <th className={classNames(thClasses, style.sticky_white)} rowSpan={2}>Role</th>
-                <th className={thClasses} rowSpan={2}>Who</th>
-                <th className={thClasses} rowSpan={2}>Updated On</th>
-                <th className={thClasses} rowSpan={2}>Opportunity Review</th>
-                <th className={thClasses} rowSpan={2}>Charter</th>
-                <th className={thClasses} rowSpan={2}>Project Plan</th>
-                <th className={thClasses} rowSpan={2}>Tailoring</th>
-                <th className={thClasses} colSpan={2}>Accountability</th>
-                <th className={thClasses} colSpan={2}>Business Plan</th>
-                <th className={thClasses} colSpan={2}>Launch Plan</th>
-                <th className={thClasses} rowSpan={2}>Lessons Learned</th>
-                <th className={thClasses} rowSpan={2}>Risks</th>
+                <th className={roleClasses} rowSpan={2}>
+                    Role
+                </th>
+                <th className={thClasses} rowSpan={2}>
+                    Who</th>
+                <th className={thClasses} rowSpan={2}>
+                    Updated On
+                </th>
+                <th className={thClasses} rowSpan={2}>
+                    Opportunity Review
+                </th>
+                <th className={thClasses} rowSpan={2}>
+                    Charter
+                </th>
+                <th className={thClasses} rowSpan={2}>
+                    Project Plan
+                </th>
+                <th className={thClasses} rowSpan={2}>
+                    Tailoring
+                </th>
+                <th className={thClasses} colSpan={2}>
+                    Accountability
+                </th>
+                <th className={thClasses} colSpan={2}>
+                    Business Plan
+                </th>
+                <th className={thClasses} colSpan={2}>
+                    Launch Plan
+                </th>
+                <th className={thClasses} rowSpan={2}>
+                    Lessons Learned
+                </th>
+                <th className={thClasses} rowSpan={2}>
+                    Risks
+                </th>
                 <th className={thCommentClasses} rowSpan={2}>
                     <div>
                         <div className={style.inline_block}>

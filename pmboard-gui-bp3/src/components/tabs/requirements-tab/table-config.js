@@ -8,7 +8,8 @@ export default [
         headerName: "Req-Id",
         searchType: "input",
         decorator: function (value) {
-            return <SafeUrl url={`http://www.jira.com/${value}`} label={value} />;
+            const url = `http://www.jira.com/${value}`;
+            return <SafeUrl url={url} label={value} />;
         }
     },
     {

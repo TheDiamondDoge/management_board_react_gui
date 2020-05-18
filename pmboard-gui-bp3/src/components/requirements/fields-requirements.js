@@ -1,6 +1,6 @@
 import {WorkspaceStatus, ProjectTypes} from "../../util/constants";
 
-export default {
+let config = {
     controls: {
         label: "Controls",
         allowedIf: {
@@ -32,3 +32,9 @@ export default {
         label: "Current # of scoped requirements",
     },
 };
+
+Object.defineProperty(config, "controls", {
+    enumerable: false, writable: true, configurable: true
+});
+
+export default config;

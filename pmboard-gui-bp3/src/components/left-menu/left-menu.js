@@ -5,7 +5,7 @@ import { MENU_ITEMS_ARRAY } from "../menu-navigation/menu-navigation-object";
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 
-export default class LeftMenu extends React.Component {
+export default class LeftMenu extends React.PureComponent {
     render() {
         const { className } = this.props;
         let classes = classNames(styles.container, className);
@@ -20,4 +20,8 @@ export default class LeftMenu extends React.Component {
 
 LeftMenu.propTypes = {
     className: PropTypes.string,
+};
+
+LeftMenu.defaultProps = {
+    className: ''
 };

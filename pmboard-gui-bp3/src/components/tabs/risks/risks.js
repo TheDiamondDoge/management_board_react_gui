@@ -22,7 +22,8 @@ export default class Risks extends React.Component {
         super(props);
 
         this.state = {
-            file: null
+            file: null,
+            url: "http://google.com"
         };
         this.uploadRef = React.createRef();
     }
@@ -42,15 +43,20 @@ export default class Risks extends React.Component {
             const {errors} = this.props.risks;
 
             const picklists = createEnchantedTableFilters(payload.risks);
+            const isImportDialogOpened = !errorListShowed && !!errors;
             return (
                 <div className={styles.container}>
                     <CustomCard>
                         <div className={styles.last_updated_container}>
-                            <LastUpdatedLabel isFileExists={payload.fileExists}
-                                              onClick={() => getLastUploadedFile(this.projectId, projectName)}
-                                              label={"Last uploaded:"}
+                            <LastUpdatedLabel
+                                isFileExists={payload.fileExists}
+                                onClick={() => getLastUploadedFile(this.projectId, projectName)}
+                                label={"Last uploaded:"}
                             />
-                            <LastUpdated className={styles.last_updated} dateStr={payload.lastUploaded}/>
+                            <LastUpdated
+                                className={styles.last_updated}
+                                dateStr={payload.lastUploaded}
+                            />
                         </div>
                     </CustomCard>
                     <CustomCard className={styles.table_container}>
@@ -66,17 +72,20 @@ export default class Risks extends React.Component {
                             contextMenu={this.getContextMenu(renderHelper)}
                             renderFooter={this.getTableFooter(renderHelper)}
                         />
-                        <UploadFileControlsHidden uploadRef={this.uploadRef}
-                                                  onSubmit={(file) => uploadRisksFile(this.projectId, file)}
+                        <UploadFileControlsHidden
+                            uploadRef={this.uploadRef}
+                            onSubmit={(file) => uploadRisksFile(this.projectId, file)}
                         />
-                        <ImportErrorsDialog isOpen={!errorListShowed && !!errors}
-                                            onClose={setErrorsShowedTrue}
-                                            errors={errors}
+                        <ImportErrorsDialog
+                            isOpen={isImportDialogOpened}
+                            onClose={setErrorsShowedTrue}
+                            errors={errors}
                         />
                     </CustomCard>
                     <CustomCard>
-                        <SafeUrl label={"Get template for upload"}
-                                 url={"http://google.com"}
+                        <SafeUrl
+                            label={"Get template for upload"}
+                            url={this.state.url}
                         />
                     </CustomCard>
                 </div>

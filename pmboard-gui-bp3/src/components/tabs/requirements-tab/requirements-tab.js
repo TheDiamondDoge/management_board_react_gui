@@ -16,13 +16,14 @@ export default class RequirementsTab extends React.Component {
         } else {
             this.projectId = this.props.defaults.payload.projectId;
             const {payload} = this.props.rqs;
+            const noDataMessage = "No data found. Check 'Requirements(JIRA)' and 'RQ Release Name(JIRA)' fields";
             return (
                 <CustomCard className={styles.table_container}>
                     <EnchantedTable
                         striped
                         interactive
                         bordered
-                        noDataMessage={"No data found. Check 'Requirements(JIRA)' and 'RQ Release Name(JIRA)' fields"}
+                        noDataMessage={noDataMessage}
                         data={payload}
                         columns={tableConfig}
                         renderFooter={() => (

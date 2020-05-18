@@ -77,7 +77,10 @@ export default class Requirements extends React.Component {
                 {
                     renderHelper.displayOrNot("controls") &&
                     <tr>
-                        <th className={styles.table_header} colSpan={2}>
+                        <th
+                            className={styles.table_header}
+                            colSpan={2}
+                        >
                             <EditSaveControls smallSize
                                               onClick={this.onClickEdit}
                                               editMode={this.state.editMode}
@@ -99,12 +102,19 @@ export default class Requirements extends React.Component {
                 }
                 {
                     Object.keys(fieldsToRender).map((field) => {
-                        if (field === "note" || field === "controls") return true;
+                        const label = renderHelper.getLabelById(field);
+                        const value = this.renderValueField(field, values);
                         return (
                             renderHelper.displayOrNot(field) &&
                             <tr key={field}>
-                                <td><FieldName name={renderHelper.getLabelById(field)}/></td>
-                                <td>{this.renderValueField(field, values)}</td>
+                                <td>
+                                    <FieldName name={label}/>
+                                </td>
+                                <td>
+                                    <div className={styles.column_align_center}>
+                                        {value}
+                                    </div>
+                                </td>
                             </tr>
                         )
                     })
@@ -121,15 +131,35 @@ export default class Requirements extends React.Component {
         const value = values[propName];
         switch (propName) {
             case "dr1Actual":
-                return <FieldValue value={dateFormatToString(dr1)} className={styles.column_align_center}/>;
+                const dateStr = dateFormatToString(dr1);
+                return (
+                    <FieldValue
+                        value={dateStr}
+                        className={styles.column_align_center}
+                    />
+                );
             case "sum":
-                return <FieldValue value={sum} className={styles.column_align_center}/>;
+                return (
+                    <FieldValue
+                        value={sum}
+                        className={styles.column_align_center}
+                    />
+                );
             default: {
                 if (this.state.editMode) {
-                    return <FormikInput type="numeric" name={propName}
-                                        onValueChange={this.updateFieldHandler(propName)}/>;
+                    return (
+                        <FormikInput
+                            type="numeric"
+                            name={propName}
+                            onValueChange={this.updateFieldHandler(propName)}/>
+                    );
                 } else {
-                    return <FieldValue value={value} className={styles.column_align_center}/>
+                    return (
+                        <FieldValue
+                            value={value}
+                            className={styles.column_align_center}
+                        />
+                    )
                 }
             }
         }
@@ -142,4 +172,9 @@ Requirements.propTypes = {
     renderHelper: PropTypes.func.isRequired,
     rqsSubmit: PropTypes.func,
     rqsReload: PropTypes.func
+};
+
+Requirements.defaultProps = {
+    rqsSubmit: () => {},
+    rqsReload: () => {},
 };

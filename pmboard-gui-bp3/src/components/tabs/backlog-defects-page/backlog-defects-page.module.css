@@ -10,6 +10,7 @@
 .chart_container {
     max-height: 100%;
     height: calc(100% - 120px);
+    margin-bottom: 17px;
 
     display: flex;
     flex-direction: column;
