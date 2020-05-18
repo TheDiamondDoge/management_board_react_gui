@@ -1,10 +1,10 @@
-import {ProjectStates} from "../../util/constants";
+import {WorkspaceStatus} from "../../util/constants";
 
 export default {
     controls: {
         label: "Sync Button",
         allowedIf: {
-            workspaceStatus: [ProjectStates.ENABLED]
+            workspaceStatus: [WorkspaceStatus.ENABLED]
         }
     },
     quality: {

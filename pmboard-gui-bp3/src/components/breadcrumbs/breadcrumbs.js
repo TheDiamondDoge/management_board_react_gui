@@ -14,12 +14,19 @@ export const CustomBreadcrumbs = ({className}) => {
     let classes = classNames(className, styles.container);
     return (
         <div className={classes}>
-            <Breadcrumbs className={className} items={BREADCRUMBS}/>
+            <Breadcrumbs
+                className={className}
+                items={BREADCRUMBS}
+            />
         </div>
     )
 };
 
 CustomBreadcrumbs.propTypes = {
     className: PropTypes.string,
+};
+
+CustomBreadcrumbs.defaultProps = {
+    className: ''
 };
 

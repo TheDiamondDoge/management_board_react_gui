@@ -46,7 +46,8 @@ export default class AddEditDialog extends React.Component {
                                             const columnId = col.id;
                                             const columnName = col.headerName;
                                             const inputType = col.inputType;
-                                            const itemsToSelectFrom = col.selectValues || getPropFromStringPath(editDynamicInputVals, columnId);
+                                            const itemsToSelectFrom = col.selectValues
+                                                || getPropFromStringPath(editDynamicInputVals, columnId);
                                             let optionalProps = this.getSpecificProps(inputType, {
                                                 formikProps,
                                                 columnId,

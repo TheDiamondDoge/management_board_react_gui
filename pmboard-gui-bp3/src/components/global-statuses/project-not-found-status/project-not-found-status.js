@@ -7,12 +7,17 @@ export default class ProjectNotFoundStatus extends React.PureComponent {
     render() {
         const {id, ...others} = this.props;
         const message = this.getErrorMessage(id);
+        const iconSize = 100;
         return (
-            <div className={styles.wrapper} {...others}>
-                <Icon icon={"inbox-search"}
-                      iconSize={50}
-                      intent={Intent.PRIMARY}
-                      className={styles.icon_style}
+            <div
+                className={styles.wrapper}
+                {...others}
+            >
+                <Icon
+                    icon={"inbox-search"}
+                    iconSize={iconSize}
+                    intent={Intent.PRIMARY}
+                    className={styles.icon_style}
                 />
                 {message}
             </div>

@@ -1,9 +1,9 @@
-import {ProjectStates} from "../../../util/constants";
+import {WorkspaceStatus} from "../../../util/constants";
 
 export default {
     controls: {
         notAllowedIf: {
-            workspaceStatus: [ProjectStates.DISABLED],
+            workspaceStatus: [WorkspaceStatus.DISABLED],
         }
     }
 }

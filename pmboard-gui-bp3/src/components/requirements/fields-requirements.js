@@ -1,10 +1,10 @@
-import {ProjectStates, ProjectTypes} from "../../util/constants";
+import {WorkspaceStatus, ProjectTypes} from "../../util/constants";
 
 export default {
     controls: {
         label: "Controls",
         allowedIf: {
-            workspaceStatus: [ProjectStates.ENABLED]
+            workspaceStatus: [WorkspaceStatus.ENABLED]
         }
     },
     note: {

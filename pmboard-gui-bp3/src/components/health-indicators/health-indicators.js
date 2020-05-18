@@ -72,6 +72,10 @@ export default class HealthIndicators extends React.Component {
     getHealthIndicatorsTable = (values, isSummaryMode) => {
         const {prevStatusSet, currentStatusSet} = values;
         const {onCancel, fieldsToRender, blocked} = this.props;
+        const isStatusControlsShown = !isSummaryMode && !blocked && !this.state.editCommentMode;
+        const isCommentsControlsShown = !this.state.editStatusMode && !blocked;
+        const prevDate = dateFormatToString(new Date(prevStatusSet));
+        const currentDate = dateFormatToString(new Date(currentStatusSet));
         return (
             <HTMLTable
                 striped
@@ -88,16 +92,18 @@ export default class HealthIndicators extends React.Component {
                     <th>
                         <FieldName name={"Status"}/>
                         <Tooltip
-                            content={<TooltipContent
-                                        title={healthStatusHelp.title}
-                                        content={healthStatusHelp.content}
-                                    />}
+                            content={
+                                (<TooltipContent
+                                    title={healthStatusHelp.title}
+                                    content={healthStatusHelp.content}
+                                />)
+                            }
                             position={Position.TOP}
                         >
                             <HelpIcon className={styles.help_icon}/>
                         </Tooltip>
                         {
-                            !isSummaryMode && !blocked && !this.state.editCommentMode &&
+                            isStatusControlsShown &&
                             <EditSaveControls
                                 smallSize
                                 className={styles.inline_block}
@@ -110,11 +116,11 @@ export default class HealthIndicators extends React.Component {
                     </th>
                     <th className={styles.column_align_center}>
                         <FieldName name={"Previous"}/><br/>
-                        <FieldName name={dateFormatToString(new Date(prevStatusSet))}/>
+                        <FieldName name={prevDate}/>
                     </th>
                     <th className={styles.column_align_center}>
                         <FieldName name={"Current "}/><br/>
-                        <FieldName name={dateFormatToString(new Date(currentStatusSet))}/>
+                        <FieldName name={currentDate}/>
                     </th>
 
                     {
@@ -122,7 +128,7 @@ export default class HealthIndicators extends React.Component {
                         <th className={styles.column_align_center}>
                             <FieldName name={"Comments"}/>
                             {
-                                !this.state.editStatusMode && !blocked &&
+                                isCommentsControlsShown &&
                                 <EditSaveControls
                                     smallSize
                                     className={styles.inline_block}
@@ -140,31 +146,21 @@ export default class HealthIndicators extends React.Component {
                 {
                     Object.keys(fieldsToRender).map((field) => {
                         const label = fieldsToRender[field].label;
-                        let prevValue = "", currentValue = "";
-                        if (values.statuses.prev) {
-                            prevValue = values.statuses.prev[field];
-                        }
-
-                        if (values.statuses.current) {
-                            currentValue = values.statuses.current[field];
-                        }
-
+                        const prevValue = values.statuses.prev ? values.statuses.prev[field] : "";
+                        const currentValue = values.statuses.current ? values.statuses.current[field] : "";
                         const comment = values.comments[field];
+                        const immutableIndicatorName = "statuses.prev." + field;
+                        const indicatorName = "statuses.current." + field;
+                        const commentName = "comments." + field;
                         return (
                             <tr key={field}>
                                 <td>
                                     <FieldName name={label}/>
                                 </td>
 
-                                {this.getImmutableIndicatorTd(prevValue, "statuses.current." + field, styles)}
-                                {this.getIndicatorTd(currentValue, "statuses.current." + field, styles)}
-
-                                {
-                                    isSummaryMode ||
-                                    (
-                                        this.getCommentTd(comment, "comments." + field, styles)
-                                    )
-                                }
+                                {this.getImmutableIndicatorTd(prevValue, immutableIndicatorName, styles)}
+                                {this.getIndicatorTd(currentValue, indicatorName, styles)}
+                                {isSummaryMode || this.getCommentTd(comment, commentName, styles)}
                             </tr>
                         )
                     })
@@ -184,7 +180,7 @@ export default class HealthIndicators extends React.Component {
         } else {
             return (
                 <td className={styles.column_align_center}>
-                    <Comment value={comment} />
+                    <Comment value={comment}/>
                 </td>
             )
         }
@@ -196,17 +192,19 @@ export default class HealthIndicators extends React.Component {
 
     getIndicatorTd = (status, name, styles, isMutable = true) => {
         if (isMutable && this.state.editStatusMode) {
+            const selectComponent = this.selectElement(name);
             return (
                 <td className={styles.column_align_center}>
-                    {this.selectElement(name)}
+                    {selectComponent}
                 </td>
             )
         } else {
+            const statusIndicator = getIndicatorsColor(status);
             return (
                 <td className={styles.column_align_center}>
                     <StatusIndicator
                         className={styles.inline_block}
-                        status={getIndicatorsColor(status)}
+                        status={statusIndicator}
                     />
                 </td>
             )
@@ -235,3 +233,11 @@ HealthIndicators.propTypes = {
     onCancel: PropTypes.func,
     blocked: PropTypes.bool,
 };
+
+HealthIndicators.defaultProps = {
+    isSummaryMode: false,
+    onIndicatorsSubmit: () => {},
+    onCommentsSubmit: () => {},
+    onCancel: () => {},
+    blocked: false,
+}

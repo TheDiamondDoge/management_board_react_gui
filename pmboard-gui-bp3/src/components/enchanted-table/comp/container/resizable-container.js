@@ -1,9 +1,10 @@
 import React from 'react';
 import {Rnd} from "react-rnd";
+import PropTypes from "prop-types";
 import "./resizable-container.module.css";
 
 
-export const ResizableContainer = (props) => {
+export const ResizableContainer = React.memo((props) => {
     const {defaultStyle, children, ...others} = props;
     return (
         <Rnd
@@ -21,4 +22,8 @@ export const ResizableContainer = (props) => {
             {children}
         </Rnd>
     )
+});
+
+ResizableContainer.propTypes = {
+    defaultStyle: PropTypes.object,
 };

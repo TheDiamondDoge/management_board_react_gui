@@ -244,7 +244,7 @@ export const ProjectDefaults = PropTypes.shape({
     projectName: PropTypes.string
 });
 
-export const ExcelError = PropTypes.shape({
+export const ExcelErrorTypes = PropTypes.shape({
     cellIndex: PropTypes.number.isRequired,
     rowIndex: PropTypes.number.isRequired,
     message: PropTypes.string.isRequired,

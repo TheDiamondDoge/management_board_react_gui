@@ -6,19 +6,22 @@ import PropTypes from "prop-types";
 export default class AppToaster extends React.Component {
     render() {
         const {toasts, onDismiss} = this.props;
+        const maxToasts = 3;
+        const fadeTimeout = 5000;
         return (
-            <Toaster maxToasts={3}>
+            <Toaster maxToasts={maxToasts}>
                 {toasts.map(toast => (
-                    !toast.hidden &&
-                    <Toast
-                        key={toast.id}
-                        message={toast.message}
-                        timeout={5000}
-                        intent={toast.intent}
-                        onDismiss={() => {
-                            onDismiss(toast.id)
-                        }}
-                    />
+                    !toast.hidden && (
+                        <Toast
+                            key={toast.id}
+                            message={toast.message}
+                            timeout={fadeTimeout}
+                            intent={toast.intent}
+                            onDismiss={() => {
+                                onDismiss(toast.id)
+                            }}
+                        />
+                    )
                 ))}
             </Toaster>
         )
@@ -29,8 +32,11 @@ AppToaster.propTypes = {
     toasts: PropTypes.arrayOf(
         PropTypes.shape({
             hidden: PropTypes.bool,
-            id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+            id: PropTypes.oneOfType(
+                [PropTypes.string, PropTypes.number]
+            ).isRequired,
             intent: PropTypes.string,
-            message: PropTypes.string,
-        })).isRequired,
+            message: PropTypes.string.isRequired,
+        })
+    ).isRequired,
 };

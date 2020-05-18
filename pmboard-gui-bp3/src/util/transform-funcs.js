@@ -104,7 +104,7 @@ export const toPercents = (value) => {
 
 export const toPercentsOrNA = (value) => {
     if (value === null) return "N/A";
-    return toPercents(value);
+    return `${toPercents(value)}%`;
 }
 
 export const toTwoTrailingDigits = (value) => {

@@ -7,10 +7,22 @@ export default class FieldName extends React.PureComponent {
     render() {
         const {className, name, ...other} = this.props;
         const styleClass = classNames(className, styles.field);
-        return (<div className={styleClass} {...other}>{name}</div>)
+        return (
+            <span
+                className={styleClass}
+                {...other}
+            >
+                {name}
+            </span>
+        )
     }
 }
 
 FieldName.propTypes = {
-    name: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]).isRequired
+    name: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]).isRequired,
+    className: PropTypes.string,
 };
+
+FieldName.defaultProps = {
+    className: ''
+}

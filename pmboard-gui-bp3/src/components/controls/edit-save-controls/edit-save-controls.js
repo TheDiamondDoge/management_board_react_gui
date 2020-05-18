@@ -14,13 +14,17 @@ export default class EditSaveControls extends React.PureComponent {
     renderElements = () => {
         let {className, smallSize, loading, editMode, onSubmit, onCancel, onClick, sticky} = this.props;
         let condProps = this.getButtonProps(smallSize);
-        const classes = classNames(className, {[styles.sticky_controls]: sticky})
+        const classes = classNames(
+            className,
+            {[styles.sticky_controls]: sticky}
+        );
+
         if (editMode) {
             return (
                 <div className={classes}>
                     <Button
                         text={"Save"}
-                        minimal={true}
+                        minimal
                         icon={"saved"}
                         onClick={onSubmit}
                         intent={Intent.SUCCESS}
@@ -28,7 +32,7 @@ export default class EditSaveControls extends React.PureComponent {
                     />
                     <Button
                         text={"Cancel"}
-                        minimal={true}
+                        minimal
                         icon={"undo"}
                         onClick={onCancel}
                         intent={Intent.DANGER}
@@ -43,7 +47,7 @@ export default class EditSaveControls extends React.PureComponent {
             return (
                 <div className={classes}>
                     <Button
-                        minimal={true}
+                        minimal
                         icon={"edit"}
                         onClick={onClick}
                         intent={Intent.PRIMARY}
@@ -77,4 +81,15 @@ EditSaveControls.propTypes = {
     className: PropTypes.string,
     loading: PropTypes.bool,
     sticky: PropTypes.bool
+};
+
+EditSaveControls.defaultProps = {
+    onClick: () => {},
+    onSubmit: () => {},
+    onCancel: () => {},
+    editMode: false,
+    smallSize: false,
+    className: '',
+    loading: false,
+    sticky: false
 };

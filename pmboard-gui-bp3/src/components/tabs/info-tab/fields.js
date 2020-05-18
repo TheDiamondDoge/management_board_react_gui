@@ -1,11 +1,11 @@
-import {ProjectStates, ProjectTypes} from "../../../util/constants";
+import {WorkspaceStatus, ProjectTypes} from "../../../util/constants";
 
 //Props mandatory: label,
 //Props not mandatory: type, notAllowedIf, allowedIf, editable
 export const infoFieldsToRender = {
     controls: {
         allowedIf: {
-            workspaceStatus: [ProjectStates.ENABLED]
+            workspaceStatus: [WorkspaceStatus.ENABLED]
         }
     },
     projectDescription: {label: "Project Description", type: "textarea"},

@@ -27,11 +27,13 @@ export default class SelectList extends React.Component {
                 {...otherProps}
                 items={items}
                 itemRenderer={(item, {handleClick}) => {
+                    const key = item.value;
+                    const text = this.emptyToNone(item.label);
                     const isActive = this.getObjByLabel(item.label) || false;
                     return (
                         <MenuItem
-                            key={item.value}
-                            text={this.emptyToNone(item.label)}
+                            key={key}
+                            text={text}
                             onClick={handleClick}
                             active={isActive}
                         />
@@ -42,7 +44,10 @@ export default class SelectList extends React.Component {
                 onItemSelect={onItemSelect}
                 tagRenderer={item => item.label ? item.label : empty}
                 tagInputProps={{
-                    onRemove: (label) => (onRemove(this.getObjByLabel(label)))
+                    onRemove: (label) => {
+                        const objToRemove = this.getObjByLabel(label);
+                        return onRemove(objToRemove);
+                    }
                 }}
             />
         );
@@ -78,4 +83,11 @@ SelectList.propTypes = {
     selectedItems: PropTypes.arrayOf(PropTypes.any),
     onItemSelect: PropTypes.func,
     onRemove: PropTypes.func
+};
+
+SelectList.defaultProps = {
+    items: [],
+    selectedItems: [],
+    onItemSelect: () => {},
+    onRemove: () => {}
 };

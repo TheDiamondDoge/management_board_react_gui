@@ -21,3 +21,8 @@ Comment.propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
     className: PropTypes.string
 };
+
+Comment.defaultProps = {
+    value: '',
+    className: ''
+}

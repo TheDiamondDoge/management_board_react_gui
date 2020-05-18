@@ -11,7 +11,12 @@ export default function FormikInput(props) {
 export const RenderControls = React.memo((props) => {
     const {type, ...others} = props;
     const args = getControlProps(type);
-    return (<MiniButton {...others} icon={args.icon} intent={args.intent}/>)
+    return (
+        <MiniButton
+            {...others}
+            {...args}
+        />
+    )
 });
 
 const getControlProps = (type) => {
@@ -34,7 +39,7 @@ const getControlProps = (type) => {
     }
 };
 
-export const MiniButton = React.memo((props) => (
+const MiniButton = React.memo((props) => (
     <Button
         style={{display: "inline-block", textAlign: "center"}}
         minimal

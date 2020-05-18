@@ -30,8 +30,9 @@ export default class FormikCustomField extends React.Component {
             return (
                 <div>
                     {this.fieldFactory(type, field, props, values)}
-                    {touchedValue &&
-                    errorsValue && <div className={styles.error}>{errorsValue}</div>}
+                    {touchedValue && errorsValue &&
+                        <div className={styles.error}>{errorsValue}</div>
+                    }
                 </div>
             );
         } else {
@@ -75,14 +76,17 @@ export default class FormikCustomField extends React.Component {
             case "select":
                 return (
                     <Field component="select" {...field} {...props}>
-                        {values.map((obj) => (
-                            <option
-                                key={obj.label}
-                                value={obj.value}
-                            >
-                                {obj.label}
-                            </option>
-                        ))}
+                        {values.map((obj) => {
+                            const {label, value} = obj;
+                            return (
+                                <option
+                                    key={label}
+                                    value={value}
+                                >
+                                    {label}
+                                </option>
+                            )
+                        })}
                     </Field>
                 );
             case "multiselect":
@@ -92,7 +96,12 @@ export default class FormikCustomField extends React.Component {
             case "quill":
                 const {value, onChange, name, ...restField} = field;
                 return (
-                    <ReactQuill {...props} {...restField} value={value} onChange={onChange(name)}/>
+                    <ReactQuill
+                        {...props}
+                        {...restField}
+                        value={value}
+                        onChange={onChange(name)}
+                    />
                 );
             case "text":
             default:

@@ -27,3 +27,8 @@ CustomCard.propTypes = {
     className: PropTypes.string,
     children: PropTypes.any,
 };
+
+CustomCard.defaultProps = {
+    className: '',
+    children: null,
+};

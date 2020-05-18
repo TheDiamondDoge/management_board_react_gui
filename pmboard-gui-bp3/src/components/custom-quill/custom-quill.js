@@ -4,10 +4,10 @@ import styles from './custom-quill.module.css';
 import EditSaveControls from "../controls/edit-save-controls/edit-save-controls";
 import {Formik} from "formik";
 import FormikInput from "../controls/util-renderers";
+import {getQuillModuleToolbar} from "../../util/util";
+import classNames from "classnames";
 
 import 'react-quill/dist/quill.snow.css';
-import {getQuillModuleToolbar} from "../../util/util";
-
 
 export default class CustomQuill extends React.Component {
     constructor(props) {
@@ -34,7 +34,8 @@ export default class CustomQuill extends React.Component {
         const value = this.props.value || this.state.default.value;
         const {editMode} = this.state;
         const readOnly = !editMode;
-        let modules = this.getModules(editMode);
+        let modules = this.getModules();
+        const quillClasses = classNames({[styles.display_mode] : !editMode});
         return (
             <Formik
                 enableReinitialize
@@ -52,13 +53,14 @@ export default class CustomQuill extends React.Component {
                                 <div className={styles.inline_block}>
                                     {header}
                                 </div>
-                                <EditSaveControls smallSize
-                                                  className={styles.inline_block}
-                                                  onClick={this.onEditChange}
-                                                  onCancel={this.handleCancel}
-                                                  onSubmit={this.submitForm}
-                                                  editMode={editMode}
-                                                  loading={loading}
+                                <EditSaveControls
+                                    smallSize
+                                    className={styles.inline_block}
+                                    onClick={this.onEditChange}
+                                    onCancel={this.handleCancel}
+                                    onSubmit={this.submitForm}
+                                    editMode={editMode}
+                                    loading={loading}
                                 />
                             </div>
                             <FormikInput
@@ -67,6 +69,7 @@ export default class CustomQuill extends React.Component {
                                 name={"text"}
                                 readOnly={readOnly}
                                 modules={modules}
+                                className={quillClasses}
                             />
                         </>
                     )
@@ -75,7 +78,9 @@ export default class CustomQuill extends React.Component {
         );
     }
 
-    getModules(editMode) {
+    getModules() {
+        const {editMode} = this.state;
+
         if (!editMode) {
             let modules = {...this.state.default.modules};
             modules.toolbar = null;
@@ -103,4 +108,12 @@ CustomQuill.propTypes = {
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
     loading: PropTypes.bool
+};
+
+CustomQuill.defaultProps = {
+    header: '',
+    value: '',
+    onSubmit: () => {},
+    onCancel: () => {},
+    loading: false,
 };

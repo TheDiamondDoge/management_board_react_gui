@@ -9,6 +9,11 @@ export default class HealthIndicatorsMinimal extends React.PureComponent {
     render() {
         const {indicators, className} = this.props;
         const {schedule, scope, quality, cost} = indicators;
+
+        const scheduleIndicator = getIndicatorsColor(schedule);
+        const scopeIndicator = getIndicatorsColor(scope);
+        const qualityIndicator = getIndicatorsColor(quality);
+        const costIndicator = getIndicatorsColor(cost);
         return (
             <div className={className}>
                 <HTMLTable
@@ -41,16 +46,28 @@ export default class HealthIndicatorsMinimal extends React.PureComponent {
                     <tbody>
                     <tr>
                         <td className={styles.td_style}>
-                            <StatusIndicator status={getIndicatorsColor(schedule)} className={styles.status_icon}/>
+                            <StatusIndicator
+                                status={scheduleIndicator}
+                                className={styles.status_icon}
+                            />
                         </td>
                         <td className={styles.td_style}>
-                            <StatusIndicator status={getIndicatorsColor(scope)} className={styles.status_icon}/>
+                            <StatusIndicator
+                                status={scopeIndicator}
+                                className={styles.status_icon}
+                            />
                         </td>
                         <td className={styles.td_style}>
-                            <StatusIndicator status={getIndicatorsColor(quality)} className={styles.status_icon}/>
+                            <StatusIndicator
+                                status={qualityIndicator}
+                                className={styles.status_icon}
+                            />
                         </td>
                         <td className={styles.td_style}>
-                            <StatusIndicator status={getIndicatorsColor(cost)} className={styles.status_icon}/>
+                            <StatusIndicator
+                                status={costIndicator}
+                                className={styles.status_icon}
+                            />
                         </td>
                     </tr>
                     </tbody>
@@ -67,4 +84,13 @@ HealthIndicatorsMinimal.propTypes = {
         schedule: PropTypes.number.isRequired,
         scope: PropTypes.number.isRequired,
     })
+};
+
+HealthIndicatorsMinimal.defaultProps = {
+    indicators: {
+        cost: 0,
+        quality: 0,
+        schedule: 0,
+        scope: 0,
+    }
 };

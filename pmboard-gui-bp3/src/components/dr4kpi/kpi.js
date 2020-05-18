@@ -32,17 +32,16 @@ export default class Kpi extends React.Component {
                 </tr>
                 <tr>
                     <td className={headerClasses}/>
-                    <td className={headerClasses}>COMMITTED vs ACTUAL</td>
+                    <td className={headerClasses}>
+                        COMMITTED vs ACTUAL
+                    </td>
                 </tr>
                 </thead>
                 <tbody>
                 {
                     Object.keys(fieldsToRender).map((field) => {
-                        if (field === "year") return true;
-
                         const label = fieldsToRender[field].label;
-                        let value = toPercentsOrNA(dr4Kpi[field]);
-                        value = value === "N/A" ? value : `${value}%`;
+                        const value = toPercentsOrNA(dr4Kpi[field]);
                         const help = fieldsToRender[field].help;
                         return (
                             <tr key={field}>
@@ -56,7 +55,12 @@ export default class Kpi extends React.Component {
                                         <HelpIcon />
                                     </Tooltip>
                                 </td>
-                                <td><FieldValue value={value} className={styles.value_col}/></td>
+                                <td>
+                                    <FieldValue
+                                        value={value}
+                                        className={styles.value_col}
+                                    />
+                                </td>
                             </tr>
                         )
                     })
@@ -69,5 +73,6 @@ export default class Kpi extends React.Component {
 
 Kpi.propTypes = {
     dr4Kpi: PropTypes.object.isRequired,
+    //Config object (kpi-fields.js)
     fieldsToRender: PropTypes.object.isRequired,
 };

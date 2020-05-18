@@ -7,14 +7,20 @@ import styles from "./offer-product-title.module.css";
 export default class OfferProductTitle extends React.PureComponent {
     render() {
         const {isOffer, isContrib, className} = this.props;
-        const classes = classNames(className, {[styles.red]: (!isOffer && !isContrib)});
-        let title = this.getTitle(isOffer, isContrib);
+        const classes = classNames(
+            className,
+            {[styles.red]: (!isOffer && !isContrib)}
+        );
+
+        let title = this.getTitle();
         return (
             <FieldName className={classes} name={title}/>
         );
     }
 
-    getTitle(isOffer, isContrib) {
+    getTitle() {
+        const {isOffer, isContrib} = this.props;
+
         if (isOffer) {
             return "Contributing Open Projects:";
         } else if (isContrib) {
@@ -29,4 +35,10 @@ OfferProductTitle.propTypes = {
     isOffer: PropTypes.bool,
     isContrib: PropTypes.bool,
     className: PropTypes.string,
+};
+
+OfferProductTitle.defaultProps = {
+    isOffer: false,
+    isContrib: false,
+    className: ''
 };

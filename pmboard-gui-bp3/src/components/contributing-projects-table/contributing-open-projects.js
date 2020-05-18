@@ -8,8 +8,9 @@ import {ContribTable} from "../../util/custom-types";
 import {dateFormatToString} from "../../util/transform-funcs";
 import Legend from "../legend/legend";
 import SafeUrl from "../safe-url/safe-url";
+import {getProjectUrl} from "../../util/util";
+import {ProjectStates} from "../../util/constants";
 
-//TODO is this the way like you want to add urls here?
 export default class ContributingOpenProjects extends React.Component {
     render() {
         const {maxDate, minDate, offer, contributed} = this.props;
@@ -19,11 +20,16 @@ export default class ContributingOpenProjects extends React.Component {
         const {tdForYear, currentMonthIndex} = this.calculateTdsForYear(monthsBetween, min);
         const years = Object.keys(tdForYear);
 
-        const monthsHeaderObjs = this.getMonthsHeader(monthsBetween, min, offer);
+        const monthsHeaderObjs = this.getMonthsHeader(monthsBetween, min);
         const offers = this.getMilestonesPerMonthForProducts(monthsBetween, min, offer);
         const products = this.getMilestonesPerMonthForProducts(monthsBetween, min, contributed);
 
         const lastComplTh = classNames(styles.last_compl_col, styles.th_style);
+        const cols = this.getColsForMonthsColumns(monthsBetween);
+
+        const offerThClasses = classNames(styles.th_style, styles.sticky_first);
+        const typeThClasses = classNames(styles.th_style, styles.sticky_third);
+        const approvedThClasses = classNames(lastComplTh, styles.sticky_second);
         return (
             <div className={styles.table_container}>
                 <div className={styles.overflow_x}>
@@ -35,91 +41,112 @@ export default class ContributingOpenProjects extends React.Component {
                             <col className={styles.name_col_size}/>
                             <col className={styles.type_size}/>
                             <col className={styles.last_dr_col_size}/>
-                            {
-                                Array(monthsBetween).fill(0).map((x, i) =>
-                                    <col key={i} className={styles.mils_col_size}/>
-                                )
-                            }
+                            {cols}
                         </colgroup>
                         <thead>
                         <tr>
-                            <th colSpan={3}
+                            <th
+                                colSpan={3}
                                 className={styles.sticky_colspan2}
                             />
-                            {years.map((year, i) => (
-                                <th key={year}
-                                    colSpan={tdForYear[year]}
-                                    className={
-                                        classNames(
-                                            {[styles.year_left_border]: i !== 0},
-                                            styles.th_style
-                                        )
-                                    }
-                                >
-                                    {<FieldName name={year}/>}
-                                </th>
-                            ))}
+                            {years.map((year, i) => {
+                                const yearThClasses = classNames(
+                                    {[styles.year_left_border]: i !== 0},
+                                    styles.th_style
+                                )
+                                return (
+                                    <th
+                                        key={year}
+                                        colSpan={tdForYear[year]}
+                                        className={yearThClasses}
+                                    >
+                                        {<FieldName name={year}/>}
+                                    </th>
+                                )
+                            })}
                         </tr>
                         <tr>
-                            <th className={classNames(styles.th_style, styles.sticky_first)}>
+                            <th className={offerThClasses}>
                                 <FieldName name="Offer"/>
                             </th>
-                            <th className={classNames(styles.th_style, styles.sticky_third)}>
+                            <th className={typeThClasses}>
                                 <FieldName name="Type"/>
                             </th>
-                            <th className={classNames(lastComplTh, styles.sticky_second)}>
+                            <th className={approvedThClasses}>
                                 <FieldName name="Last completed (Approved DR)"/>
                             </th>
                             {this.getMonthsTds(monthsHeaderObjs, min, currentMonthIndex)}
                         </tr>
                         </thead>
                         <tbody>
-                        {Object.keys(offers).map(prjName =>
-                            (
+                        {Object.keys(offers).map(prjName => {
+                            const url = getProjectUrl(offers[prjName].projectId);
+                            const projectType = offers[prjName].projectType;
+                            const lastApproved = offers[prjName].lastApproved;
+                            const milestones = offers[prjName].milestones;
+
+                            const offerNameClasses = classNames(styles.sticky_first, styles.word_wrap);
+                            const offerTypeClasses = classNames(styles.td_style, styles.sticky_third, styles.word_wrap);
+                            const offerApprovedClasses = classNames(styles.td_style, styles.sticky_second);
+                            return (
                                 <tr key={prjName}>
-                                    <td className={classNames(styles.sticky_first, styles.word_wrap)}>
+                                    <td className={offerNameClasses}>
                                         <b>
                                             <SafeUrl
-                                                url={`http://localhost:3000/pws?projectId=${offers[prjName].projectId}`}
+                                                url={url}
                                                 label={prjName}
                                             />
                                         </b>
                                     </td>
-                                    <td className={classNames(styles.td_style, styles.sticky_third, styles.word_wrap)}>
-                                        {offers[prjName].projectType}
+                                    <td className={offerTypeClasses}>
+                                        {projectType}
                                     </td>
-                                    <td className={classNames(styles.td_style, styles.sticky_second)}>
-                                        {offers[prjName].lastApproved}
+                                    <td className={offerApprovedClasses}>
+                                        {lastApproved}
                                     </td>
-                                    {this.renderMilestonesTds(offers[prjName].milestones, currentMonthIndex)}
+                                    {this.renderMilestonesTds(milestones, currentMonthIndex)}
                                 </tr>
                             )
-                        )}
-                        {Object.keys(products).map(prjName =>
-                            (
+                        })}
+                        {Object.keys(products).map(prjName => {
+                            const url = getProjectUrl(products[prjName].projectId);
+                            const productType = products[prjName].projectType;
+                            const lastApproved = products[prjName].lastApproved;
+                            const milestones = products[prjName].milestones;
+
+                            const productNameClasses = classNames(styles.products_name, styles.sticky_first, styles.word_wrap);
+                            const productTypeClasses = classNames(styles.td_style, styles.sticky_third, styles.word_wrap);
+                            const productApprovedClasses = classNames(styles.td_style, styles.sticky_second);
+                            return (
                                 <tr key={prjName}>
-                                    <td className={classNames(styles.products_name, styles.sticky_first, styles.word_wrap)}>
+                                    <td className={productNameClasses}>
                                         <SafeUrl
-                                            url={`http://localhost:3000/pws?projectId=${products[prjName].projectId}`}
+                                            url={url}
                                             label={prjName}
                                         />
                                     </td>
-                                    <td className={classNames(styles.td_style, styles.sticky_third, styles.word_wrap)}>
-                                        {products[prjName].projectType}
+                                    <td className={productTypeClasses}>
+                                        {productType}
                                     </td>
-                                    <td className={classNames(styles.td_style, styles.sticky_second)}>
-                                        {products[prjName].lastApproved}
+                                    <td className={productApprovedClasses}>
+                                        {lastApproved}
                                     </td>
-                                    {this.renderMilestonesTds(products[prjName].milestones, currentMonthIndex)}
+                                    {this.renderMilestonesTds(milestones, currentMonthIndex)}
                                 </tr>
                             )
-                        )}
+                        })}
                         </tbody>
                     </HTMLTable>
                 </div>
                 <Legend/>
             </div>
         );
+    }
+
+    getColsForMonthsColumns(monthsBetween) {
+        return Array(monthsBetween).fill(0).map((x, i) =>
+            <col key={i} className={styles.mils_col_size}/>
+        )
     }
 
     getMinMaxDates(minDate, maxDate) {
@@ -162,7 +189,7 @@ export default class ContributingOpenProjects extends React.Component {
 
     getMilestonesPerMonth(monthsBetween, min, milestones, projectState) {
         let tds = new Array(monthsBetween).fill(0);
-        const isCommitted = projectState.toUpperCase() === "COMMITTED";
+        const isCommitted = projectState.toUpperCase() === ProjectStates.COMMITTED;
         let prevYear = -1;
         for (let i = 0; i <= monthsBetween; i++) {
             const startDate = min.clone();
@@ -199,7 +226,8 @@ export default class ContributingOpenProjects extends React.Component {
         return tds.slice(0, tds.length - 1);
     }
 
-    getMonthsHeader(monthsBetween, min, offers) {
+    getMonthsHeader(monthsBetween, min) {
+        const offers = this.props.offer;
         const {milestones, projectState} = offers[Object.keys(offers)[0]];
         return this.getMilestonesPerMonth(monthsBetween, min, milestones, projectState);
     }
@@ -254,7 +282,8 @@ export default class ContributingOpenProjects extends React.Component {
             } else {
                 const currentDate = moment();
                 return (
-                    <td key={i}
+                    <td
+                        key={i}
                         className={classes}
                     >
                         {td.map(mil => (this.renderMilestoneLabel(mil, item.isCommitted, currentDate)))}
@@ -276,12 +305,15 @@ export default class ContributingOpenProjects extends React.Component {
 
         const dateStr = milestone.actualDate;
         const title = dateFormatToString(new Date(dateStr));
+        const key = milestone.label;
+        const label = milestone.label;
         return (
-            <div key={milestone.label}
-                 className={classes}
-                 title={title}
+            <div
+                key={key}
+                className={classes}
+                title={title}
             >
-                {milestone.label}
+                {label}
             </div>
         )
     }

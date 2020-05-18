@@ -94,7 +94,7 @@ export function getQuillModuleToolbar() {
     ];
 }
 
-export const isUrl = (value) => {
+export function isUrl(value) {
     if (typeof value === "string") {
         const expr = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.?[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/gi;
         const regExp = new RegExp(expr);
@@ -102,6 +102,12 @@ export const isUrl = (value) => {
     } else {
         return false;
     }
-};
+}
 
-export const getSpecialNumericRegexp = () => /^([1-9]\d*%?)$|^0$|^\s$|^$/;
+export function getSpecialNumericRegexp() {
+    return /^([1-9]\d*%?)$|^0$|^\s$|^$/
+}
+
+export function getProjectUrl(projectId) {
+    return `http://localhost:3000/pws?projectId=${projectId}`
+}

@@ -66,7 +66,7 @@ export default class MilestonesKpi extends React.Component {
             return (
                 <tr>
                     <td colSpan={4} className={styles.column_align_center}>
-                        <FieldName name={"No TR, DR4, DR5, CI milestones found"}/>
+                        <FieldName name={"No suitable TR, DR4, DR5, CI milestones found"}/>
                     </td>
                 </tr>
             )

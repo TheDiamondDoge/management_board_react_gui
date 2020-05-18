@@ -44,17 +44,26 @@ export default class BarChart extends React.Component {
             initialRange = [Number(min), Number(max) - 2];
             labelsAmount = labels.length || 1;
         }
+
         const classes = this.props.className;
+        const sliderValue = this.state.range || initialRange;
+        const minSliderVal = initialRange[0];
+        const maxSliderVal = initialRange[1];
+        const stepSize = 1;
         return (
             <div className={classes}>
-                <canvas id="myChart" className={styles.canvas} ref={this.chartRef}/>
+                <canvas
+                    id="myChart"
+                    className={styles.canvas}
+                    ref={this.chartRef}
+                />
                 <RangeSlider
-                    min={initialRange[0]}
-                    max={initialRange[1]}
-                    stepSize={1}
+                    min={minSliderVal}
+                    max={maxSliderVal}
+                    stepSize={stepSize}
                     labelStepSize={labelsAmount}
                     onChange={this.onChange}
-                    value={this.state.range || initialRange}
+                    value={sliderValue}
                 />
             </div>
         );
@@ -147,6 +156,7 @@ export default class BarChart extends React.Component {
         return (range) => {
             this.setState({shouldChartUpdate: false});
             this.setState({range});
+
             clearTimeout(timeout);
             timeout = setTimeout(() => this.setState({shouldChartUpdate: true}), 300)
         }
@@ -157,7 +167,9 @@ export default class BarChart extends React.Component {
         if (!range) return data;
 
         const {labels} = data;
+        // eslint-disable-next-line eqeqeq
         const startIndex = labels.findIndex((item) => item == range[0]);
+        // eslint-disable-next-line eqeqeq
         const endIndex = labels.findIndex((item) => item == range[1]);
 
         let filtered = {};
@@ -173,6 +185,18 @@ export default class BarChart extends React.Component {
 }
 
 BarChart.propTypes = {
-    data: PropTypes.object.isRequired,
+    data: PropTypes.shape({
+        dev: PropTypes.arrayOf(PropTypes.number),
+        in: PropTypes.arrayOf(PropTypes.number),
+        labels: PropTypes.arrayOf(PropTypes.string),
+        newIssues: PropTypes.arrayOf(PropTypes.number),
+        out: PropTypes.arrayOf(PropTypes.number),
+        qa: PropTypes.arrayOf(PropTypes.number),
+        qaDone: PropTypes.arrayOf(PropTypes.number),
+    }).isRequired,
     className: PropTypes.string,
+};
+
+BarChart.defaultProps = {
+    className: ''
 };

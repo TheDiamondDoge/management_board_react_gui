@@ -1,8 +1,8 @@
 import React from 'react';
-import ErrorStatus from "../global-statuses/error-status";
+import ErrorStatus from "../global-statuses/error-status/error-status";
 import StatusContainer from "../status-container/status-container";
 
-export default class ErrorBoundary extends React.Component {
+export default class ErrorBoundary extends React.PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -21,7 +21,8 @@ export default class ErrorBoundary extends React.Component {
 
     render() {
         const {children} = this.props;
-        if (this.state.hasError)
+        const {hasError} = this.state;
+        if (hasError)
             return (
                 <StatusContainer>
                     <ErrorStatus/>

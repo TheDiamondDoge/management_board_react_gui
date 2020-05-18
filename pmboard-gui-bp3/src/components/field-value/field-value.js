@@ -13,12 +13,17 @@ export default class FieldValue extends React.PureComponent {
         const classes = classNames(styles.word_wrap, className);
         value = nullToEmptyStr(value);
         const field = isUrl(value)
-            ? <SafeUrl url={value} label={useName}/>
+            ? (
+                <SafeUrl
+                    url={value}
+                    label={useName}
+                />
+            )
             : value;
         return (
-            <div className={classes} {...other}>
+            <span className={classes} {...other}>
                 {field}
-            </div>
+            </span>
         )
     }
 };
@@ -31,4 +36,10 @@ FieldValue.propTypes = {
     ]),
     useName: PropTypes.string,
     className: PropTypes.string,
+};
+
+FieldValue.defaultProps = {
+    value: '',
+    useName: 'Click here',
+    className: ''
 };

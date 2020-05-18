@@ -1,11 +1,15 @@
 import React from "react";
+import styles from "./excel-error.module.css";
+import {ExcelErrorTypes} from  "../../util/custom-types";
 
 export default class ExcelError extends React.PureComponent {
     render() {
         const {cellIndex, rowIndex, message} = this.props;
+        const displayedCellIndex = cellIndex + 1;
+        const displayedRowIndex = rowIndex + 1;
         return(
-            <div style={{marginBottom: "10px"}}>
-                <b>Column:</b> {cellIndex + 1}. <b>Row:</b> {rowIndex + 1}. <br/>
+            <div style={styles.error_margin}>
+                <b>Column:</b> {displayedCellIndex}. <b>Row:</b> {displayedRowIndex}. <br/>
                 <b>Error:</b> {message}
             </div>
         )
@@ -13,5 +17,5 @@ export default class ExcelError extends React.PureComponent {
 }
 
 ExcelError.propTypes = {
-    ExcelError
+    ExcelErrorTypes
 };

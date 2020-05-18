@@ -11,13 +11,10 @@ import Comment from "../comment/comment";
 
 export default class BlcRow extends React.Component {
     render() {
-        const {
-            roleName, lastUpdatedBy, updatedOn,
-            rowValues, comment,
-            onClickEdit, isValuesEdit, isCommentsEdit
-        } = this.props;
+        const {roleName, lastUpdatedBy, updatedOn, rowValues, comment, onClickEdit, isValuesEdit, isCommentsEdit} = this.props;
         const tdClasses = classNames(style.column_align_center, style.word_break);
         const commentName = `${this.props.rowName}.comment`;
+        const updatedOnString = getDateFromStringWithTime(updatedOn);
         const isEditShown = this.shouldShowEditButton();
         return (
             <tr>
@@ -39,27 +36,43 @@ export default class BlcRow extends React.Component {
                         </div>
                     </div>
                 </td>
-                <td className={tdClasses}>{lastUpdatedBy}</td>
-                <td className={tdClasses}>{getDateFromStringWithTime(updatedOn)}</td>
+                <td className={tdClasses}>
+                    {lastUpdatedBy}
+                </td>
+                <td className={tdClasses}>
+                    {updatedOnString}
+                </td>
 
-                {Object.keys(rowValues).map((key) => (
-                    <td key={key} className={tdClasses}>
-                        {
-                            isValuesEdit
-                                ? this.selectElement(rowValues[key], key)
-                                : (<StatusIndicator className={style.inline_block}
-                                                    status={blcNumberToState(rowValues[key])}
-                                />)
-                        }
-                    </td>
-                ))}
+                {Object.keys(rowValues).map((key) => {
+                    const status = blcNumberToState(rowValues[key]);
+                    return (
+                        <td
+                            key={key}
+                            className={tdClasses}
+                        >
+                            {
+                                isValuesEdit
+                                    ? this.selectElement(rowValues[key], key)
+                                    : (
+                                        <StatusIndicator
+                                            className={style.inline_block}
+                                            status={status}
+                                        />
+                                    )
+                            }
+                        </td>
+                    )
+                })}
 
                 <td className={tdClasses}>
                     {isCommentsEdit
-                        ? (<FormikInput type="textarea"
-                                        fill
-                                        name={commentName}
-                        />)
+                        ? (
+                            <FormikInput
+                                fill
+                                type="textarea"
+                                name={commentName}
+                            />
+                        )
                         : <Comment value={comment}/>
                     }
                 </td>
@@ -102,3 +115,16 @@ BlcRow.propTypes = {
     comment: PropTypes.string,
     blocked: PropTypes.bool,
 };
+
+BlcRow.defaultProps = {
+    lastUpdatedBy: '',
+    updatedOn: '',
+    className: '',
+    onClickEdit: () => {},
+    onChange: () => {},
+    isValuesEdit: false,
+    isCommentsEdit: false,
+    isControlsHidden: false,
+    comment: '',
+    blocked: false,
+}

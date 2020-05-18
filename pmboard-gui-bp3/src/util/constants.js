@@ -4,7 +4,14 @@ export const ProjectTypes = {
     OFFER_PRODUCT : "Offer & Product",
     OEM_PRODUCT : "OEM Product",
     SUPPORT_PROGRAM : "Support Program",
-    ENABLED : "ENABLED",
+};
+
+export const ProjectStates = {
+    CLOSED: "CLOSED",
+    COMMITTED: "COMMITTED",
+    CANCELLED: "CANCELLED",
+    FORECAST: "FORECAST",
+    PLANNING: "PLANNING"
 };
 
 export const PWSTabs = {
@@ -21,7 +28,7 @@ export const PWSTabs = {
     BLC: "blc"
 };
 
-export const ProjectStates = {
+export const WorkspaceStatus = {
     ENABLED: "Enabled",
     DISABLED: "Disabled"
 };

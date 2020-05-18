@@ -1,4 +1,4 @@
-import {ProjectStates, ProjectTypes} from "../../../util/constants";
+import {WorkspaceStatus, ProjectTypes} from "../../../util/constants";
 
 export default {
     productName: {label: "Product Name"},
@@ -28,7 +28,7 @@ export default {
     disabledTime: {
         label: "Disabled Time",
         allowedIf: {
-            workspaceState: [ProjectStates.DISABLED]
+            workspaceState: [WorkspaceStatus.DISABLED]
         },
     },
     executiveSummary: {label: "Executive Status Summary"},

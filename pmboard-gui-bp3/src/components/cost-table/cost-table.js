@@ -14,6 +14,10 @@ export default class CostTable extends React.Component {
 
         const committedValue = nanToEmptyString(committed.value);
         const realizedValue = nanToEmptyString(realized.value);
+        const committedMilestone = committed.milestone;
+        const committedMilestoneComment = committed.comment;
+        const realizedMilestone = realized.milestone;
+        const realizedMilestoneComment = realized.comment;
         return (
             <HTMLTable
                 striped
@@ -27,20 +31,30 @@ export default class CostTable extends React.Component {
                 <thead>
                 <tr>
                     <th>{tableName}</th>
-                    <th className={styles.column_align_center}>Value (k&euro;)</th>
+                    <th className={styles.column_align_center}>
+                        Value (k&euro;)
+                    </th>
                     <th>Comment</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>Committed at {committed.milestone}</td>
-                    <td className={styles.column_align_center}>{committedValue}</td>
-                    <td><Comment value={committed.comment}/></td>
+                    <td>Committed at {committedMilestone}</td>
+                    <td className={styles.column_align_center}>
+                        {committedValue}
+                    </td>
+                    <td>
+                        <Comment value={committedMilestoneComment} />
+                    </td>
                 </tr>
                 <tr>
-                    <td>Released at {realized.milestone}</td>
-                    <td className={styles.column_align_center}>{realizedValue}</td>
-                    <td><Comment value={realized.comment}/></td>
+                    <td>Released at {realizedMilestone}</td>
+                    <td className={styles.column_align_center}>
+                        {realizedValue}
+                    </td>
+                    <td>
+                        <Comment value={realizedMilestoneComment} />
+                    </td>
                 </tr>
                 </tbody>
             </HTMLTable>
@@ -64,4 +78,11 @@ CostTable.propTypes = {
             comment: PropTypes.string
         })
     }),
+};
+
+CostTable.defaultProps = {
+    data: {
+        committed: {},
+        realized: {}
+    }
 };

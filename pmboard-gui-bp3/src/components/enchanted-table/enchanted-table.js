@@ -20,7 +20,8 @@ export default class EnchantedTable extends React.Component {
         super(props);
         this.state = {
             defaults: {
-                noDataMessage: "No data found"
+                noDataMessage: "No data found",
+                editTableDialogTitle: "Edit table row"
             },
             filters: {},
             width: {},
@@ -33,24 +34,25 @@ export default class EnchantedTable extends React.Component {
     }
 
     render() {
-        const {data, columns, className, filterValues, editable, validationSchema, editDynamicInputVals, onReload, onSubmit, ...otherProps} = this.props;
-        let {renderFooter, contextMenu, ...others} = otherProps;
+        const {data, columns, className, editable, validationSchema, editDynamicInputVals, onSubmit, ...otherProps} = this.props;
         const tableClasses = classNames(className, styles.table_style);
         const isDialogOpen = this.state.editDialog.isOpen;
         const colsAmount = columns.length;
         let filteredData = this.filter(data);
         filteredData = this.sortData(filteredData);
 
-        const renderFooterParam = {
-            dialogOpen: this.dialogOpen
-        };
-        const footer = renderFooter ? renderFooter(renderFooterParam) : null;
+        const renderFooterParam = this.getRenderFooterParams();
+        const footer = this.getFooter(renderFooterParam);
         const noDataMessage = this.props.noDataMessage || this.state.defaults.noDataMessage;
-
+        const editTableDialogTitle = this.state.defaults.editTableDialogTitle;
+        const isEditorOpen = isDialogOpen && editable;
         return (
             <div className={styles.container}>
                 <div className={styles.table_container}>
-                    <HTMLTable {...others} className={tableClasses}>
+                    <HTMLTable
+                        {...otherProps}
+                        className={tableClasses}
+                    >
                         <thead>
                         <tr>
                             {columns.map((field) => {
@@ -87,30 +89,7 @@ export default class EnchantedTable extends React.Component {
                         <tbody>
                         {
                             filteredData.length > 0
-                                ? (
-                                    filteredData.map((row, i) => {
-                                        const rowKey = `row_${i}`;
-                                        const contextMenuParams = this.getContextMenuParams(filteredData[i]);
-                                        const menu = contextMenu ? contextMenu(contextMenuParams) : null;
-                                        return (
-                                            <EnchantedRow
-                                                key={rowKey}
-                                                contextMenu={menu}
-                                            >
-                                                {columns.map((col) => {
-                                                    const styles = this.getTdStyle(col, "column");
-                                                    const colId = col.id || "";
-                                                    const decorator = col.decorator;
-                                                    return (
-                                                        <td key={colId} style={styles}>
-                                                            {renderValue(row[colId], decorator, row)}
-                                                        </td>
-                                                    )
-                                                })}
-                                            </EnchantedRow>
-                                        )
-                                    })
-                                )
+                                ? this.getBodyRows(filteredData)
                                 : <tr><td colSpan={colsAmount}><FieldName name={noDataMessage}/></td></tr>
                         }
                         </tbody>
@@ -121,9 +100,9 @@ export default class EnchantedTable extends React.Component {
                 </div>
 
                 <Dialog
-                    isOpen={isDialogOpen && editable}
+                    isOpen={isEditorOpen}
                     onClose={this.onDialogClose}
-                    title="Edit table row"
+                    title={editTableDialogTitle}
                     className={styles.dialog}
                 >
                     <div className={Classes.DIALOG_BODY}>
@@ -141,6 +120,15 @@ export default class EnchantedTable extends React.Component {
         )
     }
 
+    getRenderFooterParams() {
+        return  {dialogOpen: this.dialogOpen}
+    }
+
+    getFooter(renderFooterParam) {
+        const {renderFooter} = this.props;
+        return renderFooter ? renderFooter(renderFooterParam) : null;
+    }
+
     getTdStyle(obj, type) {
         if (obj.hasOwnProperty("style")) {
             if (obj.style.hasOwnProperty(type)) {
@@ -149,6 +137,31 @@ export default class EnchantedTable extends React.Component {
         } else {
             return {};
         }
+    }
+
+    getBodyRows(filteredData) {
+        const {columns} = this.props;
+        return (filteredData.map((row, i) => {
+            const rowKey = `row_${i}`;
+            const menu = this.getContextMenu(filteredData[i]);
+            return (
+                <EnchantedRow
+                    key={rowKey}
+                    contextMenu={menu}
+                >
+                    {columns.map((col) => {
+                        const styles = this.getTdStyle(col, "column");
+                        const colId = col.id || "";
+                        const decorator = col.decorator;
+                        return (
+                            <td key={colId} style={styles}>
+                                {renderValue(row[colId], decorator, row)}
+                            </td>
+                        )
+                    })}
+                </EnchantedRow>
+            )
+        }))
     }
 
     getFilterBar(type, id) {
@@ -162,12 +175,14 @@ export default class EnchantedTable extends React.Component {
                 />
             )
         } else if (type.toLowerCase() === "multiselect") {
+            const items = filterValues[id];
+            const selected = filters[id];
             return (
                 <SelectList
                     fill
-                    items={filterValues[id]}
+                    items={items}
                     onItemSelect={this.handleSelectFilters(id, "select")}
-                    selectedItems={filters[id]}
+                    selectedItems={selected}
                     onRemove={this.onFilterRemove(id)}
                 />
             )
@@ -209,7 +224,6 @@ export default class EnchantedTable extends React.Component {
             }));
         }
     }
-
 
     handleSortClick(id) {
         const self = this;
@@ -284,6 +298,12 @@ export default class EnchantedTable extends React.Component {
         this.onDialogClose();
     };
 
+    getContextMenu(rowData) {
+        const {contextMenu} = this.props;
+        const contextMenuParams = this.getContextMenuParams(rowData)
+        return contextMenu ? contextMenu(contextMenuParams) : null;
+    }
+
     getContextMenuParams = (rowData) => (
         {
             editRow: () => {
@@ -302,12 +322,24 @@ EnchantedTable.propTypes = {
     columns: PropTypes.arrayOf(EnchantedTableColsConfig).isRequired,
     filterValues: PropTypes.object,
     editable: PropTypes.bool,
+    //TODO rename???
     validationSchema: PropTypes.object,
     onSubmit: PropTypes.func,
     noDataMessage: PropTypes.string,
     //Render prop: {dialogOpen: func}
     renderFooter: PropTypes.func,
-    //Render prop: {editRow: func, getRow: func}
+    //Render props: {editRow: func, getRow: func}
     contextMenu: PropTypes.func,
     editDynamicInputVals: PropTypes.object
+};
+
+EnchantedTable.defaultProps = {
+    filterValues: {},
+    editable: false,
+    validationSchema: {},
+    onSubmit: () => {},
+    noDataMessage: '',
+    renderFooter: () => {},
+    contextMenu: () => {},
+    editDynamicInputVals: {}
 };

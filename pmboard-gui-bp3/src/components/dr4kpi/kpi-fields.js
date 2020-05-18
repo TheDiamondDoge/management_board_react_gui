@@ -1,4 +1,4 @@
-export default {
+let configObj = {
     year: {
         label: "Year (based on DR1 date)",
     },
@@ -18,4 +18,10 @@ export default {
         label: "Cost Adherence",
         help: "Test help for cost adherence",
     }
-}
+};
+
+Object.defineProperty(configObj, "year", {
+    configurable: true, writable: true, enumerable: false
+})
+
+export default configObj;
