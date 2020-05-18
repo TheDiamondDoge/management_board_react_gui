@@ -10,7 +10,7 @@ export const qualityKpiLoad = (projectId) => ({
     projectId
 });
 
-export const qualityKpiSuccess = ({data}) => ({
+export const qualityKpiSuccess = (data) => ({
     type: QUALITY_KPI_SUCCESS,
     data
 });

@@ -16,7 +16,7 @@ export const loadRisks = (projectId) => ({
     projectId
 });
 
-export const loadSuccess = ({data}) => ({
+export const loadSuccess = (data) => ({
     type: RISKS_LOAD_SUCCESS,
     data
 });
@@ -26,7 +26,7 @@ export const loadRiskIds = (projectId) => ({
     projectId
 });
 
-export const loadRisksSuccess = ({data}) => ({
+export const loadRisksSuccess = (data) => ({
     type: RISKS_IDS_LOAD_SUCCESS,
     data
 });

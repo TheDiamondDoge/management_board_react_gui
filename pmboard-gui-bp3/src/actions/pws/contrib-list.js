@@ -8,7 +8,7 @@ export const contribLoad = (projectId) => ({
     projectId
 });
 
-export const contribLoadSuccess = ({data}) => ({
+export const contribLoadSuccess = (data) => ({
     type: CONTRIB_LOAD_SUCCESS,
     data
 });

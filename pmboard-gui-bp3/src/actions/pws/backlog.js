@@ -8,7 +8,7 @@ export const loadBacklogChart = (projectId) => ({
     projectId
 });
 
-export const loadBacklogChartSuccess = ({data}) => ({
+export const loadBacklogChartSuccess = (data) => ({
     type: BACKLOG_CHART_LOAD_SUCCESS,
     data
 });

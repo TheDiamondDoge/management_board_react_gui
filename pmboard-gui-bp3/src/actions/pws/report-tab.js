@@ -10,7 +10,7 @@ export const loadReport = (projectId) => ({
     projectId
 });
 
-export const loadReportSuccess = ({data}) => ({
+export const loadReportSuccess = (data) => ({
     type: REPORT_LOAD_SUCCESS,
     data
 });
@@ -20,7 +20,7 @@ export const loadSnapshot = (projectId) => ({
     projectId
 });
 
-export const loadSnapshotSuccess = ({data}) => ({
+export const loadSnapshotSuccess = (data) => ({
     type: SNAPSHOT_LOAD_SUCCESS,
     data
 });

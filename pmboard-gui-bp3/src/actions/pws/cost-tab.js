@@ -10,7 +10,7 @@ export const costLoad = (projectId) => ({
     projectId
 });
 
-export const costLoadSuccess = ({data}) => ({
+export const costLoadSuccess = (data) => ({
     type: COST_LOAD_SUCCESS,
     data,
 });

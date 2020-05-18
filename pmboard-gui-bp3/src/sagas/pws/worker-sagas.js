@@ -53,7 +53,7 @@ export function* loadIndicatorsTab({projectId}) {
 
 export function* loadInformationTab({projectId}) {
     try {
-        const data = yield call(api.getInformationTab, projectId);
+        const {data} = yield call(api.getInformationTab, projectId);
         yield put(infoTab.infoLoadSuccess(data));
     } catch (e) {
         yield put(infoTab.infoError(e));
@@ -63,7 +63,7 @@ export function* loadInformationTab({projectId}) {
 
 export function* loadContributableProjects({projectId}) {
     try {
-        const data = yield call(api.getContributableProjects, projectId);
+        const {data} = yield call(api.getContributableProjects, projectId);
         yield put(contrib.contribLoadSuccess(data));
     } catch (e) {
         yield put(contrib.contribLoadFail(e));
@@ -73,7 +73,7 @@ export function* loadContributableProjects({projectId}) {
 
 export function* loadContribTable({projectId}) {
     try {
-        const data = yield call(api.getContribTable, projectId);
+        const {data} = yield call(api.getContribTable, projectId);
         yield put(contribTable.loadContribTableSuccess(data));
     } catch (e) {
         yield put(contribTable.errorContribTable(e));
@@ -83,7 +83,7 @@ export function* loadContribTable({projectId}) {
 
 export function* loadHealthIndicators({projectId}) {
     try {
-        const data = yield call(api.getHealthIndicators, projectId);
+        const {data} = yield call(api.getHealthIndicators, projectId);
         yield put(healthIndicators.healthLoadSuccess(data));
     } catch (e) {
         yield put(healthIndicators.healthError(e));
@@ -93,7 +93,7 @@ export function* loadHealthIndicators({projectId}) {
 
 export function* loadMilestones({projectId, isShown}) {
     try {
-        const data = yield call(api.getMilestones, projectId, !!isShown);
+        const {data} = yield call(api.getMilestones, projectId, !!isShown);
         yield put(milestones.milestonesLoadSuccess(data));
     } catch (e) {
         yield put(milestones.milestonesError(e));
@@ -103,7 +103,7 @@ export function* loadMilestones({projectId, isShown}) {
 
 export function* loadIndicatorsRqs({projectId}) {
     try {
-        const data = yield call(api.getIndicatorsRqs, projectId);
+        const {data} = yield call(api.getIndicatorsRqs, projectId);
         yield put(rqIndicators.indicatorsRqsSuccess(data));
     } catch (e) {
         yield put(rqIndicators.indicatorsRqsError(e));
@@ -113,7 +113,7 @@ export function* loadIndicatorsRqs({projectId}) {
 
 export function* loadMilestonesKpi({projectId}) {
     try {
-        const data = yield call(api.getMilestonesKpi, projectId);
+        const {data} = yield call(api.getMilestonesKpi, projectId);
         yield put(milestonesKpi.milestonesKpiSuccess(data));
     } catch (e) {
         yield put(milestonesKpi.milestonesKpiError(e));
@@ -123,7 +123,7 @@ export function* loadMilestonesKpi({projectId}) {
 
 export function* loadDr4Kpi({projectId}) {
     try {
-        const data = yield call(api.getDr4Kpi, projectId);
+        const {data} = yield call(api.getDr4Kpi, projectId);
         yield put(dr4Kpi.dr4KpiSuccess(data));
     } catch (e) {
         yield put(dr4Kpi.dr4KpiError(e));
@@ -133,7 +133,7 @@ export function* loadDr4Kpi({projectId}) {
 
 export function* loadQualityKpi({projectId}) {
     try {
-        const data = yield call(api.getQualityKpi, projectId);
+        const {data} = yield call(api.getQualityKpi, projectId);
         yield put(qualityKpi.qualityKpiSuccess(data))
     } catch (e) {
         yield put(qualityKpi.qualityKpiError(e));
@@ -153,7 +153,7 @@ export function* loadBlcTab({projectId}) {
 
 export function* loadRisks({projectId, mini}) {
     try {
-        const data = yield call(api.getRisks, projectId, !!mini);
+        const {data} = yield call(api.getRisks, projectId, !!mini);
         yield put(risks.loadSuccess(data));
     } catch (e) {
         yield put(risks.riskError(e));
@@ -198,7 +198,7 @@ export function* downloadRisksFile({projectId, projectName}) {
 
 export function* loadRelatedRisksIds({projectId}) {
     try {
-        const data = yield call(api.getRelatedRisksIds, projectId);
+        const {data} = yield call(api.getRelatedRisksIds, projectId);
         yield put(risks.loadRisksSuccess(data));
     } catch (e) {
         yield put(risks.riskError(e));
@@ -208,7 +208,7 @@ export function* loadRelatedRisksIds({projectId}) {
 
 export function* loadActions({projectId}) {
     try {
-        const data = yield call(api.getActions, projectId);
+        const {data} = yield call(api.getActions, projectId);
         yield put(actions.actionsLoadSuccess(data))
     } catch (e) {
         yield put(actions.actionsError(e));
@@ -218,7 +218,7 @@ export function* loadActions({projectId}) {
 
 export function* loadCost({projectId}) {
     try {
-        const data = yield call(api.getCost, projectId);
+        const {data} = yield call(api.getCost, projectId);
         yield put(cost.costLoadSuccess(data));
     } catch (e) {
         yield put(cost.costError(e));
@@ -239,7 +239,7 @@ export function* uploadCostFile({projectId, data}) {
 
 export function* loadRequirements({projectId}) {
     try {
-        const data = yield call(api.getRequirements, projectId);
+        const {data} = yield call(api.getRequirements, projectId);
         yield put(requirements.loadRequirementsSuccess(data));
     } catch (e) {
         yield put(requirements.errorRequirements(e));
@@ -249,7 +249,7 @@ export function* loadRequirements({projectId}) {
 
 export function* loadBacklogChart({projectId}) {
     try {
-        const data = yield call(api.getBacklogChart, projectId);
+        const {data} = yield call(api.getBacklogChart, projectId);
         yield put(backlog.loadBacklogChartSuccess(data));
     } catch (e) {
         yield put(backlog.errorBacklog(e));
@@ -259,7 +259,7 @@ export function* loadBacklogChart({projectId}) {
 
 export function* loadDefectsChart({projectId}) {
     try {
-        const data = yield call(api.getDefectsChart, projectId);
+        const {data} = yield call(api.getDefectsChart, projectId);
         yield put(defects.loadDefectsChartSuccess(data));
     } catch (e) {
         yield put(defects.errorDefects(e));
@@ -269,7 +269,7 @@ export function* loadDefectsChart({projectId}) {
 
 export function* loadReportTab({projectId}) {
     try {
-        const data = yield call(api.getReportTab, projectId);
+        const {data} = yield call(api.getReportTab, projectId);
         yield call(loadMilestones, {projectId, isShown: true});
         yield call(loadHealthIndicators, {projectId});
         yield call(loadRisks, {projectId, mini: true});
@@ -284,7 +284,7 @@ export function* loadReportTab({projectId}) {
 
 export function* loadUserReports({projectId}) {
     try {
-        const data = yield call(api.getUserReports, projectId);
+        const {data} = yield call(api.getUserReports, projectId);
         yield put(userReports.loadUserReportsSuccess(data));
         yield call(loadReportSnapshotsData, {projectId});
     } catch(e) {
@@ -426,7 +426,7 @@ export function* getLastUploadedRisks({projectId, projectName}) {
 
 export function* loadProjectDefaults({projectId}) {
     try {
-        const data = yield call(api.getProjectDefaults, projectId);
+        const {data} = yield call(api.getProjectDefaults, projectId);
         yield put(defaults.loadProjectDefaultsSuccess(data));
     } catch (e) {
         yield put(defaults.errorProjectDefaults(e));
@@ -447,7 +447,7 @@ export function* loadPptFile({projectId, pptType, snapshotId}) {
 
 export function* loadReportSnapshotsData({projectId}) {
     try {
-        const data = yield call(api.getSnapshotsData, projectId);
+        const {data} = yield call(api.getSnapshotsData, projectId);
         yield put(report.loadSnapshotSuccess(data));
     } catch (e) {
         yield put(report.errorReport(e));

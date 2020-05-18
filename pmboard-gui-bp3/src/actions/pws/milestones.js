@@ -16,7 +16,7 @@ export const milestonesSave = (projectId, data) => ({
     projectId,
 });
 
-export const milestonesLoadSuccess = ({data}) => ({
+export const milestonesLoadSuccess = (data) => ({
     type: MILESTONES_LOAD_SUCCESS,
     data
 });

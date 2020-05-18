@@ -8,7 +8,7 @@ export const loadRequirements = (projectId) => ({
     projectId
 });
 
-export const loadRequirementsSuccess = ({data}) => ({
+export const loadRequirementsSuccess = (data) => ({
     type: REQUIREMENTS_LOAD_SUCCESS,
     data,
 });

@@ -9,7 +9,7 @@ export const indicatorsRqsLoad = (projectId) => ({
     projectId
 });
 
-export const indicatorsRqsSuccess = ({data}) => ({
+export const indicatorsRqsSuccess = (data) => ({
     type: INDICATORS_RQS_SUCCESS,
     data
 });

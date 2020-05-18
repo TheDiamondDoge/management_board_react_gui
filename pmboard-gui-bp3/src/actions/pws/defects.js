@@ -8,7 +8,7 @@ export const loadDefectsChart = (projectId) => ({
     projectId
 });
 
-export const loadDefectsChartSuccess = ({data}) => ({
+export const loadDefectsChartSuccess = (data) => ({
     type: DEFECTS_CHART_LOAD_SUCCESS,
     data
 });

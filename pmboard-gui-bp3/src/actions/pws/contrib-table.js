@@ -9,7 +9,7 @@ export const loadContribTable = (projectId) => ({
     projectId
 });
 
-export const loadContribTableSuccess = ({data}) => ({
+export const loadContribTableSuccess = (data) => ({
     type: CONTRIB_TABLE_LOAD_SUCCESS,
     data
 });

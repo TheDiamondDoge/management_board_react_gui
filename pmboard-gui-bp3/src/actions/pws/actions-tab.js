@@ -10,7 +10,7 @@ export const actionsLoad = (projectId) => ({
     projectId
 });
 
-export const actionsLoadSuccess = ({data}) => ({
+export const actionsLoadSuccess = (data) => ({
     type: ACTIONS_LOAD_SUCCESS,
     data
 });

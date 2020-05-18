@@ -10,7 +10,7 @@ export const healthLoad = (projectId) => ({
     projectId
 });
 
-export const healthLoadSuccess = ({data}) => ({
+export const healthLoadSuccess = (data) => ({
     type: HEALTH_LOAD_SUCCESS,
     healthIndicators: data,
 });

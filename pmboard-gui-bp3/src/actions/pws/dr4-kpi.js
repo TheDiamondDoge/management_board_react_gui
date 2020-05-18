@@ -8,7 +8,7 @@ export const dr4KpiLoad = (projectId) => ({
     projectId
 });
 
-export const dr4KpiSuccess = ({data}) => ({
+export const dr4KpiSuccess = (data) => ({
     type: DR4_KPI_SUCCESS,
     data
 });

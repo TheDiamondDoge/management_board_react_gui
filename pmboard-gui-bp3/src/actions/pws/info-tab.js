@@ -10,7 +10,7 @@ export const infoLoad = (projectId) => ({
     }
 );
 
-export const infoLoadSuccess = ({data}) => ({
+export const infoLoadSuccess = (data) => ({
         type: INFO_LOAD_SUCCESS,
         data: data,
     }

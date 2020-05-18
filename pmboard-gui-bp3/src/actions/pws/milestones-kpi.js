@@ -8,7 +8,7 @@ export const milestonesKpiLoad = (projectId) => ({
     projectId
 });
 
-export const milestonesKpiSuccess = ({data}) => ({
+export const milestonesKpiSuccess = (data) => ({
     type: MILESTONES_KPI_SUCCESS,
     data
 });

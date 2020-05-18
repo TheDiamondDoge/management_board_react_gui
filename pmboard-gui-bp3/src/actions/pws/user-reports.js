@@ -9,7 +9,7 @@ export const loadUserReports = (projectId) => ({
     projectId
 });
 
-export const loadUserReportsSuccess = ({data}) => ({
+export const loadUserReportsSuccess = (data) => ({
     type: USER_REPORTS_LOAD_SUCCESS,
     data
 });

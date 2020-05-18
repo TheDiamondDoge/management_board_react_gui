@@ -8,7 +8,7 @@ export const loadProjectDefaults = (projectId) => ({
     projectId
 });
 
-export const loadProjectDefaultsSuccess = ({data}) => ({
+export const loadProjectDefaultsSuccess = (data) => ({
     type: PROJECT_DEFAULTS_LOAD_SUCCESS,
     data
 });
