@@ -163,7 +163,6 @@ export function* loadRisks({projectId}) {
     }
 }
 
-//TODO HERE
 export function* loadRisksSummary({projectId}) {
     const mini = true;
     try {

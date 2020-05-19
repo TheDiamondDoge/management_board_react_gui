@@ -8,24 +8,26 @@ export default class ContextMenu extends React.PureComponent {
         const editTitle = "Edit action";
         const deleteTitle = "Delete action";
         return (
-            <Menu {...menuProps}>
-                <MenuItem
-                    icon={"edit"}
-                    text={editTitle}
-                    onClick={onEdit}
-                />
-                <MenuItem
-                    icon={"delete"}
-                    intent={Intent.DANGER}
-                    text={deleteTitle}
-                    onClick={onDelete}
-                />
-            </Menu>
+            <>
+                <Menu {...menuProps}>
+                    <MenuItem
+                        icon={"edit"}
+                        text={editTitle}
+                        onClick={onEdit}
+                    />
+                    <MenuItem
+                        icon={"delete"}
+                        intent={Intent.DANGER}
+                        text={deleteTitle}
+                        onClick={onDelete}
+                    />
+                </Menu>
+            </>
         );
     }
 }
 
 ContextMenu.propTypes = {
     onEdit: PropTypes.func.isRequired,
-    onDelete: PropTypes.func.isRequired
+    onDelete: PropTypes.func.isRequired,
 };

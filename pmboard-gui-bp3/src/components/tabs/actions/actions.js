@@ -12,8 +12,20 @@ import renderFields from "./fields";
 import {ProjectDefaults} from "../../../util/custom-types";
 import RenderFieldHelper from "../../../util/render-field-helper";
 import styles from "./actions.module.css";
+import {Button, Intent, Icon} from "@blueprintjs/core";
+import ConfirmationPopup from "../../confirmation-popup/confirmation-popup";
 
 export default class Actions extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isDialogOpen: false
+        }
+    }
+
+    actionUid = null;
+
     render() {
         const {loading} = this.props.actions;
         if (loading) {
@@ -26,6 +38,8 @@ export default class Actions extends React.Component {
             const filters = createEnchantedTableFilters(payload);
             let editDynamicInputVals = {relatedRisks: this.getDynamicInputRisks()};
 
+            const confirmTitle = "Deletion confirmation";
+            const confirmBody = "It is a permanent operation. You will not be able to restore deleted action.";
             return (
                 <CustomCard className={styles.table_container}>
                     <EnchantedTable
@@ -41,6 +55,14 @@ export default class Actions extends React.Component {
                         validationSchema={validationSchema}
                         contextMenu={this.getContextMenu(renderHelper)}
                         renderFooter={this.getTableFooter(renderHelper)}
+                    />
+                    <ConfirmationPopup
+                        isOpen={this.state.isDialogOpen}
+                        onClose={this.toggleConfirmDialog}
+                        title={confirmTitle}
+                        icon={<Icon icon={"warning-sign"} intent={Intent.DANGER}/>}
+                        body={confirmBody}
+                        footer={this.getConfirmFooter()}
                     />
                 </CustomCard>
             )
@@ -67,18 +89,40 @@ export default class Actions extends React.Component {
         )
     }
 
+    getConfirmFooter() {
+        return (
+            <>
+                <Button onClick={() => this.handleDeleteAction(this.actionUid)}>
+                    Delete
+                </Button>
+                <Button
+                    intent={Intent.DANGER}
+                    onClick={this.toggleConfirmDialog}
+                >
+                    Cancel
+                </Button>
+            </>
+        )
+    }
+
+    toggleConfirmDialog = () => {
+        this.setState((prev) => ({isDialogOpen: !prev.isDialogOpen}))
+    }
 
     getContextMenu = (renderHelper) => {
         if (renderHelper.displayOrNot("controls")) {
             return (
-                (menuFuncs) =>
-                    <ContextMenu
-                        onEdit={menuFuncs.editRow}
-                        onDelete={() => this.handleDeleteAction(menuFuncs.getRow().uid)}
-                    />
+                (menuFuncs) => {
+                    this.actionUid = menuFuncs.getRow().uid;
+                    return (
+                        <ContextMenu
+                            onEdit={menuFuncs.editRow}
+                            onDelete={this.toggleConfirmDialog}
+                        />
+                    )
+                }
             )
         }
-
         return null;
     };
 
@@ -88,6 +132,7 @@ export default class Actions extends React.Component {
 
     handleDeleteAction = (data) => {
         this.props.deleteAction(this.projectId, data);
+        this.toggleConfirmDialog();
     };
 
     handleLoadData = () => {
