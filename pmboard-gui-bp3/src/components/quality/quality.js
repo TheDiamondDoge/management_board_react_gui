@@ -14,6 +14,8 @@ import getValidationSchema from "./validation-schema";
 import Comment from "../comment/comment";
 import RenderFieldHelper from "../../util/render-field-helper";
 import LastUpdated from "../last-updated/last-updated";
+import {Messages} from "../../util/constants";
+import OnSubmitValidationError from "../formik-onsubmit-validator";
 
 export default class Quality extends React.Component {
     constructor(props) {
@@ -163,6 +165,7 @@ export default class Quality extends React.Component {
                     }
                     </tbody>
                 </HTMLTable>
+                <OnSubmitValidationError callback={this.handleSubmitWithErrors}/>
             </>
         )
     };
@@ -309,7 +312,7 @@ export default class Quality extends React.Component {
     getSyncButtonProps(isDr1ActualExists) {
         const {updateInProcess} = this.props.qualityKpi;
         const editBtnProps = {};
-        if (isDr1ActualExists) {
+        if (!isDr1ActualExists) {
             editBtnProps.disabled = true;
             editBtnProps.title = "Set DR1 date to enable syncro";
         }
@@ -332,6 +335,12 @@ export default class Quality extends React.Component {
 
         return inputAttrs;
     }
+
+    handleSubmitWithErrors = (formikProps) => {
+        if (!formikProps.isValid) {
+            this.props.onSubmitErrorCallback(Messages.FORM_SUBMIT_ERROR)
+        }
+    }
 }
 
 Quality.propTypes = {
@@ -340,9 +349,11 @@ Quality.propTypes = {
     fieldsRenderValidation: ProjectDefaults,
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
+    onSubmitErrorCallback: PropTypes.func,
 };
 
 Quality.defaultProps = {
     onSubmit: () => {},
     onCancel: () => {},
+    onSubmitErrorCallback: () => {},
 };

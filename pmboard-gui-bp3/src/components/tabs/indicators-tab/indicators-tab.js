@@ -26,8 +26,15 @@ import {getPropFromStringPath} from "../../../util/util";
 import {getIndicatorsColor} from "../../../util/transform-funcs";
 import RenderFieldHelper from "../../../util/render-field-helper";
 import fieldsParams from "./indicators-fields";
+import {Messages} from "../../../util/constants";
 
 export default class IndicatorsTab extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.onSubmitErrorHandler = () => this.props.pushWarningToast(Messages.FORM_SUBMIT_ERROR);
+    }
+
     render() {
         this.projectId = this.props.defaults.payload.projectId;
         const validationParams = this.props.defaults.payload;
@@ -43,6 +50,7 @@ export default class IndicatorsTab extends React.Component {
         const milestonesKpiClasses = classNames(styles.milestones_kpi, styles.card);
         const dr4KpiClasses = classNames(styles.dr4_kpi, styles.card);
         const qualityClasses = classNames(styles.quality, styles.card);
+
         return (
             <div>
                 <CustomCard className={styles.card}>
@@ -73,6 +81,7 @@ export default class IndicatorsTab extends React.Component {
                                         onCommentsSubmit={this.handleHealthCommentsSubmit}
                                         onCancel={this.handleHealthReload}
                                         blocked={isControlsBlocked}
+                                        onSubmitErrorCallback={this.onSubmitErrorHandler}
                                     />
                                 </ErrorBoundary>
                             )
@@ -93,6 +102,7 @@ export default class IndicatorsTab extends React.Component {
                                             fieldsRenderValidation={validationParams}
                                             rqsSubmit={this.handleRqsSubmit}
                                             rqsReload={this.handleRqsReload}
+                                            onSubmitErrorCallback={this.onSubmitErrorHandler}
                                         />
                                     </ErrorBoundary>
                                 )
@@ -141,6 +151,7 @@ export default class IndicatorsTab extends React.Component {
                                             fieldsRenderValidation={validationParams}
                                             onSubmit={this.handleQualitySubmit}
                                             onCancel={this.handleQualityReload}
+                                            onSubmitErrorCallback={this.onSubmitErrorHandler}
                                         />
                                     </ErrorBoundary>
                                 )
@@ -217,4 +228,5 @@ IndicatorsTab.propTypes = {
     rqsReload: PropTypes.func,
     qualityReload: PropTypes.func,
     qualitySubmit: PropTypes.func,
+    pushWarningToast: PropTypes.func,
 };

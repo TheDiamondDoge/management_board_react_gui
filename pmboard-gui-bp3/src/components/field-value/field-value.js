@@ -21,9 +21,9 @@ export default class FieldValue extends React.PureComponent {
             )
             : value;
         return (
-            <span className={classes} {...other}>
+            <div className={classes} {...other}>
                 {field}
-            </span>
+            </div>
         )
     }
 };

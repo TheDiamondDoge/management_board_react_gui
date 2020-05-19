@@ -20,7 +20,8 @@ import {boolToYesNo} from "../../../util/transform-funcs";
 import {MenuItem} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 import Comment from "../../comment/comment";
-import {CommonMilestonesLabels} from "../../../util/constants";
+import {CommonMilestonesLabels, Messages} from "../../../util/constants";
+import OnSubmitValidationError from "../../formik-onsubmit-validator";
 
 
 export default class InfoTab extends React.Component {
@@ -85,6 +86,7 @@ export default class InfoTab extends React.Component {
                 <Formik
                     enableReinitialize
                     onSubmit={(values, formikActions) => {
+                        console.log(this.x())
                         formikActions.setSubmitting(false);
 
                         this.sendData(values);
@@ -102,6 +104,7 @@ export default class InfoTab extends React.Component {
                     }
                     render={
                         (formikProps) => {
+                            this.x = formikProps.validateForm;
                             this.bindFormSubmission(formikProps.submitForm);
                             this.handleChange = formikFieldHandleChange(formikProps);
                             return (
@@ -136,6 +139,7 @@ export default class InfoTab extends React.Component {
                                     <CustomCard>
                                         {this.mainRows(formikProps.values.urls, "urls")}
                                     </CustomCard>
+                                    <OnSubmitValidationError callback={this.handleSubmitWithErrors} />
                                 </div>
                             )
                         }
@@ -469,6 +473,12 @@ export default class InfoTab extends React.Component {
                 return styles.data_container;
         }
     };
+
+    handleSubmitWithErrors = (formikProps) => {
+        if (!formikProps.isValid) {
+            this.props.pushWarningToast(Messages.FORM_SUBMIT_ERROR)
+        }
+    }
 }
 
 InfoTab.propTypes = {
@@ -492,4 +502,5 @@ InfoTab.propTypes = {
     }),
     saveInfo: PropTypes.func,
     saveMilestones: PropTypes.func,
+    pushWarningToast: PropTypes.func,
 };

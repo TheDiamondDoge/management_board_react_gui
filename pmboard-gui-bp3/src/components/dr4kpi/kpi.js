@@ -52,7 +52,7 @@ export default class Kpi extends React.Component {
                                         position={Position.TOP}
                                         className={styles.help}
                                     >
-                                        <HelpIcon />
+                                        <HelpIcon/>
                                     </Tooltip>
                                 </td>
                                 <td>

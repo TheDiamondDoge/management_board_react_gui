@@ -8,17 +8,17 @@ export default () => {
     return Yup.object().shape({
        backlog: Yup.array().of(
             Yup.object().shape({
-                objective: nullableInteger(99999),
+                objective: nullableInteger(999999),
             })
        ),
         defects: Yup.array().of(
             Yup.object().shape({
-                objective: nullableInteger(99999),
+                objective: nullableInteger(999999),
             })
         ),
         quality: Yup.array().of(
             Yup.object().shape({
-                objective: nullableInteger(99999),
+                objective: nullableInteger(999999),
             })
         ),
         testExecution: Yup.array().of(

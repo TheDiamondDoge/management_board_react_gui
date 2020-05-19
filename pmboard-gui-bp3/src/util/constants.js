@@ -75,3 +75,7 @@ export const BlcRowNames = {
     PMO: "pmo",
     SALES: "sales"
 };
+
+export const Messages = {
+    FORM_SUBMIT_ERROR: "You have errors in your form. Please fix them before save."
+};

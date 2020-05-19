@@ -12,6 +12,8 @@ import FormikInput from "../controls/util-renderers";
 import {RequirementsShape} from "../../util/custom-types";
 import {formikFieldHandleChange} from "../../util/util";
 import getValidationSchema from "./validation-schema";
+import OnSubmitValidationError from "../formik-onsubmit-validator";
+import {Messages} from "../../util/constants";
 
 export default class Requirements extends React.Component {
     constructor(props) {
@@ -65,62 +67,65 @@ export default class Requirements extends React.Component {
         const {rqsReload, fieldsToRender} = this.props;
         const renderHelper = this.props.renderHelper;
         return (
-            <HTMLTable
-                className={styles.req_table}
-                striped
-            >
-                <colgroup>
-                    <col className={styles.title_col}/>
-                    <col className={valueColumnClasses}/>
-                </colgroup>
-                <thead>
-                {
-                    renderHelper.displayOrNot("controls") &&
-                    <tr>
-                        <th
-                            className={styles.table_header}
-                            colSpan={2}
-                        >
-                            <EditSaveControls smallSize
-                                              onClick={this.onClickEdit}
-                                              editMode={this.state.editMode}
-                                              onSubmit={this.onSubmit}
-                                              onCancel={rqsReload}
-                            />
-                        </th>
-                    </tr>
-                }
-                </thead>
-                <tbody>
-                {
-                    renderHelper.displayOrNot("note") &&
-                    <tr>
-                        <td colSpan={2}>
-                            <FieldName name={renderHelper.getLabelById("note")}/>
-                        </td>
-                    </tr>
-                }
-                {
-                    Object.keys(fieldsToRender).map((field) => {
-                        const label = renderHelper.getLabelById(field);
-                        const value = this.renderValueField(field, values);
-                        return (
-                            renderHelper.displayOrNot(field) &&
-                            <tr key={field}>
-                                <td>
-                                    <FieldName name={label}/>
-                                </td>
-                                <td>
-                                    <div className={styles.column_align_center}>
-                                        {value}
-                                    </div>
-                                </td>
-                            </tr>
-                        )
-                    })
-                }
-                </tbody>
-            </HTMLTable>
+            <>
+                <HTMLTable
+                    className={styles.req_table}
+                    striped
+                >
+                    <colgroup>
+                        <col className={styles.title_col}/>
+                        <col className={valueColumnClasses}/>
+                    </colgroup>
+                    <thead>
+                    {
+                        renderHelper.displayOrNot("controls") &&
+                        <tr>
+                            <th
+                                className={styles.table_header}
+                                colSpan={2}
+                            >
+                                <EditSaveControls smallSize
+                                                  onClick={this.onClickEdit}
+                                                  editMode={this.state.editMode}
+                                                  onSubmit={this.onSubmit}
+                                                  onCancel={rqsReload}
+                                />
+                            </th>
+                        </tr>
+                    }
+                    </thead>
+                    <tbody>
+                    {
+                        renderHelper.displayOrNot("note") &&
+                        <tr>
+                            <td colSpan={2}>
+                                <FieldName name={renderHelper.getLabelById("note")}/>
+                            </td>
+                        </tr>
+                    }
+                    {
+                        Object.keys(fieldsToRender).map((field) => {
+                            const label = renderHelper.getLabelById(field);
+                            const value = this.renderValueField(field, values);
+                            return (
+                                renderHelper.displayOrNot(field) &&
+                                <tr key={field}>
+                                    <td>
+                                        <FieldName name={label}/>
+                                    </td>
+                                    <td>
+                                        <div className={styles.column_align_center}>
+                                            {value}
+                                        </div>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
+                    </tbody>
+                </HTMLTable>
+                <OnSubmitValidationError callback={this.handleSubmitWithErrors}/>
+            </>
         )
     };
 
@@ -165,6 +170,11 @@ export default class Requirements extends React.Component {
         }
     };
 
+    handleSubmitWithErrors = (formikProps) => {
+        if (!formikProps.isValid) {
+            this.props.onSubmitErrorCallback(Messages.FORM_SUBMIT_ERROR)
+        }
+    }
 }
 
 Requirements.propTypes = {

@@ -13,6 +13,8 @@ import TooltipContent from "../tooltip-content/tooltip-content";
 import {FieldsToRenderShape, HealthIndicatorsShape} from "../../util/custom-types";
 import FormikInput from "../controls/util-renderers";
 import Comment from "../comment/comment";
+import {Messages} from "../../util/constants";
+import OnSubmitValidationError from "../formik-onsubmit-validator";
 
 export default class HealthIndicators extends React.Component {
     constructor(props) {
@@ -77,96 +79,99 @@ export default class HealthIndicators extends React.Component {
         const prevDate = dateFormatToString(new Date(prevStatusSet));
         const currentDate = dateFormatToString(new Date(currentStatusSet));
         return (
-            <HTMLTable
-                striped
-                className={styles.health_table}
-            >
-                <colgroup>
-                    <col className={styles.status_col}/>
-                    <col className={styles.prev_column}/>
-                    <col className={styles.cur_column}/>
-                    {isSummaryMode || <col/>}
-                </colgroup>
-                <thead>
-                <tr>
-                    <th>
-                        <FieldName name={"Status"}/>
-                        <Tooltip
-                            content={
-                                (<TooltipContent
-                                    title={healthStatusHelp.title}
-                                    content={healthStatusHelp.content}
-                                />)
-                            }
-                            position={Position.TOP}
-                        >
-                            <HelpIcon className={styles.help_icon}/>
-                        </Tooltip>
-                        {
-                            isStatusControlsShown &&
-                            <EditSaveControls
-                                smallSize
-                                className={styles.inline_block}
-                                editMode={this.state.editStatusMode}
-                                onClick={this.onClickEditStatus}
-                                onSubmit={this.submitForm}
-                                onCancel={onCancel}
-                            />
-                        }
-                    </th>
-                    <th className={styles.column_align_center}>
-                        <FieldName name={"Previous"}/><br/>
-                        <FieldName name={prevDate}/>
-                    </th>
-                    <th className={styles.column_align_center}>
-                        <FieldName name={"Current "}/><br/>
-                        <FieldName name={currentDate}/>
-                    </th>
-
-                    {
-                        isSummaryMode ||
-                        <th className={styles.column_align_center}>
-                            <FieldName name={"Comments"}/>
+            <>
+                <HTMLTable
+                    striped
+                    className={styles.health_table}
+                >
+                    <colgroup>
+                        <col className={styles.status_col}/>
+                        <col className={styles.prev_column}/>
+                        <col className={styles.cur_column}/>
+                        {isSummaryMode || <col/>}
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>
+                            <FieldName name={"Status"}/>
+                            <Tooltip
+                                content={
+                                    (<TooltipContent
+                                        title={healthStatusHelp.title}
+                                        content={healthStatusHelp.content}
+                                    />)
+                                }
+                                position={Position.TOP}
+                            >
+                                <HelpIcon className={styles.help_icon}/>
+                            </Tooltip>
                             {
-                                isCommentsControlsShown &&
+                                isStatusControlsShown &&
                                 <EditSaveControls
                                     smallSize
                                     className={styles.inline_block}
-                                    editMode={this.state.editCommentMode}
-                                    onClick={this.onClickEditComment}
-                                    onCancel={onCancel}
+                                    editMode={this.state.editStatusMode}
+                                    onClick={this.onClickEditStatus}
                                     onSubmit={this.submitForm}
+                                    onCancel={onCancel}
                                 />
                             }
                         </th>
-                    }
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    Object.keys(fieldsToRender).map((field) => {
-                        const label = fieldsToRender[field].label;
-                        const prevValue = values.statuses.prev ? values.statuses.prev[field] : "";
-                        const currentValue = values.statuses.current ? values.statuses.current[field] : "";
-                        const comment = values.comments[field];
-                        const immutableIndicatorName = "statuses.prev." + field;
-                        const indicatorName = "statuses.current." + field;
-                        const commentName = "comments." + field;
-                        return (
-                            <tr key={field}>
-                                <td>
-                                    <FieldName name={label}/>
-                                </td>
+                        <th className={styles.column_align_center}>
+                            <FieldName name={"Previous"}/><br/>
+                            <FieldName name={prevDate}/>
+                        </th>
+                        <th className={styles.column_align_center}>
+                            <FieldName name={"Current "}/><br/>
+                            <FieldName name={currentDate}/>
+                        </th>
 
-                                {this.getImmutableIndicatorTd(prevValue, immutableIndicatorName, styles)}
-                                {this.getIndicatorTd(currentValue, indicatorName, styles)}
-                                {isSummaryMode || this.getCommentTd(comment, commentName, styles)}
-                            </tr>
-                        )
-                    })
-                }
-                </tbody>
-            </HTMLTable>
+                        {
+                            isSummaryMode ||
+                            <th className={styles.column_align_center}>
+                                <FieldName name={"Comments"}/>
+                                {
+                                    isCommentsControlsShown &&
+                                    <EditSaveControls
+                                        smallSize
+                                        className={styles.inline_block}
+                                        editMode={this.state.editCommentMode}
+                                        onClick={this.onClickEditComment}
+                                        onCancel={onCancel}
+                                        onSubmit={this.submitForm}
+                                    />
+                                }
+                            </th>
+                        }
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        Object.keys(fieldsToRender).map((field) => {
+                            const label = fieldsToRender[field].label;
+                            const prevValue = values.statuses.prev ? values.statuses.prev[field] : "";
+                            const currentValue = values.statuses.current ? values.statuses.current[field] : "";
+                            const comment = values.comments[field];
+                            const immutableIndicatorName = "statuses.prev." + field;
+                            const indicatorName = "statuses.current." + field;
+                            const commentName = "comments." + field;
+                            return (
+                                <tr key={field}>
+                                    <td>
+                                        <FieldName name={label}/>
+                                    </td>
+
+                                    {this.getImmutableIndicatorTd(prevValue, immutableIndicatorName, styles)}
+                                    {this.getIndicatorTd(currentValue, indicatorName, styles)}
+                                    {isSummaryMode || this.getCommentTd(comment, commentName, styles)}
+                                </tr>
+                            )
+                        })
+                    }
+                    </tbody>
+                </HTMLTable>
+                <OnSubmitValidationError callback={this.handleSubmitWithErrors}/>
+            </>
         )
     };
 
@@ -221,6 +226,12 @@ export default class HealthIndicators extends React.Component {
             </Field>
         )
     };
+
+    handleSubmitWithErrors = (formikProps) => {
+        if (!formikProps.isValid) {
+            this.props.onSubmitErrorCallback(Messages.FORM_SUBMIT_ERROR)
+        }
+    }
 }
 
 
@@ -232,6 +243,7 @@ HealthIndicators.propTypes = {
     onCommentsSubmit: PropTypes.func,
     onCancel: PropTypes.func,
     blocked: PropTypes.bool,
+    onSubmitErrorCallback: PropTypes.func
 };
 
 HealthIndicators.defaultProps = {
@@ -240,4 +252,5 @@ HealthIndicators.defaultProps = {
     onCommentsSubmit: () => {},
     onCancel: () => {},
     blocked: false,
+    onSubmitErrorCallback: () => {}
 }

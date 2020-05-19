@@ -4,6 +4,7 @@ import {infoLoad, infoReset, infoSaveData} from "../../../actions/pws/info-tab";
 import {milestonesLoad, milestonesReset, milestonesSave} from "../../../actions/pws/milestones";
 import {contribLoad, contribReset} from "../../../actions/pws/contrib-list";
 import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
+import {addWarningToast} from "../../../actions/app/toaster";
 
 function mapStateToProps(state) {
     return {
@@ -28,6 +29,7 @@ function mapDispatchToProps(dispatch) {
             dispatch(milestonesReset());
             dispatch(contribReset())
         },
+        pushWarningToast: (message) => dispatch(addWarningToast(message))
     }
 }
 

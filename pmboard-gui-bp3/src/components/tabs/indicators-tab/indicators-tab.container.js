@@ -13,6 +13,7 @@ import {milestonesKpiReset} from "../../../actions/pws/milestones-kpi";
 import {dr4KpiReset} from "../../../actions/pws/dr4-kpi";
 import {qualityKpiLoad, qualityKpiReset, qualityKpiSave} from "../../../actions/pws/quality-kpi";
 import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
+import {addWarningToast} from "../../../actions/app/toaster";
 
 function mapStateToProps(state){
     return {
@@ -43,7 +44,8 @@ function mapDispatchToProps(dispatch) {
             dispatch(milestonesKpiReset());
             dispatch(dr4KpiReset());
             dispatch(qualityKpiReset());
-        }
+        },
+        pushWarningToast: (message) => dispatch(addWarningToast(message))
     }
 }
 
