@@ -288,6 +288,7 @@ export default class InfoTab extends React.Component {
         return (
             shouldRender &&
             <FieldArray
+                key={arrayName}
                 name={arrayName}
                 render={(arrayHelpers) => {
                     const value = arrayHelpers.form.values[stateBranch][obj];
@@ -363,9 +364,10 @@ export default class InfoTab extends React.Component {
 
     getMilestoneSelector(name, key) {
         return (
-            <Field key={key}
-                   component="select"
-                   name={name}
+            <Field
+                key={key}
+                component="select"
+                name={name}
             >
                 <option value="">&nbsp;</option>
                 <option value="CI">CI</option>

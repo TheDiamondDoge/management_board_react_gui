@@ -7,7 +7,7 @@ import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 import {exportPpt} from "../../../actions/pws/ppt-export";
 import {milestonesReset} from "../../../actions/pws/milestones";
 import {healthReset} from "../../../actions/pws/health-indicators";
-import {resetRisks} from "../../../actions/pws/risks-tab";
+import {risksSummaryReset} from "../../../actions/pws/risks/risks-summary";
 
 function mapStateToProps(state) {
     return {
@@ -17,7 +17,7 @@ function mapStateToProps(state) {
         userReports: state.pws.userReports,
         milestones: state.pws.milestones,
         indicators: state.pws.healthIndicators,
-        risks: state.pws.risks,
+        risks: state.pws.risks.summary,
         pptLoading: state.pws.pptReport.loading,
     }
 }
@@ -31,7 +31,7 @@ function mapDispatchToProps(dispatch) {
             dispatch(resetUserReports());
             dispatch(milestonesReset());
             dispatch(healthReset());
-            dispatch(resetRisks());
+            dispatch(risksSummaryReset());
         },
         saveData: (projectId, data) => dispatch(saveUserReport(projectId, data)),
         reloadUserReports: (projectId) => dispatch(loadUserReports(projectId)),

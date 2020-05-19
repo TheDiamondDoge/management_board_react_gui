@@ -1,12 +1,10 @@
 import {
     RISKS_LOAD,
     RISKS_LOAD_SUCCESS,
-    RISKS_IDS_LOAD,
-    RISKS_IDS_LOAD_SUCCESS,
     RISKS_ERROR,
     RISK_RESET,
     RISK_SAVE, RISKS_UPLOAD, RISKS_UPLOAD_SUCCESS, RISKS_ERRORS_SHOWED, RISKS_DOWNLOAD, RISKS_GET_LAST_UPLOADED
-} from "../../actions/pws/risks-tab";
+} from "../../../actions/pws/risks/risks-tab";
 
 const initState = {
     loading: true,
@@ -31,15 +29,6 @@ export default (state, action) => {
                 ...state,
                 loading: false,
                 payload: action.data,
-            };
-        case RISKS_IDS_LOAD:
-            return {
-                ...state,
-            };
-        case RISKS_IDS_LOAD_SUCCESS:
-            return {
-                ...state,
-                riskIDs: [...action.data],
             };
         case RISKS_ERROR:
             return {

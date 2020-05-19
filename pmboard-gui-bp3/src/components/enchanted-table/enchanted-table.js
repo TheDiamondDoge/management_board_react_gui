@@ -34,7 +34,9 @@ export default class EnchantedTable extends React.Component {
     }
 
     render() {
-        const {data, columns, className, editable, validationSchema, editDynamicInputVals, onSubmit, ...otherProps} = this.props;
+        const {
+            data, columns, className, editable, validationSchema, editDynamicInputVals, striped, interactive, bordered
+        } = this.props;
         const tableClasses = classNames(className, styles.table_style);
         const isDialogOpen = this.state.editDialog.isOpen;
         const colsAmount = columns.length;
@@ -50,7 +52,9 @@ export default class EnchantedTable extends React.Component {
             <div className={styles.container}>
                 <div className={styles.table_container}>
                     <HTMLTable
-                        {...otherProps}
+                        striped={striped}
+                        interactive={interactive}
+                        bordered={bordered}
                         className={tableClasses}
                     >
                         <thead>

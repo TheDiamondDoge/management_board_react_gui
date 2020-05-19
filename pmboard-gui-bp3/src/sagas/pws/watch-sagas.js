@@ -9,7 +9,9 @@ import * as quality from "../../actions/pws/quality-kpi";
 import * as milestones from "../../actions/pws/milestones";
 import * as contrib from "../../actions/pws/contrib-list";
 import * as blc from "../../actions/pws/blc-tab";
-import * as risks from "../../actions/pws/risks-tab";
+import * as risksTab from "../../actions/pws/risks/risks-tab";
+import * as risksSummary from "../../actions/pws/risks/risks-summary";
+import * as risksRelated from "../../actions/pws/risks/risks-related";
 import * as actions from "../../actions/pws/actions-tab";
 import * as cost from "../../actions/pws/cost-tab";
 import * as requirements from "../../actions/pws/requirements-tab";
@@ -94,23 +96,27 @@ function* watchContibTableLoad() {
 }
 
 function* watchRisksLoad() {
-    yield takeEvery(risks.RISKS_LOAD, sagas.loadRisks)
+    yield takeEvery(risksTab.RISKS_LOAD, sagas.loadRisks)
 }
 
 function* watchRiskSave() {
-    yield takeLatest(risks.RISK_SAVE, sagas.saveRisk);
+    yield takeLatest(risksTab.RISK_SAVE, sagas.saveRisk);
 }
 
 function* watchRisksUpload() {
-    yield takeLatest(risks.RISKS_UPLOAD, sagas.uploadRisksFile);
+    yield takeLatest(risksTab.RISKS_UPLOAD, sagas.uploadRisksFile);
 }
 
 function* watchRisksDownload() {
-    yield takeLeading(risks.RISKS_DOWNLOAD, sagas.downloadRisksFile);
+    yield takeLeading(risksTab.RISKS_DOWNLOAD, sagas.downloadRisksFile);
+}
+
+function* watchRisksSummaryLoad() {
+    yield takeLeading(risksSummary.RISKS_SUMMARY_LOAD, sagas.loadRisksSummary);
 }
 
 function* watchRelatedRisksLoad() {
-    yield takeEvery(risks.RISKS_IDS_LOAD, sagas.loadRelatedRisksIds)
+    yield takeEvery(risksRelated.RISKS_IDS_LOAD, sagas.loadRelatedRisksIds)
 }
 
 function* watchActionsLoad() {
@@ -162,7 +168,7 @@ function* watchGetLastUploadedCost() {
 }
 
 function* watchGetLastUploadedRisks() {
-    yield takeLatest(risks.RISKS_GET_LAST_UPLOADED, sagas.getLastUploadedRisks)
+    yield takeLatest(risksTab.RISKS_GET_LAST_UPLOADED, sagas.getLastUploadedRisks)
 }
 
 function* watchProjectDefaultsLoad() {
@@ -185,6 +191,7 @@ const exportSagas = [
     fork(watchBlcTabSaveIndicators),
     fork(watchBlcTabSaveComments),
     fork(watchRisksLoad),
+    fork(watchRisksSummaryLoad),
     fork(watchRiskSave),
     fork(watchRisksUpload),
     fork(watchRisksDownload),

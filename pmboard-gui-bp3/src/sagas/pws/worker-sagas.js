@@ -12,7 +12,9 @@ import * as qualityKpi from "../../actions/pws/quality-kpi";
 import * as infoTab from "../../actions/pws/info-tab";
 import * as contrib from "../../actions/pws/contrib-list";
 import * as blc from "../../actions/pws/blc-tab";
-import * as risks from "../../actions/pws/risks-tab";
+import * as risksTab from "../../actions/pws/risks/risks-tab";
+import * as risksSummary from "../../actions/pws/risks/risks-summary";
+import * as risksIds from "../../actions/pws/risks/risks-related";
 import * as actions from "../../actions/pws/actions-tab";
 import * as cost from "../../actions/pws/cost-tab";
 import * as requirements from "../../actions/pws/requirements-tab";
@@ -151,12 +153,24 @@ export function* loadBlcTab({projectId}) {
     }
 }
 
-export function* loadRisks({projectId, mini}) {
+export function* loadRisks({projectId}) {
     try {
-        const {data} = yield call(api.getRisks, projectId, !!mini);
-        yield put(risks.loadSuccess(data));
+        const {data} = yield call(api.getRisks, projectId);
+        yield put(risksTab.loadSuccess(data));
     } catch (e) {
-        yield put(risks.riskError(e));
+        yield put(risksTab.riskError(e));
+        yield put(addDangerToast("'Risks' failed. Please try again"));
+    }
+}
+
+//TODO HERE
+export function* loadRisksSummary({projectId}) {
+    const mini = true;
+    try {
+        const {data} = yield call(api.getRisks, projectId, mini);
+        yield put(risksSummary.loadRisksSummarySuccess(data));
+    } catch (e) {
+        yield put(risksSummary.risksSummaryError(e));
         yield put(addDangerToast("'Risks' failed. Please try again"));
     }
 }
@@ -167,7 +181,7 @@ export function* saveRisk({projectId, data}) {
         yield put(addSuccessToast("Saved"));
         yield call(loadRisks, {projectId});
     } catch (e) {
-        yield put(risks.riskError(e));
+        yield put(risksTab.riskError(e));
         yield put(addDangerToast("Save failed. Please try again"));
     }
 }
@@ -175,11 +189,11 @@ export function* saveRisk({projectId, data}) {
 export function* uploadRisksFile({projectId, data}) {
     try {
         const errors = yield call(api.uploadRisksFile, projectId, data);
-        yield put(risks.riskUploadSucceed(errors.data));
+        yield put(risksTab.riskUploadSucceed(errors.data));
         yield put(addSuccessToast("File uploaded"));
         yield call(loadRisks, {projectId});
     } catch (e) {
-        yield put(risks.riskError(e));
+        yield put(risksTab.riskError(e));
         yield put(addDangerToast(`Risks upload failed. ${e.response.data.message}`));
     }
 }
@@ -191,7 +205,7 @@ export function* downloadRisksFile({projectId, projectName}) {
 
         yield put(addSuccessToast("Risk file downloaded"))
     } catch(e) {
-        yield put(risks.riskError(e));
+        yield put(risksTab.riskError(e));
         yield put(addDangerToast(`Risk download failed. ${e.response.data.message}`))
     }
 }
@@ -199,9 +213,9 @@ export function* downloadRisksFile({projectId, projectName}) {
 export function* loadRelatedRisksIds({projectId}) {
     try {
         const {data} = yield call(api.getRelatedRisksIds, projectId);
-        yield put(risks.loadRisksSuccess(data));
+        yield put(risksIds.loadRiskIdsSuccess(data));
     } catch (e) {
-        yield put(risks.riskError(e));
+        yield put(risksIds.riskIdsError(e));
         yield put(addDangerToast("'Related Risks' load failed. Please try again"));
     }
 }
@@ -272,7 +286,7 @@ export function* loadReportTab({projectId}) {
         const {data} = yield call(api.getReportTab, projectId);
         yield call(loadMilestones, {projectId, isShown: true});
         yield call(loadHealthIndicators, {projectId});
-        yield call(loadRisks, {projectId, mini: true});
+        yield call(loadRisksSummary, {projectId});
         yield put(report.loadReportSuccess(data));
         yield call(loadRequirements, {projectId});
         yield call(loadUserReports, {projectId});
@@ -419,8 +433,8 @@ export function* getLastUploadedRisks({projectId, projectName}) {
         const data = yield call(api.getRisksLastUploadedFile, projectId);
         yield call(FileSaver.saveAs, new Blob([data.data]), `${projectName}_risks.xlsx`);
     } catch (e) {
-        yield put(risks.riskError(e));
-        yield put(addDangerToast("Error. Can`t get last updated risks file"));
+        yield put(risksTab.riskError(e));
+        yield put(addDangerToast("Error. Can`t get last updated risksTab file"));
     }
 }
 

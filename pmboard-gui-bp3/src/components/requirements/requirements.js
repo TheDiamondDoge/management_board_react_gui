@@ -169,7 +169,7 @@ export default class Requirements extends React.Component {
 
 Requirements.propTypes = {
     requirements: RequirementsShape.isRequired,
-    renderHelper: PropTypes.func.isRequired,
+    renderHelper: PropTypes.object.isRequired,
     rqsSubmit: PropTypes.func,
     rqsReload: PropTypes.func
 };

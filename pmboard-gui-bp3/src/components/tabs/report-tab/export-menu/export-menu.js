@@ -67,9 +67,11 @@ export default class ExportMenu extends React.Component {
 ExportMenu.propTypes = {
     onClickElement: PropTypes.func.isRequired,
     projectId: PropTypes.number.isRequired,
-    snapshots: PropTypes.shape({
-        timestamp: PropTypes.string,
-        reportId: PropTypes.number
-    }),
+    snapshots: PropTypes.arrayOf(
+        PropTypes.shape({
+            timestamp: PropTypes.string,
+            reportId: PropTypes.number
+        })
+    ),
     snapshotLoading: PropTypes.bool.isRequired,
 };

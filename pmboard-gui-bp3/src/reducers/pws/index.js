@@ -11,7 +11,7 @@ import milestonesKpiReducer from "./milestones-kpi";
 import dr4KpiReducer from "./dr4-kpi";
 import qualityKpiReducer from "./quality-kpi";
 import contrib from "./contrib-list";
-import risks from "./risks-tab";
+import risks from "./risks";
 import actions from "./actions";
 import requirements from "./requirements-tab";
 import backlog from "./backlog";
@@ -36,7 +36,7 @@ export default function pwsReducers() {
         costTab: costTabReducer,
         blcTab: blcTabReducer,
         contrib: contrib,
-        risks: risks,
+        risks: risks(),
         actions: actions,
         requirementsTab: requirements,
         backlogTab: backlog,

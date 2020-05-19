@@ -1,7 +1,5 @@
 export const RISKS_LOAD = "RISKS_LOAD";
 export const RISKS_LOAD_SUCCESS = "RISKS_LOAD_SUCCESS";
-export const RISKS_IDS_LOAD = "RISKS_IDS_LOAD";
-export const RISKS_IDS_LOAD_SUCCESS = "RISKS_IDS_LOAD_SUCCESS";
 export const RISKS_ERROR = "RISKS_ERROR";
 export const RISK_SAVE = "RISK_SAVE";
 export const RISKS_UPLOAD = "RISKS_UPLOAD";
@@ -18,16 +16,6 @@ export const loadRisks = (projectId) => ({
 
 export const loadSuccess = (data) => ({
     type: RISKS_LOAD_SUCCESS,
-    data
-});
-
-export const loadRiskIds = (projectId) => ({
-    type: RISKS_IDS_LOAD,
-    projectId
-});
-
-export const loadRisksSuccess = (data) => ({
-    type: RISKS_IDS_LOAD_SUCCESS,
     data
 });
 

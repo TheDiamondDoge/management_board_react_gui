@@ -6,14 +6,14 @@ import {
     saveRisk,
     setErrorsShowedTrue,
     uploadRisks
-} from "../../../actions/pws/risks-tab";
+} from "../../../actions/pws/risks/risks-tab";
 import Risks from "./risks";
 import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
         defaults: state.pws.defaults,
-        risks: state.pws.risks,
+        risks: state.pws.risks.tab,
     }
 }
 

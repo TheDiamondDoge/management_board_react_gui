@@ -48,7 +48,7 @@ export default class Actions extends React.Component {
     }
 
     getDynamicInputRisks() {
-        const {relatedRisks} = this.props;
+        const relatedRisks = this.props.relatedRisks.payload;
         return relatedRisks !== undefined ? relatedRisks.map((number) => ({value: number, label: `${number}`})) : [];
     }
 
@@ -105,7 +105,10 @@ Actions.propTypes = {
         payload: PropTypes.arrayOf(PropTypes.object),
     }),
     loadData: PropTypes.func.isRequired,
-    relatedRisks: PropTypes.arrayOf(PropTypes.string),
+    relatedRisks: PropTypes.shape({
+        payload: PropTypes.arrayOf(PropTypes.string),
+        loading: PropTypes.bool
+    }),
     saveAction: PropTypes.func,
     deleteAction: PropTypes.func,
 };

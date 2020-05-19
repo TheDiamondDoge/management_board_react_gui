@@ -19,7 +19,7 @@ export default class SafeUrl extends React.PureComponent {
 }
 
 SafeUrl.propTypes = {
-    url: PropTypes.string.isRequired,
+    url: PropTypes.string,
     className: PropTypes.string,
     label: PropTypes.string
 };
