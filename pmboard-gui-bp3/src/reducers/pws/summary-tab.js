@@ -77,11 +77,6 @@ let dataComposer = (data) => ({
         epmLastSavedDate: data.epmLastSavedDate,
         pwsLastUpdatedDate: data.pwsLastUpdatedDate,
         pwsLastUpdatedBy: data.pwsLastUpdatedBy,
-    },
-    validationParams: {
-        projectType: data.projectType,
-        workspaceState: data.workspaceState,
-        isEpm: data.epm,
     }
 });
 

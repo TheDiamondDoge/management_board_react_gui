@@ -14,6 +14,7 @@ export function dateDecorator(str) {
 }
 
 export function impactDecorator(value) {
+    // eslint-disable-next-line eqeqeq
     if (value == 0 || value == null) {
         return "None";
     } else if (value == -1) {
@@ -32,6 +33,7 @@ export function impactDecorator(value) {
 export function probabilityDecorator(value) {
     if (!value) {
         return "None";
+    // eslint-disable-next-line eqeqeq
     } else if (value == -1) {
         return <ErrorDecorator/>
     } else {
@@ -40,6 +42,7 @@ export function probabilityDecorator(value) {
 }
 
 export function errorDisplayDecorator(value) {
+    // eslint-disable-next-line eqeqeq
     if (value == -1 || value === "Error") {
         return <ErrorDecorator/>
     } else {
@@ -48,16 +51,20 @@ export function errorDisplayDecorator(value) {
 }
 
 export function preDecorator(value) {
-    return <Comment value={value} />
+    return <Comment value={value}/>
 }
 
 function ErrorDecorator({value}) {
     let displayMessage = value || "Error";
     return (
-        <span style={{color: "red"}}
-              title={"Check your excel file"}
+        <span
+            style={{color: "red"}}
+            title={"Check your excel file"}
         >
-            <Icon icon={"warning-sign"} intent={Intent.DANGER} />
+            <Icon
+                icon={"warning-sign"}
+                intent={Intent.DANGER}
+            />
             {displayMessage}
         </span>
     )

@@ -32,6 +32,7 @@ export default class RenderFieldHelper {
         return (id in this._fieldsToRender);
     };
 
+    //TODO get rid of this
     getFieldProps(field, value) {
         const fieldType = this._fieldsToRender[field].type ? this._fieldsToRender[field].type : "text";
         const fields = ["composite", "maintenance"];
