@@ -46,11 +46,9 @@ export default class InfoTab extends React.Component {
     };
 
     sendData = (data) => {
-        const {saveInfo, saveMilestones} = this.props;
-        const {milestones, ...infoDto} = data;
+        const {saveInfo} = this.props;
         const {projectId} = this.props.defaults.payload;
-        saveInfo(projectId, infoDto);
-        saveMilestones(projectId, milestones);
+        saveInfo(projectId, data);
     };
 
     cancelInput = () => {
@@ -87,7 +85,6 @@ export default class InfoTab extends React.Component {
                     enableReinitialize
                     isInitialValid
                     onSubmit={(values, formikActions) => {
-                        console.log(this.x())
                         formikActions.setSubmitting(false);
 
                         this.sendData(values);

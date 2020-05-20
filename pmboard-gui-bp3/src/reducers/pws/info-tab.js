@@ -1,4 +1,5 @@
 import {INFO_LOAD, INFO_ERROR, INFO_LOAD_SUCCESS, INFO_RESET, INFO_SAVE_DATA} from '../../actions/pws/info-tab';
+import milestones from "./milestones";
 
 const initState = {
     loading: true,
@@ -42,7 +43,8 @@ export default (state, action) => {
 
 let getSaveDto = (data) => ({
     ...data.general,
-    ...data.urls
+    ...data.urls,
+    milestones: [...data.milestones]
 });
 
 let dataComposer = (data) => ({

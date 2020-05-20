@@ -378,6 +378,7 @@ export function* saveInformationTab({projectId, data}) {
         yield call(api.saveInformationTab, projectId, data);
         yield put(addSuccessToast("Information saved"));
         yield call(loadInformationTab, {projectId});
+        yield call(loadMilestones, {projectId});
     } catch (e) {
         yield put(infoTab.infoError(e));
         yield put(addDangerToast("Save failed. Please try again"));
