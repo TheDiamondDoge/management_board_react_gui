@@ -31,7 +31,7 @@ export default class FormikCustomField extends React.Component {
                 <div>
                     {this.fieldFactory(type, field, props, values)}
                     {touchedValue && errorsValue &&
-                        <div className={styles.error}>{errorsValue}</div>
+                    <div className={styles.error}>{errorsValue}</div>
                     }
                 </div>
             );
@@ -72,7 +72,14 @@ export default class FormikCustomField extends React.Component {
                     />
                 );
             case "checkbox":
-                return (<Checkbox defaultChecked={field.value} {...field} {...props} />);
+                return (
+                    <Checkbox
+                        className={styles.no_margin}
+                        defaultChecked={field.value}
+                        inline
+                        {...field} {...props}
+                    />
+                );
             case "select":
                 return (
                     <Field component="select" {...field} {...props}>

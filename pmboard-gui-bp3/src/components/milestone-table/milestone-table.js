@@ -96,7 +96,6 @@ export default class MilestoneTable extends React.Component {
                                     const minutesValue = milestone.meetingMinutes;
                                     const label = milestone.label;
 
-
                                     renderedMilestones.push(label);
                                     return (
                                         shouldBeExcluded ||
@@ -161,11 +160,11 @@ export default class MilestoneTable extends React.Component {
                                                 {
                                                     timelineEditable
                                                         ? (
-                                                            <FormikInput
-                                                                type="checkbox"
-                                                                name={timelineName}
-                                                                value={timelineValue}
-                                                            />
+                                                                <FormikInput
+                                                                    type="checkbox"
+                                                                    name={timelineName}
+                                                                    value={timelineValue}
+                                                                />
                                                         )
                                                         : <FieldValue value={shownString}/>
                                                 }
@@ -258,6 +257,7 @@ MilestoneTable.propTypes = {
 
 MilestoneTable.defaultProps = {
     editMode: false,
-    onChange: () => {},
+    onChange: () => {
+    },
     mandatoryMilestones: []
 };
