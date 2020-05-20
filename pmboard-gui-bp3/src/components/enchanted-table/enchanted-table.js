@@ -35,8 +35,10 @@ export default class EnchantedTable extends React.Component {
 
     render() {
         const {
-            data, columns, className, editable, validationSchema, editDynamicInputVals, striped, interactive, bordered
+            data, columns, className, editable, validationSchema, editDynamicInputVals, striped, interactive, bordered,
+            onSubmitErrorCallback
         } = this.props;
+
         const tableClasses = classNames(className, styles.table_style);
         const isDialogOpen = this.state.editDialog.isOpen;
         const colsAmount = columns.length;
@@ -117,6 +119,7 @@ export default class EnchantedTable extends React.Component {
                             onSubmit={this.editDialogSubmit}
                             onCancel={this.onDialogClose}
                             editDynamicInputVals={editDynamicInputVals}
+                            onSubmitErrorCallback={onSubmitErrorCallback}
                         />
                     </div>
                 </Dialog>
@@ -334,7 +337,8 @@ EnchantedTable.propTypes = {
     renderFooter: PropTypes.func,
     //Render props: {editRow: func, getRow: func}
     contextMenu: PropTypes.func,
-    editDynamicInputVals: PropTypes.object
+    editDynamicInputVals: PropTypes.object,
+    onSubmitErrorCallback: PropTypes.func,
 };
 
 EnchantedTable.defaultProps = {
@@ -345,5 +349,6 @@ EnchantedTable.defaultProps = {
     noDataMessage: '',
     renderFooter: () => {},
     contextMenu: () => {},
-    editDynamicInputVals: {}
+    editDynamicInputVals: {},
+    onSubmitErrorCallback: () => {},
 };

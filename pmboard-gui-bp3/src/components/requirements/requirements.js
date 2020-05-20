@@ -41,6 +41,7 @@ export default class Requirements extends React.Component {
         const {rqsSubmit} = this.props;
         return (
             <Formik
+                isInitialValid
                 onSubmit={(values, formikActions) => {
                     formikActions.setSubmitting(false);
                     rqsSubmit(values);
@@ -171,7 +172,8 @@ export default class Requirements extends React.Component {
     };
 
     handleSubmitWithErrors = (formikProps) => {
-        if (!formikProps.isValid) {
+        console.log(formikProps)
+        if (!formikProps.isValid && !formikProps.isSubmitting) {
             this.props.onSubmitErrorCallback(Messages.FORM_SUBMIT_ERROR)
         }
     }

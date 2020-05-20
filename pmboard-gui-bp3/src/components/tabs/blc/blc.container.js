@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import blcTab from "./blc";
 import {blcLoad, blcReset, blcCommentsSave, blcIndicatorsSave} from "../../../actions/pws/blc-tab";
 import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
+import {addWarningToast} from "../../../actions/app/toaster";
 
 function mapStateToProps(state) {
     return {
@@ -16,6 +17,7 @@ function mapDispatchToProps(dispatch) {
         resetData: () => dispatch(blcReset()),
         saveIndicators: (projectId, data) => dispatch(blcIndicatorsSave(projectId, data)),
         saveComments: (projectId, data) => dispatch(blcCommentsSave(projectId, data)),
+        pushWarningToast: (message) => dispatch(addWarningToast(message))
     }
 }
 

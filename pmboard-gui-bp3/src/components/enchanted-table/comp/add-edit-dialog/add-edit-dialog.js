@@ -8,12 +8,14 @@ import FieldName from "../../../field-name/field-name";
 import styles from "./add-edit-dialog.module.css";
 import {formikFieldHandleChange, getPropFromStringPath} from "../../../../util/util";
 import {getObjByLabel, removeSelectedObjByLabel} from "../../util";
+import OnSubmitValidationError from "../../../formik-onsubmit-validator";
 
 export default class AddEditDialog extends React.Component {
     submitForm = null;
 
     render() {
         const {columns, data, validationSchema, editDynamicInputVals, onSubmit, onCancel} = this.props;
+        const initValues = this.generateInitialValiesIfEmpty(data);
         return (
             <Formik
                 onSubmit={
@@ -22,7 +24,8 @@ export default class AddEditDialog extends React.Component {
                         onSubmit(values);
                     }
                 }
-                initialValues={data}
+                // initialValues={data}
+                initialValues={{...initValues}}
                 validationSchema={validationSchema}
                 render={
                     (formikProps) => {
@@ -87,12 +90,32 @@ export default class AddEditDialog extends React.Component {
                                         />
                                     </div>
                                 </div>
+                                <OnSubmitValidationError callback={this.handleSubmitWithErrors}/>
                             </>
                         );
                     }
                 }
             />
         );
+    }
+
+    generateInitialValiesIfEmpty(data) {
+        if (Object.keys(data).length !== 0) return data;
+
+        const columns = this.props.columns;
+        let initValues = {};
+        let keys = [];
+        for (let i = 0; i < columns.length; i++) {
+            keys.push(columns[i].id);
+        }
+
+        if (keys.length !== 0) {
+            keys.forEach(col => {
+                initValues[col] = "";
+            });
+        }
+
+        return initValues;
     }
 
     mapSelectedToObject(selected) {
@@ -144,6 +167,12 @@ export default class AddEditDialog extends React.Component {
 
         return optionalProps;
     }
+
+    handleSubmitWithErrors = (formikProps) => {
+        if (!formikProps.isValid) {
+            this.props.onSubmitErrorCallback();
+        }
+    }
 }
 
 AddEditDialog.propTypes = {
@@ -152,5 +181,15 @@ AddEditDialog.propTypes = {
     validationSchema: PropTypes.object,
     editDynamicInputVals: PropTypes.object,
     onSubmit: PropTypes.func,
-    onCancel: PropTypes.func
+    onCancel: PropTypes.func,
+    onSubmitErrorCallback: PropTypes.func,
+};
+
+AddEditDialog.defaultProps = {
+    data: {},
+    validationSchema: {},
+    editDynamicInputVals: {},
+    onSubmit: () => {},
+    onCancel: () => {},
+    onSubmitErrorCallback: () => {},
 };

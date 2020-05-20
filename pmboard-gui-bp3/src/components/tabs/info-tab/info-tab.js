@@ -85,6 +85,7 @@ export default class InfoTab extends React.Component {
             return (
                 <Formik
                     enableReinitialize
+                    isInitialValid
                     onSubmit={(values, formikActions) => {
                         console.log(this.x())
                         formikActions.setSubmitting(false);

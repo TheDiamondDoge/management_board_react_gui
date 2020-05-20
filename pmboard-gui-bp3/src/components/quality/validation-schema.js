@@ -9,16 +9,25 @@ export default () => {
        backlog: Yup.array().of(
             Yup.object().shape({
                 objective: nullableInteger(999999),
+                comment: Yup.string()
+                    .max(256, ValidationErrors.string.MAX)
+                    .nullable()
             })
        ),
         defects: Yup.array().of(
             Yup.object().shape({
                 objective: nullableInteger(999999),
+                comment: Yup.string()
+                    .max(256, ValidationErrors.string.MAX)
+                    .nullable()
             })
         ),
         quality: Yup.array().of(
             Yup.object().shape({
                 objective: nullableInteger(999999),
+                comment: Yup.string()
+                    .max(256, ValidationErrors.string.MAX)
+                    .nullable()
             })
         ),
         testExecution: Yup.array().of(
@@ -29,6 +38,9 @@ export default () => {
                 objective: Yup.string()
                     .max(6, ValidationErrors.string.MAX)
                     .nullable(),
+                comment: Yup.string()
+                    .max(256, ValidationErrors.string.MAX)
+                    .nullable()
             })
         ),
         testRate: Yup.array().of(
@@ -39,6 +51,9 @@ export default () => {
                 objective: Yup.string()
                     .max(6, ValidationErrors.string.MAX)
                     .nullable(),
+                comment: Yup.string()
+                    .max(256, ValidationErrors.string.MAX)
+                    .nullable()
             })
         ),
     })

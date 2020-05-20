@@ -50,6 +50,7 @@ export default class Quality extends React.Component {
 
         return (
             <Formik
+                isInitialValid
                 initialValues={
                     {
                         quality,
@@ -337,7 +338,7 @@ export default class Quality extends React.Component {
     }
 
     handleSubmitWithErrors = (formikProps) => {
-        if (!formikProps.isValid) {
+        if (!formikProps.isValid && !formikProps.isSubmitting) {
             this.props.onSubmitErrorCallback(Messages.FORM_SUBMIT_ERROR)
         }
     }

@@ -14,6 +14,7 @@ import {FieldsToRenderShape, HealthIndicatorsShape} from "../../util/custom-type
 import FormikInput from "../controls/util-renderers";
 import Comment from "../comment/comment";
 import {Messages} from "../../util/constants";
+import validationSchema from "./validation-schema";
 import OnSubmitValidationError from "../formik-onsubmit-validator";
 
 export default class HealthIndicators extends React.Component {
@@ -50,6 +51,7 @@ export default class HealthIndicators extends React.Component {
         const {isSummaryMode, indicators, onIndicatorsSubmit, onCommentsSubmit} = this.props;
         return (
             <Formik
+                isInitialValid
                 onSubmit={(values, formikActions) => {
                     formikActions.setSubmitting(false);
                     if (this.state.editStatusMode) {
@@ -61,6 +63,9 @@ export default class HealthIndicators extends React.Component {
                 initialValues={{
                     ...indicators
                 }}
+                validationSchema={
+                    validationSchema
+                }
                 render={
                     (formikProps) => {
                         this.bindFormSubmission(formikProps.submitForm);

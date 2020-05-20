@@ -3,6 +3,7 @@ import {actionsLoad, actionsReset, actionSave, actionDelete} from "../../../acti
 import Actions from "./actions";
 import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 import {loadRiskIds, riskIdsReset} from "../../../actions/pws/risks/risks-related";
+import {addWarningToast} from "../../../actions/app/toaster";
 
 function mapStateToProps(state) {
     return {
@@ -28,6 +29,7 @@ function mapDispatchToProps(dispatch) {
             dispatch(actionsReset());
             dispatch(riskIdsReset())
         },
+        pushWarningToast: (message) => dispatch(addWarningToast(message))
     }
 }
 

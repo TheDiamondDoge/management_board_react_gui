@@ -14,6 +14,7 @@ import RenderFieldHelper from "../../../util/render-field-helper";
 import styles from "./actions.module.css";
 import {Button, Intent, Icon} from "@blueprintjs/core";
 import ConfirmationPopup from "../../confirmation-popup/confirmation-popup";
+import {Messages} from "../../../util/constants";
 
 export default class Actions extends React.Component {
     constructor(props) {
@@ -22,6 +23,8 @@ export default class Actions extends React.Component {
         this.state = {
             isDialogOpen: false
         }
+
+        this.onSubmitErrorHandler = () => this.props.pushWarningToast(Messages.FORM_SUBMIT_ERROR);
     }
 
     actionUid = null;
@@ -55,6 +58,7 @@ export default class Actions extends React.Component {
                         validationSchema={validationSchema}
                         contextMenu={this.getContextMenu(renderHelper)}
                         renderFooter={this.getTableFooter(renderHelper)}
+                        onSubmitErrorCallback={this.onSubmitErrorHandler}
                     />
                     <ConfirmationPopup
                         isOpen={this.state.isDialogOpen}
@@ -156,4 +160,5 @@ Actions.propTypes = {
     }),
     saveAction: PropTypes.func,
     deleteAction: PropTypes.func,
+    pushWarningToast: PropTypes.func,
 };

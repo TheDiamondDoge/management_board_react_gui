@@ -13,7 +13,9 @@ import {formikFieldHandleChange} from "../../../util/util";
 import {BlcTab, ProjectDefaults} from "../../../util/custom-types";
 import renderFields from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
-import {BlcRowNames} from "../../../util/constants";
+import {BlcRowNames, Messages} from "../../../util/constants";
+import validationSchema from "./validation-schema";
+import OnSubmitValidationError from "../../formik-onsubmit-validator";
 
 export default class BlcDashboard extends React.Component {
     constructor(props) {
@@ -54,6 +56,8 @@ export default class BlcDashboard extends React.Component {
                             />
                         }
                         <Formik
+                            isInitialValid
+                            enableReinitialize
                             onSubmit={(values, formikActions) => {
                                 formikActions.setSubmitting(false);
                                 values.rowToSave = this.getRowToSaveValue();
@@ -69,6 +73,9 @@ export default class BlcDashboard extends React.Component {
                             initialValues={{
                                 pm, pmo, sales, rowToSave
                             }}
+                            validationSchema={
+                                validationSchema
+                            }
                             render={
                                 (formikProps) => {
                                     this.bindFormSubmission(formikProps.submitForm);
@@ -209,6 +216,7 @@ export default class BlcDashboard extends React.Component {
                         </tbody>
                     </HTMLTable>
                 </div>
+                <OnSubmitValidationError callback={this.handleSubmitWithErrors}/>
             </div>
         );
     };
@@ -313,6 +321,12 @@ export default class BlcDashboard extends React.Component {
     isInEditMode = () => {
         return (this.state.isPmRow || this.state.isPmoRow || this.state.isSalesRow || this.state.isCommentsEdit)
     };
+
+    handleSubmitWithErrors = (formikProps) => {
+        if (!formikProps.isValid) {
+            this.props.pushWarningToast(Messages.FORM_SUBMIT_ERROR);
+        }
+    }
 }
 
 BlcDashboard.propTypes = {
@@ -323,4 +337,5 @@ BlcDashboard.propTypes = {
     saveIndicators: PropTypes.func,
     saveComments: PropTypes.func,
     blcTab: BlcTab.isRequired,
+    pushWarningToast: PropTypes.func
 };
