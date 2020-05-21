@@ -34,14 +34,15 @@ export default class BarChart extends React.Component {
     render() {
         let initialRange;
         let labelsAmount;
-        if (!this.props.data.labels) {
+        const {labels} = this.props.data;
+        if (!labels) {
             initialRange = [0, 0];
             labelsAmount = 1;
         } else {
             const {labels} = this.props.data;
-            const min = labels[0];
-            const max = labels[labels.length - 1];
-            initialRange = [Number(min), Number(max) - 2];
+            const min = 0;
+            const max = this.getMaxFromLabels(labels);
+            initialRange = [min, max];
             labelsAmount = labels.length || 1;
         }
 
@@ -61,6 +62,7 @@ export default class BarChart extends React.Component {
                     min={minSliderVal}
                     max={maxSliderVal}
                     stepSize={stepSize}
+                    labelRenderer={(index) => labels ? labels[index] : 0}
                     labelStepSize={labelsAmount}
                     onChange={this.onChange}
                     value={sliderValue}
@@ -69,8 +71,13 @@ export default class BarChart extends React.Component {
         );
     }
 
+    getMaxFromLabels(labels) {
+        return labels && labels.length && labels.length > 0 ? labels.length -1 : 1;
+    }
+
     createChart(data) {
         let myChartRef = this.chartRef.current.getContext("2d");
+        const {target} = this.props.data;
         this.barChart = new Chart(myChartRef, {
             type: 'bar',
             data: {
@@ -133,22 +140,28 @@ export default class BarChart extends React.Component {
 
                     }]
                 },
-                annotation: {
-                    annotations: [{
-                        type: 'line',
-                        mode: 'horizontal',
-                        scaleID: 'y-axis-0',
-                        value: 250,
-                        borderColor: 'rgb(75, 192, 192)',
-                        borderWidth: 4,
-                        label: {
-                            enabled: true,
-                            content: "Test"
-                        }
-                    }]
-                }
+                annotation: this.getAnnotationConfig(target)
             }
         });
+    }
+
+    getAnnotationConfig(target) {
+        if (!target) return null;
+
+        return {
+            annotations: [{
+                type: 'line',
+                mode: 'horizontal',
+                scaleID: 'y-axis-0',
+                value: target.value,
+                borderColor: 'rgb(75, 192, 192)',
+                borderWidth: 4,
+                label: {
+                    enabled: true,
+                    content: target.milestone
+                }
+            }]
+        }
     }
 
     handleChange() {
@@ -166,11 +179,8 @@ export default class BarChart extends React.Component {
         const range = this.state.range;
         if (!range) return data;
 
-        const {labels} = data;
-        // eslint-disable-next-line eqeqeq
-        const startIndex = labels.findIndex((item) => item == range[0]);
-        // eslint-disable-next-line eqeqeq
-        const endIndex = labels.findIndex((item) => item == range[1]);
+        const startIndex = range[0];
+        const endIndex = range[1];
 
         let filtered = {};
         filtered.dev = data.dev.slice(startIndex, endIndex + 1);
