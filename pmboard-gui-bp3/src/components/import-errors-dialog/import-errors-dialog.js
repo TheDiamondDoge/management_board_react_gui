@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {Classes, Dialog, Icon} from "@blueprintjs/core";
 import {Intent} from "@blueprintjs/core/lib/cjs/common/intent";
 import ExcelError from "../excel-error/excel-error";
+import {ExcelErrorTypes} from "../../util/custom-types";
 
 
 export default class ImportErrorsDialog extends React.PureComponent {
@@ -45,6 +46,6 @@ ImportErrorsDialog.propTypes = {
     isOpen: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired,
     errors: PropTypes.arrayOf(PropTypes.shape({
-        ExcelError
+        ExcelErrorTypes
     })),
 };

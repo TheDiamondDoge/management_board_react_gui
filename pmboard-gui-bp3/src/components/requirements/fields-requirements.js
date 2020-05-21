@@ -33,8 +33,19 @@ let config = {
     },
 };
 
-Object.defineProperty(config, "controls", {
-    enumerable: false, writable: true, configurable: true
-});
+Object.defineProperties(config,
+    {
+        controls: {
+            enumerable: false,
+            writable: true,
+            configurable: true
+        },
+        note: {
+            enumerable: false,
+            writable: true,
+            configurable: true
+        },
+    }
+);
 
 export default config;

@@ -131,6 +131,9 @@ export default class Actions extends React.Component {
     };
 
     handleSaveAction = (data) => {
+        if (data.relatedRisks === "") {
+            data.relatedRisks = [];
+        }
         this.props.saveAction(this.projectId, data);
     };
 

@@ -8,7 +8,7 @@ export default class ExcelError extends React.PureComponent {
         const displayedCellIndex = cellIndex + 1;
         const displayedRowIndex = rowIndex + 1;
         return(
-            <div style={styles.error_margin}>
+            <div className={styles.error_margin}>
                 <b>Column:</b> {displayedCellIndex}. <b>Row:</b> {displayedRowIndex}. <br/>
                 <b>Error:</b> {message}
             </div>

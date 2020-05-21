@@ -1,5 +1,6 @@
-.column_align_center {
+.data_column {
     text-align: center !important;
+    word-wrap: break-word;
 }
 
 .cost_table {

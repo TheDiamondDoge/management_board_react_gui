@@ -2,7 +2,7 @@ import React from "react";
 import {HTMLTable} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import styles from "./cost-table.module.css";
-import {nanToEmptyString} from "../../util/transform-funcs";
+import {nanToEmptyString, toTwoTrailingDigits} from "../../util/transform-funcs";
 import Comment from "../comment/comment";
 
 export default class CostTable extends React.Component {
@@ -12,8 +12,8 @@ export default class CostTable extends React.Component {
         if (committed == null) committed = {};
         if (realized == null) realized = {};
 
-        const committedValue = nanToEmptyString(committed.value);
-        const realizedValue = nanToEmptyString(realized.value);
+        const committedValue = toTwoTrailingDigits(nanToEmptyString(committed.value));
+        const realizedValue = toTwoTrailingDigits(nanToEmptyString(realized.value));
         const committedMilestone = committed.milestone;
         const committedMilestoneComment = committed.comment;
         const realizedMilestone = realized.milestone;
@@ -31,7 +31,7 @@ export default class CostTable extends React.Component {
                 <thead>
                 <tr>
                     <th>{tableName}</th>
-                    <th className={styles.column_align_center}>
+                    <th className={styles.data_column}>
                         Value (k&euro;)
                     </th>
                     <th>Comment</th>
@@ -40,7 +40,7 @@ export default class CostTable extends React.Component {
                 <tbody>
                 <tr>
                     <td>Committed at {committedMilestone}</td>
-                    <td className={styles.column_align_center}>
+                    <td className={styles.data_column}>
                         {committedValue}
                     </td>
                     <td>
@@ -49,7 +49,7 @@ export default class CostTable extends React.Component {
                 </tr>
                 <tr>
                     <td>Released at {realizedMilestone}</td>
-                    <td className={styles.column_align_center}>
+                    <td className={styles.data_column}>
                         {realizedValue}
                     </td>
                     <td>
