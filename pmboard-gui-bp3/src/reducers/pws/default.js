@@ -1,6 +1,6 @@
 import {
     PROJECT_DEFAULTS_ERROR,
-    PROJECT_DEFAULTS_LOAD,
+    PROJECT_DEFAULTS_LOAD, PROJECT_DEFAULTS_LOAD_SILENT,
     PROJECT_DEFAULTS_LOAD_SUCCESS,
     PROJECT_DEFAULTS_RESET
 } from "../../actions/pws/default";
@@ -21,6 +21,11 @@ export default (state, action) => {
             return {
                 ...state,
                 loading: true,
+            };
+        case PROJECT_DEFAULTS_LOAD_SILENT:
+            return {
+                ...state,
+                loading: false
             };
         case PROJECT_DEFAULTS_LOAD_SUCCESS:
             return {

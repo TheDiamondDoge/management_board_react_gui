@@ -172,7 +172,9 @@ function* watchGetLastUploadedRisks() {
 }
 
 function* watchProjectDefaultsLoad() {
-    yield takeLatest(defaults.PROJECT_DEFAULTS_LOAD, sagas.loadProjectDefaults)
+    yield takeLatest(
+        [defaults.PROJECT_DEFAULTS_LOAD, defaults.PROJECT_DEFAULTS_LOAD_SILENT], sagas.loadProjectDefaults
+    )
 }
 
 function* watchCustomPptFile() {

@@ -4,6 +4,7 @@ export const ProjectTypes = {
     OFFER_PRODUCT : "Offer & Product",
     OEM_PRODUCT : "OEM Product",
     SUPPORT_PROGRAM : "Support Program",
+    RD_PRODUCT: "R&D Product"
 };
 
 export const ProjectStates = {

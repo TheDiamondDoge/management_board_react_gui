@@ -19,9 +19,12 @@ import LoadingStatus from "../../global-statuses/loading-status";
 import StatusContainer from "../../status-container/status-container";
 import {getUrlParam} from "../../../util/util";
 import ProjectNotFoundStatus from "../../global-statuses/project-not-found-status/project-not-found-status";
+import config from "./config";
 
 import "./pws.css";
 import {Helmet} from "react-helmet";
+import RenderFieldHelper from "../../../util/render-field-helper";
+import {ProjectDefaults} from "../../../util/custom-types";
 
 export default class PWS extends React.Component {
     constructor(props) {
@@ -52,8 +55,9 @@ export default class PWS extends React.Component {
         } else if (error) {
             return <ProjectNotFoundStatus id={this.projectId}/>;
         } else {
+            this.renderFieldHelper = new RenderFieldHelper(config, this.props.defaults.payload);
             const tabName = this.getActiveTabName();
-            const {projectName} = this.props.defaults.payload;
+            const {projectName, requirementsUrl, metricsScope} = this.props.defaults.payload;
             const selectedTabId = this.state.selectedId || tabName;
             return (
                 <>
@@ -70,6 +74,7 @@ export default class PWS extends React.Component {
                             className={styles.tabs}
                             onChange={this.onChange}
                         >
+                            {this.renderFieldHelper.displayOrNot(PWSTabs.SUMMARY) &&
                             <Tab
                                 id={PWSTabs.SUMMARY}
                                 title="Summary"
@@ -80,6 +85,8 @@ export default class PWS extends React.Component {
                                     </ErrorBoundary>
                                 )}
                             />
+                            }
+                            {this.renderFieldHelper.displayOrNot(PWSTabs.INDICATORS) &&
                             <Tab
                                 id={PWSTabs.INDICATORS}
                                 title="Indicators"
@@ -89,6 +96,8 @@ export default class PWS extends React.Component {
                                         <IndicatorsTab tabId={PWSTabs.INDICATORS}/>
                                     </ErrorBoundary>
                                 )}/>
+                            }
+                            {this.renderFieldHelper.displayOrNot(PWSTabs.INFORMATION) &&
                             <Tab
                                 id={PWSTabs.INFORMATION}
                                 title="Information"
@@ -98,6 +107,8 @@ export default class PWS extends React.Component {
                                         <InfoTab tabId={PWSTabs.INFORMATION}/>
                                     </ErrorBoundary>
                                 )}/>
+                            }
+                            {this.renderFieldHelper.displayOrNot(PWSTabs.ACTIONS) &&
                             <Tab
                                 id={PWSTabs.ACTIONS}
                                 title="Actions"
@@ -107,6 +118,8 @@ export default class PWS extends React.Component {
                                         <Actions tabId={PWSTabs.ACTIONS}/>
                                     </ErrorBoundary>
                                 )}/>
+                            }
+                            {this.renderFieldHelper.displayOrNot(PWSTabs.RISKS) &&
                             <Tab
                                 id={PWSTabs.RISKS}
                                 title="Risks"
@@ -116,6 +129,8 @@ export default class PWS extends React.Component {
                                         <Risks tabId={PWSTabs.RISKS}/>
                                     </ErrorBoundary>
                                 )}/>
+                            }
+                            {this.renderFieldHelper.displayOrNot(PWSTabs.COST) &&
                             <Tab
                                 id={PWSTabs.COST}
                                 title="Cost"
@@ -125,6 +140,8 @@ export default class PWS extends React.Component {
                                         <CostTab tabId={PWSTabs.COST}/>
                                     </ErrorBoundary>
                                 )}/>
+                            }
+                            {this.renderFieldHelper.displayOrNot(PWSTabs.REPORT) &&
                             <Tab
                                 id={PWSTabs.REPORT}
                                 title="Report"
@@ -134,33 +151,44 @@ export default class PWS extends React.Component {
                                         <Report tabId={PWSTabs.REPORT}/>
                                     </ErrorBoundary>
                                 )}/>
+                            }
+                            {this.renderFieldHelper.displayOrNot(PWSTabs.REQUIREMENTS) &&
                             <Tab
                                 id={PWSTabs.REQUIREMENTS}
                                 title="Requirements"
                                 className={styles.tab_container}
+                                disabled={!requirementsUrl}
                                 panel={(
                                     <ErrorBoundary>
                                         <Requirements tabId={PWSTabs.REQUIREMENTS}/>
                                     </ErrorBoundary>
                                 )}/>
+                            }
+                            {this.renderFieldHelper.displayOrNot(PWSTabs.BACKLOG) &&
                             <Tab
                                 id={PWSTabs.BACKLOG}
                                 title="Backlog"
                                 className={styles.tab_container}
+                                disabled={!metricsScope}
                                 panel={(
                                     <ErrorBoundary>
                                         <BacklogTab tabId={PWSTabs.BACKLOG}/>
                                     </ErrorBoundary>
                                 )}/>
+                            }
+                            {this.renderFieldHelper.displayOrNot(PWSTabs.DEFECTS) &&
                             <Tab
                                 id={PWSTabs.DEFECTS}
                                 title="Defects"
                                 className={styles.tab_container}
+                                disabled={!metricsScope}
                                 panel={(
                                     <ErrorBoundary>
                                         <DefectsTab tabId={PWSTabs.DEFECTS}/>
                                     </ErrorBoundary>
                                 )}/>
+                            }
+                            {this.renderFieldHelper.displayOrNot(PWSTabs.BLC) &&
                             <Tab
                                 id={PWSTabs.BLC}
                                 title="BLC Dashboard"
@@ -170,6 +198,7 @@ export default class PWS extends React.Component {
                                         <BlcDashboard tabId={PWSTabs.BLC}/>
                                     </ErrorBoundary>
                                 )}/>
+                            }
                         </Tabs>
                     </div>
                 </>
@@ -188,7 +217,9 @@ export default class PWS extends React.Component {
     getActiveTabName() {
         const urlParams = this.props.location.search;
         const tabName = new URLSearchParams(urlParams).get('tab');
-        return this.isTabNameExists(tabName) ? tabName.toLowerCase() : this.state.defaults.defaultSelectedTab;
+        return this.isTabNameExists(tabName) && this.renderFieldHelper.displayOrNot(tabName)
+            ? tabName.toLowerCase()
+            : this.state.defaults.defaultSelectedTab;
     }
 
     isTabNameExists(name) {
@@ -199,10 +230,7 @@ export default class PWS extends React.Component {
 PWS.propTypes = {
     defaults: PropTypes.shape({
         loading: PropTypes.bool,
-        payload: PropTypes.shape({
-            projectName: PropTypes.string,
-            projectId: PropTypes.number
-        })
+        payload: ProjectDefaults,
     }),
     loadData: PropTypes.func.isRequired,
     resetData: PropTypes.func.isRequired,

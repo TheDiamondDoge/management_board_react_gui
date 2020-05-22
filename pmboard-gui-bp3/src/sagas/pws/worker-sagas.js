@@ -26,6 +26,7 @@ import * as contribTable from "../../actions/pws/contrib-table";
 import * as defaults from "../../actions/pws/default";
 import * as exportPpt from "../../actions/pws/ppt-export";
 import {addDangerToast, addSuccessToast} from "../../actions/app/toaster";
+import {silentLoadProjectDefaults} from "../../actions/pws/default";
 
 export function* loadSummaryTab({projectId}) {
     try {
@@ -377,6 +378,7 @@ export function* saveInformationTab({projectId, data}) {
     try {
         yield call(api.saveInformationTab, projectId, data);
         yield put(addSuccessToast("Information saved"));
+        yield put(silentLoadProjectDefaults(projectId));
         yield call(loadInformationTab, {projectId});
         yield call(loadMilestones, {projectId});
     } catch (e) {

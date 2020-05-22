@@ -240,8 +240,16 @@ export const ContribTable = PropTypes.shape({
 });
 
 export const ProjectDefaults = PropTypes.shape({
-    projectId: PropTypes.number.isRequired,
-    projectName: PropTypes.string
+    projectId: PropTypes.number,
+    projectName: PropTypes.string,
+    projectType: PropTypes.string,
+    projectDivision: PropTypes.string,
+    metricsScope: PropTypes.string,
+    requirementsUrl: PropTypes.string,
+    workspaceStatus: PropTypes.string,
+    dr1Actual: PropTypes.string,
+    epm: PropTypes.bool,
+    maintenance: PropTypes.bool
 });
 
 export const ExcelErrorTypes = PropTypes.shape({
