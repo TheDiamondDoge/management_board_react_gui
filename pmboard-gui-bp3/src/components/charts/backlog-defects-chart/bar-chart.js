@@ -20,15 +20,12 @@ export default class BarChart extends React.Component {
     barChart = null;
     onChange = null;
 
+    componentDidMount() {
+       this.loadChart();
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.shouldChartUpdate) {
-            if (this.barChart) {
-                this.barChart.destroy();
-            }
-            const data = this.filterData(this.props.data);
-            this.filtered = data;
-            this.createChart(data);
-        }
+        this.loadChart();
     }
 
     render() {
@@ -73,6 +70,17 @@ export default class BarChart extends React.Component {
 
     getMaxFromLabels(labels) {
         return labels && labels.length && labels.length > 0 ? labels.length -1 : 1;
+    }
+
+    loadChart() {
+        if (this.state.shouldChartUpdate) {
+            if (this.barChart) {
+                this.barChart.destroy();
+            }
+            const data = this.filterData(this.props.data);
+            this.filtered = data;
+            this.createChart(data);
+        }
     }
 
     createChart(data) {

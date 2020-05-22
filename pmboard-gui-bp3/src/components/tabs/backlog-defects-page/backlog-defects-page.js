@@ -7,11 +7,14 @@ import HelpIcon from "../../help-icon/help-icon";
 import UpdatedInfo from "../../updated-info/updated-info";
 import classNames from "classnames";
 import {BacklogDefectsTypes} from "../../../util/custom-types";
+import NoDataFound from "../../global-statuses/no-data-found/no-data-found";
 
 export default class BacklogDefectsPage extends React.Component {
     render() {
         const payload = this.props.data;
         const {updatedOn, header, tooltip} = this.props;
+        const isDataExist = this.isDataExists(payload);
+        console.log("page render")
         return (
             <div className={styles.card_container}>
                 <div className={styles.header_container}>
@@ -25,20 +28,51 @@ export default class BacklogDefectsPage extends React.Component {
                         <HelpIcon className={styles.tooltip}/>
                     </Tooltip>
                 </div>
-                <BarChart
-                    data={payload}
-                    className={styles.chart_container}
-                />
+
+                {this.renderChartZone(payload, isDataExist)}
+
                 <UpdatedInfo
                     date={updatedOn}
                     className={styles.updated_block}
                 />
+
                 {this.getFooter()}
+
             </div>
         );
     }
 
-    getFooter = () => {
+    renderChartZone(payload, isDataExist) {
+        console.log("page func render")
+        if (isDataExist) {
+            return (
+                <BarChart
+                    data={payload}
+                    className={styles.chart_container}
+                />
+            )
+        } else {
+            const message = "No data found. Update grid or check 'Metrics Scope' value on 'Information' tab";
+            return (
+                <div className={styles.no_data_container}>
+                    <NoDataFound message={message}/>
+                </div>
+            )
+        }
+    }
+
+    isDataExists(data) {
+        let dataExist = false;
+        Object.keys(data).forEach(key => {
+            if (data[key] && data[key].length && data[key].length > 0) {
+                dataExist = true;
+            }
+        })
+
+        return dataExist;
+    }
+
+    getFooter = (isDataExist) => {
         const {onUpdate, blocked, onCurrentClick} = this.props;
         const currentWeekClasses = classNames(
             {[styles.float_right]: !blocked},
@@ -61,6 +95,7 @@ export default class BacklogDefectsPage extends React.Component {
                         />
                     </div>
                 }
+                {isDataExist &&
                 <div className={currentWeekClasses}>
                     <Button
                         minimal
@@ -70,6 +105,7 @@ export default class BacklogDefectsPage extends React.Component {
                         onClick={onCurrentClick}
                     />
                 </div>
+                }
             </div>
         );
     }
