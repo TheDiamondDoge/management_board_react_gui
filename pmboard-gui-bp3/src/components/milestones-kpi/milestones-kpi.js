@@ -5,6 +5,7 @@ import styles from "./milestones-kpi.module.css";
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import {MilestoneKpiShape} from "../../util/custom-types";
+import {toPercents, toPercentsOrNA} from "../../util/transform-funcs";
 
 export default class MilestonesKpi extends React.PureComponent {
     constructor(props) {
@@ -71,7 +72,7 @@ export default class MilestonesKpi extends React.PureComponent {
         if (milestonesToRender.length > 0) {
             return milestonesToRender.map((obj, i) => {
                 const label = obj.label;
-                const adherence = `${obj.adherence * 100}%`;
+                const adherence = toPercentsOrNA(obj.adherence);
                 const delay = obj.delay;
                 const duration = obj.duration === 1 ? `${obj.duration} day` : `${obj.duration} days`;
                 return (

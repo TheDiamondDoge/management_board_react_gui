@@ -16,6 +16,7 @@ import RenderFieldHelper from "../../util/render-field-helper";
 import LastUpdated from "../last-updated/last-updated";
 import {Messages} from "../../util/constants";
 import OnSubmitValidationError from "../formik-onsubmit-validator";
+import SafeUrl from "../safe-url/safe-url";
 
 export default class Quality extends React.Component {
     constructor(props) {
@@ -246,14 +247,7 @@ export default class Quality extends React.Component {
                                 </td>
                                 <td className={styles.column_align_center}>
                                     {
-                                        isActualEditable
-                                            ? (
-                                                <FormikInput
-                                                    type="text"
-                                                    name={actualName}
-                                                />
-                                            )
-                                            : <FieldValue value={this.emptyToZero(row.actual)}/>
+                                        this.renderActual(isActualEditable, actualName, row.actual)
                                     }
                                 </td>
                                 {
@@ -337,6 +331,30 @@ export default class Quality extends React.Component {
         return inputAttrs;
     }
 
+    renderActual(isEditable, name, value) {
+        if (isEditable) {
+            return (
+                <FormikInput
+                    type="text"
+                    name={name}
+                />
+            )
+        } else {
+            const val = this.emptyToZero(value);
+            const regex = new RegExp(/backlog|quality|defects/);
+            const {projectId} = this.props;
+            if (val && regex.test(name)) {
+                const type = name.match(regex);
+                const url = `http://localhost:8080/api/kpi/${type}/issuesList/${projectId}`;
+                return <SafeUrl url={url} label={val}/>
+            } else {
+                return (
+                    <FieldValue value={val}/>
+                )
+            }
+        }
+    }
+
     handleSubmitWithErrors = (formikProps) => {
         if (!formikProps.isValid && !formikProps.isSubmitting) {
             this.props.onSubmitErrorCallback(Messages.FORM_SUBMIT_ERROR)
@@ -345,6 +363,7 @@ export default class Quality extends React.Component {
 }
 
 Quality.propTypes = {
+    projectId: PropTypes.number,
     fieldsToRender: FieldsToRenderShape,
     qualityKpi: QualityIndicatorsShape,
     fieldsRenderValidation: ProjectDefaults,

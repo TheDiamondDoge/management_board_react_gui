@@ -146,6 +146,7 @@ export default class IndicatorsTab extends React.Component {
                                 : (
                                     <ErrorBoundary>
                                         <Quality
+                                            projectId={this.projectId}
                                             qualityKpi={qualityKpi.payload}
                                             fieldsToRender={qualityFields}
                                             fieldsRenderValidation={validationParams}
