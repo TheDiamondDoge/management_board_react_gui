@@ -14,7 +14,6 @@ export default class BacklogDefectsPage extends React.Component {
         const payload = this.props.data;
         const {updatedOn, header, tooltip} = this.props;
         const isDataExist = this.isDataExists(payload);
-        console.log("page render")
         return (
             <div className={styles.card_container}>
                 <div className={styles.header_container}>

@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styles from "./tooltip-content.module.css";
 
 export default class TooltipContent extends React.PureComponent {
     render() {
         const {title, content} = this.props;
         return (
-            <div>
+            <div className={styles.tooltip_style}>
                 <h4>{title}</h4>
                 <p dangerouslySetInnerHTML={{__html: content}}/>
             </div>

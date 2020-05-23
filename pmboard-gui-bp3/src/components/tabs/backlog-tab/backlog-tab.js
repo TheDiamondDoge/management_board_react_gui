@@ -10,7 +10,7 @@ import RenderFieldHelper from "../../../util/render-field-helper";
 
 export default class BacklogTab extends React.Component {
     render() {
-        const {loading} = this.props;
+        const {loading} = this.props.backlog;
         if (loading) {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {

@@ -11,7 +11,7 @@ import RenderFieldHelper from "../../../util/render-field-helper";
 
 export default class DefectsTab extends React.Component {
     render() {
-        const {loading} = this.props;
+        const {loading} = this.props.defects;
         if (loading) {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {

@@ -106,7 +106,7 @@ export default class HealthIndicators extends React.Component {
                                         content={healthStatusHelp.content}
                                     />)
                                 }
-                                position={Position.TOP}
+                                position={Position.RIGHT}
                             >
                                 <HelpIcon className={styles.help_icon}/>
                             </Tooltip>
