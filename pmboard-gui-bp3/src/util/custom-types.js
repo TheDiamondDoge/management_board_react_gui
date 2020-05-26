@@ -236,7 +236,8 @@ export const ContribTable = PropTypes.shape({
     offer: PropTypes.arrayOf(ContribProject),
     contributed: PropTypes.arrayOf(ContribProject),
     minDate: PropTypes.string,
-    maxDate: PropTypes.string
+    maxDate: PropTypes.string,
+    fileExport: PropTypes.bool,
 });
 
 export const ProjectDefaults = PropTypes.shape({

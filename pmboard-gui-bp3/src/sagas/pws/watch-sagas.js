@@ -95,6 +95,10 @@ function* watchContibTableLoad() {
     yield takeEvery(contribTable.CONTRIB_TABLE_LOAD, sagas.loadContribTable)
 }
 
+function* watchContribTableExport() {
+    yield takeLeading(contribTable.CONTRIB_TABLE_EXPORT, sagas.loadContribTableFile)
+}
+
 function* watchRisksLoad() {
     yield takeEvery(risksTab.RISKS_LOAD, sagas.loadRisks)
 }
@@ -217,6 +221,7 @@ const exportSagas = [
     fork(watchIndicatorsQualitySave),
     fork(watchIndicatorsQualityLoad),
     fork(watchContribLoad),
+    fork(watchContribTableExport),
     fork(watchReportTabLoad),
     fork(watchUserReportLoad),
     fork(watchUserReportSave),

@@ -69,3 +69,8 @@ function ErrorDecorator({value}) {
         </span>
     )
 }
+
+export function projectNameDecorator(name) {
+    const expr = new RegExp(/\s+/g);
+    return String(name).replace(expr, "_");
+}

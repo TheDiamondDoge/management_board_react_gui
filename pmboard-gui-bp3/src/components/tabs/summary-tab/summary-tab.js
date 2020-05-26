@@ -31,6 +31,12 @@ import 'react-quill/dist/quill.snow.css';
 import Comment from "../../comment/comment";
 
 export default class SummaryTab extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.handleContribExport = this.handleContribExport.bind(this);
+    }
+
     render() {
         const {loading} = this.props.summaryData;
         const {payload: validationParams} = this.props.defaults;
@@ -193,6 +199,8 @@ export default class SummaryTab extends React.Component {
                                             contributed={contribTable.payload.products}
                                             minDate={contribTable.payload.minDate}
                                             maxDate={contribTable.payload.maxDate}
+                                            onContribExport={this.handleContribExport}
+                                            fileExport={this.props.contribTable.fileExport}
                                         />
                                     </ErrorBoundary>
                                     }
@@ -203,6 +211,11 @@ export default class SummaryTab extends React.Component {
                 </div>
             )
         }
+    }
+
+    handleContribExport() {
+        const {projectId, projectName} = this.props.defaults.payload;
+        return this.props.onContribExport(projectId, projectName);
     }
 
     renderHelper(id, data) {
@@ -251,4 +264,5 @@ SummaryTab.propTypes = {
         payload: PropTypes.arrayOf(MilestoneShape)
     }).isRequired,
     healthIndicators: HealthIndicatorsShape.isRequired,
+    onContribExport: PropTypes.func,
 };

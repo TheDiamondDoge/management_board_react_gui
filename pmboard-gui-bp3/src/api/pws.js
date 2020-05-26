@@ -144,6 +144,10 @@ export const getContribTable = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/contrib`)
 );
 
+export const exportContribTable = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/getContribFile`, {responseType: "blob"})
+);
+
 export const getRisksLastUploadedFile = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/risks/lastUploaded`, {responseType: "blob"})
 );

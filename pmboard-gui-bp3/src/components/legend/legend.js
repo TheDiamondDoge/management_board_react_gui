@@ -5,8 +5,9 @@ import styles from "./legend.module.css";
 
 export default class Legend extends React.PureComponent {
     render() {
+        const className = this.props.className;
         return (
-            <div>
+            <div className={className}>
                 <HTMLTable>
                     <thead>
                     <tr>

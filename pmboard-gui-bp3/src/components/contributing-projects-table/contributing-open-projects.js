@@ -1,5 +1,5 @@
 import React from 'react';
-import {HTMLTable} from "@blueprintjs/core";
+import {Button, HTMLTable, Intent} from "@blueprintjs/core";
 import moment from "moment";
 import styles from "./contributing-open-projects.module.css";
 import classNames from "classnames";
@@ -10,10 +10,11 @@ import Legend from "../legend/legend";
 import SafeUrl from "../safe-url/safe-url";
 import {getProjectUrl} from "../../util/util";
 import {ProjectStates} from "../../util/constants";
+import PropTypes from "prop-types";
 
 export default class ContributingOpenProjects extends React.Component {
     render() {
-        const {maxDate, minDate, offer, contributed} = this.props;
+        const {maxDate, minDate, offer, contributed, fileExport} = this.props;
         const {min, max} = this.getMinMaxDates(minDate, maxDate);
         const monthsBetween = Math.ceil(max.diff(min, "months", true));
 
@@ -138,7 +139,15 @@ export default class ContributingOpenProjects extends React.Component {
                         </tbody>
                     </HTMLTable>
                 </div>
-                <Legend/>
+                <Legend className={styles.legend}/>
+                <Button
+                    minimal
+                    loading={fileExport}
+                    intent={Intent.PRIMARY}
+                    text={"Export this grid"}
+                    icon={"export"}
+                    onClick={this.props.onContribExport}
+                />
             </div>
         );
     }
@@ -320,5 +329,10 @@ export default class ContributingOpenProjects extends React.Component {
 }
 
 ContributingOpenProjects.propTypes = {
-    ContribTable
+    ContribTable,
+    onContribExport: PropTypes.func,
 };
+
+ContributingOpenProjects.defaultProps = {
+    onContribExport: () => {}
+}

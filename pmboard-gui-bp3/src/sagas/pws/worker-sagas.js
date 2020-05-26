@@ -27,6 +27,7 @@ import * as defaults from "../../actions/pws/default";
 import * as exportPpt from "../../actions/pws/ppt-export";
 import {addDangerToast, addSuccessToast} from "../../actions/app/toaster";
 import {silentLoadProjectDefaults} from "../../actions/pws/default";
+import {projectNameDecorator} from "../../util/common-decorators";
 
 export function* loadSummaryTab({projectId}) {
     try {
@@ -81,6 +82,19 @@ export function* loadContribTable({projectId}) {
     } catch (e) {
         yield put(contribTable.errorContribTable(e));
         yield put(addDangerToast("'Contribution table' load failed. Please try again"));
+    }
+}
+
+export function* loadContribTableFile({projectId, projectName}) {
+    try {
+        const {data} = yield call(api.exportContribTable, projectId);
+        const filename = projectNameDecorator(projectName);
+        yield call(FileSaver.saveAs, new Blob([data]), `${filename}_contrib.xlsx`);
+        yield put(contribTable.exportContribTableSuccess())
+        yield put(addSuccessToast("Table exported"));
+    } catch (e) {
+        yield put(contribTable.errorContribTable(e))
+        yield put(addSuccessToast("Export failed"));
     }
 }
 
@@ -201,7 +215,8 @@ export function* uploadRisksFile({projectId, data}) {
 export function* downloadRisksFile({projectId, projectName}) {
     try {
         const data = yield call(api.downloadRisksFile, projectId);
-        yield call(FileSaver.saveAs, new Blob([data.data]), `${projectName}_risks.xlsx`);
+        const filename = projectNameDecorator(projectName);
+        yield call(FileSaver.saveAs, new Blob([data.data]), `${filename}_risks.xlsx`);
 
         yield put(addSuccessToast("Risk file downloaded"))
     } catch(e) {
@@ -423,7 +438,8 @@ export function* saveBlcTabComments({projectId, data}) {
 export function* getLastUploadedCost({projectId, projectName}) {
     try {
         const data = yield call(api.getCostLastUploadedFile, projectId);
-        yield call(FileSaver.saveAs, new Blob([data.data]), `${projectName}_cost.xlsx`);
+        const filename = projectNameDecorator(projectName);
+        yield call(FileSaver.saveAs, new Blob([data.data]), `${filename}_cost.xlsx`);
     } catch (e) {
         yield put(cost.costError(e));
         yield put(addDangerToast("Error. Can`t get last updated cost file."));
@@ -433,7 +449,8 @@ export function* getLastUploadedCost({projectId, projectName}) {
 export function* getLastUploadedRisks({projectId, projectName}) {
     try {
         const data = yield call(api.getRisksLastUploadedFile, projectId);
-        yield call(FileSaver.saveAs, new Blob([data.data]), `${projectName}_risks.xlsx`);
+        const filename = projectNameDecorator(projectName);
+        yield call(FileSaver.saveAs, new Blob([data.data]), `${filename}_risks.xlsx`);
     } catch (e) {
         yield put(risksTab.riskError(e));
         yield put(addDangerToast("Error. Can`t get last updated risksTab file"));

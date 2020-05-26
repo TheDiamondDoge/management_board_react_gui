@@ -99,3 +99,7 @@
 .word_wrap {
     word-wrap: break-word;
 }
+
+.legend {
+    margin-bottom: 17px;
+}

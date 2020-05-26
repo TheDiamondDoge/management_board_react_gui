@@ -3,7 +3,7 @@ import summaryTab from './summary-tab';
 import {summaryLoad, summaryReset} from "../../../actions/pws/summary-tab";
 import {milestonesReset} from "../../../actions/pws/milestones";
 import {healthReset} from "../../../actions/pws/health-indicators";
-import {loadContribTable, resetContribTable} from "../../../actions/pws/contrib-table";
+import {exportContribTable, loadContribTable, resetContribTable} from "../../../actions/pws/contrib-table";
 import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
@@ -28,6 +28,7 @@ function mapDispatchToProps(dispatch) {
             dispatch(healthReset());
             dispatch(resetContribTable());
         },
+        onContribExport: (projectId, projectName) => dispatch(exportContribTable(projectId, projectName))
     }
 }
 
