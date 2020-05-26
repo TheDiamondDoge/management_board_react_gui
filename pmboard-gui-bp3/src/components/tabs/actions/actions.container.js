@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {actionsLoad, actionsReset, actionSave, actionDelete} from "../../../actions/pws/actions-tab";
+import {actionsLoad, actionsReset, actionSave, actionDelete, actionsExport} from "../../../actions/pws/actions-tab";
 import Actions from "./actions";
 import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 import {loadRiskIds, riskIdsReset} from "../../../actions/pws/risks/risks-related";
@@ -20,6 +20,9 @@ function mapDispatchToProps(dispatch) {
         },
         deleteAction: (projectId, uid) => {
             dispatch(actionDelete(projectId, uid))
+        },
+        exportActions: (projectId, projectName) => {
+            dispatch(actionsExport(projectId, projectName))
         },
         loadData: (projectId) => {
             dispatch(actionsLoad(projectId));

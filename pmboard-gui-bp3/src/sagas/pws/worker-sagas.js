@@ -162,7 +162,7 @@ export function* loadBlcTab({projectId}) {
     try {
         const data = yield call(api.getBlcTabData, projectId);
         yield put(blc.blcLoadSuccess(data.data))
-    } catch(e) {
+    } catch (e) {
         yield put(blc.blcError(e));
         yield put(addDangerToast("'BLC' load failed. Please try again"));
     }
@@ -219,7 +219,7 @@ export function* downloadRisksFile({projectId, projectName}) {
         yield call(FileSaver.saveAs, new Blob([data.data]), `${filename}_risks.xlsx`);
 
         yield put(addSuccessToast("Risk file downloaded"))
-    } catch(e) {
+    } catch (e) {
         yield put(risksTab.riskError(e));
         yield put(addDangerToast(`Risk download failed. ${e.response.data.message}`))
     }
@@ -316,7 +316,7 @@ export function* loadUserReports({projectId}) {
         const {data} = yield call(api.getUserReports, projectId);
         yield put(userReports.loadUserReportsSuccess(data));
         yield call(loadReportSnapshotsData, {projectId});
-    } catch(e) {
+    } catch (e) {
         yield put(userReports.errorUserReports(e));
         yield put(addDangerToast("Save failed. Please try again!111ASD" + e.response.data.message));
     }
@@ -335,7 +335,7 @@ export function* saveUserReport({projectId, data}) {
 
 export function* saveAction({projectId, data}) {
     try {
-         yield call(api.saveAction, projectId, data);
+        yield call(api.saveAction, projectId, data);
         yield put(addSuccessToast("Saved"));
         yield call(loadActions, {projectId});
     } catch (e) {
@@ -352,6 +352,19 @@ export function* deleteAction({uid, projectId}) {
     } catch (e) {
         yield put(actions.actionsError(e));
         yield put(addDangerToast("Delete failed. Please try again"));
+    }
+}
+
+export function* exportActions({projectId, projectName}) {
+    try {
+        const {data} = yield call(api.exportActions, projectId);
+        const filename = projectNameDecorator(projectName);
+        yield call(FileSaver.saveAs, new Blob([data]), `${filename}_actions.xlsx`);
+        yield put(actions.actionsExportSuccess());
+        yield put(addSuccessToast("Actions exported"));
+    } catch (e) {
+        yield put(actions.actionsError(e));
+        yield put(addDangerToast("Actions export failed"));
     }
 }
 
@@ -372,7 +385,7 @@ export function* saveIndicatorsRqs({projectId, data}) {
         yield put(addSuccessToast("Saved"));
         yield call(loadIndicatorsRqs, {projectId});
         yield call(loadDr4Kpi, {projectId});
-    } catch(e) {
+    } catch (e) {
         yield put(rqIndicators.indicatorsRqsError(e));
         yield put(addDangerToast("Save failed. Please try again"));
     }

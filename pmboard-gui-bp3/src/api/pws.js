@@ -104,6 +104,10 @@ export const deleteAction = (uid) => (
     axios.delete(`http://localhost:8080/api/actions/${uid}`)
 );
 
+export const exportActions = (projectID) => (
+    axios.get(`http://localhost:8080/api/actions/${projectID}/getFile`, {responseType: "blob"})
+);
+
 export const getCost = (projectID) => (
     axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/cost`)
 );

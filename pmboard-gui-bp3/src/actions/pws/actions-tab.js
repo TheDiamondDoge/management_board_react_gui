@@ -1,5 +1,7 @@
 export const ACTIONS_LOAD = "ACTIONS_LOAD";
 export const ACTIONS_LOAD_SUCCESS = "ACTIONS_LOAD_SUCCESS";
+export const ACTIONS_EXPORT = "ACTIONS_EXPORT";
+export const ACTIONS_EXPORT_SUCCESS = "ACTIONS_EXPORT_SUCCESS";
 export const ACTIONS_ERROR = "ACTIONS_ERROR";
 export const ACTIONS_SAVE = "ACTIONS_SAVE";
 export const ACTIONS_DELETE = "ACTIONS_DELETE";
@@ -13,6 +15,16 @@ export const actionsLoad = (projectId) => ({
 export const actionsLoadSuccess = (data) => ({
     type: ACTIONS_LOAD_SUCCESS,
     data
+});
+
+export const actionsExport = (projectId, projectName) => ({
+    type: ACTIONS_EXPORT,
+    projectId,
+    projectName
+});
+
+export const actionsExportSuccess = () => ({
+    type: ACTIONS_EXPORT_SUCCESS,
 });
 
 export const actionsError = (error) => ({

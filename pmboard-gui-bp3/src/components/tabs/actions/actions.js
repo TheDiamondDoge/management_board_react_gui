@@ -81,7 +81,9 @@ export default class Actions extends React.Component {
     getTableFooter = (renderHelper) => {
         const renderable = renderHelper.displayOrNot("controls");
         const props = {
-            onRefresh: this.handleLoadData
+            onRefresh: this.handleLoadData,
+            onExport: this.handleExportActions,
+            fileExporting: this.props.actions.fileExport
         };
         return (
             (tableFuncs) => {
@@ -142,6 +144,11 @@ export default class Actions extends React.Component {
         this.toggleConfirmDialog();
     };
 
+    handleExportActions = () => {
+        const {projectId, projectName} = this.props.defaults.payload;
+        this.props.exportActions(projectId, projectName);
+    }
+
     handleLoadData = () => {
         this.props.loadData(this.projectId);
     };
@@ -159,9 +166,11 @@ Actions.propTypes = {
     loadData: PropTypes.func.isRequired,
     relatedRisks: PropTypes.shape({
         payload: PropTypes.arrayOf(PropTypes.string),
-        loading: PropTypes.bool
+        loading: PropTypes.bool,
+        fileExport: PropTypes.bool,
     }),
     saveAction: PropTypes.func,
     deleteAction: PropTypes.func,
+    exportActions: PropTypes.func,
     pushWarningToast: PropTypes.func,
 };

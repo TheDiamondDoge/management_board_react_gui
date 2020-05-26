@@ -3,7 +3,7 @@ import {Button, Intent} from "@blueprintjs/core";
 import PropTypes from 'prop-types';
 
 export default function TableFooter(props) {
-    const {onRefresh, onAdd, ...containerProps} = props;
+    const {onRefresh, onAdd, onExport, fileExporting, ...containerProps} = props;
     return (
         <div {...containerProps}>
             {
@@ -26,19 +26,25 @@ export default function TableFooter(props) {
                     onClick={onAdd}
                 />
             }
-            <Button
-                text={"Export to Excel"}
-                icon={"export"}
-                onClick={() => alert("Export!")}
-                intent={Intent.PRIMARY}
-                minimal
-            />
+            {
+                onExport &&
+                <Button
+                    loading={fileExporting}
+                    text={"Export to Excel"}
+                    icon={"export"}
+                    onClick={onExport}
+                    intent={Intent.PRIMARY}
+                    minimal
+                />
+            }
         </div>
     );
 }
 
 TableFooter.propTypes = {
     onRefresh: PropTypes.func,
-    onAdd: PropTypes.func
+    onAdd: PropTypes.func,
+    onExport: PropTypes.func,
+    fileExporting: PropTypes.bool,
 };
 

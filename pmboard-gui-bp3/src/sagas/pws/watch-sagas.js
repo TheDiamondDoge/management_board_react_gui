@@ -135,6 +135,10 @@ function* watchActionDelete() {
     yield takeLeading(actions.ACTIONS_DELETE, sagas.deleteAction);
 }
 
+function* watchActionsExport() {
+    yield takeLeading(actions.ACTIONS_EXPORT, sagas.exportActions);
+}
+
 function* watchCostLoad() {
     yield takeEvery(cost.COST_LOAD, sagas.loadCost);
 }
@@ -205,6 +209,7 @@ const exportSagas = [
     fork(watchActionsLoad),
     fork(watchActionsSave),
     fork(watchActionDelete),
+    fork(watchActionsExport),
     fork(watchCostLoad),
     fork(watchCostUpload),
     fork(watchRequirementsLoad),
