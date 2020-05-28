@@ -10,6 +10,8 @@ export function arrayDecorator(arr) {
 export function dateDecorator(str) {
     if (!str) return "";
     if (str === "1970-01-01") return <ErrorDecorator/>;
+    const date = new Date(str);
+    if (date < new Date("1970-01-01")) return <ErrorDecorator/>;
     return dateFormatToString(new Date(str));
 }
 
