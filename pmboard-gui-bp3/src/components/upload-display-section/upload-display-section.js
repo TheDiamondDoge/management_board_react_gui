@@ -14,13 +14,14 @@ export default class UploadDisplaySection extends React.Component {
 
     render() {
         const {buttonName, amount, files, onUpload, isUploading} = this.props;
+        const title = `${buttonName} (max amount: ${amount})`;
         return (
             <div>
                 <Button
                     minimal
                     loading={isUploading}
                     className={styles.section}
-                    text={buttonName}
+                    text={title}
                     icon={<Icon icon={"upload"} intent={Intent.PRIMARY}/>}
                     onClick={this.openFileDialog}
                 />

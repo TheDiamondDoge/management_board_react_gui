@@ -520,7 +520,7 @@ export function* uploadReportImages({projectId, files}) {
         yield call(loadReportImages, {projectId});
     } catch (e) {
         yield put(report.reportImagesError(e));
-        yield put(addDangerToast("Upload failed"));
+        yield put(addDangerToast(`Upload failed. ${e.response.data.message}`));
     }
 }
 
