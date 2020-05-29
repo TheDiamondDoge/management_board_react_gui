@@ -4,6 +4,7 @@ import UploadedImage from "../uploaded-image/uploaded-image";
 import PropTypes from "prop-types";
 import UploadFileControlsHidden from "../upload-file-controls/upload-file-controls-hidden";
 import styles from "./upload-display-section.module.css";
+import classNames from "classnames";
 import ConfirmationPopup from "../confirmation-popup/confirmation-popup";
 
 export default class UploadDisplaySection extends React.Component {
@@ -21,12 +22,13 @@ export default class UploadDisplaySection extends React.Component {
         const {buttonName, amount, files, onUpload, isUploading} = this.props;
         const title = `${buttonName} (max amount: ${amount})`;
         const confirmBody = "It is a permanent operation. You will not be able to restore deleted image.";
+        const buttonClasses = classNames({[styles.section]: files.length !== 0});
         return (
             <div>
                 <Button
                     minimal
                     loading={isUploading}
-                    className={styles.section}
+                    className={buttonClasses}
                     text={title}
                     icon={<Icon icon={"upload"} intent={Intent.PRIMARY}/>}
                     onClick={this.openFileDialog}
