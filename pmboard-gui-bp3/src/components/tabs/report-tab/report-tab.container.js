@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import {loadReport, resetReport} from "../../../actions/pws/report-tab";
+import {deleteReportImage, loadReport, resetReport, uploadReportImages} from "../../../actions/pws/report-tab";
 import ReportTab from "./report-tab";
 import {resetRequirements} from "../../../actions/pws/requirements-tab";
 import {loadUserReports, resetUserReports, saveUserReport} from "../../../actions/pws/user-reports";
@@ -8,6 +8,7 @@ import {exportPpt} from "../../../actions/pws/ppt-export";
 import {milestonesReset} from "../../../actions/pws/milestones";
 import {healthReset} from "../../../actions/pws/health-indicators";
 import {risksSummaryReset} from "../../../actions/pws/risks/risks-summary";
+import {addWarningToast} from "../../../actions/app/toaster";
 
 function mapStateToProps(state) {
     return {
@@ -36,6 +37,9 @@ function mapDispatchToProps(dispatch) {
         saveData: (projectId, data) => dispatch(saveUserReport(projectId, data)),
         reloadUserReports: (projectId) => dispatch(loadUserReports(projectId)),
         downloadPptReport: (projectId, pptType, snapshotId) => dispatch(exportPpt(projectId, pptType, snapshotId)),
+        uploadImages: (files, projectId) => dispatch(uploadReportImages(projectId, files)),
+        deleteImage: (filename, projectId) => dispatch(deleteReportImage(projectId, filename)),
+        pushWarningToast: (message) => dispatch(addWarningToast(message))
     }
 }
 

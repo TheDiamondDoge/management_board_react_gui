@@ -171,3 +171,15 @@ export const getPptCustomFile = (projectID, type, snapshotId) => {
     }
     return axios.get(`http://localhost:8080/api/export/ppt/${type}/${projectID}${param}`, {responseType: "blob"})
 };
+
+export const loadReportImages = (projectID) => (
+    axios.get(`http://localhost:8080/api/projects/${projectID}/tabs/report/images`)
+);
+
+export const uploadReportImages = (projectID, file) => (
+    axios.post(`http://localhost:8080/api/projects/${projectID}/tabs/report/images`, file)
+);
+
+export const deleteReportImage = (projectID, filename) => (
+    axios.delete(`http://localhost:8080/api/projects/${projectID}/tabs/report/images/${filename}`)
+);

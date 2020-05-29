@@ -305,6 +305,7 @@ export function* loadReportTab({projectId}) {
         yield put(report.loadReportSuccess(data));
         yield call(loadRequirements, {projectId});
         yield call(loadUserReports, {projectId});
+        yield call(loadReportImages, {projectId})
     } catch (e) {
         yield put(report.errorReport(e));
         yield put(addDangerToast("'Report tab' load failed. Please try again"));
@@ -498,5 +499,38 @@ export function* loadReportSnapshotsData({projectId}) {
     } catch (e) {
         yield put(report.errorReport(e));
         yield put(addDangerToast("'Report snapshots' load failed."));
+    }
+}
+
+export function* loadReportImages({projectId}) {
+    try {
+        const {data} = yield call(api.loadReportImages, projectId);
+        yield put(report.loadReportImagesSuccess(data));
+    } catch (e) {
+        yield put(report.reportImagesError(e));
+        yield put(addDangerToast("'Report images' load failed"));
+    }
+}
+
+export function* uploadReportImages({projectId, files}) {
+    try {
+        yield call(api.uploadReportImages, projectId, files);
+        yield put(report.uploadReportImagesSuccess());
+        yield put(addSuccessToast("Images uploaded"));
+        yield call(loadReportImages, {projectId});
+    } catch (e) {
+        yield put(report.reportImagesError(e));
+        yield put(addDangerToast("Upload failed"));
+    }
+}
+
+export function* deleteReportImage({projectId, filename}) {
+    try {
+        yield call(api.deleteReportImage, projectId, filename);
+        yield put(addSuccessToast("Image deleted"));
+        yield call(loadReportImages, {projectId});
+    } catch (e) {
+        yield put(report.errorReport(e));
+        yield put(addDangerToast("Deletion failed"));
     }
 }

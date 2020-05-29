@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    padding-top: 8px;
+}
+
+.image_container {
+    display: inline-block;
+    width: calc(100% - 40px);
+    max-width: 100%;
+    height: auto;
+}
+
+.image {
+    width: 100%;
+}
+
+.controls {
+    display: inline-block;
+    width: 40px;
+}

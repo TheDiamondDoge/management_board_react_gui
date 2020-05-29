@@ -171,6 +171,18 @@ function* watchUserReportSave() {
     yield takeLatest(userReport.USER_REPORTS_SAVE, sagas.saveUserReport)
 }
 
+function* watchReportImagesLoad() {
+    yield takeEvery(report.REPORT_IMAGES_LOAD, sagas.loadReportImages)
+}
+
+function* watchReportImagesUpload() {
+    yield takeLatest(report.REPORT_IMAGES_UPLOAD, sagas.uploadReportImages)
+}
+
+function* watchReportImageDelete() {
+    yield takeLeading(report.REPORT_IMAGES_DELETE, sagas.deleteReportImage)
+}
+
 function* watchGetLastUploadedCost() {
     yield takeLatest(cost.COST_GET_LAST_UPLOADED, sagas.getLastUploadedCost)
 }
@@ -236,6 +248,9 @@ const exportSagas = [
     fork(watchProjectDefaultsLoad),
     fork(watchCustomPptFile),
     fork(watchSnapshotsDataLoad),
+    fork(watchReportImagesLoad),
+    fork(watchReportImagesUpload),
+    fork(watchReportImageDelete)
 ];
 
 export default exportSagas;

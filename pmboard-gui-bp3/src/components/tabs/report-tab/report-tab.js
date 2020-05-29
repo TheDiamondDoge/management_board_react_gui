@@ -21,8 +21,14 @@ import ExportMenu from "./export-menu/export-menu";
 import {getIndicatorsColor} from "../../../util/transform-funcs";
 import renderFields from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
+import UploadDisplaySection from "../../upload-display-section/upload-display-section";
 
 export default class ReportTab extends React.Component {
+    constructor(props) {
+        super(props);
+         this.amount = 5;
+    }
+
     render() {
         const {loading} = this.props.report;
         if (loading) {
@@ -38,7 +44,7 @@ export default class ReportTab extends React.Component {
             const risksObj = this.getRiskObj(data);
             const {loading: rqsLoading, payload: rqsPayload} = this.props.rqs;
             const {loading: userReportsLoading, payload: userReportsPayload} = this.props.userReports;
-            const {snapshots, snapshotLoading} = this.props.report;
+            const {snapshots, snapshotLoading, images, imagesLoading} = this.props.report;
             return (
                 <>
                     <CustomCard>
@@ -119,10 +125,26 @@ export default class ReportTab extends React.Component {
                             )
                         }
                     </CustomCard>
+                    <CustomCard>
+                       <UploadDisplaySection
+                            buttonName={"Upload image"}
+                            isUploading={imagesLoading}
+                            amount={this.amount}
+                            files={images}
+                            onUpload={(formData) => this.props.uploadImages(formData, this.projectId)}
+                            onDelete={(filename) => this.props.deleteImage(filename, this.projectId)}
+                            onAmountExceed={this.handleOnAmountExceed}
+                       />
+                    </CustomCard>
                 </>
             );
         }
     }
+
+    handleOnAmountExceed = () => {
+        const message = `Total amount of images should not exceed ${this.amount}`;
+        this.props.pushWarningToast(message);
+    };
 
     onUserReportSaveFactory(type, submitFunc) {
         return function (value) {
@@ -170,6 +192,8 @@ ReportTab.propTypes = {
     reloadUserReports: PropTypes.func.isRequired,
     saveData: PropTypes.func.isRequired,
     downloadPptReport: PropTypes.func,
+    uploadImages: PropTypes.func,
+    deleteImage: PropTypes.func,
     report: PropTypes.shape({
         loading: PropTypes.bool.isRequired,
         payload: PropTypes.shape({
