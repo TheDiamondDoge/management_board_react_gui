@@ -4,10 +4,15 @@ import UploadedImage from "../uploaded-image/uploaded-image";
 import PropTypes from "prop-types";
 import UploadFileControlsHidden from "../upload-file-controls/upload-file-controls-hidden";
 import styles from "./upload-display-section.module.css";
+import ConfirmationPopup from "../confirmation-popup/confirmation-popup";
 
 export default class UploadDisplaySection extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isConfirmPopupOpen: false,
+            deletedFilename: "",
+        };
 
         this.uploadRef = React.createRef();
     }
@@ -15,6 +20,7 @@ export default class UploadDisplaySection extends React.Component {
     render() {
         const {buttonName, amount, files, onUpload, isUploading} = this.props;
         const title = `${buttonName} (max amount: ${amount})`;
+        const confirmBody = "It is a permanent operation. You will not be able to restore deleted image.";
         return (
             <div>
                 <Button
@@ -34,7 +40,7 @@ export default class UploadDisplaySection extends React.Component {
                                     className={styles.section}
                                     key={file.filename}
                                     src={file.base64Image}
-                                    onDelete={() => this.props.onDelete(file.filename)}
+                                    onDelete={() => this.toggleConfirmDialog(file.filename)}
                                 />
                             </>
                         )
@@ -46,9 +52,46 @@ export default class UploadDisplaySection extends React.Component {
                     amount={amount}
                     onAmountExceed={this.props.onAmountExceed}
                 />
+                <ConfirmationPopup
+                    isOpen={this.state.isConfirmPopupOpen}
+                    onClose={this.toggleConfirmDialog}
+                    title={"Deletion confirmation"}
+                    icon={<Icon icon={"warning-sign"} intent={Intent.DANGER}/>}
+                    body={confirmBody}
+                    footer={this.getConfirmFooter()}
+                />
             </div>
         );
     }
+
+    getConfirmFooter() {
+        return (
+            <>
+                <Button onClick={this.handleDeletion}>
+                    Delete
+                </Button>
+                <Button
+                    intent={Intent.DANGER}
+                    onClick={this.toggleConfirmDialog}
+                >
+                    Cancel
+                </Button>
+            </>
+        )
+    }
+
+    handleDeletion = () => {
+        this.props.onDelete(this.state.deletedFilename);
+        this.toggleConfirmDialog("");
+    }
+
+    toggleConfirmDialog = (filename) => {
+        this.setState((prev) => ({
+            isConfirmPopupOpen: !prev.isConfirmPopupOpen,
+            deletedFilename: filename
+        }));
+    };
+
 
     openFileDialog = () => {
         this.uploadRef.current.click();

@@ -26,7 +26,7 @@ import UploadDisplaySection from "../../upload-display-section/upload-display-se
 export default class ReportTab extends React.Component {
     constructor(props) {
         super(props);
-         this.amount = 5;
+        this.amount = 5;
     }
 
     render() {
@@ -126,7 +126,7 @@ export default class ReportTab extends React.Component {
                         }
                     </CustomCard>
                     <CustomCard>
-                       <UploadDisplaySection
+                        <UploadDisplaySection
                             buttonName={"Upload image"}
                             isUploading={imagesLoading}
                             amount={this.amount}
@@ -134,7 +134,7 @@ export default class ReportTab extends React.Component {
                             onUpload={(formData) => this.props.uploadImages(formData, this.projectId)}
                             onDelete={(filename) => this.props.deleteImage(filename, this.projectId)}
                             onAmountExceed={this.handleOnAmountExceed}
-                       />
+                        />
                     </CustomCard>
                 </>
             );
