@@ -21,6 +21,7 @@ export default class BacklogTab extends React.Component {
 
             const title = "Defects backlog (ECMA CRs)";
             const isBlocked = !renderHelper.displayOrNot("controls");
+            const help = renderHelper.getHelpObject("title");
             return (
                 <CustomCard>
                     <BacklogDefectsPage
@@ -29,12 +30,12 @@ export default class BacklogTab extends React.Component {
                         onUpdate={() => alert("Updated")}
                         onCurrentClick={() => alert("Current week")}
                         updatedOn={updatedOn}
-                        tooltip={(
+                        tooltip={
                             <TooltipContent
-                                title={"Tips are"}
-                                content={"Here"}
+                                title={help.title}
+                                content={help.content}
                             />
-                        )}
+                        }
                         blocked={isBlocked}
                     />
                 </CustomCard>

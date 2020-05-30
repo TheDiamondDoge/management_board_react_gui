@@ -17,6 +17,7 @@ import LastUpdated from "../last-updated/last-updated";
 import {Messages} from "../../util/constants";
 import OnSubmitValidationError from "../formik-onsubmit-validator";
 import SafeUrl from "../safe-url/safe-url";
+import TooltipContent from "../tooltip-content/tooltip-content";
 
 export default class Quality extends React.Component {
     constructor(props) {
@@ -93,8 +94,8 @@ export default class Quality extends React.Component {
         const controlsAttrName = "controls";
         const {syncDate} = this.props.qualityKpi;
         const {fieldsToRender, onCancel, fieldsRenderValidation} = this.props;
-        const renderHelper = new RenderFieldHelper(fieldsToRender, fieldsRenderValidation);
-        const controlsRendered = renderHelper.displayOrNot(controlsAttrName);
+        this.renderHelper = new RenderFieldHelper(fieldsToRender, fieldsRenderValidation);
+        const controlsRendered = this.renderHelper.displayOrNot(controlsAttrName);
         const editBtnProps = this.getSyncButtonProps(!!fieldsRenderValidation.dr1Actual);
 
         return (
@@ -153,7 +154,7 @@ export default class Quality extends React.Component {
                     <tbody>
                     {
                         Object.keys(fieldsToRender).map(field => {
-                                if (renderHelper.displayOrNot(field)) {
+                                if (this.renderHelper.displayOrNot(field)) {
                                     if (field === "testExecution" || field === "testRate") {
                                         return this.renderComplexRows(values, field, true);
                                     } else {
@@ -182,7 +183,7 @@ export default class Quality extends React.Component {
                 name={field}
                 render={(arrayHelpers) => {
                     const rowTitle = this.props.fieldsToRender[field].label;
-                    const help = this.props.fieldsToRender[field].help;
+                    const help = this.renderHelper.getHelpObject(field);
                     if (indicators && indicators.length === 0) {
                         indicators = [this.getEmptyRowObject("")];
                     }
@@ -205,7 +206,15 @@ export default class Quality extends React.Component {
                                                     <FieldName name={rowTitle}/>
                                                 </div>
                                                 <div className={styles.help_container}>
-                                                    <Tooltip content={help} position={Position.TOP}>
+                                                    <Tooltip
+                                                        position={Position.TOP}
+                                                        content={
+                                                            <TooltipContent
+                                                                title={help.title}
+                                                                content={help.content}
+                                                            />
+                                                        }
+                                                    >
                                                         <HelpIcon className={styles.help_icon}/>
                                                     </Tooltip>
                                                 </div>

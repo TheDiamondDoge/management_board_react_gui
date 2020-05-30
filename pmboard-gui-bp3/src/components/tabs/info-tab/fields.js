@@ -1,4 +1,11 @@
 import {WorkspaceStatus, ProjectTypes} from "../../../util/constants";
+import {
+    launchingPlanHelp,
+    lessonsLearnedHelp,
+    projectPlanHelp,
+    tailoringCommentHelp,
+    updBusinessPlanCommentHelp
+} from "../../../util/global-helps";
 
 //Props mandatory: label,
 //Props not mandatory: type, notAllowedIf, allowedIf, editable
@@ -84,12 +91,25 @@ let config = {
         label: "OR Business Plan",
         editable: false,
     },
-    updatedBusinessPlan: {label: "Updated Business Plan"},
-    drChecklist: {label: "Tailoring"},
-    lessonsLearned: {label: "Lessons learned"},
-    projectPlan: {label: "Project Plan"},
+    updatedBusinessPlan: {
+        label: "Updated Business Plan",
+        help: updBusinessPlanCommentHelp,
+    },
+    drChecklist: {
+        label: "Tailoring",
+        help: tailoringCommentHelp,
+    },
+    lessonsLearned: {
+        label: "Lessons learned",
+        help: lessonsLearnedHelp,
+    },
+    projectPlan: {
+        label: "Project Plan",
+        help: projectPlanHelp,
+    },
     launchingPlan: {
         label: "Launching Plan",
+        help: launchingPlanHelp,
         allowedIf: {
             projectType: [ProjectTypes.OFFER, ProjectTypes.OFFER_PRODUCT]
         }

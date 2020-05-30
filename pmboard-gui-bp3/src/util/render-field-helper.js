@@ -32,6 +32,10 @@ export default class RenderFieldHelper {
         return (id in this._fieldsToRender);
     };
 
+    getHelpObject(field) {
+        return this._fieldsToRender[field].help;
+    }
+
     //TODO get rid of this
     getFieldProps(field, value) {
         const fieldType = this._fieldsToRender[field].type ? this._fieldsToRender[field].type : "text";

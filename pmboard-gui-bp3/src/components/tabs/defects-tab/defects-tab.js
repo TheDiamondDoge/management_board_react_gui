@@ -20,9 +20,7 @@ export default class DefectsTab extends React.Component {
             const renderHelper = new RenderFieldHelper(renderFields, validationParams);
             const {updatedOn, ...data} = payload;
             const title = "New Open Defects (ECMA CRs)";
-
-            const tooltipTitle = "Tips are";
-            const tooltipContent = "Here";
+            const help = renderHelper.getHelpObject("title");
 
             const isBlocked = !renderHelper.displayOrNot("controls");
             return (
@@ -33,12 +31,12 @@ export default class DefectsTab extends React.Component {
                         onUpdate={() => alert("Updated")}
                         onCurrentClick={() => alert("Current week")}
                         updatedOn={updatedOn}
-                        tooltip={(
+                        tooltip={
                             <TooltipContent
-                                title={tooltipTitle}
-                                content={tooltipContent}
+                                title={help.title}
+                                content={help.content}
                             />
-                        )}
+                        }
                         blocked={isBlocked}
                     />
                 </CustomCard>

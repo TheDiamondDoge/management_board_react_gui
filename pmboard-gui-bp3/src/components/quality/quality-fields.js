@@ -1,4 +1,11 @@
 import {WorkspaceStatus} from "../../util/constants";
+import {
+    backlogReductionHelp,
+    newOpenDefectsHelp,
+    qualityKpiHelp,
+    testExecutionHelp,
+    testPassHelp
+} from "../../util/global-helps";
 
 let config = {
     controls: {
@@ -9,26 +16,26 @@ let config = {
     },
     quality: {
         label: "Quality KPI",
-        help: "Help for quality"
+        help: qualityKpiHelp
     },
     defects: {
         label: "New Open Defects",
         allowedIf: {
             maintenance: [false],
         },
-        help: "Help for defects"
+        help: newOpenDefectsHelp
     },
     backlog: {
         label: "Backlog Reduction",
-        help: "Help for backlog"
+        help: backlogReductionHelp
     },
     testExecution: {
         label: "Test execution (rate or number)",
-        help: "Help for exec"
+        help: testExecutionHelp
     },
     testRate: {
         label: "Test pass (rate or number)",
-        help: "Help for pass"
+        help: testPassHelp
     }
 };
 

@@ -1,4 +1,4 @@
 .tooltip_style {
     font-size: 12px;
-    width: 500px;
+    max-width: 500px;
 }

@@ -8,6 +8,7 @@ import UpdatedInfo from "../../updated-info/updated-info";
 import classNames from "classnames";
 import {BacklogDefectsTypes} from "../../../util/custom-types";
 import NoDataFound from "../../global-statuses/no-data-found/no-data-found";
+import TooltipContent from "../../tooltip-content/tooltip-content";
 
 export default class BacklogDefectsPage extends React.Component {
     render() {
@@ -21,8 +22,8 @@ export default class BacklogDefectsPage extends React.Component {
                         {header}
                     </h4>
                     <Tooltip
+                        position={Position.BOTTOM}
                         content={tooltip}
-                        position={Position.TOP}
                     >
                         <HelpIcon className={styles.tooltip}/>
                     </Tooltip>
@@ -42,7 +43,6 @@ export default class BacklogDefectsPage extends React.Component {
     }
 
     renderChartZone(payload, isDataExist) {
-        console.log("page func render")
         if (isDataExist) {
             return (
                 <BarChart
@@ -116,12 +116,12 @@ BacklogDefectsPage.propTypes = {
     onUpdate: PropTypes.func.isRequired,
     onCurrentClick: PropTypes.func.isRequired,
     updatedOn: PropTypes.string,
-    tooltip: PropTypes.element,
+    tooltip: PropTypes.instanceOf(TooltipContent),
     blocked: PropTypes.bool
 };
 
 BacklogDefectsPage.defaultProps = {
     updatedOn: '',
-    tooltip: '',
+    tooltip: <TooltipContent title={""} content={""}/>,
     blocked: false
 };

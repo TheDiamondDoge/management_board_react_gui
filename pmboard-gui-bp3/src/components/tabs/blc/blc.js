@@ -1,5 +1,5 @@
 import React from "react";
-import {HTMLTable, Button, Classes, Intent} from "@blueprintjs/core";
+import {HTMLTable, Button, Classes, Intent, Tooltip, Position} from "@blueprintjs/core";
 import CustomCard from "../../card/custom-card";
 import styles from "./blc.module.css";
 import classNames from 'classnames';
@@ -16,6 +16,8 @@ import RenderFieldHelper from "../../../util/render-field-helper";
 import {BlcRowNames, Messages} from "../../../util/constants";
 import validationSchema from "./validation-schema";
 import OnSubmitValidationError from "../../formik-onsubmit-validator";
+import TooltipContent from "../../tooltip-content/tooltip-content";
+import HelpIcon from "../../help-icon/help-icon";
 
 export default class BlcDashboard extends React.Component {
     constructor(props) {
@@ -155,9 +157,21 @@ export default class BlcDashboard extends React.Component {
         const thClasses = styles.column_align_center;
         const thCommentClasses = classNames(styles.column_align_center);
         const controlsAllowed = this.renderHelper.displayOrNot("controls");
+        const help = this.renderHelper.getHelpObject("title");
         const {pm, pmo, sales} = formikProps.values;
         return (
             <div className={styles.relative_wrapper}>
+                <Tooltip
+                    position={Position.TOP}
+                    content={
+                        <TooltipContent
+                            title={help.title}
+                            content={help.content}
+                        />
+                    }
+                >
+                    <HelpIcon className={styles.help_icon}/>
+                </Tooltip>
                 <div className={styles.overflow_wrapper}>
                     <HTMLTable
                         bordered

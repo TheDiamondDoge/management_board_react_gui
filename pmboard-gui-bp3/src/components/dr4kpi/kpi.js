@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import {toPercentsOrNA} from "../../util/transform-funcs";
 import HelpIcon from "../help-icon/help-icon";
 import FieldValue from "../field-value/field-value";
+import TooltipContent from "../tooltip-content/tooltip-content";
 
 export default class Kpi extends React.Component {
     render() {
@@ -48,9 +49,14 @@ export default class Kpi extends React.Component {
                                 <td>
                                     <FieldName name={label}/>
                                     <Tooltip
-                                        content={help}
                                         position={Position.TOP}
                                         className={styles.help}
+                                        content={
+                                            <TooltipContent
+                                                title={help.title}
+                                                content={help.content}
+                                            />
+                                        }
                                     >
                                         <HelpIcon/>
                                     </Tooltip>

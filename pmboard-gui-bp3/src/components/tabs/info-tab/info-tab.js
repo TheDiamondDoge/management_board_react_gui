@@ -17,11 +17,12 @@ import getValidationSchema from "./validation-schema";
 import HelpIcon from "../../help-icon/help-icon";
 import {isBoolean} from "../../../util/comparators";
 import {boolToYesNo} from "../../../util/transform-funcs";
-import {MenuItem} from "@blueprintjs/core";
+import {MenuItem, Position, Tooltip} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 import Comment from "../../comment/comment";
 import {CommonMilestonesLabels, Messages} from "../../../util/constants";
 import OnSubmitValidationError from "../../formik-onsubmit-validator";
+import TooltipContent from "../../tooltip-content/tooltip-content";
 
 
 export default class InfoTab extends React.Component {
@@ -137,7 +138,7 @@ export default class InfoTab extends React.Component {
                                     <CustomCard>
                                         {this.mainRows(formikProps.values.urls, "urls")}
                                     </CustomCard>
-                                    <OnSubmitValidationError callback={this.handleSubmitWithErrors} />
+                                    <OnSubmitValidationError callback={this.handleSubmitWithErrors}/>
                                 </div>
                             )
                         }
@@ -226,6 +227,7 @@ export default class InfoTab extends React.Component {
 
     renderRowWithComment = (obj, stateBranch, value) => {
         const {editMode} = this.state;
+        const help = this.renderHelper.getHelpObject(obj);
         const formikProps = this.renderHelper.getFieldProps(obj, value);
         const shouldRender = this.renderHelper.displayOrNot(obj);
         const label = this.renderHelper.getLabelById(obj);
@@ -259,7 +261,17 @@ export default class InfoTab extends React.Component {
                 }
                 <div className={styles.comment_row_comment}>
                     <FieldName name={"Comment"}/>
-                    <HelpIcon className={styles.help_icon}/>
+                    <Tooltip
+                        position={Position.LEFT}
+                        content={
+                            <TooltipContent
+                                title={help.title}
+                                content={help.content}
+                            />
+                        }
+                    >
+                        <HelpIcon className={styles.help_icon}/>
+                    </Tooltip>
                 </div>
 
                 {
