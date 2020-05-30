@@ -16,7 +16,7 @@ import actions from "./actions";
 import requirements from "./requirements-tab";
 import backlog from "./backlog";
 import defects from "./defects";
-import report from "./report-tab";
+import report from "./report";
 import userReports from "./user-reports";
 import contribTable from "./contrib-table";
 import defaults from "./default";
@@ -41,7 +41,7 @@ export default function pwsReducers() {
         requirementsTab: requirements,
         backlogTab: backlog,
         defectsTab: defects,
-        reportTab: report,
+        reportTab: report(),
         userReports: userReports,
         contribTable: contribTable,
         defaults: defaults,

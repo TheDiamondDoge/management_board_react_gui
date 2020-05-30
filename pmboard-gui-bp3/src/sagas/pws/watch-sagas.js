@@ -17,7 +17,9 @@ import * as cost from "../../actions/pws/cost-tab";
 import * as requirements from "../../actions/pws/requirements-tab";
 import * as backlog from "../../actions/pws/backlog";
 import * as defects from "../../actions/pws/defects";
-import * as report from "../../actions/pws/report-tab";
+import * as report from "../../actions/pws/report/report-tab";
+import * as reportImages from "../../actions/pws/report/images";
+import * as reportSnapshots from "../../actions/pws/report/snapshots";
 import * as userReport from "../../actions/pws/user-reports";
 import * as contribTable from "../../actions/pws/contrib-table";
 import * as defaults from "../../actions/pws/default";
@@ -172,15 +174,15 @@ function* watchUserReportSave() {
 }
 
 function* watchReportImagesLoad() {
-    yield takeEvery(report.REPORT_IMAGES_LOAD, sagas.loadReportImages)
+    yield takeEvery(reportImages.REPORT_IMAGES_LOAD, sagas.loadReportImages)
 }
 
 function* watchReportImagesUpload() {
-    yield takeLatest(report.REPORT_IMAGES_UPLOAD, sagas.uploadReportImages)
+    yield takeLatest(reportImages.REPORT_IMAGES_UPLOAD, sagas.uploadReportImages)
 }
 
 function* watchReportImageDelete() {
-    yield takeLeading(report.REPORT_IMAGES_DELETE, sagas.deleteReportImage)
+    yield takeLeading(reportImages.REPORT_IMAGES_DELETE, sagas.deleteReportImage)
 }
 
 function* watchGetLastUploadedCost() {
@@ -202,7 +204,7 @@ function* watchCustomPptFile() {
 }
 
 function* watchSnapshotsDataLoad() {
-    yield takeEvery(report.SNAPSHOT_LOAD, sagas.loadReportSnapshotsData);
+    yield takeEvery(reportSnapshots.SNAPSHOT_LOAD, sagas.loadReportSnapshotsData);
 }
 
 const exportSagas = [

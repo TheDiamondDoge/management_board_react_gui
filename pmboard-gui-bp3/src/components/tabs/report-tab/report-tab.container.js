@@ -1,5 +1,6 @@
 import {connect} from 'react-redux';
-import {deleteReportImage, loadReport, resetReport, uploadReportImages} from "../../../actions/pws/report-tab";
+import {loadReport, resetReport} from "../../../actions/pws/report/report-tab";
+import {deleteReportImage, resetReportImages, uploadReportImages} from "../../../actions/pws/report/images";
 import ReportTab from "./report-tab";
 import {resetRequirements} from "../../../actions/pws/requirements-tab";
 import {loadUserReports, resetUserReports, saveUserReport} from "../../../actions/pws/user-reports";
@@ -9,6 +10,7 @@ import {milestonesReset} from "../../../actions/pws/milestones";
 import {healthReset} from "../../../actions/pws/health-indicators";
 import {risksSummaryReset} from "../../../actions/pws/risks/risks-summary";
 import {addWarningToast} from "../../../actions/app/toaster";
+import {snapshotReset} from "../../../actions/pws/report/snapshots";
 
 function mapStateToProps(state) {
     return {
@@ -28,6 +30,8 @@ function mapDispatchToProps(dispatch) {
         loadData: (projectId) => dispatch(loadReport(projectId)),
         resetData: () => {
             dispatch(resetReport());
+            dispatch(resetReportImages());
+            dispatch(snapshotReset());
             dispatch(resetRequirements());
             dispatch(resetUserReports());
             dispatch(milestonesReset());

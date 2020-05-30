@@ -20,13 +20,14 @@ import * as cost from "../../actions/pws/cost-tab";
 import * as requirements from "../../actions/pws/requirements-tab";
 import * as backlog from "../../actions/pws/backlog";
 import * as defects from "../../actions/pws/defects";
-import * as report from "../../actions/pws/report-tab";
+import * as report from "../../actions/pws/report/report-tab";
+import * as reportSnapshots from "../../actions/pws/report/snapshots";
+import * as reportImages from "../../actions/pws/report/images";
 import * as userReports from "../../actions/pws/user-reports";
 import * as contribTable from "../../actions/pws/contrib-table";
 import * as defaults from "../../actions/pws/default";
 import * as exportPpt from "../../actions/pws/ppt-export";
-import {addDangerToast, addSuccessToast} from "../../actions/app/toaster";
-import {silentLoadProjectDefaults} from "../../actions/pws/default";
+import * as toasts from "../../actions/app/toaster";
 import {projectNameDecorator} from "../../util/common-decorators";
 
 export function* loadSummaryTab({projectId}) {
@@ -37,7 +38,7 @@ export function* loadSummaryTab({projectId}) {
         yield call(loadMilestones, {projectId, isShown: true});
     } catch (e) {
         yield put(summaryTab.summaryError(e));
-        yield put(addDangerToast("'Summary' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Summary' load failed. Please try again"));
     }
 }
 
@@ -51,7 +52,7 @@ export function* loadIndicatorsTab({projectId}) {
         yield call(loadQualityKpi, {projectId});
     } catch (e) {
         yield put(indicatorsTab.indicatorsError(e));
-        yield put(addDangerToast("'Indicators' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Indicators' load failed. Please try again"));
     }
 }
 
@@ -61,7 +62,7 @@ export function* loadInformationTab({projectId}) {
         yield put(infoTab.infoLoadSuccess(data));
     } catch (e) {
         yield put(infoTab.infoError(e));
-        yield put(addDangerToast("'Information' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Information' load failed. Please try again"));
     }
 }
 
@@ -71,7 +72,7 @@ export function* loadContributableProjects({projectId}) {
         yield put(contrib.contribLoadSuccess(data));
     } catch (e) {
         yield put(contrib.contribLoadFail(e));
-        yield put(addDangerToast("'List of contributing projects' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'List of contributing projects' load failed. Please try again"));
     }
 }
 
@@ -81,7 +82,7 @@ export function* loadContribTable({projectId}) {
         yield put(contribTable.loadContribTableSuccess(data));
     } catch (e) {
         yield put(contribTable.errorContribTable(e));
-        yield put(addDangerToast("'Contribution table' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Contribution table' load failed. Please try again"));
     }
 }
 
@@ -91,10 +92,10 @@ export function* loadContribTableFile({projectId, projectName}) {
         const filename = projectNameDecorator(projectName);
         yield call(FileSaver.saveAs, new Blob([data]), `${filename}_contrib.xlsx`);
         yield put(contribTable.exportContribTableSuccess())
-        yield put(addSuccessToast("Table exported"));
+        yield put(toasts.addSuccessToast("Table exported"));
     } catch (e) {
         yield put(contribTable.errorContribTable(e))
-        yield put(addSuccessToast("Export failed"));
+        yield put(toasts.addDangerToast("Export failed"));
     }
 }
 
@@ -104,7 +105,7 @@ export function* loadHealthIndicators({projectId}) {
         yield put(healthIndicators.healthLoadSuccess(data));
     } catch (e) {
         yield put(healthIndicators.healthError(e));
-        yield put(addDangerToast("'Health Indicators' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Health Indicators' load failed. Please try again"));
     }
 }
 
@@ -114,7 +115,7 @@ export function* loadMilestones({projectId, isShown}) {
         yield put(milestones.milestonesLoadSuccess(data));
     } catch (e) {
         yield put(milestones.milestonesError(e));
-        yield put(addDangerToast("'Milestones' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Milestones' load failed. Please try again"));
     }
 }
 
@@ -124,7 +125,7 @@ export function* loadIndicatorsRqs({projectId}) {
         yield put(rqIndicators.indicatorsRqsSuccess(data));
     } catch (e) {
         yield put(rqIndicators.indicatorsRqsError(e));
-        yield put(addDangerToast("'RQs indicators' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'RQs indicators' load failed. Please try again"));
     }
 }
 
@@ -134,7 +135,7 @@ export function* loadMilestonesKpi({projectId}) {
         yield put(milestonesKpi.milestonesKpiSuccess(data));
     } catch (e) {
         yield put(milestonesKpi.milestonesKpiError(e));
-        yield put(addDangerToast("'Milestones KPI' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Milestones KPI' load failed. Please try again"));
     }
 }
 
@@ -144,7 +145,7 @@ export function* loadDr4Kpi({projectId}) {
         yield put(dr4Kpi.dr4KpiSuccess(data));
     } catch (e) {
         yield put(dr4Kpi.dr4KpiError(e));
-        yield put(addDangerToast("'DR4 KPI' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'DR4 KPI' load failed. Please try again"));
     }
 }
 
@@ -154,7 +155,7 @@ export function* loadQualityKpi({projectId}) {
         yield put(qualityKpi.qualityKpiSuccess(data))
     } catch (e) {
         yield put(qualityKpi.qualityKpiError(e));
-        yield put(addDangerToast("'Quality KPI' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Quality KPI' load failed. Please try again"));
     }
 }
 
@@ -164,7 +165,7 @@ export function* loadBlcTab({projectId}) {
         yield put(blc.blcLoadSuccess(data.data))
     } catch (e) {
         yield put(blc.blcError(e));
-        yield put(addDangerToast("'BLC' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'BLC' load failed. Please try again"));
     }
 }
 
@@ -174,7 +175,7 @@ export function* loadRisks({projectId}) {
         yield put(risksTab.loadSuccess(data));
     } catch (e) {
         yield put(risksTab.riskError(e));
-        yield put(addDangerToast("'Risks' failed. Please try again"));
+        yield put(toasts.addDangerToast("'Risks' failed. Please try again"));
     }
 }
 
@@ -185,18 +186,18 @@ export function* loadRisksSummary({projectId}) {
         yield put(risksSummary.loadRisksSummarySuccess(data));
     } catch (e) {
         yield put(risksSummary.risksSummaryError(e));
-        yield put(addDangerToast("'Risks' failed. Please try again"));
+        yield put(toasts.addDangerToast("'Risks' failed. Please try again"));
     }
 }
 
 export function* saveRisk({projectId, data}) {
     try {
         yield call(api.saveRisks, projectId, data);
-        yield put(addSuccessToast("Saved"));
+        yield put(toasts.addSuccessToast("Saved"));
         yield call(loadRisks, {projectId});
     } catch (e) {
         yield put(risksTab.riskError(e));
-        yield put(addDangerToast("Save failed. Please try again"));
+        yield put(toasts.addDangerToast("Save failed. Please try again"));
     }
 }
 
@@ -204,11 +205,11 @@ export function* uploadRisksFile({projectId, data}) {
     try {
         const errors = yield call(api.uploadRisksFile, projectId, data);
         yield put(risksTab.riskUploadSucceed(errors.data));
-        yield put(addSuccessToast("File uploaded"));
+        yield put(toasts.addSuccessToast("File uploaded"));
         yield call(loadRisks, {projectId});
     } catch (e) {
         yield put(risksTab.riskError(e));
-        yield put(addDangerToast(`Risks upload failed. ${e.response.data.message}`));
+        yield put(toasts.addDangerToast(`Risks upload failed. ${e.response.data.message}`));
     }
 }
 
@@ -218,10 +219,10 @@ export function* downloadRisksFile({projectId, projectName}) {
         const filename = projectNameDecorator(projectName);
         yield call(FileSaver.saveAs, new Blob([data.data]), `${filename}_risks.xlsx`);
 
-        yield put(addSuccessToast("Risk file downloaded"))
+        yield put(toasts.addSuccessToast("Risk file downloaded"))
     } catch (e) {
         yield put(risksTab.riskError(e));
-        yield put(addDangerToast(`Risk download failed. ${e.response.data.message}`))
+        yield put(toasts.addDangerToast(`Risk download failed. ${e.response.data.message}`))
     }
 }
 
@@ -231,7 +232,7 @@ export function* loadRelatedRisksIds({projectId}) {
         yield put(risksIds.loadRiskIdsSuccess(data));
     } catch (e) {
         yield put(risksIds.riskIdsError(e));
-        yield put(addDangerToast("'Related Risks' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Related Risks' load failed. Please try again"));
     }
 }
 
@@ -241,7 +242,7 @@ export function* loadActions({projectId}) {
         yield put(actions.actionsLoadSuccess(data))
     } catch (e) {
         yield put(actions.actionsError(e));
-        yield put(addDangerToast("'Actions' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Actions' load failed. Please try again"));
     }
 }
 
@@ -251,7 +252,7 @@ export function* loadCost({projectId}) {
         yield put(cost.costLoadSuccess(data));
     } catch (e) {
         yield put(cost.costError(e));
-        yield put(addDangerToast("'Cost' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Cost' load failed. Please try again"));
     }
 }
 
@@ -259,10 +260,10 @@ export function* uploadCostFile({projectId, data}) {
     try {
         yield call(api.uploadCost, projectId, data);
         yield call(loadCost, {projectId});
-        yield put(addSuccessToast("File uploaded"));
+        yield put(toasts.addSuccessToast("File uploaded"));
     } catch (e) {
         yield put(cost.costError(e));
-        yield put(addDangerToast(`'Cost' upload failed. ${e.response.data.message}`));
+        yield put(toasts.addDangerToast(`'Cost' upload failed. ${e.response.data.message}`));
     }
 }
 
@@ -272,7 +273,7 @@ export function* loadRequirements({projectId}) {
         yield put(requirements.loadRequirementsSuccess(data));
     } catch (e) {
         yield put(requirements.errorRequirements(e));
-        yield put(addDangerToast("'Requirements' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Requirements' load failed. Please try again"));
     }
 }
 
@@ -282,7 +283,7 @@ export function* loadBacklogChart({projectId}) {
         yield put(backlog.loadBacklogChartSuccess(data));
     } catch (e) {
         yield put(backlog.errorBacklog(e));
-        yield put(addDangerToast("'Backlog chart' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Backlog chart' load failed. Please try again"));
     }
 }
 
@@ -292,7 +293,7 @@ export function* loadDefectsChart({projectId}) {
         yield put(defects.loadDefectsChartSuccess(data));
     } catch (e) {
         yield put(defects.errorDefects(e));
-        yield put(addDangerToast("'Defects chart' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Defects chart' load failed. Please try again"));
     }
 }
 
@@ -305,10 +306,10 @@ export function* loadReportTab({projectId}) {
         yield put(report.loadReportSuccess(data));
         yield call(loadRequirements, {projectId});
         yield call(loadUserReports, {projectId});
-        yield call(loadReportImages, {projectId})
+        yield call(loadReportImages, {projectId});
     } catch (e) {
         yield put(report.errorReport(e));
-        yield put(addDangerToast("'Report tab' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Report tab' load failed. Please try again"));
     }
 }
 
@@ -319,40 +320,40 @@ export function* loadUserReports({projectId}) {
         yield call(loadReportSnapshotsData, {projectId});
     } catch (e) {
         yield put(userReports.errorUserReports(e));
-        yield put(addDangerToast("Save failed. Please try again!111ASD" + e.response.data.message));
+        yield put(toasts.addDangerToast("Save failed. Please try again!111ASD" + e.response.data.message));
     }
 }
 
 export function* saveUserReport({projectId, data}) {
     try {
         yield call(api.saveUserReports, projectId, data);
-        yield put(addSuccessToast("Saved"));
+        yield put(toasts.addSuccessToast("Saved"));
         yield call(loadUserReports, {projectId});
     } catch (e) {
         yield put(userReports.errorUserReports(e));
-        yield put(addDangerToast("Save failed. Please try again"));
+        yield put(toasts.addDangerToast("Save failed. Please try again"));
     }
 }
 
 export function* saveAction({projectId, data}) {
     try {
         yield call(api.saveAction, projectId, data);
-        yield put(addSuccessToast("Saved"));
+        yield put(toasts.addSuccessToast("Saved"));
         yield call(loadActions, {projectId});
     } catch (e) {
         yield put(actions.actionsError(e));
-        yield put(addDangerToast("Save failed. Please try again"));
+        yield put(toasts.addDangerToast("Save failed. Please try again"));
     }
 }
 
 export function* deleteAction({uid, projectId}) {
     try {
         yield call(api.deleteAction, uid);
-        yield put(addSuccessToast("Deleted"));
+        yield put(toasts.addSuccessToast("Deleted"));
         yield call(loadActions, {projectId});
     } catch (e) {
         yield put(actions.actionsError(e));
-        yield put(addDangerToast("Delete failed. Please try again"));
+        yield put(toasts.addDangerToast("Delete failed. Please try again"));
     }
 }
 
@@ -362,90 +363,90 @@ export function* exportActions({projectId, projectName}) {
         const filename = projectNameDecorator(projectName);
         yield call(FileSaver.saveAs, new Blob([data]), `${filename}_actions.xlsx`);
         yield put(actions.actionsExportSuccess());
-        yield put(addSuccessToast("Actions exported"));
+        yield put(toasts.addSuccessToast("Actions exported"));
     } catch (e) {
         yield put(actions.actionsError(e));
-        yield put(addDangerToast("Actions export failed"));
+        yield put(toasts.addDangerToast("Actions export failed"));
     }
 }
 
 export function* saveHealthIndicators({projectId, data}) {
     try {
         yield call(api.saveHealthIndicatorsPost, projectId, data);
-        yield put(addSuccessToast("Saved"));
+        yield put(toasts.addSuccessToast("Saved"));
         yield call(loadHealthIndicators, {projectId});
     } catch (e) {
         yield put(healthIndicators.healthError(e));
-        yield put(addDangerToast("Save failed. Please try again"));
+        yield put(toasts.addDangerToast("Save failed. Please try again"));
     }
 }
 
 export function* saveIndicatorsRqs({projectId, data}) {
     try {
         yield call(api.saveIndicatorsRqs, projectId, data);
-        yield put(addSuccessToast("Saved"));
+        yield put(toasts.addSuccessToast("Saved"));
         yield call(loadIndicatorsRqs, {projectId});
         yield call(loadDr4Kpi, {projectId});
     } catch (e) {
         yield put(rqIndicators.indicatorsRqsError(e));
-        yield put(addDangerToast("Save failed. Please try again"));
+        yield put(toasts.addDangerToast("Save failed. Please try again"));
     }
 }
 
 export function* saveIndicatorsQuality({projectId, data}) {
     try {
         yield call(api.saveQualityKpi, projectId, data);
-        yield put(addSuccessToast("Saved"));
+        yield put(toasts.addSuccessToast("Saved"));
         yield call(loadQualityKpi, {projectId});
     } catch (e) {
         yield put(qualityKpi.qualityKpiError(e));
-        yield put(addDangerToast("Save failed. Please try again"));
+        yield put(toasts.addDangerToast("Save failed. Please try again"));
     }
 }
 
 export function* saveInformationTab({projectId, data}) {
     try {
         yield call(api.saveInformationTab, projectId, data);
-        yield put(addSuccessToast("Information saved"));
-        yield put(silentLoadProjectDefaults(projectId));
+        yield put(toasts.addSuccessToast("Information saved"));
+        yield put(defaults.silentLoadProjectDefaults(projectId));
         yield call(loadInformationTab, {projectId});
         yield call(loadMilestones, {projectId});
     } catch (e) {
         yield put(infoTab.infoError(e));
-        yield put(addDangerToast("Save failed. Please try again"));
+        yield put(toasts.addDangerToast("Save failed. Please try again"));
     }
 }
 
 export function* saveMilestones({projectId, data}) {
     try {
         yield call(api.saveMilestones, projectId, data);
-        yield put(addSuccessToast("Milestones saved"));
+        yield put(toasts.addSuccessToast("Milestones saved"));
         yield call(loadMilestones, {projectId});
     } catch (e) {
         yield put(milestones.milestonesError(e));
-        yield put(addDangerToast("Save failed. Please try again"));
+        yield put(toasts.addDangerToast("Save failed. Please try again"));
     }
 }
 
 export function* saveBlcTabIndicators({projectId, data}) {
     try {
         yield call(api.saveBlcIndicators, projectId, data);
-        yield put(addSuccessToast("Saved"));
+        yield put(toasts.addSuccessToast("Saved"));
         yield call(loadBlcTab, {projectId});
     } catch (e) {
         yield put(blc.blcError(e));
-        yield put(addDangerToast("Save failed. Please try again"));
+        yield put(toasts.addDangerToast("Save failed. Please try again"));
     }
 }
 
 export function* saveBlcTabComments({projectId, data}) {
     try {
         yield call(api.saveBlcComments, projectId, data);
-        yield put(addSuccessToast("Saved"));
+        yield put(toasts.addSuccessToast("Saved"));
         yield call(loadBlcTab, {projectId});
     } catch (e) {
         yield put(blc.blcError(e));
-        yield put(addDangerToast("Save failed. Please try again"));
+        yield put(toasts.addDangerToast("Save failed. Please try again"));
     }
 }
 
@@ -456,7 +457,7 @@ export function* getLastUploadedCost({projectId, projectName}) {
         yield call(FileSaver.saveAs, new Blob([data.data]), `${filename}_cost.xlsx`);
     } catch (e) {
         yield put(cost.costError(e));
-        yield put(addDangerToast("Error. Can`t get last updated cost file."));
+        yield put(toasts.addDangerToast("Error. Can`t get last updated cost file."));
     }
 }
 
@@ -467,7 +468,7 @@ export function* getLastUploadedRisks({projectId, projectName}) {
         yield call(FileSaver.saveAs, new Blob([data.data]), `${filename}_risks.xlsx`);
     } catch (e) {
         yield put(risksTab.riskError(e));
-        yield put(addDangerToast("Error. Can`t get last updated risksTab file"));
+        yield put(toasts.addDangerToast("Error. Can`t get last updated risksTab file"));
     }
 }
 
@@ -477,7 +478,7 @@ export function* loadProjectDefaults({projectId}) {
         yield put(defaults.loadProjectDefaultsSuccess(data));
     } catch (e) {
         yield put(defaults.errorProjectDefaults(e));
-        yield put(addDangerToast("'Project defaults' load failed. Please try again"));
+        yield put(toasts.addDangerToast("'Project defaults' load failed. Please try again"));
     }
 }
 
@@ -488,49 +489,49 @@ export function* loadPptFile({projectId, pptType, snapshotId}) {
         yield call(FileSaver.saveAs, new Blob([file.data]), `${projectId}_${pptType}${snapshotName}.pptx`);
     } catch (e) {
         yield put(exportPpt.exportFailed());
-        yield put(addDangerToast("PowerPoint export failed. Please try again"));
+        yield put(toasts.addDangerToast("PowerPoint export failed. Please try again"));
     }
 }
 
 export function* loadReportSnapshotsData({projectId}) {
     try {
         const {data} = yield call(api.getSnapshotsData, projectId);
-        yield put(report.loadSnapshotSuccess(data));
+        yield put(reportSnapshots.loadSnapshotSuccess(data));
     } catch (e) {
-        yield put(report.errorReport(e));
-        yield put(addDangerToast("'Report snapshots' load failed."));
+        yield put(reportSnapshots.snapshotError(e));
+        yield put(toasts.addDangerToast("'Report snapshots' load failed."));
     }
 }
 
 export function* loadReportImages({projectId}) {
     try {
         const {data} = yield call(api.loadReportImages, projectId);
-        yield put(report.loadReportImagesSuccess(data));
+        yield put(reportImages.loadReportImagesSuccess(data));
     } catch (e) {
-        yield put(report.reportImagesError(e));
-        yield put(addDangerToast("'Report images' load failed"));
+        yield put(reportImages.reportImagesError(e));
+        yield put(toasts.addDangerToast("'Report images' load failed"));
     }
 }
 
 export function* uploadReportImages({projectId, files}) {
     try {
         yield call(api.uploadReportImages, projectId, files);
-        yield put(report.uploadReportImagesSuccess());
-        yield put(addSuccessToast("Images uploaded"));
+        yield put(reportImages.uploadReportImagesSuccess());
+        yield put(toasts.addSuccessToast("Images uploaded"));
         yield call(loadReportImages, {projectId});
     } catch (e) {
-        yield put(report.reportImagesError(e));
-        yield put(addDangerToast(`Upload failed. ${e.response.data.message}`));
+        yield put(reportImages.reportImagesError(e));
+        yield put(toasts.addDangerToast(`Upload failed. ${e.response.data.message}`));
     }
 }
 
 export function* deleteReportImage({projectId, filename}) {
     try {
         yield call(api.deleteReportImage, projectId, filename);
-        yield put(addSuccessToast("Image deleted"));
+        yield put(toasts.addSuccessToast("Image deleted"));
         yield call(loadReportImages, {projectId});
     } catch (e) {
-        yield put(report.errorReport(e));
-        yield put(addDangerToast("Deletion failed"));
+        yield put(reportImages.reportImagesError(e));
+        yield put(toasts.addDangerToast("Deletion failed"));
     }
 }

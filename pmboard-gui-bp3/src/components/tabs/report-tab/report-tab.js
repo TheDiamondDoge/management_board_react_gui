@@ -30,21 +30,25 @@ export default class ReportTab extends React.Component {
     }
 
     render() {
-        const {loading} = this.props.report;
+        console.log(this.props)
+        const {loading} = this.props.report.tab;
         if (loading) {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
             this.projectId = this.props.defaults.payload.projectId;
             const validationParams = this.props.defaults.payload;
             const renderHelper = new RenderFieldHelper(renderFields, validationParams);
-            const {updatedOn, projectName, projectManager} = this.props.report.payload;
+            const {updatedOn, projectName, projectManager} = this.props.report.tab.payload;
             const {payload: data, loading: risksLoading} = this.props.risks;
             const {payload: milestones, loading: milestonesLoading} = this.props.milestones;
             const {payload: indicators, loading: indLoading} = this.props.indicators;
             const risksObj = this.getRiskObj(data);
             const {loading: rqsLoading, payload: rqsPayload} = this.props.rqs;
             const {loading: userReportsLoading, payload: userReportsPayload} = this.props.userReports;
-            const {snapshots, snapshotLoading, images, imagesLoading} = this.props.report;
+            const images = this.props.report.images.payload;
+            const imagesLoading = this.props.report.images.loading;
+            const snapshots = this.props.report.snapshots.payload;
+            const snapshotLoading = this.props.report.snapshots.loading;
             return (
                 <>
                     <CustomCard>
