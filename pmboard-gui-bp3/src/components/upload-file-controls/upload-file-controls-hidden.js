@@ -46,8 +46,14 @@ export default class UploadFileControlsHidden extends React.PureComponent {
     onFilePick = (e) => {
         const filesLimit = this.props.amount;
         const files = e.currentTarget.files;
+        const {maxFileSize} = this.props;
         if (files.length > filesLimit) {
-            this.props.onAmountExceed();
+            const message = `Total amount of images should not exceed ${filesLimit}`;
+            this.props.onError(message);
+        } else if (!this.checkFilesSize(files, maxFileSize)) {
+            const fileSizeMb = maxFileSize / 8 / 1024 / 1024;
+            const message = `File size should be less than ${fileSizeMb} Mb`;
+            this.props.onError(message);
         } else {
             this.setState(
                 {files: files},
@@ -55,6 +61,16 @@ export default class UploadFileControlsHidden extends React.PureComponent {
             );
         }
     };
+
+    checkFilesSize = (files, maxFileSize) => {
+        for (let i = 0; i < files.length; i++) {
+            if (files[i].size > maxFileSize) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     handleFormSubmit = (e) => {
         e.preventDefault();
@@ -73,10 +89,12 @@ UploadFileControlsHidden.propTypes = {
     uploadRef: PropTypes.object.isRequired,
     onSubmit: PropTypes.func.isRequired,
     amount: PropTypes.number,
-    onAmountExceed: PropTypes.func,
+    onError: PropTypes.func,
+    maxFileSize: PropTypes.number
 };
 
 UploadFileControlsHidden.defaultProps = {
     onAmountExceed: () => {},
-    amount: 1
+    amount: 1,
+    maxFileSize: 8 * 1024 * 1024
 };

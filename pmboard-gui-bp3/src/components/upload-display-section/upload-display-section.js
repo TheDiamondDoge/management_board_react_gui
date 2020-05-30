@@ -22,6 +22,7 @@ export default class UploadDisplaySection extends React.Component {
         const {buttonName, amount, files, onUpload, isUploading} = this.props;
         const title = `${buttonName} (max amount: ${amount})`;
         const confirmBody = "It is a permanent operation. You will not be able to restore deleted image.";
+        const maxFileSize = 8 * 1024 * 1024;
         const buttonClasses = classNames({[styles.section]: files.length !== 0});
         return (
             <div>
@@ -36,15 +37,14 @@ export default class UploadDisplaySection extends React.Component {
                 {
                     files.map((file) => {
                         return (
-                            <>
+                            <React.Fragment key={file.filename}>
                                 <Divider />
                                 <UploadedImage
                                     className={styles.section}
-                                    key={file.filename}
                                     src={file.base64Image}
                                     onDelete={() => this.toggleConfirmDialog(file.filename)}
                                 />
-                            </>
+                            </React.Fragment>
                         )
                     })
                 }
@@ -52,7 +52,8 @@ export default class UploadDisplaySection extends React.Component {
                     onSubmit={onUpload}
                     uploadRef={this.uploadRef}
                     amount={amount}
-                    onAmountExceed={this.props.onAmountExceed}
+                    onError={this.props.onError}
+                    maxFileSize={maxFileSize}
                 />
                 <ConfirmationPopup
                     isOpen={this.state.isConfirmPopupOpen}
@@ -105,7 +106,7 @@ UploadDisplaySection.propTypes = {
     isUploading: PropTypes.bool,
     amount: PropTypes.number,
     files: PropTypes.arrayOf(PropTypes.object),
-    onAmountExceed: PropTypes.func,
+    onError: PropTypes.func,
     onUpload: PropTypes.func,
     onDelete: PropTypes.func,
 };

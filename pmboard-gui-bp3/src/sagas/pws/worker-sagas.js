@@ -320,7 +320,7 @@ export function* loadUserReports({projectId}) {
         yield call(loadReportSnapshotsData, {projectId});
     } catch (e) {
         yield put(userReports.errorUserReports(e));
-        yield put(toasts.addDangerToast("Save failed. Please try again!111ASD" + e.response.data.message));
+        yield put(toasts.addDangerToast("Save failed. Please try again" + e.response.data.message));
     }
 }
 

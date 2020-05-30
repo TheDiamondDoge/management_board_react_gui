@@ -12,7 +12,7 @@ import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {
     HealthIndicatorsShape,
     MilestoneShape,
-    ProjectDefaults,
+    ProjectDefaults, ReportImagesTypes, ReportSnapshotsTypes, ReportTabTypes,
     RiskMinimal,
 } from "../../../util/custom-types";
 import RqsReportList from "../../rqs-report-list/rqs-report-list";
@@ -30,7 +30,6 @@ export default class ReportTab extends React.Component {
     }
 
     render() {
-        console.log(this.props)
         const {loading} = this.props.report.tab;
         if (loading) {
             return <CustomCard><LoadingSpinner/></CustomCard>
@@ -137,7 +136,7 @@ export default class ReportTab extends React.Component {
                             files={images}
                             onUpload={(formData) => this.props.uploadImages(formData, this.projectId)}
                             onDelete={(filename) => this.props.deleteImage(filename, this.projectId)}
-                            onAmountExceed={this.handleOnAmountExceed}
+                            onError={this.handleOnAmountExceed}
                         />
                     </CustomCard>
                 </>
@@ -145,8 +144,7 @@ export default class ReportTab extends React.Component {
         }
     }
 
-    handleOnAmountExceed = () => {
-        const message = `Total amount of images should not exceed ${this.amount}`;
+    handleOnAmountExceed = (message) => {
         this.props.pushWarningToast(message);
     };
 
@@ -199,15 +197,8 @@ ReportTab.propTypes = {
     uploadImages: PropTypes.func,
     deleteImage: PropTypes.func,
     report: PropTypes.shape({
-        loading: PropTypes.bool.isRequired,
-        payload: PropTypes.shape({
-            milestones: PropTypes.arrayOf(MilestoneShape),
-            indicators: PropTypes.shape({
-                schedule: PropTypes.number,
-                scope: PropTypes.number,
-                quality: PropTypes.number,
-                cost: PropTypes.number
-            }),
-        })
-    }).isRequired
+        tab: ReportTabTypes,
+        images: ReportImagesTypes,
+        snapshots: ReportSnapshotsTypes
+    })
 };

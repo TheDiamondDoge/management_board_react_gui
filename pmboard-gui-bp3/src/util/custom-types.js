@@ -258,3 +258,32 @@ export const ExcelErrorTypes = PropTypes.shape({
     rowIndex: PropTypes.number.isRequired,
     message: PropTypes.string.isRequired,
 });
+
+export const ReportTabTypes = PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    payload: PropTypes.shape({
+        projectManager: PropTypes.string,
+        projectName: PropTypes.string,
+        updatedOn: PropTypes.string,
+    }),
+});
+
+export const ReportImagesTypes = PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    payload: PropTypes.arrayOf(
+        PropTypes.shape({
+            filename: PropTypes.string.isRequired,
+            base64Image: PropTypes.string.isRequired,
+        })
+    )
+});
+
+export const ReportSnapshotsTypes = PropTypes.shape({
+    loading: PropTypes.bool.isRequired,
+    payload: PropTypes.arrayOf(
+        PropTypes.shape({
+            reportId: PropTypes.number.isRequired,
+            timestamp: PropTypes.string.isRequired,
+        })
+    )
+}).isRequired;
