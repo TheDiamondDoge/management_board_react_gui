@@ -12,7 +12,7 @@ import renderFields from "./fields";
 import {ProjectDefaults} from "../../../util/custom-types";
 import RenderFieldHelper from "../../../util/render-field-helper";
 import styles from "./actions.module.css";
-import {Button, Intent, Icon} from "@blueprintjs/core";
+import {Intent, Icon} from "@blueprintjs/core";
 import ConfirmationPopup from "../../confirmation-popup/confirmation-popup";
 import {Messages} from "../../../util/constants";
 
@@ -66,7 +66,9 @@ export default class Actions extends React.Component {
                         title={confirmTitle}
                         icon={<Icon icon={"warning-sign"} intent={Intent.DANGER}/>}
                         body={confirmBody}
-                        footer={this.getConfirmFooter()}
+                        onConfirm={() => this.handleDeleteAction(this.actionUid)}
+                        onCancel={this.toggleConfirmDialog}
+                        confirmLabel={"Delete"}
                     />
                 </CustomCard>
             )
@@ -92,22 +94,6 @@ export default class Actions extends React.Component {
                 }
                 return <TableFooter {...props}/>
             }
-        )
-    }
-
-    getConfirmFooter() {
-        return (
-            <>
-                <Button onClick={() => this.handleDeleteAction(this.actionUid)}>
-                    Delete
-                </Button>
-                <Button
-                    intent={Intent.DANGER}
-                    onClick={this.toggleConfirmDialog}
-                >
-                    Cancel
-                </Button>
-            </>
         )
     }
 

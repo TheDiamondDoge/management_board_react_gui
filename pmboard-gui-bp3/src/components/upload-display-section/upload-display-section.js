@@ -58,29 +58,15 @@ export default class UploadDisplaySection extends React.Component {
                 <ConfirmationPopup
                     isOpen={this.state.isConfirmPopupOpen}
                     onClose={this.toggleConfirmDialog}
+                    onConfirm={this.handleDeletion}
+                    onCancel={this.toggleConfirmDialog}
                     title={"Deletion confirmation"}
                     icon={<Icon icon={"warning-sign"} intent={Intent.DANGER}/>}
                     body={confirmBody}
-                    footer={this.getConfirmFooter()}
+                    confirmLabel={"Delete"}
                 />
             </div>
         );
-    }
-
-    getConfirmFooter() {
-        return (
-            <>
-                <Button onClick={this.handleDeletion}>
-                    Delete
-                </Button>
-                <Button
-                    intent={Intent.DANGER}
-                    onClick={this.toggleConfirmDialog}
-                >
-                    Cancel
-                </Button>
-            </>
-        )
     }
 
     handleDeletion = () => {
