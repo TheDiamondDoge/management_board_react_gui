@@ -101,15 +101,22 @@ export default class World extends React.Component {
                 <br/>
 
                 <MultiSelect
-
                     items={[{name: "A", id: 1}, {name: "B", id: 2}, {name: "C", id: 3}]}
-                    itemRenderer={(item, {handleClick}) =>
-                        <MenuItem
-                            key={item.id}
-                            text={item.name}
-                            onClick={handleClick}
-                            active={this.isSelected(item)}
-                        />
+                    itemListPredicate={(q, w) => {
+                        return w.filter(item => item.name.toLowerCase().includes(q.toLowerCase()))
+                    }}
+                    itemRenderer={(item, x) => {
+                        // console.log(x);
+                        const {handleClick} = x;
+                        return (
+                            <MenuItem
+                                key={item.id}
+                                text={item.name}
+                                onClick={handleClick}
+                                active={this.isSelected(item)}
+                            />
+                        )
+                    }
                     }
                     selectedItems={this.state.selectedItems}
                     onItemSelect={(elem) => {
@@ -169,7 +176,7 @@ export default class World extends React.Component {
                                                     }
                                                 }}
                                                 popoverProps={{
-                                                    onOpening: ()=> alert(1234),
+                                                    onOpening: () => alert(1234),
                                                     popoverClassName: styles.container,
                                                 }}
                                             />

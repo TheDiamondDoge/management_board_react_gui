@@ -413,6 +413,10 @@ export default class InfoTab extends React.Component {
                     shouldMultiselectRender &&
                     <MultiSelect
                         items={payload}
+                        itemListPredicate={(inputVal, itemArr) => {
+                            return itemArr.filter(item => String(item.projectName).toLowerCase()
+                                .includes(inputVal.toLowerCase()))
+                        }}
                         itemRenderer={(item, {handleClick}) =>
                             <MenuItem
                                 key={item.projectName}
@@ -425,6 +429,7 @@ export default class InfoTab extends React.Component {
                         onItemSelect={(elem) => {
                             editProjectList(this.addProject(elem, value))
                         }}
+                        noResults={<MenuItem disabled text="No results." />}
                         tagRenderer={item => item}
                         tagInputProps={
                             {

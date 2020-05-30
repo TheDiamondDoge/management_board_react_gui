@@ -2,6 +2,7 @@ import React from 'react';
 import {MenuItem} from "@blueprintjs/core";
 import {MultiSelect} from "@blueprintjs/select";
 import PropTypes from "prop-types";
+import styles from "./select-list.module.css";
 
 //TODO: Idea => If more than 2-3 elems selected - change them on "# selected". Add x button to each elem in list
 export default class SelectList extends React.Component {
@@ -26,6 +27,9 @@ export default class SelectList extends React.Component {
             <MultiSelect
                 {...otherProps}
                 items={items}
+                itemListPredicate={(inputVal, itemArr) => {
+                    return itemArr.filter(item => String(item.label).toLowerCase().includes(inputVal.toLowerCase()))
+                }}
                 itemRenderer={(item, {handleClick}) => {
                     const key = item.value;
                     const text = this.emptyToNone(item.label);
@@ -42,12 +46,16 @@ export default class SelectList extends React.Component {
                 }
                 selectedItems={selectedItems}
                 onItemSelect={onItemSelect}
+                noResults={<MenuItem disabled text="No results." />}
                 tagRenderer={item => item.label ? item.label : empty}
                 tagInputProps={{
                     onRemove: (label) => {
                         const objToRemove = this.getObjByLabel(label);
                         return onRemove(objToRemove);
                     }
+                }}
+                popoverProps={{
+                    popoverClassName: styles.container
                 }}
             />
         );
