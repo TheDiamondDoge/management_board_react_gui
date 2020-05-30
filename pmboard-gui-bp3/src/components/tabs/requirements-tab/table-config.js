@@ -7,6 +7,14 @@ export default [
         id: "reqId",
         headerName: "Req-Id",
         searchType: "input",
+        style: {
+            column: {
+                maxWidth: "100px"
+            },
+            header: {
+                maxWidth: "100px"
+            }
+        },
         decorator: function (value) {
             const url = `http://www.jira.com/${value}`;
             return <SafeUrl url={url} label={value} />;
@@ -16,6 +24,14 @@ export default [
         id: "headline",
         headerName: "Headline",
         searchType: "input",
+        style: {
+            column: {
+                width: "300px"
+            },
+            header: {
+                width: "300px"
+            }
+        },
     },
     {
         id: "priority",
@@ -37,5 +53,13 @@ export default [
         id: "components",
         headerName: "Components",
         searchType: "input",
+        style: {
+            column: {
+                width: "300px"
+            },
+            header: {
+                width: "300px"
+            }
+        },
     },
 ];

@@ -73,7 +73,7 @@ export default class CostTab extends React.Component {
                                 />
                             </div>
                         }
-                        <CostTable tableName={"Effort"} data={charged}/>
+                        <CostTable tableName={"Manpower (charged)"} data={charged}/>
                     </CustomCard>
                     <CustomCard>
                         <CostTable tableName={"CAPEX/OPEX"} data={capex}/>

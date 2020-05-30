@@ -140,6 +140,8 @@ export default class EnchantedTable extends React.Component {
         if (obj.hasOwnProperty("style")) {
             if (obj.style.hasOwnProperty(type)) {
                 return obj.style[type];
+            } else {
+                return {};
             }
         } else {
             return {};
