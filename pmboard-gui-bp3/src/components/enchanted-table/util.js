@@ -7,7 +7,7 @@ export function getObjByLabel(label, selectedItems) {
 }
 
 export function removeSelectedObjByLabel(obj, arr) {
-    return  arr.filter(elem => obj.label !== elem.label);
+    return  arr.filter(elem => String(obj.label) !== String(elem.label));
 }
 
 export function renderValue(value, decorator, row) {

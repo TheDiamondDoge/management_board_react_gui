@@ -172,7 +172,6 @@ export default class Requirements extends React.Component {
     };
 
     handleSubmitWithErrors = (formikProps) => {
-        console.log(formikProps)
         if (!formikProps.isValid && !formikProps.isSubmitting) {
             this.props.onSubmitErrorCallback(Messages.FORM_SUBMIT_ERROR)
         }

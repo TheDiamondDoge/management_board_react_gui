@@ -1,0 +1,8 @@
+.tabs {
+    justify-content: center;
+    height: calc(100% - 150px);
+}
+
+.container {
+    height: 100%;
+}

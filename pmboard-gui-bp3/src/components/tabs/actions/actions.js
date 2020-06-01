@@ -28,8 +28,6 @@ export default class Actions extends React.Component {
         this.onSubmitErrorHandler = () => this.props.pushWarningToast(Messages.FORM_SUBMIT_ERROR);
     }
 
-    actionUid = null;
-
     render() {
         const {loading} = this.props.actions;
         if (loading) {

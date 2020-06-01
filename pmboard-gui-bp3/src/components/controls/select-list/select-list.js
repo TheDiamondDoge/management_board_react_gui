@@ -21,7 +21,6 @@ export default class SelectList extends React.Component {
         let {items, selectedItems, ...otherProps} = other;
         items = items ? items : [];
         selectedItems = selectedItems ? selectedItems : [];
-        const {empty} = this.state.label;
 
         return (
             <MultiSelect
@@ -47,7 +46,7 @@ export default class SelectList extends React.Component {
                 selectedItems={selectedItems}
                 onItemSelect={onItemSelect}
                 noResults={<MenuItem disabled text="No results." />}
-                tagRenderer={item => item.label ? item.label : empty}
+                tagRenderer={item => this.emptyToNone(item.label)}
                 tagInputProps={{
                     onRemove: (label) => {
                         const objToRemove = this.getObjByLabel(label);
@@ -66,7 +65,7 @@ export default class SelectList extends React.Component {
         label = label === empty ? "" : label;
         const selectedItems = this.props.selectedItems || [];
         for (let i = 0; i < selectedItems.length; i++) {
-            if (selectedItems[i].label === label) {
+            if (String(selectedItems[i].label) === String(label)) {
                 return selectedItems[i];
             }
         }
@@ -74,7 +73,13 @@ export default class SelectList extends React.Component {
 
     emptyToNone(label) {
         const {empty} = this.state.label;
-        return label ? label : empty;
+        if (label) {
+            return label
+        } else if (label === 0) {
+            return String(label)
+        } else {
+            return empty;
+        }
     }
 }
 

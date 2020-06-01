@@ -14,6 +14,7 @@ FocusStyleManager.onlyShowFocusOnTabs();
 
 const Pws = React.lazy(() => import("../pages/pws/pws.container"));
 const World = React.lazy(() => import("../test_comps/world"));
+const Projects = React.lazy(() => import("../pages/list-of-projects/list-of-projects"));
 const Test = React.lazy(() => import("../test_comps/test"));
 const suspenseFallback = <StatusContainer><LoadingStatus/></StatusContainer>;
 
@@ -31,9 +32,9 @@ export default function App(props) {
             <WorkingArea className={styles.page}>
                 <Router>
                     <Suspense fallback={suspenseFallback}>
-                        <Route path="/" exact component={World}/>
+                        <Route path="/" exact component={Projects}/>
                         <Route path="/pws" exact component={Pws}/>
-                        <Route path="/test" exact component={Test}/>
+                        <Route path="/test" exact component={World}/>
                     </Suspense>
                 </Router>
             </WorkingArea>

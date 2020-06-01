@@ -24,6 +24,7 @@ import * as userReport from "../../actions/pws/user-reports";
 import * as contribTable from "../../actions/pws/contrib-table";
 import * as defaults from "../../actions/pws/default";
 import * as pptExport from "../../actions/pws/ppt-export";
+import * as projectsList from "../../actions/pws/projects-list";
 
 function* watchSummaryTabLoad() {
     yield takeEvery(summaryTab.SUMMARY_LOAD, sagas.loadSummaryTab);
@@ -207,6 +208,10 @@ function* watchSnapshotsDataLoad() {
     yield takeEvery(reportSnapshots.SNAPSHOT_LOAD, sagas.loadReportSnapshotsData);
 }
 
+function* watchProjectsListLoad() {
+    yield takeEvery(projectsList.PROJECTS_LOAD, sagas.loadProjectsList);
+}
+
 const exportSagas = [
     fork(watchSummaryTabLoad),
     fork(watchIndicatorsTabLoad),
@@ -252,7 +257,8 @@ const exportSagas = [
     fork(watchSnapshotsDataLoad),
     fork(watchReportImagesLoad),
     fork(watchReportImagesUpload),
-    fork(watchReportImageDelete)
+    fork(watchReportImageDelete),
+    fork(watchProjectsListLoad)
 ];
 
 export default exportSagas;

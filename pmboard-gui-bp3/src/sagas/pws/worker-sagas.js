@@ -27,8 +27,10 @@ import * as userReports from "../../actions/pws/user-reports";
 import * as contribTable from "../../actions/pws/contrib-table";
 import * as defaults from "../../actions/pws/default";
 import * as exportPpt from "../../actions/pws/ppt-export";
+import * as projectsList from "../../actions/pws/projects-list";
 import * as toasts from "../../actions/app/toaster";
 import {projectNameDecorator} from "../../util/common-decorators";
+import {addDangerToast} from "../../actions/app/toaster";
 
 export function* loadSummaryTab({projectId}) {
     try {
@@ -534,5 +536,15 @@ export function* deleteReportImage({projectId, filename}) {
     } catch (e) {
         yield put(reportImages.reportImagesError(e));
         yield put(toasts.addDangerToast("Deletion failed"));
+    }
+}
+
+export function* loadProjectsList({isEpm, status}) {
+    try {
+        const {data} = yield call(api.getProjectsList, isEpm, status);
+        yield put(projectsList.loadProjectsSuccess(data));
+    } catch (e) {
+        yield put(projectsList.projectsError(e));
+        yield put(addDangerToast("Projects load failed"))
     }
 }

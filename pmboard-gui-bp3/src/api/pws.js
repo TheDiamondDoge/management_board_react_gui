@@ -183,3 +183,7 @@ export const uploadReportImages = (projectID, file) => (
 export const deleteReportImage = (projectID, filename) => (
     axios.delete(`http://localhost:8080/api/projects/${projectID}/tabs/report/images/${filename}`)
 );
+
+export const getProjectsList = (isEpm, status) => (
+    axios.get(`http://localhost:8080/api/projects/tableview?isEPM=${!!isEpm}&status=${status}`)
+);
