@@ -21,6 +21,7 @@ export default class Actions extends React.Component {
         super(props);
 
         this.state = {
+            currentActionUid: -1,
             isDialogOpen: false
         }
 
@@ -66,7 +67,7 @@ export default class Actions extends React.Component {
                         title={confirmTitle}
                         icon={<Icon icon={"warning-sign"} intent={Intent.DANGER}/>}
                         body={confirmBody}
-                        onConfirm={() => this.handleDeleteAction(this.actionUid)}
+                        onConfirm={() => this.handleDeleteAction(this.state.currentActionUid)}
                         onCancel={this.toggleConfirmDialog}
                         confirmLabel={"Delete"}
                     />
@@ -97,7 +98,8 @@ export default class Actions extends React.Component {
         )
     }
 
-    toggleConfirmDialog = () => {
+    toggleConfirmDialog = (actionUid) => {
+        this.setState({currentActionUid: actionUid});
         this.setState((prev) => ({isDialogOpen: !prev.isDialogOpen}))
     }
 
@@ -105,11 +107,10 @@ export default class Actions extends React.Component {
         if (renderHelper.displayOrNot("controls")) {
             return (
                 (menuFuncs) => {
-                    this.actionUid = menuFuncs.getRow().uid;
                     return (
                         <ContextMenu
                             onEdit={menuFuncs.editRow}
-                            onDelete={this.toggleConfirmDialog}
+                            onDelete={() => this.toggleConfirmDialog(menuFuncs.getRow().uid)}
                         />
                     )
                 }
