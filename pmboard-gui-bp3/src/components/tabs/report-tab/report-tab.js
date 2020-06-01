@@ -48,6 +48,7 @@ export default class ReportTab extends React.Component {
             const imagesLoading = this.props.report.images.loading;
             const snapshots = this.props.report.snapshots.payload;
             const snapshotLoading = this.props.report.snapshots.loading;
+            const {isExportInProcess} = this.props;
             return (
                 <>
                     <CustomCard>
@@ -62,6 +63,7 @@ export default class ReportTab extends React.Component {
                                 onClickElement={this.props.downloadPptReport}
                                 snapshots={snapshots}
                                 snapshotLoading={snapshotLoading}
+                                buttonLoading={isExportInProcess}
                             />
                         </div>
                         {indLoading
@@ -200,5 +202,6 @@ ReportTab.propTypes = {
         tab: ReportTabTypes,
         images: ReportImagesTypes,
         snapshots: ReportSnapshotsTypes
-    })
+    }),
+    isExportInProcess: PropTypes.bool,
 };

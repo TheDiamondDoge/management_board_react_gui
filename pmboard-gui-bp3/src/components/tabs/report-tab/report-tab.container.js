@@ -22,6 +22,7 @@ function mapStateToProps(state) {
         indicators: state.pws.healthIndicators,
         risks: state.pws.risks.summary,
         pptLoading: state.pws.pptReport.loading,
+        isExportInProcess: state.pws.pptReport.loading,
     }
 }
 

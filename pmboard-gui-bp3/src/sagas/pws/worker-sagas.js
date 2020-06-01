@@ -487,6 +487,7 @@ export function* loadPptFile({projectId, pptType, snapshotId}) {
         const file = yield call(api.getPptCustomFile, projectId, pptType, snapshotId);
         const snapshotName = snapshotId ? `_snapshot_${snapshotId}` : "";
         yield call(FileSaver.saveAs, new Blob([file.data]), `${projectId}_${pptType}${snapshotName}.pptx`);
+        yield put(exportPpt.exportSuccess());
     } catch (e) {
         yield put(exportPpt.exportFailed());
         yield put(toasts.addDangerToast("PowerPoint export failed. Please try again"));

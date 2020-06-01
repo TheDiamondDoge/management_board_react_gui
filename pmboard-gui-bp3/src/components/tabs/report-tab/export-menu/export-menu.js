@@ -7,6 +7,7 @@ import {getDateFromStringWithTime} from "../../../../util/transform-funcs";
 export default class ExportMenu extends React.Component {
     render() {
         const exportButtonTitle = "PPT Upload";
+        const {buttonLoading} = this.props;
         return (
             <Popover
                 content={this.pptMenu()}
@@ -15,6 +16,7 @@ export default class ExportMenu extends React.Component {
                 <Button
                     large
                     minimal
+                    loading={buttonLoading}
                     icon={"download"}
                     intent={Intent.PRIMARY}
                     text={exportButtonTitle}
@@ -74,4 +76,9 @@ ExportMenu.propTypes = {
         })
     ),
     snapshotLoading: PropTypes.bool.isRequired,
+    buttonLoading: PropTypes.bool
 };
+
+ExportMenu.defaultProps = {
+    buttonLoading: false
+}
