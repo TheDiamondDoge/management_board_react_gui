@@ -80,3 +80,10 @@ export const BlcRowNames = {
 export const Messages = {
     FORM_SUBMIT_ERROR: "You have errors in your form. Please fix them before save."
 };
+
+export const IndicatorsFilterLabels = {
+    0 : "Blank",
+    1 : "Green",
+    2 : "Yellow",
+    3 : "Red"
+};

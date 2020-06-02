@@ -3,11 +3,11 @@ import CustomCard from "../../../../card/custom-card";
 import EnchantedTable from "../../../../enchanted-table/enchanted-table";
 import tableConfig from "./table-config";
 import LoadingSpinner from "../../../../loading-spinner/loading-spinner";
-import styles from "./projects-tab.module.css";
 import {createEnchantedTableFilters} from "../../../../../util/util";
 import Footer from "../../footer/footer";
 import PropTypes from "prop-types";
 import {ProjectData} from "../../../../../util/custom-types";
+import {IndicatorsFilterLabels} from "../../../../../util/constants";
 
 export default class ProjectsTab extends React.Component {
     render() {
@@ -15,9 +15,11 @@ export default class ProjectsTab extends React.Component {
         if (loading) {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
-            const filters = createEnchantedTableFilters(payload);
+            const className = this.props.className;
+            const customFilterLabels = this.getCustomIndicatorsFilters();
+            const filters = createEnchantedTableFilters(payload, customFilterLabels);
             return (
-                <CustomCard className={styles.card}>
+                <CustomCard className={className}>
                     <EnchantedTable
                         data={payload}
                         columns={tableConfig}
@@ -36,6 +38,14 @@ export default class ProjectsTab extends React.Component {
         const onRefresh = this.props.loadData;
         return <Footer amount={amount} onRefresh={onRefresh} />
     }
+
+    getCustomIndicatorsFilters = () => ({
+        overallProjectHealth: IndicatorsFilterLabels,
+        scheduleStatus: IndicatorsFilterLabels,
+        qualityStatus: IndicatorsFilterLabels,
+        costStatus: IndicatorsFilterLabels,
+        contentStatus: IndicatorsFilterLabels,
+    });
 }
 
 ProjectsTab.propTypes = {

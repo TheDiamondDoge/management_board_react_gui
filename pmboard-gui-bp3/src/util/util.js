@@ -34,7 +34,8 @@ export function getPropFromStringPath(obj, path) {
     }
 }
 
-export function createEnchantedTableFilters(data) {
+// {attr: {value: label}}
+export function createEnchantedTableFilters(data, customLabelsConfig) {
     if (!data.length) {
         return {};
     }
@@ -49,7 +50,7 @@ export function createEnchantedTableFilters(data) {
             result[colId] = result[colId] ? result[colId] : [];
             const value = dataRow[colId];
             if (!~result[colId].findIndex((obj) => obj.value === value)) {
-                const label = getLabel(value);
+                const label = getLabel(value, colId, customLabelsConfig);
                 result[colId].push({value: value, label: label});
             }
         });
@@ -60,11 +61,13 @@ export function createEnchantedTableFilters(data) {
     return result;
 }
 
-function getLabel(value) {
+function getLabel(value, colId, customLabelsConfig) {
     if (isBoolean(value)) {
         return boolToYesNo(value);
     } else if (/\d{4}-\d{2}-\d{2}/.test(value)) {
         return dateFormatToString(new Date(value));
+    } else if (customLabelsConfig && customLabelsConfig.hasOwnProperty(colId)) {
+        return customLabelsConfig[colId][value];
     } else {
         return value;
     }

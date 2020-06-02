@@ -22,7 +22,7 @@ export default class ListOfProjects extends React.Component {
                         className={styles.container}
                         panel={(
                             <ErrorBoundary>
-                                <ProjectsTab />
+                                <ProjectsTab className={styles.container} />
                             </ErrorBoundary>
                         )}
                     />
