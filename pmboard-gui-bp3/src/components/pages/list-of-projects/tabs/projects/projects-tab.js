@@ -32,8 +32,7 @@ export default class ProjectsTab extends React.Component {
         }
     }
 
-    renderFooter = () => {
-        const amount = this.props.projectsList.payload.length;
+    renderFooter = ({amount}) => {
         const onRefresh = this.props.loadData;
         return <Footer amount={amount} onRefresh={onRefresh} />
     }

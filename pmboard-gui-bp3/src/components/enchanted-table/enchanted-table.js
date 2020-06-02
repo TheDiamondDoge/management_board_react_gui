@@ -45,7 +45,7 @@ export default class EnchantedTable extends React.Component {
         let filteredData = this.filter(data);
         filteredData = this.sortData(filteredData);
 
-        const renderFooterParam = this.getRenderFooterParams();
+        const renderFooterParam = this.getRenderFooterParams(filteredData);
         const footer = this.getFooter(renderFooterParam);
         const noDataMessage = this.props.noDataMessage || this.state.defaults.noDataMessage;
         const editTableDialogTitle = this.state.defaults.editTableDialogTitle;
@@ -127,8 +127,11 @@ export default class EnchantedTable extends React.Component {
         )
     }
 
-    getRenderFooterParams() {
-        return  {dialogOpen: this.dialogOpen}
+    getRenderFooterParams(data) {
+        return  {
+            dialogOpen: this.dialogOpen,
+            amount: data.length
+        }
     }
 
     getFooter(renderFooterParam) {
@@ -335,7 +338,7 @@ EnchantedTable.propTypes = {
     validationSchema: PropTypes.object,
     onSubmit: PropTypes.func,
     noDataMessage: PropTypes.string,
-    //Render prop: {dialogOpen: func}
+    //Render prop: {dialogOpen: func, amount: int}
     renderFooter: PropTypes.func,
     //Render props: {editRow: func, getRow: func}
     contextMenu: PropTypes.func,
