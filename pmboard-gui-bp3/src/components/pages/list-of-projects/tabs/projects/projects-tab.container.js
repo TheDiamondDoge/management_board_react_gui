@@ -2,6 +2,7 @@ import {connect} from 'react-redux';
 import {loadProjects, resetProjects} from "../../../../../actions/pws/projects-list";
 import {WorkspaceStatus} from "../../../../../util/constants";
 import ProjectsTab from "./projects-tab";
+import {withOnMountCall} from "../../../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
@@ -11,9 +12,16 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        onLoad: () => dispatch(loadProjects(false, WorkspaceStatus.ENABLED)),
-        onReset: () => dispatch(resetProjects()),
+        loadData: () => dispatch(loadProjects(false, WorkspaceStatus.ENABLED)),
+        resetData: () => dispatch(resetProjects()),
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectsTab);
+const executeMethodsConfig = {
+    onMount: "loadData",
+    onUnmount: "resetData",
+};
+
+const ConnectedComponent = withOnMountCall(ProjectsTab, executeMethodsConfig);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

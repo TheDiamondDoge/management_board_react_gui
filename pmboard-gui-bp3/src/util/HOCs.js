@@ -24,6 +24,30 @@ export function withPwsOnMountCall(Component, config) {
     return WithPwsOnMountCall;
 }
 
+export function withOnMountCall(Component, config) {
+    const WithOnMountCall = class extends React.Component {
+        componentDidMount() {
+            if (config.onMount) {
+                this.props[config.onMount]();
+            }
+        }
+
+        componentWillUnmount() {
+            if (config.onUnmount) {
+                this.props[config.onUnmount]();
+            }
+        }
+
+        render() {
+            return <Component {...this.props}/>
+        }
+    };
+
+    WithOnMountCall.displayName = `WithOnMountCall(${getDisplayName(Component)})`;
+    return WithOnMountCall;
+}
+
+
 export function withPwsTabNameUrlChanger(Component) {
     const WithPwsTabNameUrlChanger = class extends React.Component {
         componentDidMount() {

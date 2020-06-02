@@ -287,3 +287,33 @@ export const ReportSnapshotsTypes = PropTypes.shape({
         })
     )
 }).isRequired;
+
+export const ProjectData = PropTypes.shape({
+    businessDivision: PropTypes.string,
+    businessLineManager: PropTypes.string,
+    businessUnit: PropTypes.string,
+    ciDate: PropTypes.string,
+    contentStatus: PropTypes.number,
+    costStatus: PropTypes.number,
+    dr0date: PropTypes.string,
+    dr1date: PropTypes.string,
+    dr2date: PropTypes.string,
+    dr3date: PropTypes.string,
+    dr4date: PropTypes.string,
+    dr5date: PropTypes.string,
+    obrDate: PropTypes.string,
+    orDate: PropTypes.string,
+    overallProjectHealth: PropTypes.number,
+    productLine: PropTypes.string,
+    productLineManager: PropTypes.string,
+    projectId: PropTypes.number.isRequired,
+    projectManager: PropTypes.string,
+    projectName: PropTypes.string,
+    projectRelease: PropTypes.string,
+    projectRigor: PropTypes.string,
+    projectState: PropTypes.string,
+    projectType: PropTypes.string,
+    qualityStatus: PropTypes.number,
+    scheduleStatus: PropTypes.number,
+    trDate: PropTypes.string
+});
