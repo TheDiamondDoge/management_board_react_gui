@@ -29,7 +29,7 @@ import * as defaults from "../../actions/pws/default";
 import * as exportPpt from "../../actions/pws/ppt-export";
 import * as projectsList from "../../actions/pws/projects-list";
 import * as toasts from "../../actions/app/toaster";
-import {projectNameDecorator} from "../../util/common-decorators";
+import {projectNameDecorator} from "../../util/common-decorators/common-decorators";
 import {addDangerToast} from "../../actions/app/toaster";
 
 export function* loadSummaryTab({projectId}) {

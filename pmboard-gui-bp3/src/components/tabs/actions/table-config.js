@@ -1,4 +1,4 @@
-import {dateDecorator, arrayDecorator, preDecorator} from "../../../util/common-decorators";
+import {dateDecorator, arrayDecorator, preDecorator} from "../../../util/common-decorators/common-decorators";
 
 export default [
     {

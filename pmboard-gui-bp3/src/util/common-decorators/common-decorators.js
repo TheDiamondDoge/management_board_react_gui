@@ -1,9 +1,10 @@
 import React from "react";
-import {dateFormatToString, getIndicatorsColor} from "./transform-funcs";
+import {dateFormatToString, getIndicatorsColor} from "../transform-funcs";
 import {Icon, Intent} from "@blueprintjs/core";
-import Comment from "../components/comment/comment";
-import StatusIndicator from "../components/status-indicator/status-indicator";
-import SafeUrl from "../components/safe-url/safe-url";
+import Comment from "../../components/comment/comment";
+import StatusIndicator from "../../components/status-indicator/status-indicator";
+import SafeUrl from "../../components/safe-url/safe-url";
+import styles from "./common-decorators.module.css";
 
 export function arrayDecorator(arr) {
     return Array.isArray(arr) ? arr.join("; ") : arr;
@@ -81,10 +82,21 @@ export function projectNameDecorator(name) {
 
 export function healthIndicatorsDecorator(value) {
     const indicatorColor = getIndicatorsColor(value)
-    return <StatusIndicator status={indicatorColor}/>
+    return (
+        <StatusIndicator
+            status={indicatorColor}
+            className={styles.health_indicator}
+        />
+    );
 }
 
 export function projectNameUrlDecorator(projectName, row) {
     const url = `http://localhost:3000/pws?projectId=${row.projectId}`;
-    return <SafeUrl url={url} label={projectName} />
+    return (
+        <SafeUrl
+            url={url}
+            label={projectName}
+            className={styles.project_url}
+        />
+    );
 }

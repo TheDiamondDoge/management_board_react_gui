@@ -4,7 +4,7 @@ import {
     errorDisplayDecorator,
     impactDecorator, preDecorator,
     probabilityDecorator
-} from "../../../util/common-decorators";
+} from "../../../util/common-decorators/common-decorators";
 
 export default [
     {

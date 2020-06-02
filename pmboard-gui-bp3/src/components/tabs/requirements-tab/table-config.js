@@ -1,5 +1,5 @@
 import React from 'react';
-import {arrayDecorator} from "../../../util/common-decorators";
+import {arrayDecorator} from "../../../util/common-decorators/common-decorators";
 import SafeUrl from "../../safe-url/safe-url";
 
 export default [

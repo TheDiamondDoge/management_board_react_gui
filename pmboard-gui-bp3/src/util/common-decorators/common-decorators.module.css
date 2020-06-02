@@ -1,0 +1,8 @@
+.health_indicator {
+    display: inline-block;
+}
+
+.project_url {
+    word-break: break-all;
+    white-space: pre-wrap;
+}
