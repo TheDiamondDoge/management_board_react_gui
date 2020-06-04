@@ -1,14 +1,13 @@
+@import "../../constants";
+
 .kpi_table {
     width: 100%;
     table-layout: fixed;
 }
 
-.column_align_center {
+.header {
     text-align: center !important;
-}
-
-.border_top {
-    border-top: 1px solid lightgray;
+    border-top: 1px solid $grey_color;
 }
 
 .name_col {
@@ -23,4 +22,3 @@
     text-align: center !important;
     /*width: 131px;*/
 }
-

@@ -2,7 +2,7 @@ import React from "react";
 import Chart from "chart.js";
 import "chartjs-plugin-annotation";
 import PropTypes from "prop-types";
-import styles from "./bar-chart.module.css";
+import styles from "./bar-chart.module.scss";
 import {RangeSlider} from "@blueprintjs/core";
 
 export default class BarChart extends React.Component {

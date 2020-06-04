@@ -1,6 +1,6 @@
 import React from 'react';
 import {Breadcrumbs} from "@blueprintjs/core";
-import styles from './breadcrumbs.module.css';
+import styles from './breadcrumbs.module.scss';
 import classNames from 'classnames';
 import PropTypes from "prop-types";
 

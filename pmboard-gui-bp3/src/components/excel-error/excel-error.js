@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./excel-error.module.css";
+import styles from "./excel-error.module.scss";
 import {ExcelErrorTypes} from  "../../util/custom-types";
 
 export default class ExcelError extends React.PureComponent {

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "./field-name.module.css";
+import styles from "./field-name.module.scss";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 

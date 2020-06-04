@@ -1,7 +1,7 @@
 import React from 'react';
 import {Rnd} from "react-rnd";
 import PropTypes from "prop-types";
-import "./resizable-container.module.css";
+import "./resizable-container.module.scss";
 
 
 export const ResizableContainer = React.memo((props) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import {HTMLTable} from "@blueprintjs/core";
 import FieldName from "../field-name/field-name";
 import FieldValue from "../field-value/field-value";
-import styles from './milestone-table.module.css';
+import styles from './milestone-table.module.scss';
 import PropTypes from "prop-types";
 import {FieldArray} from "formik";
 import FormikInput, {ArrayErrors, RenderControls} from "../controls/util-renderers";

@@ -1,7 +1,7 @@
 import React from 'react';
 import {Icon, Intent} from "@blueprintjs/core";
 import PropTypes from "prop-types";
-import styles from "./project-not-found-status.module.css";
+import styles from "./project-not-found-status.module.scss";
 
 export default class ProjectNotFoundStatus extends React.PureComponent {
     render() {

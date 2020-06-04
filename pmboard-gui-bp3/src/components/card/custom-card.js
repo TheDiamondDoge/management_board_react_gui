@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card, Elevation} from "@blueprintjs/core";
-import styles from './custom-card.module.css';
+import styles from './custom-card.module.scss';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import ErrorBoundary from "../error-boundary/error-boundary";

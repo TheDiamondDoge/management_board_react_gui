@@ -1,7 +1,7 @@
 import React from 'react';
 import {HTMLTable, Icon, Button, Position, Tooltip} from "@blueprintjs/core";
 import EditSaveControls from "../controls/edit-save-controls/edit-save-controls";
-import styles from "./quality.module.css";
+import styles from "./quality.module.scss";
 import FieldName from "../field-name/field-name";
 import PropTypes from "prop-types";
 import {FieldArray, Formik} from "formik";
@@ -101,7 +101,7 @@ export default class Quality extends React.Component {
         return (
             <>
                 <div>
-                    <div className={styles.float_left}>
+                    <div className={styles.header}>
                         {
                             controlsRendered &&
                             <Button

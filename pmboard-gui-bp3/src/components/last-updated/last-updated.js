@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {getDateFromStringWithTime, isDateLateForOneMonth} from "../../util/transform-funcs";
 import classNames from 'classnames';
-import styles from './last-updated.module.css';
+import styles from './last-updated.module.scss';
 import {Icon, Intent} from "@blueprintjs/core";
 
 export default class LastUpdated extends React.PureComponent {

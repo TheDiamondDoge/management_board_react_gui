@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import StatusIndicator from "../status-indicator/status-indicator";
-import classNames from "classnames";
-import style from "./blc-row.module.css";
+import style from "./blc-row.module.scss";
 import {Button} from "@blueprintjs/core";
 import {blcNumberToState, getDateFromStringWithTime} from "../../util/transform-funcs";
 import {FastField} from "formik";
@@ -12,7 +11,7 @@ import Comment from "../comment/comment";
 export default class BlcRow extends React.Component {
     render() {
         const {roleName, lastUpdatedBy, updatedOn, rowValues, comment, onClickEdit, isValuesEdit, isCommentsEdit} = this.props;
-        const tdClasses = classNames(style.column_align_center, style.word_break);
+        const tdClasses = style.td_style;
         const commentName = `${this.props.rowName}.comment`;
         const updatedOnString = getDateFromStringWithTime(updatedOn);
         const isEditShown = this.shouldShowEditButton();

@@ -1,8 +1,10 @@
+@import "constants";
+
 html, body, #root {
     height: 100%;
     width: 100%;
     min-width: 970px;
-    background-color: #f8f9fc;
+    background-color: $main_background_color;
 }
 
 html {

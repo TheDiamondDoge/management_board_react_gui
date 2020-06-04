@@ -1,7 +1,7 @@
 import React from "react";
 import {HTMLTable} from "@blueprintjs/core";
 import PropTypes from "prop-types";
-import styles from "./cost-table.module.css";
+import styles from "./cost-table.module.scss";
 import {nanToEmptyString, toTwoTrailingDigits} from "../../util/transform-funcs";
 import Comment from "../comment/comment";
 

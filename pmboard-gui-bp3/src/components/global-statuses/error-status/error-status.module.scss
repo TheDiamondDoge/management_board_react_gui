@@ -1,12 +1,14 @@
+@import "../../../constants";
+
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100%;
-    margin-bottom: 17px;
+    margin-bottom: $default_margin;
 }
 
 .icon {
-    margin-bottom: 15px;
+    margin-bottom: $default_margin;
 }

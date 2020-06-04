@@ -3,7 +3,7 @@ import {TextArea, InputGroup, Checkbox, NumericInput} from "@blueprintjs/core";
 import {DateInput} from "@blueprintjs/datetime";
 import {dateFormatToString, stringToDateFormat, transformDateForInput} from "../../util/transform-funcs";
 import {getPropFromStringPath} from "../../util/util";
-import styles from "./formik-custom-field.module.css";
+import styles from "./formik-custom-field.module.scss";
 import {Field} from "formik";
 import PropTypes from "prop-types";
 import FormikSelectList from "../formik-select-list";

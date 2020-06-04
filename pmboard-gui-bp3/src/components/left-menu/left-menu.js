@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './left-menu.module.css';
+import styles from './left-menu.module.scss';
 import MenuNavigation from "../menu-navigation/menu-navigation.container";
 import { MENU_ITEMS_ARRAY } from "../menu-navigation/menu-navigation-object";
 import classNames from 'classnames';

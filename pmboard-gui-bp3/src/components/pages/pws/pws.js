@@ -1,7 +1,7 @@
 import React from 'react';
 import {Tab, Tabs} from "@blueprintjs/core";
 import Report from '../../tabs/report-tab/report-tab.container';
-import styles from './pws.module.css';
+import styles from './pws.module.scss';
 import SummaryTab from "../../tabs/summary-tab/summary-tab.container";
 import InfoTab from "../../tabs/info-tab/info-tab.container";
 import IndicatorsTab from "../../tabs/indicators-tab/indicators-tab.container";
@@ -21,7 +21,7 @@ import {getUrlParam} from "../../../util/util";
 import ProjectNotFoundStatus from "../../global-statuses/project-not-found-status/project-not-found-status";
 import config from "./config";
 
-import "./pws.css";
+import "./pws.scss";
 import {Helmet} from "react-helmet";
 import RenderFieldHelper from "../../../util/render-field-helper";
 import {ProjectDefaults} from "../../../util/custom-types";

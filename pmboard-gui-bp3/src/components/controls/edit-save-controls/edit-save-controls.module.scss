@@ -1,8 +1,10 @@
+@import "../../../constants";
+
 .sticky_controls {
     border-radius: 5px;
     position: sticky;
     top: -21px;
-    background-color: #f8f9fc;
+    background-color: $main_background_color;
     margin-left: 3px;
     z-index: 1;
 }

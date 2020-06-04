@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {nullToEmptyStr} from '../../util/transform-funcs';
 import {isUrl} from '../../util/util';
-import styles from "./field-value.module.css";
+import styles from "./field-value.module.scss";
 import classNames from 'classnames';
 import SafeUrl from "../safe-url/safe-url";
 

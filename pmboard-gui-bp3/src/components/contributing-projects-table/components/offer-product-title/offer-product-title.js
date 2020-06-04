@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FieldName from "../../../field-name/field-name";
 import classNames from "classnames";
-import styles from "./offer-product-title.module.css";
+import styles from "./offer-product-title.module.scss";
 
 export default class OfferProductTitle extends React.PureComponent {
     render() {

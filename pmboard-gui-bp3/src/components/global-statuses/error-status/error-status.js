@@ -1,6 +1,6 @@
 import React from 'react';
 import {Icon, Intent} from '@blueprintjs/core';
-import styles from './error-status.module.css';
+import styles from './error-status.module.scss';
 
 export default class ErrorStatus extends React.PureComponent {
     render() {

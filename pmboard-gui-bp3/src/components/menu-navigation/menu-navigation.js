@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './menu-navigation.module.css';
+import styles from './menu-navigation.module.scss';
 import classNames from 'classnames';
 import {Button, Collapse, Alignment, Icon, Classes} from '@blueprintjs/core';
 import PropTypes from 'prop-types';

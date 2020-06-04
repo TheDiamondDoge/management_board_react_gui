@@ -1,6 +1,6 @@
 import React from 'react';
 import {Icon, Intent} from "@blueprintjs/core";
-import styles from "./no-data-found.module.css";
+import styles from "./no-data-found.module.scss";
 import FieldName from "../../field-name/field-name";
 import PropTypes from "prop-types";
 

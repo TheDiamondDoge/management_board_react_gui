@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Intent} from "@blueprintjs/core";
-import styles from "./edit-save-controls.module.css";
+import styles from "./edit-save-controls.module.scss";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 

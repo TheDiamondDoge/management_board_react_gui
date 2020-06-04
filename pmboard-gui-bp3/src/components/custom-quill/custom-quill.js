@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './custom-quill.module.css';
+import styles from './custom-quill.module.scss';
 import EditSaveControls from "../controls/edit-save-controls/edit-save-controls";
 import {Formik} from "formik";
 import FormikInput from "../controls/util-renderers";

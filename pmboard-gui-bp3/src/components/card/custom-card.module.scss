@@ -1,5 +1,7 @@
+@import "../../constants";
+
 .custom_card {
     border-radius: 5px !important;
     border-left: 3px solid #224abe;
-    margin-bottom: 20px;
+    margin-bottom: $default_margin;
 }

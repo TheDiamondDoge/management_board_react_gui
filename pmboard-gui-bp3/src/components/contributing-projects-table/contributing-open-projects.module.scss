@@ -1,0 +1,123 @@
+@import "../../constants";
+
+.last_compl_col {
+    border-right: 2px solid black;
+}
+
+.th_style {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.last_completed {
+    border-right: 2px solid black;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.last_completed_sticky {
+    position: sticky;
+    background-color: white;
+    left: 245px;
+    border-right: 2px solid black;
+}
+
+.offer_th {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.offer_th_sticky {
+    position: sticky;
+    background-color: white;
+    left: 0;
+}
+
+.type_th {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+.type_th_sticky {
+    position: sticky;
+    background-color: white;
+    left: 170px;
+}
+
+.sticky_colspan3 {
+    position: sticky;
+    background-color: white;
+    left: 0;
+    border-right: 2px solid black;
+}
+
+.table_container {
+    position: relative;
+}
+
+.overflow_container {
+    overflow-x: auto;
+    margin-bottom: 20px;
+}
+
+.name_col_size {
+    width: 170px;
+    max-width: 170px;
+}
+
+.type_size {
+    width: 75px;
+    max-width: 75px;
+}
+
+.last_dr_col_size {
+    width: 90px;
+    max-width: 90px;
+}
+
+.td_style {
+    text-align: center !important;
+}
+
+.products_name {
+    padding-left: 30px !important;
+}
+
+.legend {
+    margin-bottom: $default_margin;
+}
+
+.mils_col_size {
+    width: 80px;
+}
+
+.current_month {
+    border-right: $green_color;
+    border-left: $green_color;
+}
+
+.year_left_border {
+    border-left: 2px solid black;
+}
+
+.bkground_grey {
+    background-color: $grey_color;
+}
+
+.bkground_red {
+    background-color: $red_color;
+}
+
+.label {
+    margin-bottom: 3px;
+    padding: 5px;
+}
+
+.table_class {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.word_wrap {
+    word-wrap: break-word;
+}

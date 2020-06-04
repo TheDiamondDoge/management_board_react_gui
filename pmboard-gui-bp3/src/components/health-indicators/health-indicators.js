@@ -1,7 +1,7 @@
 import React from "react";
 import FieldName from "../field-name/field-name";
 import {HTMLTable, Position, Tooltip} from "@blueprintjs/core";
-import styles from "./health-indicators.module.css";
+import styles from "./health-indicators.module.scss";
 import StatusIndicator from "../status-indicator/status-indicator";
 import PropTypes from "prop-types";
 import EditSaveControls from "../controls/edit-save-controls/edit-save-controls";

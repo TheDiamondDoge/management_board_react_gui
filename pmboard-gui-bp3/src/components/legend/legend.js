@@ -1,7 +1,7 @@
 import React from 'react';
 import {HTMLTable} from "@blueprintjs/core";
 import FieldName from "../field-name/field-name";
-import styles from "./legend.module.css";
+import styles from "./legend.module.scss";
 
 export default class Legend extends React.PureComponent {
     render() {

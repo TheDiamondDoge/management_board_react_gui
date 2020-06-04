@@ -3,7 +3,7 @@ import {HTMLTable, Dialog, Classes} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import SortButton from "../controls/sort-button";
 import {EnchantedTableColsConfig} from "../../util/custom-types";
-import styles from "./enchanted-table.module.css";
+import styles from "./enchanted-table.module.scss";
 import classNames from 'classnames';
 import {ResizableContainer} from "./comp/container/resizable-container";
 import SelectList from "../controls/select-list/select-list";

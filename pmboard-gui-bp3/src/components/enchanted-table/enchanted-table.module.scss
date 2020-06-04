@@ -1,3 +1,5 @@
+@import "../../constants";
+
 .container {
     height: 100%;
 }
@@ -32,7 +34,7 @@
 }
 
 .header_container_search {
-    margin-top: 17px;
+    margin-top: $default_margin;
     height: 50%;
 }
 

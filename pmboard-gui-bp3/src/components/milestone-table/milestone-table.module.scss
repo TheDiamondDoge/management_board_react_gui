@@ -1,3 +1,5 @@
+@import "../../constants";
+
 .actual,
 .baseline,
 .completion,
@@ -40,9 +42,5 @@
 }
 
 .error {
-    color: red;
-}
-
-.inline_block {
-    display: inline-block;
+    color: $red_color;
 }

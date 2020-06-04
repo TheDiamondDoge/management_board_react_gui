@@ -2,7 +2,7 @@ import React from 'react';
 import {Tab, Tabs} from "@blueprintjs/core";
 import ErrorBoundary from "../../error-boundary/error-boundary";
 import ProjectsTab from "./tabs/projects/projects-tab.container";
-import styles from "./list-of-projects.module.css";
+import styles from "./list-of-projects.module.scss";
 
 export default class ListOfProjects extends React.Component {
     render() {

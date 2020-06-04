@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Intent} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import FieldName from "../../../field-name/field-name";
-import styles from "./footer.module.css";
+import styles from "./footer.module.scss";
 
 export default class Footer extends React.PureComponent {
     render() {

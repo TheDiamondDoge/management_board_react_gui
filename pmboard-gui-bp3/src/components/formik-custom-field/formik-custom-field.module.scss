@@ -1,5 +1,7 @@
+@import "../../constants";
+
 .error {
-    color: red;
+    color: $red_color;
 }
 
 .no_margin {

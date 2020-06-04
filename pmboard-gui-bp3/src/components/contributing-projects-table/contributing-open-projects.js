@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, HTMLTable, Intent} from "@blueprintjs/core";
 import moment from "moment";
-import styles from "./contributing-open-projects.module.css";
+import styles from "./contributing-open-projects.module.scss";
 import classNames from "classnames";
 import FieldName from "../field-name/field-name";
 import {ContribTable} from "../../util/custom-types";
@@ -25,15 +25,15 @@ export default class ContributingOpenProjects extends React.Component {
         const offers = this.getMilestonesPerMonthForProducts(monthsBetween, min, offer);
         const products = this.getMilestonesPerMonthForProducts(monthsBetween, min, contributed);
 
-        const lastComplTh = classNames(styles.last_compl_col, styles.th_style);
+        const lastComplTh = styles.last_completed;
         const cols = this.getColsForMonthsColumns(monthsBetween);
 
-        const offerThClasses = classNames(styles.th_style, styles.sticky_first);
-        const typeThClasses = classNames(styles.th_style, styles.sticky_third);
-        const approvedThClasses = classNames(lastComplTh, styles.sticky_second);
+        const offerThClasses = classNames(styles.offer_th, styles.offer_th_sticky);
+        const typeThClasses = classNames(styles.type_th, styles.type_th_sticky);
+        const approvedThClasses = classNames(lastComplTh, styles.last_completed_sticky);
         return (
             <div className={styles.table_container}>
-                <div className={styles.overflow_x}>
+                <div className={styles.overflow_container}>
                     <HTMLTable
                         className={styles.table_class}
                         bordered
@@ -48,7 +48,7 @@ export default class ContributingOpenProjects extends React.Component {
                         <tr>
                             <th
                                 colSpan={3}
-                                className={styles.sticky_colspan2}
+                                className={styles.sticky_colspan3}
                             />
                             {years.map((year, i) => {
                                 const yearThClasses = classNames(
@@ -86,9 +86,9 @@ export default class ContributingOpenProjects extends React.Component {
                             const lastApproved = offers[prjName].lastApproved;
                             const milestones = offers[prjName].milestones;
 
-                            const offerNameClasses = classNames(styles.sticky_first, styles.word_wrap);
-                            const offerTypeClasses = classNames(styles.td_style, styles.sticky_third, styles.word_wrap);
-                            const offerApprovedClasses = classNames(styles.td_style, styles.sticky_second);
+                            const offerNameClasses = classNames(styles.offer_th_sticky, styles.word_wrap);
+                            const offerTypeClasses = classNames(styles.td_style, styles.type_th_sticky, styles.word_wrap);
+                            const offerApprovedClasses = classNames(styles.td_style, styles.last_completed_sticky);
                             return (
                                 <tr key={prjName}>
                                     <td className={offerNameClasses}>
@@ -115,9 +115,9 @@ export default class ContributingOpenProjects extends React.Component {
                             const lastApproved = products[prjName].lastApproved;
                             const milestones = products[prjName].milestones;
 
-                            const productNameClasses = classNames(styles.products_name, styles.sticky_first, styles.word_wrap);
-                            const productTypeClasses = classNames(styles.td_style, styles.sticky_third, styles.word_wrap);
-                            const productApprovedClasses = classNames(styles.td_style, styles.sticky_second);
+                            const productNameClasses = classNames(styles.products_name, styles.offer_th_sticky, styles.word_wrap);
+                            const productTypeClasses = classNames(styles.td_style, styles.type_th_sticky, styles.word_wrap);
+                            const productApprovedClasses = classNames(styles.td_style, styles.last_completed_sticky);
                             return (
                                 <tr key={prjName}>
                                     <td className={productNameClasses}>
@@ -263,11 +263,7 @@ export default class ContributingOpenProjects extends React.Component {
             const startDate = min.clone();
             const monthLabel = startDate.add(index, "month").format("MMM");
             const year = startDate.year();
-            const classes = classNames(
-                styles.th_style,
-                {[styles.current_month]: currentMonthIndex === index},
-                {[styles.year_left_border]: item.needYearBorder}
-            );
+            const classes = this.getMilsTdsClasses(currentMonthIndex, index, item.needYearBorder);
             return (
                 <th key={`${monthLabel}_${year}`}
                     className={classes}
@@ -280,11 +276,7 @@ export default class ContributingOpenProjects extends React.Component {
 
     renderMilestonesTds(tds, currentMonthIndex) {
         return tds.map((item, i) => {
-            const classes = classNames(
-                styles.td_style,
-                {[styles.current_month]: currentMonthIndex === i},
-                {[styles.year_left_border]: item.needYearBorder}
-            );
+            const classes = this.getMilsTdsClasses(currentMonthIndex, i, item.needYearBorder);
             const td = item.milestones;
             if (td.length === 0) {
                 return <td key={i} className={classes}/>;
@@ -300,6 +292,14 @@ export default class ContributingOpenProjects extends React.Component {
                 )
             }
         })
+    }
+
+    getMilsTdsClasses(currentMonthIndex, tdIndex, isBorderNeeded) {
+        return classNames(
+            styles.td_style,
+            {[styles.current_month]: currentMonthIndex === tdIndex},
+            {[styles.year_left_border]: isBorderNeeded}
+        );
     }
 
     renderMilestoneLabel(milestone, isCommitted, currentDate) {

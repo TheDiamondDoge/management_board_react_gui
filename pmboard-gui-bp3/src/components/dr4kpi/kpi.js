@@ -1,6 +1,6 @@
 import React from 'react';
 import {HTMLTable, Position, Tooltip} from "@blueprintjs/core";
-import styles from "./kpi.module.css";
+import styles from "./kpi.module.scss";
 import classNames from "classnames";
 import FieldName from "../field-name/field-name";
 import PropTypes from "prop-types";
@@ -11,7 +11,7 @@ import TooltipContent from "../tooltip-content/tooltip-content";
 
 export default class Kpi extends React.Component {
     render() {
-        let headerClasses = classNames(styles.column_align_center, styles.border_top);
+        const headerClasses = styles.header;
         const {dr4Kpi, fieldsToRender} = this.props;
         const {label} = fieldsToRender.year;
         const {year} = dr4Kpi;
