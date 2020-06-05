@@ -1,3 +1,5 @@
+@import "../../../constants";
+
 .data_fields {
     display: grid;
     grid-template-columns: 170px minmax(250px, auto);
@@ -38,19 +40,19 @@
 }
 
 .bottom_margin {
-    margin-bottom: 20px;
+    margin-bottom: $default_margin;
 }
 
 .red {
-    color: #db3737;
+    color: $red_color;
 }
 
 .orange {
-    color: #bf7326;
+    color: $orange_color;
 }
 
 .green {
-    color: #0d8050;
+    color: $green_color;
 }
 
 @media (max-width: 1140px) {

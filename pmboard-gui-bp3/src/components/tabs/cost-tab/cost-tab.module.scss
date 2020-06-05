@@ -1,8 +1,10 @@
+@import "../../../constants";
+
 .last_updated {
     display: inline-block;
     margin-left: 10px;
 }
 
 .import_container {
-    margin-bottom: 17px;
+    margin-bottom: $default_margin;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import styles from "./two-items-liner.module.css";
+import styles from "./two-items-liner.module.scss";
 
 export default class TwoItemsLiner extends React.PureComponent {
     render() {

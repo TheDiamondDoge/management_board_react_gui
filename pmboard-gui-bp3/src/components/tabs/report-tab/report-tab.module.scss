@@ -1,8 +1,10 @@
+@import "../../../constants";
+
 .health_minimal {
-    margin-right: 20px;
+    margin-right: $default_margin;
     float: right;
     display: inline-block;
-    margin-bottom: 20px;
+    margin-bottom: $default_margin;
 }
 
 .risk_block {
@@ -16,7 +18,7 @@
 
 .project_info {
     display: inline-block;
-    margin-bottom: 20px;
+    margin-bottom: $default_margin;
 }
 
 .inline_block {
@@ -28,15 +30,15 @@
 }
 
 .red {
-    color: #db3737;
+    color: $red_color;
 }
 
 .orange {
-    color: #bf7326;
+    color: $orange_color;
 }
 
 .green {
-    color: #0d8050;
+    color: $green_color;
 }
 
 .scope_definition {

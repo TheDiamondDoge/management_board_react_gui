@@ -1,7 +1,7 @@
 import React from 'react';
 import SafeUrl from "../safe-url/safe-url";
 import PropTypes from "prop-types";
-import styles from "./rqs-report-list.module.css";
+import styles from "./rqs-report-list.module.scss";
 
 export default class RqsReportList extends React.PureComponent {
     constructor(props) {

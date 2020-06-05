@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './timeline.module.css';
+import styles from './timeline.module.scss';
 import classNames from 'classnames';
 import StatusIndicator from "../status-indicator/status-indicator";
 import {Icon, Intent} from "@blueprintjs/core";

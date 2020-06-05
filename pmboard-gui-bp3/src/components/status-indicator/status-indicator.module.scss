@@ -1,3 +1,5 @@
+@import "../../constants";
+
 .indicator {
     width: 25px;
     height: 25px;
@@ -12,17 +14,17 @@
 }
 
 .color_red {
-    background-color: red;
+    background-color: $red_color;
 }
 
 .color_yellow {
-    background-color: yellow;
+    background-color: $yellow_color;
 }
 
 .color_green {
-    background-color: green;
+    background-color: $green_color;
 }
 
 .color_blank {
-    background-color: lightgray;
+    background-color: $grey_color;
 }

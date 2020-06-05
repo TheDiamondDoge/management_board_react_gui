@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './updated-info.module.css';
+import styles from './updated-info.module.scss';
 import LastUpdated from "../last-updated/last-updated";
 
 export default class UpdatedInfo extends React.PureComponent {

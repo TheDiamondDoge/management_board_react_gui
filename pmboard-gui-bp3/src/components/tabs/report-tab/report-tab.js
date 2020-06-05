@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CustomCard from "../../card/custom-card";
 import UpdatedInfo from "../../updated-info/updated-info";
-import styles from "./report-tab.module.css";
+import styles from "./report-tab.module.scss";
 import Timeline from "../../timeline/timeline";
 import {Divider} from "@blueprintjs/core";
 import HealthIndicatorsMinimal from "../../health-indicators-minimal/health-indicators-minimal";

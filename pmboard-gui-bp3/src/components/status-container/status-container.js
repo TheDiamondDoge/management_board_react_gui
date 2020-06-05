@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from "./status-container.module.css";
+import styles from "./status-container.module.scss";
 
 export default function StatusContainer(props) {
     const {children, ...otherProps} = props;

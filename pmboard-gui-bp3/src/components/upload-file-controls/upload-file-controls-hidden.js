@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from "./upload-file-controls-hidden.module.css";
+import styles from "./upload-file-controls-hidden.module.scss";
 
 export default class UploadFileControlsHidden extends React.PureComponent {
     constructor(props) {

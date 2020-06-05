@@ -3,7 +3,7 @@ import {Button, Divider, Icon, Intent} from "@blueprintjs/core";
 import UploadedImage from "../uploaded-image/uploaded-image";
 import PropTypes from "prop-types";
 import UploadFileControlsHidden from "../upload-file-controls/upload-file-controls-hidden";
-import styles from "./upload-display-section.module.css";
+import styles from "./upload-display-section.module.scss";
 import classNames from "classnames";
 import ConfirmationPopup from "../confirmation-popup/confirmation-popup";
 

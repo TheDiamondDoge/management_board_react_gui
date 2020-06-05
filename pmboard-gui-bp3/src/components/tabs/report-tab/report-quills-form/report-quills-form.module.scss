@@ -1,18 +1,20 @@
+@import "../../../../constants";
+
 .controls {
     margin-left: -20px;
     margin-right: -20px;
 }
 
 .red {
-    color: #db3737;
+    color: $red_color;
 }
 
 .orange {
-    color: #bf7326;
+    color: $orange_color;
 }
 
 .green {
-    color: #0d8050;
+    color: $green_color;
 }
 
 .no_border {
@@ -20,5 +22,5 @@
 }
 
 .quill_margin {
-    margin-bottom: 17px;
+    margin-bottom: $default_margin;
 }

@@ -1,0 +1,14 @@
+@import "../../constants";
+
+.list {
+    list-style: none;
+}
+
+.list_item {
+    margin-bottom: $default_margin;
+    margin-left: -$default_margin;
+}
+
+.url {
+    font-weight: bold;
+}

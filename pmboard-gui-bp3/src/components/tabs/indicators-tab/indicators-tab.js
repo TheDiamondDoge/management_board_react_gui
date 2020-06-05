@@ -5,7 +5,7 @@ import Timeline from "../../timeline/timeline";
 import CustomCard from "../../card/custom-card";
 import HealthIndicators from "../../health-indicators/health-indicators";
 import healthFields from "../../health-indicators/health-fields";
-import styles from "./indicators-tab.module.css";
+import styles from "./indicators-tab.module.scss";
 import Requirements from "../../requirements/requirements";
 import fieldsRequirements from "../../requirements/fields-requirements";
 import MilestonesKpi from "../../milestones-kpi/milestones-kpi";

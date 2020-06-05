@@ -1,7 +1,7 @@
 import React from "react";
 import {RiskReportType} from "../../util/custom-types";
 import PropTypes from "prop-types";
-import styles from "./risks-list.module.css";
+import styles from "./risks-list.module.scss";
 import Comment from "../comment/comment";
 
 export default class RisksList extends React.PureComponent {

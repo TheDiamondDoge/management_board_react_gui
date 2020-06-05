@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import styles from './status-indicator.module.css';
+import styles from './status-indicator.module.scss';
 
 export default class StatusIndicator extends React.PureComponent {
     render() {

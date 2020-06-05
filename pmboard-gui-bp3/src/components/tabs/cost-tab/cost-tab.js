@@ -1,7 +1,7 @@
 import React from "react";
 import CostTable from "../../cost-table/cost-table";
 import CustomCard from "../../card/custom-card";
-import styles from "./cost-tab.module.css";
+import styles from "./cost-tab.module.scss";
 import PropTypes from "prop-types";
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {CostTabTypes, ProjectDefaults} from "../../../util/custom-types"

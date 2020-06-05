@@ -2,7 +2,7 @@ import React from 'react';
 import Timeline from "../../timeline/timeline";
 import FieldName from "../../field-name/field-name";
 import FieldValue from "../../field-value/field-value";
-import styles from './summary-tab.module.css';
+import styles from './summary-tab.module.scss';
 import classNames from 'classnames';
 import summaryFieldsToRender from "./fields";
 import CustomCard from "../../card/custom-card.js";

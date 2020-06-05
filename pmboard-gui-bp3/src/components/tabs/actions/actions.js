@@ -11,7 +11,7 @@ import validationSchema from "./validation-schema";
 import renderFields from "./fields";
 import {ProjectDefaults} from "../../../util/custom-types";
 import RenderFieldHelper from "../../../util/render-field-helper";
-import styles from "./actions.module.css";
+import styles from "./actions.module.scss";
 import {Intent, Icon} from "@blueprintjs/core";
 import ConfirmationPopup from "../../confirmation-popup/confirmation-popup";
 import {Messages} from "../../../util/constants";

@@ -6,7 +6,7 @@ import tableConfig from './table-config';
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {ProjectDefaults, RqsTabRq} from "../../../util/custom-types";
 import TableFooter from "./components/table-footer";
-import styles from "./requirements-tab.module.css";
+import styles from "./requirements-tab.module.scss";
 
 export default class RequirementsTab extends React.Component {
     render() {

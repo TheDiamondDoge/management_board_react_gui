@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from "./tooltip-content.module.css";
+import styles from "./tooltip-content.module.scss";
 
 export default class TooltipContent extends React.PureComponent {
     render() {

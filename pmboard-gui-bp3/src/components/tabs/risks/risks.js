@@ -12,7 +12,7 @@ import UploadFileControlsHidden from "../../upload-file-controls/upload-file-con
 import ImportErrorsDialog from "../../import-errors-dialog/import-errors-dialog";
 import LastUpdatedLabel from "../../last-updated-label/last-updated-label";
 import LastUpdated from "../../last-updated/last-updated";
-import styles from "./risk.module.css";
+import styles from "./risk.module.scss";
 import renderFields from "./fields";
 import RenderFieldHelper from "../../../util/render-field-helper";
 import SafeUrl from "../../safe-url/safe-url";

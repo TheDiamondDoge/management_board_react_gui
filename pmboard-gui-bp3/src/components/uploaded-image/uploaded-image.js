@@ -2,7 +2,7 @@ import React from 'react';
 import {RenderControls} from "../controls/util-renderers";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import styles from "./uploaded-image.module.css";
+import styles from "./uploaded-image.module.scss";
 
 export default class UploadedImage extends React.Component {
     render() {

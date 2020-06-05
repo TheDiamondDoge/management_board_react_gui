@@ -1,7 +1,7 @@
 import React from "react";
 import {HTMLTable, Button, Classes, Intent, Tooltip, Position} from "@blueprintjs/core";
 import CustomCard from "../../card/custom-card";
-import styles from "./blc.module.css";
+import styles from "./blc.module.scss";
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import BlcRow from "../../blc-rows/blc-row";

@@ -3,7 +3,7 @@ import CustomCard from "../../card/custom-card";
 import MilestoneTable from "../../milestone-table/milestone-table";
 import FieldName from "../../field-name/field-name";
 import EditSaveControls from "../../controls/edit-save-controls/edit-save-controls";
-import styles from './info-tab.module.css'
+import styles from './info-tab.module.scss'
 import PropTypes from 'prop-types';
 import LoadingSpinner from "../../loading-spinner/loading-spinner";
 import {Field, FieldArray, Formik} from "formik";

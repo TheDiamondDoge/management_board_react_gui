@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BarChart from "../../charts/backlog-defects-chart/bar-chart";
-import styles from "./backlog-defects-page.module.css";
+import styles from "./backlog-defects-page.module.scss";
 import {Button, Intent, Position, Tooltip} from "@blueprintjs/core";
 import HelpIcon from "../../help-icon/help-icon";
 import UpdatedInfo from "../../updated-info/updated-info";

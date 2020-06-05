@@ -1,5 +1,7 @@
+@import "../../../constants";
+
 .card {
-    margin-bottom: 15px;
+    margin-bottom: $default_margin;
 }
 
 .kpi_container {
