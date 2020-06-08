@@ -21,7 +21,7 @@ export const nanToEmptyString = (num) => (
 
 export const isDateLateForOneMonth = (dateStr) => {
     const date = moment(dateStr);
-    return Math.abs(date.diff(moment(), "month")) >= 1;
+    return moment().diff(date, "month") >= 1;
 };
 
 export const dateFormatToString = (date) => {
@@ -56,26 +56,30 @@ function doubleDigitTimeUnit(num) {
 }
 
 function isDate(date) {
-    return typeof date.getMonth === "function";
+    return date && typeof date.getMonth === "function";
 }
 
 export const stringToDateFormat = (string) => {
     let [day, month, year] = string.split("-");
-    return new Date(year, MONTHS_NAMES.indexOf(month), day);
+    let strMonth = doubleDigitTimeUnit(MONTHS_NAMES.indexOf(month) + 1);
+    let strDay = doubleDigitTimeUnit(day);
+    return new Date(`${year}-${strMonth}-${strDay}`);
 };
 
 export const nullToEmptyStr = (str) => (
-    str == "null" ? "" : str
+    str == null || str == "null" ? "" : str
 );
 
 export const nullToNA = (value) => (
-    value === null ? "N/A" : value
+    value === null || value == "null" ? "N/A" : value
 );
 
 export const transformDateForInput = (str) => {
     if (!str) return null;
     try {
-        return new Date(str);
+        const date = new Date(str);
+        if (date == "Invalid Date") throw new Error();
+        return date;
     } catch (e) {
         return null;
     }
@@ -98,13 +102,15 @@ export const getIndicatorsColor = (number) => {
     }
 };
 
-export const toPercents = (value) => {
+export const toPercentsNumber = (value) => {
+    if (value === null) return "N/A";
     return +(value * 100).toFixed(0);
 };
 
 export const toPercentsOrNA = (value) => {
     if (value === null) return "N/A";
-    return `${toPercents(value)}%`;
+    const result = toPercentsNumber(value);
+    return Number.isNaN(result) ? "N/A" : result + "%";
 }
 
 export const toTwoTrailingDigits = (value) => {

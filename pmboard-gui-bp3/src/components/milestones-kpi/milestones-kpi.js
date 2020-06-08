@@ -5,7 +5,7 @@ import styles from "./milestones-kpi.module.scss";
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import {MilestoneKpiShape} from "../../util/custom-types";
-import {toPercents, toPercentsOrNA} from "../../util/transform-funcs";
+import {toPercentsOrNA} from "../../util/transform-funcs";
 
 export default class MilestonesKpi extends React.PureComponent {
     constructor(props) {
