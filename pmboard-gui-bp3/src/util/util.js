@@ -112,5 +112,5 @@ export function getSpecialNumericRegexp() {
 }
 
 export function getProjectUrl(projectId) {
-    return `http://localhost:3000/pws?projectId=${projectId}`
+    return `/pws?projectId=${projectId}`
 }

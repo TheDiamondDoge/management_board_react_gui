@@ -5,6 +5,7 @@ import Comment from "../../components/comment/comment";
 import StatusIndicator from "../../components/status-indicator/status-indicator";
 import SafeUrl from "../../components/safe-url/safe-url";
 import styles from "./common-decorators.module.css";
+import {getProjectUrl} from "../util";
 
 export function arrayDecorator(arr) {
     return Array.isArray(arr) ? arr.join("; ") : arr;
@@ -91,7 +92,7 @@ export function healthIndicatorsDecorator(value) {
 }
 
 export function projectNameUrlDecorator(projectName, row) {
-    const url = `http://localhost:3000/pws?projectId=${row.projectId}`;
+    const url = getProjectUrl(row.projectId);
     return (
         <SafeUrl
             url={url}

@@ -355,7 +355,7 @@ export default class Quality extends React.Component {
             // eslint-disable-next-line eqeqeq
             if (val != 0 && regex.test(name)) {
                 const type = name.match(regex);
-                const url = `http://localhost:8080/api/kpi/${type}/issuesList/${projectId}`;
+                const url = `/api/kpi/${type}/issuesList/${projectId}`;
                 return <SafeUrl url={url} label={val}/>
             } else {
                 return (
