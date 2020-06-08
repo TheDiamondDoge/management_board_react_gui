@@ -61,7 +61,7 @@ export function createEnchantedTableFilters(data, customLabelsConfig) {
     return result;
 }
 
-function getLabel(value, colId, customLabelsConfig) {
+export function getLabel(value, colId, customLabelsConfig) {
     if (isBoolean(value)) {
         return boolToYesNo(value);
     } else if (/\d{4}-\d{2}-\d{2}/.test(value)) {
