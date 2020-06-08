@@ -13,7 +13,6 @@ import {
     toPercentsOrNA, toTwoTrailingDigits,
     transformDateForInput
 } from "../transform-funcs";
-import moment from "moment";
 
 it("blcNumberToState(num)", () => {
     expect(blcNumberToState(1)).toEqual("red");
@@ -106,7 +105,7 @@ it("toPercentsNumber(value)", () => {
     expect(toPercentsNumber(0.2334)).toEqual(23);
     expect(toPercentsNumber("0.324")).toEqual(32);
     expect(toPercentsNumber("Not a number")).toEqual(Number.NaN);
-    expect(toPercentsNumber(null)).toEqual(0);
+    expect(toPercentsNumber(null)).toEqual("N/A");
 });
 
 it("toPercentsOrNA(value)", () => {
