@@ -3,6 +3,10 @@ export function milestonesCompare(a, b) {
         if (!b.actualDate) {
             return 0;
         } else {
+            return -1;
+        }
+    } else {
+        if (!b.actualDate) {
             return 1;
         }
     }
@@ -46,15 +50,15 @@ export function picklistObjectsCompare(a, b) {
         if (!b) {
             return 0;
         } else {
+            return -1;
+        }
+    } else {
+        if (!b) {
             return 1;
         }
     }
 
-    if (a.label > b.label) {
-        return 1;
-    } else {
-        return 0;
-    }
+    return stringCompare(a.label, b.label)
 }
 
 export const isBoolean = (val) => (

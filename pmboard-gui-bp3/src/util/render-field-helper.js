@@ -28,7 +28,7 @@ export default class RenderFieldHelper {
         }
     }
 
-    isLabelExists(id) {
+    isAttrExists(id) {
         return (id in this._fieldsToRender);
     };
 
@@ -79,7 +79,7 @@ export default class RenderFieldHelper {
     }
 
     getLabelById = (id) => {
-        if (this.isLabelExists(id)) {
+        if (this.isAttrExists(id)) {
             return this._fieldsToRender[id].label;
         }
     };

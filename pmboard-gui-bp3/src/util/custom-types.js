@@ -288,6 +288,23 @@ export const ReportSnapshotsTypes = PropTypes.shape({
     )
 }).isRequired;
 
+export const RenderFieldHelper = PropTypes.shape({
+    label: PropTypes.string,
+    type: PropTypes.oneOf(["textarea", "date", "numeric", "checkbox", "select", "multiselect", "quill", "text"]),
+    //false by default
+    editable: PropTypes.bool,
+    notAllowedIf: PropTypes.shape({
+        fieldToCheck: ["array", "Of", "Values"]
+    }),
+    allowedIf: PropTypes.shape({
+        fieldToCheck: ["array", "Of", "Values"]
+    }),
+    help: PropTypes.shape({
+        title: PropTypes.string,
+        content: PropTypes.string
+    })
+});
+
 export const ProjectData = PropTypes.shape({
     businessDivision: PropTypes.string,
     businessLineManager: PropTypes.string,

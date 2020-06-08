@@ -96,7 +96,9 @@ export default class EnchantedTable extends React.Component {
                         {
                             filteredData.length > 0
                                 ? this.getBodyRows(filteredData)
-                                : <tr><td colSpan={colsAmount}><FieldName name={noDataMessage}/></td></tr>
+                                : <tr>
+                                    <td colSpan={colsAmount}><FieldName name={noDataMessage}/></td>
+                                </tr>
                         }
                         </tbody>
                     </HTMLTable>
@@ -128,7 +130,7 @@ export default class EnchantedTable extends React.Component {
     }
 
     getRenderFooterParams(data) {
-        return  {
+        return {
             dialogOpen: this.dialogOpen,
             amount: data.length
         }
@@ -263,7 +265,7 @@ export default class EnchantedTable extends React.Component {
 
                 let filterValues = filter.map(obj => obj.value);
                 result = result.filter((row) => {
-                    return String(row[id]).includesWithMultiple(filterValues);
+                    return this.includesAtLeastOne(String(row[id]), filterValues);
                 });
             } else {
                 result = result.filter((row) => (
@@ -274,6 +276,16 @@ export default class EnchantedTable extends React.Component {
 
         return result;
     };
+
+    includesAtLeastOne(str, values) {
+        let count = 0;
+        values.forEach((value) => {
+            if (String(value).valueOf() === str.valueOf()) {
+                count++;
+            }
+        });
+        return (count > 0);
+    }
 
     sortData(data) {
         const {id, type} = this.state.sort;
@@ -350,10 +362,14 @@ EnchantedTable.defaultProps = {
     filterValues: {},
     editable: false,
     validationSchema: {},
-    onSubmit: () => {},
+    onSubmit: () => {
+    },
     noDataMessage: '',
-    renderFooter: () => {},
-    contextMenu: () => {},
+    renderFooter: () => {
+    },
+    contextMenu: () => {
+    },
     editDynamicInputVals: {},
-    onSubmitErrorCallback: () => {},
+    onSubmitErrorCallback: () => {
+    },
 };
