@@ -1,3 +1,9 @@
+@import "../../constants";
+
+.error_decorator {
+    color: $red_color;
+}
+
 .health_indicator {
     display: inline-block;
 }

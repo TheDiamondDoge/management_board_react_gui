@@ -4,7 +4,7 @@ import {Icon, Intent} from "@blueprintjs/core";
 import Comment from "../../components/comment/comment";
 import StatusIndicator from "../../components/status-indicator/status-indicator";
 import SafeUrl from "../../components/safe-url/safe-url";
-import styles from "./common-decorators.module.css";
+import styles from "./common-decorators.module.scss";
 import {getProjectUrl} from "../util";
 
 export function arrayDecorator(arr) {
@@ -60,11 +60,11 @@ export function preDecorator(value) {
     return <Comment value={value}/>
 }
 
-function ErrorDecorator({value}) {
+export function ErrorDecorator({value}) {
     let displayMessage = value || "Error";
     return (
         <span
-            style={{color: "red"}}
+            className={styles.error_decorator}
             title={"Check your excel file"}
         >
             <Icon
