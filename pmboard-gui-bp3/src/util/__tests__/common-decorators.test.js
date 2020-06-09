@@ -1,10 +1,11 @@
 import React from 'react';
+import {shallow} from 'enzyme';
 import {
     arrayDecorator,
     dateDecorator,
     ErrorDecorator,
-    errorDisplayDecorator,
-    impactDecorator, preDecorator, projectNameDecorator
+    errorDisplayDecorator, healthIndicatorsDecorator,
+    impactDecorator, preDecorator, projectNameDecorator, projectNameUrlDecorator
 } from "../common-decorators/common-decorators";
 import Comment from "../../components/comment/comment";
 
@@ -55,4 +56,36 @@ it("projectNameDecorator(name)", () => {
     expect(projectNameDecorator("super.project.name")).toEqual("super_project_name");
     expect(projectNameDecorator("super.project name")).toEqual("super_project_name");
     expect(projectNameDecorator("superName")).toEqual("superName");
+})
+
+it("projectNameUrlDecorator(projectName, row)", () => {
+    const row = {projectId: 3950}
+    const expectedUrl = `/pws?projectId=${row.projectId}`;
+    const projectName = "Test Project";
+    const url = shallow(projectNameUrlDecorator(projectName, row));
+
+    expect(url.find("a").prop("href")).toEqual(expectedUrl);
+    expect(url.find("a").text()).toEqual(projectName);
+})
+
+it("healthIndicatorsDecorator(value)", () => {
+    const greenValue = 1;
+    const yellowValue = 2;
+    const redValue = 3;
+    const greenIndicator = shallow(healthIndicatorsDecorator(greenValue));
+    const yellowIndicator = shallow(healthIndicatorsDecorator(yellowValue));
+    const redIndicator = shallow(healthIndicatorsDecorator(redValue));
+    const blankIndicator = shallow(healthIndicatorsDecorator("any other value"));
+
+    expect(greenIndicator.find("span").text()).toEqual("G");
+    expect(greenIndicator.find("div").prop("className")).toMatch("color_green");
+
+    expect(yellowIndicator.find("span").text()).toEqual("Y");
+    expect(yellowIndicator.find("div").prop("className")).toMatch("color_yellow");
+
+    expect(redIndicator.find("span").text()).toEqual("R");
+    expect(redIndicator.find("div").prop("className")).toMatch("color_red");
+
+    expect(blankIndicator.find("span").text()).toEqual("");
+    expect(blankIndicator.find("div").prop("className")).toMatch("color_blank");
 })
