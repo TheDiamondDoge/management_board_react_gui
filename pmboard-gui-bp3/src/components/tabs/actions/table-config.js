@@ -14,9 +14,9 @@ export default [
         inputType: "select",
         selectValues: [
             {value: "", label: ""},
-            {value: "Action", label: "Action"},
-            {value: "Informational", label: "Informational"},
-            {value: "Decision", label: "Decision"},
+            {value: "ACTION", label: "Action"},
+            {value: "INFORMATIONAL", label: "Informational"},
+            {value: "DECISION", label: "Decision"},
         ]
     },
     {
@@ -54,10 +54,10 @@ export default [
         inputType: "select",
         selectValues: [
             {value: "", label: ""},
-            {value: "Active", label: "Active"},
-            {value: "Postponed", label: "Postponed"},
-            {value: "Closed", label: "Closed"},
-            {value: "Did not occur", label: "Did not occur"},
+            {value: "ACTIVE", label: "Active"},
+            {value: "POSTPONED", label: "Postponed"},
+            {value: "CLOSED", label: "Closed"},
+            {value: "NOT_OCCUR", label: "Did not occur"},
         ],
     },
     {
@@ -73,9 +73,9 @@ export default [
         inputType: "select",
         selectValues: [
             {value: "", label: ""},
-            {value: "High", label: "High"},
-            {value: "Medium", label: "Medium"},
-            {value: "Low", label: "Low"},
+            {value: "HIGH", label: "High"},
+            {value: "MEDIUM", label: "Medium"},
+            {value: "LOW", label: "Low"},
         ]
     },
     {
