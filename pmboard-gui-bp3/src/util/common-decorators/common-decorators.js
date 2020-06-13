@@ -3,9 +3,10 @@ import {dateFormatToString, getIndicatorsColor} from "../transform-funcs";
 import {Icon, Intent} from "@blueprintjs/core";
 import Comment from "../../components/comment/comment";
 import StatusIndicator from "../../components/status-indicator/status-indicator";
-import SafeUrl from "../../components/safe-url/safe-url";
 import styles from "./common-decorators.module.scss";
 import {getProjectUrl} from "../util";
+import {Link} from "react-router-dom";
+
 
 export function arrayDecorator(arr) {
     return Array.isArray(arr) ? arr.join("; ") : arr;
@@ -39,7 +40,7 @@ export function impactDecorator(value) {
 export function probabilityDecorator(value) {
     if (!value) {
         return "None";
-    // eslint-disable-next-line eqeqeq
+        // eslint-disable-next-line eqeqeq
     } else if (value == -1) {
         return <ErrorDecorator/>
     } else {
@@ -94,10 +95,11 @@ export function healthIndicatorsDecorator(value) {
 export function projectNameUrlDecorator(projectName, row) {
     const url = getProjectUrl(row.projectId);
     return (
-        <SafeUrl
-            url={url}
-            label={projectName}
+        <Link
+            to={url}
             className={styles.project_url}
-        />
+        >
+            {projectName}
+        </Link>
     );
 }

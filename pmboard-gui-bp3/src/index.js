@@ -5,9 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app.container';
 import {applyMiddleware, createStore} from "redux";
-import {createBrowserHistory} from 'history';
 import {Provider} from "react-redux";
-import {routerMiddleware} from "react-router-redux";
 import {createLogger} from "redux-logger";
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from "./sagas";
@@ -26,11 +24,9 @@ import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
 dotenv.config();
 
 const sagas = createSagaMiddleware();
-const history = createBrowserHistory();
 const store = createStore(
     reducer,
     applyMiddleware(
-        routerMiddleware(history),
         createLogger(),
         sagas,
     )
