@@ -24,12 +24,22 @@ import "@blueprintjs/datetime/lib/css/blueprint-datetime.css";
 dotenv.config();
 
 const sagas = createSagaMiddleware();
-const store = createStore(
-    reducer,
-    applyMiddleware(
+
+let middleware;
+if (process.env.NODE_ENV !== 'production') {
+    middleware = applyMiddleware(
         createLogger(),
         sagas,
-    )
+    );
+} else {
+    middleware = applyMiddleware(
+        sagas,
+    );
+}
+
+const store = createStore(
+    reducer,
+    middleware
 );
 
 sagas.run(rootSaga);
