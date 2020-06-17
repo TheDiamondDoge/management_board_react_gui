@@ -45,8 +45,6 @@ export function createEnchantedTableFilters(data, customLabelsConfig) {
 
     data.forEach((dataRow) => {
         columnNames.forEach((colId) => {
-            if (null == dataRow[colId]) return true;
-
             result[colId] = result[colId] ? result[colId] : [];
             const value = dataRow[colId];
             if (!~result[colId].findIndex((obj) => obj.value === value)) {
@@ -68,6 +66,8 @@ export function getLabel(value, colId, customLabelsConfig) {
         return dateFormatToString(new Date(value));
     } else if (customLabelsConfig && customLabelsConfig.hasOwnProperty(colId)) {
         return customLabelsConfig[colId][value];
+    } else if (!value) {
+        return "";
     } else {
         return value;
     }
@@ -75,7 +75,7 @@ export function getLabel(value, colId, customLabelsConfig) {
 
 export function getUrlParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
-    return  urlParams.get(param);
+    return urlParams.get(param);
 }
 
 export function getQuillModuleToolbar() {
