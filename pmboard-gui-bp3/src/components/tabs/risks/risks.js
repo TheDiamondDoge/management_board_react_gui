@@ -35,7 +35,6 @@ export default class Risks extends React.Component {
         } else {
             const {payload, errorListShowed} = this.props.risks;
             const {uploadRisksFile, setErrorsShowedTrue, getLastUploadedFile} = this.props;
-            this.projectId = this.props.defaults.payload.projectId;
             const {projectName} = this.props.defaults.payload;
             const validationParams = this.props.defaults.payload;
             const renderHelper = new RenderFieldHelper(renderFields, validationParams);
@@ -50,7 +49,7 @@ export default class Risks extends React.Component {
                         <div className={styles.last_updated_container}>
                             <LastUpdatedLabel
                                 isFileExists={payload.fileExists}
-                                onClick={() => getLastUploadedFile(this.projectId, projectName)}
+                                onClick={() => getLastUploadedFile(projectName)}
                                 label={"Last uploaded:"}
                             />
                             <LastUpdated
@@ -74,7 +73,7 @@ export default class Risks extends React.Component {
                         />
                         <UploadFileControlsHidden
                             uploadRef={this.uploadRef}
-                            onSubmit={(file) => uploadRisksFile(this.projectId, file)}
+                            onSubmit={(file) => uploadRisksFile(file)}
                         />
                         <ImportErrorsDialog
                             isOpen={isImportDialogOpened}
@@ -107,7 +106,7 @@ export default class Risks extends React.Component {
         const downloadRisks = this.props.downloadRisks;
         const {projectName} = this.props.defaults.payload;
         const footerProps = {
-            onExcelExport: () => downloadRisks(this.projectId, projectName)
+            onExcelExport: () => downloadRisks(projectName)
         }
 
         if (renderHelper.displayOrNot("controls")) {
@@ -124,7 +123,7 @@ export default class Risks extends React.Component {
     };
 
     handleSaveRisks = (data) => {
-        this.props.saveRisk(this.projectId, data);
+        this.props.saveRisk(data);
     };
 }
 

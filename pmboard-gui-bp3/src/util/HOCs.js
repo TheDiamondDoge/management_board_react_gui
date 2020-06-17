@@ -1,29 +1,5 @@
 import React from 'react';
 
-export function withPwsOnMountCall(Component, config) {
-    const WithPwsOnMountCall = class extends React.Component {
-        componentDidMount() {
-            if (config.onMount) {
-                const {projectId} = this.props.defaults.payload;
-                this.props[config.onMount](projectId);
-            }
-        }
-
-        componentWillUnmount() {
-            if (config.onUnmount) {
-                this.props[config.onUnmount]();
-            }
-        }
-
-        render() {
-            return <Component {...this.props}/>
-        }
-    };
-
-    WithPwsOnMountCall.displayName = `WithPwsOnMountCall(${getDisplayName(Component)})`;
-    return WithPwsOnMountCall;
-}
-
 export function withOnMountCall(Component, config) {
     const WithOnMountCall = class extends React.Component {
         componentDidMount() {

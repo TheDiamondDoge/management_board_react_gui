@@ -26,7 +26,7 @@ export default class ExportMenu extends React.Component {
     }
 
     pptMenu() {
-        const {snapshots, snapshotLoading, projectId, onClickElement} = this.props;
+        const {snapshots, snapshotLoading, onClickElement} = this.props;
         return (
             <Menu>
                 <MenuItem
@@ -35,15 +35,15 @@ export default class ExportMenu extends React.Component {
                 />
                 <MenuItem
                     text={"PowerPoint, multi-page & customizable"}
-                    onClick={() => onClickElement(projectId, "custom")}
+                    onClick={() => onClickElement("custom")}
                 />
                 <MenuItem
                     text={"PowerPoint, multi-page & indicators"}
-                    onClick={() => onClickElement(projectId, "indicators")}
+                    onClick={() => onClickElement("indicators")}
                 />
                 <MenuItem
                     text={"PowerPoint Exec review"}
-                    onClick={() => onClickElement(projectId, "review")}
+                    onClick={() => onClickElement("review")}
                 />
                 <Divider/>
                 {snapshotLoading
@@ -56,7 +56,7 @@ export default class ExportMenu extends React.Component {
                                 key={snap.reportId}
                                 text={menuItemName}
                                 icon={"archive"}
-                                onClick={() => onClickElement(projectId, "custom", snap.reportId)}
+                                onClick={() => onClickElement("custom", snap.reportId)}
                             />
                         )
                     })
@@ -68,7 +68,6 @@ export default class ExportMenu extends React.Component {
 
 ExportMenu.propTypes = {
     onClickElement: PropTypes.func.isRequired,
-    projectId: PropTypes.number.isRequired,
     snapshots: PropTypes.arrayOf(
         PropTypes.shape({
             timestamp: PropTypes.string,

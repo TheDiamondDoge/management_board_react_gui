@@ -33,7 +33,6 @@ export default class Actions extends React.Component {
         if (loading) {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
-            this.projectId = this.props.defaults.payload.projectId;
             const validationParams = this.props.defaults.payload;
             const renderHelper = new RenderFieldHelper(renderFields, validationParams);
             const {payload} = this.props.actions;
@@ -121,21 +120,21 @@ export default class Actions extends React.Component {
         if (data.relatedRisks === "") {
             data.relatedRisks = [];
         }
-        this.props.saveAction(this.projectId, data);
+        this.props.saveAction(data);
     };
 
     handleDeleteAction = (data) => {
-        this.props.deleteAction(this.projectId, data);
+        this.props.deleteAction(data);
         this.toggleConfirmDialog();
     };
 
     handleExportActions = () => {
         const {projectId, projectName} = this.props.defaults.payload;
-        this.props.exportActions(projectId, projectName);
+        this.props.exportActions(projectName);
     }
 
     handleLoadData = () => {
-        this.props.loadData(this.projectId);
+        this.props.loadData();
     };
 }
 

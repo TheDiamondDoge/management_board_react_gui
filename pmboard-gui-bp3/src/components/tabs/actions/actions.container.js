@@ -1,30 +1,30 @@
 import {connect} from 'react-redux';
 import {actionsLoad, actionsReset, actionSave, actionDelete, actionsExport} from "../../../actions/pws/actions-tab";
 import Actions from "./actions";
-import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
+import {withOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 import {loadRiskIds, riskIdsReset} from "../../../actions/pws/risks/risks-related";
 import {addWarningToast} from "../../../actions/app/toaster";
 
 function mapStateToProps(state) {
     return {
-        defaults: state.pws.defaults,
         actions: state.pws.actions,
         relatedRisks: state.pws.risks.related,
     }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+    const {projectId} = ownProps.defaults.payload;
     return {
-        saveAction: (projectId, data) => {
+        saveAction: (data) => {
             dispatch(actionSave(projectId, data))
         },
-        deleteAction: (projectId, uid) => {
+        deleteAction: (uid) => {
             dispatch(actionDelete(projectId, uid))
         },
-        exportActions: (projectId, projectName) => {
+        exportActions: (projectName) => {
             dispatch(actionsExport(projectId, projectName))
         },
-        loadData: (projectId) => {
+        loadData: () => {
             dispatch(actionsLoad(projectId));
             dispatch(loadRiskIds(projectId));
         },
@@ -41,6 +41,6 @@ const executeMethodsConfig = {
     onUnmount: "resetData",
 };
 
-const ConnectedComponent = withPwsOnMountCall(withPwsTabNameUrlChanger(Actions), executeMethodsConfig);
+const ConnectedComponent = withOnMountCall(withPwsTabNameUrlChanger(Actions), executeMethodsConfig);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

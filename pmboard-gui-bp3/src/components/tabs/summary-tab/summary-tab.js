@@ -214,8 +214,8 @@ export default class SummaryTab extends React.Component {
     }
 
     handleContribExport() {
-        const {projectId, projectName} = this.props.defaults.payload;
-        return this.props.onContribExport(projectId, projectName);
+        const {projectName} = this.props.defaults.payload;
+        return this.props.onContribExport(projectName);
     }
 
     renderHelper(id, data) {

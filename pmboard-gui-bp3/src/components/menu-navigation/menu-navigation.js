@@ -27,7 +27,7 @@ export default class MenuNavigation extends React.PureComponent {
             <div>
                 {isNavMenuExpanded &&
                 menuNavigationObjects.map((obj) => {
-                        const {id, catButtonName, subMenus} = obj;
+                        const {id, catButtonName, subMenus, disabled} = obj;
                         const isOpen = this.state[id];
                         return (
                             <div key={id}>
@@ -36,6 +36,7 @@ export default class MenuNavigation extends React.PureComponent {
                                     className={menuButtonStyle}
                                     alignText={Alignment.LEFT}
                                     onClick={() => this.handleClick(obj)}
+                                    disabled={disabled}
                                     text={catButtonName}
                                 />
                                 <Collapse isOpen={isOpen}>

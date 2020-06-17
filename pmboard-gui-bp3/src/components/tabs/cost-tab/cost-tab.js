@@ -37,7 +37,7 @@ export default class CostTab extends React.Component {
         } else {
             const {updated, charged, capex, fileExists} = this.props.cost.payload;
             const {uploadCost, getLastUploadedFile} = this.props;
-            const {projectId, projectName} = this.props.defaults.payload;
+            const {projectName} = this.props.defaults.payload;
             const validationParams = this.props.defaults.payload;
             const renderHelper = new RenderFieldHelper(renderFields, validationParams);
             const showControls = renderHelper.displayOrNot("controls");
@@ -52,7 +52,7 @@ export default class CostTab extends React.Component {
                             <LastUpdatedLabel
                                 label={lastUploadedLabel}
                                 isFileExists={fileExists}
-                                onClick={() => getLastUploadedFile(projectId, projectName)}
+                                onClick={() => getLastUploadedFile(projectName)}
                             />
                             <LastUpdated
                                 className={styles.last_updated}
@@ -87,7 +87,7 @@ export default class CostTab extends React.Component {
 
                     <UploadFileControlsHidden
                         uploadRef={this.uploadRef}
-                        onSubmit={(file) => uploadCost(projectId, file)}
+                        onSubmit={(file) => uploadCost(file)}
                     />
                 </>
             )

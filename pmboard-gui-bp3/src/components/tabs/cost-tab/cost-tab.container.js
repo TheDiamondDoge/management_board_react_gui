@@ -1,20 +1,20 @@
 import {connect} from "react-redux";
 import CostTab from "./cost-tab";
 import {costGetLastUploaded, costLoad, costReset, costUpload} from "../../../actions/pws/cost-tab";
-import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
+import {withOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
-        defaults: state.pws.defaults,
         cost: state.pws.costTab,
     }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+    const {projectId} = ownProps.defaults.payload;
     return {
-        loadData: (projectId) => dispatch(costLoad(projectId)),
-        uploadCost: (projectId, file) => dispatch(costUpload(projectId, file)),
-        getLastUploadedFile: (projectId, projectName) => dispatch(costGetLastUploaded(projectId, projectName)),
+        loadData: () => dispatch(costLoad(projectId)),
+        uploadCost: (file) => dispatch(costUpload(projectId, file)),
+        getLastUploadedFile: (projectName) => dispatch(costGetLastUploaded(projectId, projectName)),
         resetData: () => dispatch(costReset()),
     }
 }
@@ -24,6 +24,6 @@ const executeMethodsConfig = {
     onUnmount: "resetData",
 };
 
-const ConnectedComponent = withPwsOnMountCall(withPwsTabNameUrlChanger(CostTab), executeMethodsConfig);
+const ConnectedComponent = withOnMountCall(withPwsTabNameUrlChanger(CostTab), executeMethodsConfig);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

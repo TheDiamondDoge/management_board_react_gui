@@ -4,7 +4,7 @@ import {deleteReportImage, resetReportImages, uploadReportImages} from "../../..
 import ReportTab from "./report-tab";
 import {resetRequirements} from "../../../actions/pws/requirements-tab";
 import {loadUserReports, resetUserReports, saveUserReport} from "../../../actions/pws/user-reports";
-import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
+import {withOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 import {exportPpt} from "../../../actions/pws/ppt-export";
 import {milestonesReset} from "../../../actions/pws/milestones";
 import {healthReset} from "../../../actions/pws/health-indicators";
@@ -14,7 +14,6 @@ import {snapshotReset} from "../../../actions/pws/report/snapshots";
 
 function mapStateToProps(state) {
     return {
-        defaults: state.pws.defaults,
         report: state.pws.reportTab,
         rqs: state.pws.requirementsTab,
         userReports: state.pws.userReports,
@@ -26,9 +25,10 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+    const {projectId} = ownProps.defaults.payload;
     return {
-        loadData: (projectId) => dispatch(loadReport(projectId)),
+        loadData: () => dispatch(loadReport(projectId)),
         resetData: () => {
             dispatch(resetReport());
             dispatch(resetReportImages());
@@ -39,11 +39,11 @@ function mapDispatchToProps(dispatch) {
             dispatch(healthReset());
             dispatch(risksSummaryReset());
         },
-        saveData: (projectId, data) => dispatch(saveUserReport(projectId, data)),
-        reloadUserReports: (projectId) => dispatch(loadUserReports(projectId)),
-        downloadPptReport: (projectId, pptType, snapshotId) => dispatch(exportPpt(projectId, pptType, snapshotId)),
-        uploadImages: (files, projectId) => dispatch(uploadReportImages(projectId, files)),
-        deleteImage: (filename, projectId) => dispatch(deleteReportImage(projectId, filename)),
+        saveData: (data) => dispatch(saveUserReport(projectId, data)),
+        reloadUserReports: () => dispatch(loadUserReports(projectId)),
+        downloadPptReport: (pptType, snapshotId) => dispatch(exportPpt(projectId, pptType, snapshotId)),
+        uploadImages: (files) => dispatch(uploadReportImages(projectId, files)),
+        deleteImage: (filename) => dispatch(deleteReportImage(projectId, filename)),
         pushWarningToast: (message) => dispatch(addWarningToast(message))
     }
 }
@@ -53,6 +53,6 @@ const executeMethodsConfig = {
     onUnmount: "resetData",
 };
 
-const ConnectedComponent = withPwsOnMountCall(withPwsTabNameUrlChanger(ReportTab), executeMethodsConfig);
+const ConnectedComponent = withOnMountCall(withPwsTabNameUrlChanger(ReportTab), executeMethodsConfig);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

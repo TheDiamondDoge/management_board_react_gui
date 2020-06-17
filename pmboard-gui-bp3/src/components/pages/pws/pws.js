@@ -81,7 +81,7 @@ export default class PWS extends React.Component {
                                 className={styles.tab_container}
                                 panel={(
                                     <ErrorBoundary>
-                                        <SummaryTab tabId={PWSTabs.SUMMARY}/>
+                                        <SummaryTab tabId={PWSTabs.SUMMARY} defaults={this.props.defaults}/>
                                     </ErrorBoundary>
                                 )}
                             />
@@ -93,7 +93,7 @@ export default class PWS extends React.Component {
                                 className={styles.tab_container}
                                 panel={(
                                     <ErrorBoundary>
-                                        <IndicatorsTab tabId={PWSTabs.INDICATORS}/>
+                                        <IndicatorsTab tabId={PWSTabs.INDICATORS} defaults={this.props.defaults}/>
                                     </ErrorBoundary>
                                 )}/>
                             }
@@ -104,7 +104,7 @@ export default class PWS extends React.Component {
                                 className={styles.tab_container}
                                 panel={(
                                     <ErrorBoundary>
-                                        <InfoTab tabId={PWSTabs.INFORMATION}/>
+                                        <InfoTab tabId={PWSTabs.INFORMATION} defaults={this.props.defaults}/>
                                     </ErrorBoundary>
                                 )}/>
                             }
@@ -115,7 +115,7 @@ export default class PWS extends React.Component {
                                 className={styles.tab_container}
                                 panel={(
                                     <ErrorBoundary>
-                                        <Actions tabId={PWSTabs.ACTIONS}/>
+                                        <Actions tabId={PWSTabs.ACTIONS} defaults={this.props.defaults}/>
                                     </ErrorBoundary>
                                 )}/>
                             }
@@ -126,7 +126,7 @@ export default class PWS extends React.Component {
                                 className={styles.tab_container}
                                 panel={(
                                     <ErrorBoundary>
-                                        <Risks tabId={PWSTabs.RISKS}/>
+                                        <Risks tabId={PWSTabs.RISKS} defaults={this.props.defaults}/>
                                     </ErrorBoundary>
                                 )}/>
                             }
@@ -137,7 +137,7 @@ export default class PWS extends React.Component {
                                 className={styles.tab_container}
                                 panel={(
                                     <ErrorBoundary>
-                                        <CostTab tabId={PWSTabs.COST}/>
+                                        <CostTab tabId={PWSTabs.COST} defaults={this.props.defaults}/>
                                     </ErrorBoundary>
                                 )}/>
                             }
@@ -148,7 +148,7 @@ export default class PWS extends React.Component {
                                 className={styles.tab_container}
                                 panel={(
                                     <ErrorBoundary>
-                                        <Report tabId={PWSTabs.REPORT}/>
+                                        <Report tabId={PWSTabs.REPORT} defaults={this.props.defaults}/>
                                     </ErrorBoundary>
                                 )}/>
                             }
@@ -160,7 +160,7 @@ export default class PWS extends React.Component {
                                 disabled={!requirementsUrl}
                                 panel={(
                                     <ErrorBoundary>
-                                        <Requirements tabId={PWSTabs.REQUIREMENTS}/>
+                                        <Requirements tabId={PWSTabs.REQUIREMENTS} defaults={this.props.defaults}/>
                                     </ErrorBoundary>
                                 )}/>
                             }
@@ -172,7 +172,7 @@ export default class PWS extends React.Component {
                                 disabled={!metricsScope}
                                 panel={(
                                     <ErrorBoundary>
-                                        <BacklogTab tabId={PWSTabs.BACKLOG}/>
+                                        <BacklogTab tabId={PWSTabs.BACKLOG} defaults={this.props.defaults}/>
                                     </ErrorBoundary>
                                 )}/>
                             }
@@ -184,7 +184,7 @@ export default class PWS extends React.Component {
                                 disabled={!metricsScope}
                                 panel={(
                                     <ErrorBoundary>
-                                        <DefectsTab tabId={PWSTabs.DEFECTS}/>
+                                        <DefectsTab tabId={PWSTabs.DEFECTS} defaults={this.props.defaults}/>
                                     </ErrorBoundary>
                                 )}/>
                             }
@@ -195,7 +195,7 @@ export default class PWS extends React.Component {
                                 className={styles.tab_container}
                                 panel={(
                                     <ErrorBoundary>
-                                        <BlcDashboard tabId={PWSTabs.BLC}/>
+                                        <BlcDashboard tabId={PWSTabs.BLC} defaults={this.props.defaults}/>
                                     </ErrorBoundary>
                                 )}/>
                             }

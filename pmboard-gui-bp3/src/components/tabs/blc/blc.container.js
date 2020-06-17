@@ -1,22 +1,22 @@
 import { connect } from 'react-redux';
 import blcTab from "./blc";
 import {blcLoad, blcReset, blcCommentsSave, blcIndicatorsSave} from "../../../actions/pws/blc-tab";
-import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
+import {withOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 import {addWarningToast} from "../../../actions/app/toaster";
 
 function mapStateToProps(state) {
     return {
-        defaults: state.pws.defaults,
         blcTab: state.pws.blcTab,
     }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+    const {projectId} = ownProps.defaults.payload;
     return {
-        loadData: (projectId) => dispatch(blcLoad(projectId)),
+        loadData: () => dispatch(blcLoad(projectId)),
         resetData: () => dispatch(blcReset()),
-        saveIndicators: (projectId, data) => dispatch(blcIndicatorsSave(projectId, data)),
-        saveComments: (projectId, data) => dispatch(blcCommentsSave(projectId, data)),
+        saveIndicators: (data) => dispatch(blcIndicatorsSave(projectId, data)),
+        saveComments: (data) => dispatch(blcCommentsSave(projectId, data)),
         pushWarningToast: (message) => dispatch(addWarningToast(message))
     }
 }
@@ -26,6 +26,6 @@ const executeMethodsConfig = {
     onUnmount: "resetData",
 };
 
-const ConnectedComponent = withPwsOnMountCall(withPwsTabNameUrlChanger(blcTab), executeMethodsConfig);
+const ConnectedComponent = withOnMountCall(withPwsTabNameUrlChanger(blcTab), executeMethodsConfig);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

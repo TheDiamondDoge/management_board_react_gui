@@ -48,13 +48,11 @@ export default class InfoTab extends React.Component {
 
     sendData = (data) => {
         const {saveInfo} = this.props;
-        const {projectId} = this.props.defaults.payload;
-        saveInfo(projectId, data);
+        saveInfo(data);
     };
 
     cancelInput = () => {
-        const {projectId} = this.props.defaults.payload;
-        this.props.loadData(projectId);
+        this.props.loadData();
         this.editClickHandle();
     };
 
@@ -516,6 +514,5 @@ InfoTab.propTypes = {
         ),
     }),
     saveInfo: PropTypes.func,
-    saveMilestones: PropTypes.func,
     pushWarningToast: PropTypes.func,
 };

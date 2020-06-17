@@ -12,12 +12,11 @@ import {indicatorsRqsReset, indicatorsRqsSave, indicatorsRqsLoad} from "../../..
 import {milestonesKpiReset} from "../../../actions/pws/milestones-kpi";
 import {dr4KpiReset} from "../../../actions/pws/dr4-kpi";
 import {qualityKpiLoad, qualityKpiReset, qualityKpiSave} from "../../../actions/pws/quality-kpi";
-import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
+import {withOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 import {addWarningToast} from "../../../actions/app/toaster";
 
 function mapStateToProps(state){
     return {
-        defaults: state.pws.defaults,
         milestones: state.pws.milestones,
         healthIndicators: state.pws.healthIndicators,
         requirements: state.pws.indicatorsRqs,
@@ -27,16 +26,17 @@ function mapStateToProps(state){
     }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+    const {projectId} = ownProps.defaults.payload;
     return {
-        healthIndicatorsSubmit: (projectId, data) => dispatch(healthIndicatorsSave(projectId, data)),
-        healthCommentsSubmit: (projectId, data) => dispatch(healthCommentsSave(projectId, data)),
-        healthReload: (projectId) => dispatch(healthLoad(projectId)),
-        rqsSubmit: (projectId, data) => dispatch(indicatorsRqsSave(projectId, data)),
-        rqsReload: (projectId) => dispatch(indicatorsRqsLoad(projectId)),
-        qualitySubmit: (projectId, data) => dispatch(qualityKpiSave(projectId, data)),
-        qualityReload: (projectId) => dispatch(qualityKpiLoad(projectId)),
-        loadData: (projectId) => dispatch(indicatorsLoad(projectId)),
+        healthIndicatorsSubmit: (data) => dispatch(healthIndicatorsSave(projectId, data)),
+        healthCommentsSubmit: (data) => dispatch(healthCommentsSave(projectId, data)),
+        healthReload: () => dispatch(healthLoad(projectId)),
+        rqsSubmit: (data) => dispatch(indicatorsRqsSave(projectId, data)),
+        rqsReload: () => dispatch(indicatorsRqsLoad(projectId)),
+        qualitySubmit: (data) => dispatch(qualityKpiSave(projectId, data)),
+        qualityReload: () => dispatch(qualityKpiLoad(projectId)),
+        loadData: () => dispatch(indicatorsLoad(projectId)),
         resetState: () => {
             dispatch(milestonesReset());
             dispatch(healthReset());
@@ -54,6 +54,6 @@ const executeMethodsConfig = {
     onUnmount: "resetState",
 };
 
-const ConnectedComponent = withPwsOnMountCall(withPwsTabNameUrlChanger(IndicatorsTab), executeMethodsConfig);
+const ConnectedComponent = withOnMountCall(withPwsTabNameUrlChanger(IndicatorsTab), executeMethodsConfig);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

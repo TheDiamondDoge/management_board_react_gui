@@ -59,7 +59,6 @@ export default class ReportTab extends React.Component {
                         </div>
                         <div className={styles.export_button}>
                             <ExportMenu
-                                projectId={this.projectId}
                                 onClickElement={this.props.downloadPptReport}
                                 snapshots={snapshots}
                                 snapshotLoading={snapshotLoading}
@@ -136,8 +135,8 @@ export default class ReportTab extends React.Component {
                             isUploading={imagesLoading}
                             amount={this.amount}
                             files={images}
-                            onUpload={(formData) => this.props.uploadImages(formData, this.projectId)}
-                            onDelete={(filename) => this.props.deleteImage(filename, this.projectId)}
+                            onUpload={(formData) => this.props.uploadImages(formData)}
+                            onDelete={(filename) => this.props.deleteImage(filename)}
                             onError={this.handleOnAmountExceed}
                         />
                     </CustomCard>
@@ -168,11 +167,11 @@ export default class ReportTab extends React.Component {
     }
 
     handleSaveData = (data) => {
-        this.props.saveData(this.projectId, data);
+        this.props.saveData(data);
     };
 
     handleUserReportReload = () => {
-        this.props.reloadUserReports(this.projectId);
+        this.props.reloadUserReports();
     };
 }
 

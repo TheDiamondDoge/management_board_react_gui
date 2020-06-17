@@ -4,11 +4,10 @@ import {summaryLoad, summaryReset} from "../../../actions/pws/summary-tab";
 import {milestonesReset} from "../../../actions/pws/milestones";
 import {healthReset} from "../../../actions/pws/health-indicators";
 import {exportContribTable, loadContribTable, resetContribTable} from "../../../actions/pws/contrib-table";
-import {withPwsOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
+import {withOnMountCall, withPwsTabNameUrlChanger} from "../../../util/HOCs";
 
 function mapStateToProps(state) {
     return {
-        defaults: state.pws.defaults,
         summaryData: state.pws.summaryTab,
         milestones: state.pws.milestones,
         healthIndicators: state.pws.healthIndicators,
@@ -16,9 +15,10 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+    const {projectId} = ownProps.defaults.payload;
     return {
-        loadData: (projectId) => {
+        loadData: () => {
             dispatch(summaryLoad(projectId));
             dispatch(loadContribTable(projectId));
         },
@@ -28,7 +28,7 @@ function mapDispatchToProps(dispatch) {
             dispatch(healthReset());
             dispatch(resetContribTable());
         },
-        onContribExport: (projectId, projectName) => dispatch(exportContribTable(projectId, projectName))
+        onContribExport: (projectName) => dispatch(exportContribTable(projectId, projectName))
     }
 }
 
@@ -37,6 +37,6 @@ const executeMethodsConfig = {
     onUnmount: "resetData",
 };
 
-const ConnectedComponent = withPwsOnMountCall(withPwsTabNameUrlChanger(summaryTab), executeMethodsConfig);
+const ConnectedComponent = withOnMountCall(withPwsTabNameUrlChanger(summaryTab), executeMethodsConfig);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConnectedComponent);

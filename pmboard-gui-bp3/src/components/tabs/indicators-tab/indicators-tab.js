@@ -164,31 +164,31 @@ export default class IndicatorsTab extends React.Component {
     }
 
     handleHealthIndicatorsSubmit = (data) => {
-        this.props.healthIndicatorsSubmit(this.projectId, data);
+        this.props.healthIndicatorsSubmit(data);
     };
 
     handleHealthCommentsSubmit = (data) => {
-        this.props.healthCommentsSubmit(this.projectId, data);
+        this.props.healthCommentsSubmit(data);
     };
 
     handleHealthReload = () => {
-        this.props.healthReload(this.projectId);
+        this.props.healthReload();
     };
 
     handleRqsSubmit = (data) => {
-        this.props.rqsSubmit(this.projectId, data);
+        this.props.rqsSubmit(data);
     };
 
     handleRqsReload = () => {
-        this.props.rqsReload(this.projectId);
+        this.props.rqsReload();
     };
 
     handleQualityReload = () => {
-        this.props.qualityReload(this.projectId);
+        this.props.qualityReload();
     };
 
     handleQualitySubmit = (data) => {
-        this.props.qualitySubmit(this.projectId, data);
+        this.props.qualitySubmit(data);
     };
 };
 

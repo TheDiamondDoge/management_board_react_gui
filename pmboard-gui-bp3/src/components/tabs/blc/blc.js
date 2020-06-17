@@ -65,9 +65,9 @@ export default class BlcDashboard extends React.Component {
                                 values.rowToSave = this.getRowToSaveValue();
                                 const {saveComments, saveIndicators} = this.props;
                                 if (this.state.isCommentsEdit) {
-                                    saveComments(this.projectId, values);
+                                    saveComments(values);
                                 } else {
-                                    saveIndicators(this.projectId, values);
+                                    saveIndicators(values);
                                 }
 
                                 this.cancelEdit();
@@ -102,7 +102,7 @@ export default class BlcDashboard extends React.Component {
 
     handleCancel = () => {
         this.cancelEdit();
-        this.props.loadData(this.props.defaults.payload.projectId);
+        this.props.loadData();
     }
 
     bindFormSubmission = (formikSubmitFunc) => {

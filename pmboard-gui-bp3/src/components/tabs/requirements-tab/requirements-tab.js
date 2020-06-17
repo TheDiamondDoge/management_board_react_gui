@@ -14,7 +14,6 @@ export default class RequirementsTab extends React.Component {
         if (loading) {
             return <CustomCard><LoadingSpinner/></CustomCard>
         } else {
-            this.projectId = this.props.defaults.payload.projectId;
             const {payload} = this.props.rqs;
             const noDataMessage = "No data found. Check 'Requirements(JIRA)' and 'RQ Release Name(JIRA)' fields";
             return (
@@ -36,7 +35,7 @@ export default class RequirementsTab extends React.Component {
     }
 
     handleLoadData = () => {
-        this.props.loadData(this.projectId)
+        this.props.loadData()
     };
 }
 
