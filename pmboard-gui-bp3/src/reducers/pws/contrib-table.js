@@ -8,6 +8,7 @@ import {
 const initState = {
     fileExport: false,
     loading: true,
+    error: {},
     payload: {},
 };
 
@@ -44,7 +45,7 @@ export default (state, action) => {
                 ...state,
                 loading: false,
                 fileExport: false,
-                payload: action.error
+                error: action.error
             };
         case CONTRIB_TABLE_RESET:
             return initState;
