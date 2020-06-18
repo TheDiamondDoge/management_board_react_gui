@@ -43,7 +43,7 @@ export default class MenuNavigation extends React.PureComponent {
                                     <div className={menuItemsContainerStyle}>
                                         {subMenus.map((subItem, i) => {
                                             const key = "subItem" + i;
-                                            const {name} = subItem;
+                                            const {name, disabled} = subItem;
                                             return (
                                                 <Button
                                                     fill
@@ -51,6 +51,7 @@ export default class MenuNavigation extends React.PureComponent {
                                                     className={menuItemStyle}
                                                     alignText={Alignment.LEFT}
                                                     text={name}
+                                                    disabled={disabled}
                                                 />
                                             )
                                         })}

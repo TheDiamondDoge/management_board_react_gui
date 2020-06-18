@@ -14,6 +14,7 @@ export const ResizableContainer = React.memo((props) => {
                 alignItems: "center",
                 justifyContent: "center"
             }}
+            minWidth={defaultStyle.width || undefined}
             default={defaultStyle}
             disableDragging
             enableResizing={{right: true}}

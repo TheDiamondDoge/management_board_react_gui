@@ -14,13 +14,11 @@ export const MENU_ITEMS_ARRAY =
             id: 'projects',
             catButtonName: "Projects",
             subMenus: [
-                {name: "List of Offers"},
-                {name: "List of Products"},
+                {name: "List of Projects"},
                 {name: "List of R&D Projects"},
-                {name: "Metrics & Dashboard"},
-                {name: "Report Center"},
+                {name: "Metrics & Dashboard", disabled: true},
+                {name: "Report Center", disabled: true},
             ],
-            disabled: true,
         },
         {
             id: 'kpi',

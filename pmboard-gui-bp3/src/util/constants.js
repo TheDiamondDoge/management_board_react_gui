@@ -29,6 +29,12 @@ export const PWSTabs = {
     BLC: "blc"
 };
 
+export const ListOfProjectsTabs = {
+    PROJECTS: "projects",
+    HEALTH: "health",
+    HISTORICAL: "historical"
+};
+
 export const WorkspaceStatus = {
     ENABLED: "ENABLED",
     DISABLED: "DISABLED"

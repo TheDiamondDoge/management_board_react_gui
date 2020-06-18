@@ -63,7 +63,7 @@ export default class EnchantedTable extends React.Component {
                         <tr>
                             {columns.map((field) => {
                                 const style = this.getTdStyle(field, "header");
-                                const defaultStyle = {width: style.width || ""};
+                                const defaultStyle = this.getDefaultResizableStyle(style);
                                 const id = field.id;
                                 const filterType = field.searchType ? field.searchType : "";
                                 const headerName = classNames(`${id}_header`, styles.th_style);
@@ -176,6 +176,18 @@ export default class EnchantedTable extends React.Component {
                 </EnchantedRow>
             )
         }))
+    }
+
+    getDefaultResizableStyle = (style) => {
+        const width = style.width;
+        if (width) {
+            return {
+                width: String(style.width.replace("px", "")),
+                minWidth: style.width
+            }
+        } else {
+            return ""
+        }
     }
 
     getFilterBar(type, id) {

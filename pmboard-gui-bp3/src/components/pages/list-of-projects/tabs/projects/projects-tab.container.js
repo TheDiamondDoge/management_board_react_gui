@@ -1,6 +1,5 @@
 import {connect} from 'react-redux';
 import {loadProjects, resetProjects} from "../../../../../actions/pws/projects-list";
-import {WorkspaceStatus} from "../../../../../util/constants";
 import ProjectsTab from "./projects-tab";
 import {withOnMountCall} from "../../../../../util/HOCs";
 
@@ -10,9 +9,11 @@ function mapStateToProps(state) {
     }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch, ownProps) {
+    const status = ownProps.workspaceStatus ? ownProps.workspaceStatus : null;
+    const isEpm = !!ownProps.epm;
     return {
-        loadData: () => dispatch(loadProjects(false, WorkspaceStatus.ENABLED)),
+        loadData: () => dispatch(loadProjects(isEpm, status)),
         resetData: () => dispatch(resetProjects()),
     }
 }
