@@ -1,0 +1,49 @@
+@import "src/constants";
+
+.header_container {
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.card_container {
+    height: 100%;
+}
+
+.no_data_container {
+    height: 50vh;
+    margin-bottom: $default_margin;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart_container {
+    max-height: 100%;
+    height: calc(100% - 120px);
+    margin-bottom: $default_margin;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.center {
+    display: inline;
+}
+
+.tooltip {
+    margin-left: 5px;
+}
+
+.float_right {
+    float: right;
+}
+
+.inline_block {
+    display: inline-block;
+}
+
+.updated_block {
+    margin-bottom: $default_margin;
+}

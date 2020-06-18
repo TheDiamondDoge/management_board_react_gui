@@ -1,0 +1,10 @@
+@import "src/constants";
+
+.last_updated {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.import_container {
+    margin-bottom: $default_margin;
+}
