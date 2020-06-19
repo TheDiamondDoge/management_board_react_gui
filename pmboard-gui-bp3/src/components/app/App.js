@@ -9,6 +9,7 @@ import {BrowserRouter as Router, Route} from "react-router-dom";
 import StatusContainer from "../status-container/status-container";
 import LoadingStatus from "../global-statuses/loading-status";
 import AppToaster from "../app-toaster/app-toaster.container";
+import classNames from "classnames";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -20,13 +21,14 @@ const suspenseFallback = <StatusContainer><LoadingStatus/></StatusContainer>;
 
 export default function App(props) {
     const {isNavMenuExpanded} = props.appSettings;
-    const leftMenuSize = isNavMenuExpanded ? 230 : 60;
-    const containerStyle = {gridTemplateColumns: `${leftMenuSize}px calc(100% - ${leftMenuSize}px)`};
+    const containerStyle = classNames(
+        styles.container,
+        {[styles.template_expanded] : isNavMenuExpanded},
+        {[styles.template_shrinked] : !isNavMenuExpanded},
+    );
 
     return (
-        <div className={styles.container}
-             style={containerStyle}
-        >
+        <div className={containerStyle}>
             <LeftMenu className={styles.leftMenu}/>
             <NavigationBar className={styles.header}/>
             <WorkingArea className={styles.page}>

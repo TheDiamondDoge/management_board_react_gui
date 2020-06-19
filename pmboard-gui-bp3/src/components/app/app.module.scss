@@ -8,6 +8,16 @@
     height: 100%;
 }
 
+.template_shrinked {
+    grid-template-columns: 60px calc(100% - 60px);
+    transition: grid-template-columns 100ms linear;
+}
+
+.template_expanded {
+    grid-template-columns: 230px calc(100% - 230px);
+    transition: grid-template-columns 100ms linear;
+}
+
 .leftMenu {
     grid-area: nav;
     height: 100%;
