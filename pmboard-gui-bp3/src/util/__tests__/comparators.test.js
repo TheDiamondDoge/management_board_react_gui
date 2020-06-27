@@ -10,13 +10,13 @@ it("stringCompare", () => {
 });
 
 it("isBoolean", () => {
-    expect(isBoolean(true)).toBeTruthy();
-    expect(isBoolean(false)).toBeTruthy();
+    expect(isBoolean(true)).toBe(true);
+    expect(isBoolean(false)).toBe(true);
 
-    expect(isBoolean("")).toBeFalsy();
-    expect(isBoolean("a")).toBeFalsy();
-    expect(isBoolean(1)).toBeFalsy();
-    expect(isBoolean(0)).toBeFalsy();
+    expect(isBoolean("")).toBe(false);
+    expect(isBoolean("a")).toBe(false);
+    expect(isBoolean(1)).toBe(false);
+    expect(isBoolean(0)).toBe(false);
 });
 
 it("milestonesCompare", () => {

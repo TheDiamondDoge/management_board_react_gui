@@ -1,5 +1,6 @@
 import React from 'react';
-import {shallow} from 'enzyme';
+import { BrowserRouter as Router } from 'react-router-dom';
+import {mount, shallow} from 'enzyme';
 import {
     arrayDecorator,
     dateDecorator,
@@ -62,7 +63,11 @@ it("projectNameUrlDecorator(projectName, row)", () => {
     const row = {projectId: 3950}
     const expectedUrl = `/pws?projectId=${row.projectId}`;
     const projectName = "Test Project";
-    const url = shallow(projectNameUrlDecorator(projectName, row));
+    const url = mount(
+        <Router>
+            {projectNameUrlDecorator(projectName, row)}
+        </Router>
+    );
 
     expect(url.find("a").prop("href")).toEqual(expectedUrl);
     expect(url.find("a").text()).toEqual(projectName);

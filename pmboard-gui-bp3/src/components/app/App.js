@@ -53,6 +53,6 @@ App.propTypes = {
 
 App.defaultProps = {
     appSettings: {
-        isNavMenuExpanded: false
+        isNavMenuExpanded: true
     }
 }
