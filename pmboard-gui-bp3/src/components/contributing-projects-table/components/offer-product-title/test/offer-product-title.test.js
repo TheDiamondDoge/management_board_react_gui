@@ -7,7 +7,7 @@ it("render without props", () => {
     const title = "Your project has not been identified as contributing to an Offer";
 
     expect(titleWrapper.find("span").text()).toEqual(title);
-    expect(titleWrapper.find("span").hasClass(/\s?red\s?/));
+    expect(titleWrapper.find("span").hasClass("red")).toBe(true);
 });
 
 it("className should be passed", () => {
