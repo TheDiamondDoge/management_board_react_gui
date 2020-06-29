@@ -15,6 +15,14 @@ it("card should render children", () => {
     expect(card.contains(child)).toBe(true);
 });
 
+it("check if className is passed to card component", () => {
+    const card = mount(
+        <CustomCard className={"test-class"} />
+    );
+
+    expect(card.find("div.custom_card").hasClass("test-class")).toBe(true);
+});
+
 it("card should catch errors and render error message component", () => {
     const card = mount(
         <CustomCard>
