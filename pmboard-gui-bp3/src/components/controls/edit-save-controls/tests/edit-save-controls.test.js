@@ -60,3 +60,11 @@ it("edit-save-controls loading", () => {
     expect(editButton.hasClass("bp3-loading")).toBe(true);
     expect(editButton.props().disabled).toBeTruthy();
 });
+
+it("edit-save-controls minimal", () => {
+    const editSaveControls = mount(<EditSaveControls smallSize />);
+
+    // toEqual({}) means that no `span.bp3-button-text` element found
+    expect(editSaveControls.find("span.bp3-button-text")).toEqual({});
+    expect(editSaveControls.find("span[icon='edit']")).toBeTruthy();
+});
