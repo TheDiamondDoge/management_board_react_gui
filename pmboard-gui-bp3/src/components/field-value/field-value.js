@@ -17,6 +17,7 @@ export default class FieldValue extends React.PureComponent {
                 <SafeUrl
                     url={value}
                     label={useName}
+                    className={classes}
                 />
             )
             : value;
