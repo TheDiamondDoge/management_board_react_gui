@@ -2,6 +2,7 @@ import React from 'react';
 import {Icon, Intent} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 import styles from "./project-not-found-status.module.scss";
+import FieldValue from "../../field-value/field-value";
 
 export default class ProjectNotFoundStatus extends React.PureComponent {
     render() {
@@ -19,7 +20,7 @@ export default class ProjectNotFoundStatus extends React.PureComponent {
                     intent={Intent.PRIMARY}
                     className={styles.icon_style}
                 />
-                {message}
+                <FieldValue value={message} />
             </div>
         )
     }
