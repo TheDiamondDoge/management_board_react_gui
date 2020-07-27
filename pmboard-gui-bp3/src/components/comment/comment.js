@@ -3,18 +3,15 @@ import styles from "./comment.module.scss";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
-export default class Comment extends React.PureComponent {
-    render() {
-        const {value, className} = this.props;
-        const containerClasses = classNames(className, styles.container);
-        return (
-            <div className={containerClasses}>
-                <pre className={styles.pre}>
-                    {value}
-                </pre>
-            </div>
-        )
-    }
+const Comment = ({value, className}) => {
+    const containerClasses = classNames(className, styles.container);
+    return (
+        <div className={containerClasses}>
+            <pre className={styles.pre}>
+                {value}
+            </pre>
+        </div>
+    )
 }
 
 Comment.propTypes = {
@@ -26,3 +23,5 @@ Comment.defaultProps = {
     value: '',
     className: ''
 }
+
+export default React.memo(Comment);

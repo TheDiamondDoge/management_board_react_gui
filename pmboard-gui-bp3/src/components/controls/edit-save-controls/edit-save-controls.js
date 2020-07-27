@@ -4,62 +4,54 @@ import styles from "./edit-save-controls.module.scss";
 import classNames from "classnames";
 import PropTypes from "prop-types";
 
-export default class EditSaveControls extends React.PureComponent {
-    render() {
+function EditSaveControls(props) {
+    let {className, smallSize, loading, editMode, onSubmit, onCancel, onClick, sticky} = props;
+    let condProps = getButtonProps(smallSize);
+    const classes = classNames(
+        className,
+        {[styles.sticky_controls]: sticky}
+    );
+
+    if (editMode) {
         return (
-            this.renderElements()
+            <div className={classes}>
+                <Button
+                    text={"Save"}
+                    minimal
+                    icon={"saved"}
+                    onClick={onSubmit}
+                    intent={Intent.SUCCESS}
+                    {...condProps}
+                />
+                <Button
+                    text={"Cancel"}
+                    minimal
+                    icon={"undo"}
+                    onClick={onCancel}
+                    intent={Intent.DANGER}
+                    {...condProps}
+                />
+            </div>
+        )
+    } else {
+        if (!smallSize) {
+            condProps.text = "Edit";
+        }
+        return (
+            <div className={classes}>
+                <Button
+                    minimal
+                    icon={"edit"}
+                    onClick={onClick}
+                    intent={Intent.PRIMARY}
+                    loading={loading}
+                    {...condProps}
+                />
+            </div>
         )
     }
 
-    renderElements = () => {
-        let {className, smallSize, loading, editMode, onSubmit, onCancel, onClick, sticky} = this.props;
-        let condProps = this.getButtonProps(smallSize);
-        const classes = classNames(
-            className,
-            {[styles.sticky_controls]: sticky}
-        );
-
-        if (editMode) {
-            return (
-                <div className={classes}>
-                    <Button
-                        text={"Save"}
-                        minimal
-                        icon={"saved"}
-                        onClick={onSubmit}
-                        intent={Intent.SUCCESS}
-                        {...condProps}
-                    />
-                    <Button
-                        text={"Cancel"}
-                        minimal
-                        icon={"undo"}
-                        onClick={onCancel}
-                        intent={Intent.DANGER}
-                        {...condProps}
-                    />
-                </div>
-            )
-        } else {
-            if (!smallSize) {
-                condProps.text = "Edit";
-            }
-            return (
-                <div className={classes}>
-                    <Button
-                        minimal
-                        icon={"edit"}
-                        onClick={onClick}
-                        intent={Intent.PRIMARY}
-                        loading={loading}
-                        {...condProps}
-                    />
-                </div>
-            )
-        }
-    };
-
-    getButtonProps = (isSmall) => {
+    function getButtonProps(isSmall) {
         if (isSmall) {
             return {
                 text: null
@@ -69,8 +61,8 @@ export default class EditSaveControls extends React.PureComponent {
                 large: true,
             }
         }
-    };
-};
+    }
+}
 
 EditSaveControls.propTypes = {
     onClick: PropTypes.func,
@@ -84,12 +76,17 @@ EditSaveControls.propTypes = {
 };
 
 EditSaveControls.defaultProps = {
-    onClick: () => {},
-    onSubmit: () => {},
-    onCancel: () => {},
+    onClick: () => {
+    },
+    onSubmit: () => {
+    },
+    onCancel: () => {
+    },
     editMode: false,
     smallSize: false,
     className: '',
     loading: false,
     sticky: false
 };
+
+export default React.memo(EditSaveControls);

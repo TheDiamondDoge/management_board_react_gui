@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Tab, Tabs} from "@blueprintjs/core";
 import Report from './tabs/report-tab/report-tab.container';
 import styles from './pws.module.scss';
@@ -26,206 +26,193 @@ import {Helmet} from "react-helmet";
 import RenderFieldHelper from "../../../util/render-field-helper";
 import {ProjectDefaults} from "../../../util/custom-types";
 
-export default class PWS extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedId: "",
-            defaults: {
-                defaultSelectedTab: PWSTabs.SUMMARY,
-                defaultTabNames: this.getDefaultTabNames()
-            }
-        };
+export default function PWS(props) {
+    const {loadData, resetData} = props;
+    let projectId = useRef(-1);
+    useEffect(() => {
+        projectId.current = Number(getUrlParam("projectId"));
+        loadData(projectId.current);
+        return resetData;
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    let [selectedId, setSelectedId] = useState("");
+    const renderFieldHelper = new RenderFieldHelper(config, props.defaults.payload);
+
+    const {loading, error} = props.defaults;
+    if (loading) {
+        return <StatusContainer><LoadingStatus/></StatusContainer>;
+    } else if (error) {
+        return <ProjectNotFoundStatus id={projectId.current}/>;
+    } else {
+        const defaultTabNames = getDefaultTabNames();
+        const tabName = getActiveTabName(defaultTabNames, PWSTabs.SUMMARY);
+        const {projectName, requirementsUrl, metricsScope} = props.defaults.payload;
+        const selectedTabId = selectedId || tabName;
+        return (
+            <>
+                <Helmet>
+                    <title>{projectName}</title>
+                </Helmet>
+                <div className={styles.pws_container}>
+                    <h1>Project {projectName}</h1>
+                    <Tabs
+                        id="pws_tabs"
+                        large
+                        renderActiveTabPanelOnly
+                        selectedTabId={selectedTabId}
+                        className={styles.tabs}
+                        onChange={setSelectedId}
+                    >
+                        {renderFieldHelper.displayOrNot(PWSTabs.SUMMARY) &&
+                        <Tab
+                            id={PWSTabs.SUMMARY}
+                            title="Summary"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <SummaryTab tabId={PWSTabs.SUMMARY} defaults={props.defaults}/>
+                                </ErrorBoundary>
+                            )}
+                        />
+                        }
+                        {renderFieldHelper.displayOrNot(PWSTabs.INDICATORS) &&
+                        <Tab
+                            id={PWSTabs.INDICATORS}
+                            title="Indicators"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <IndicatorsTab tabId={PWSTabs.INDICATORS} defaults={props.defaults}/>
+                                </ErrorBoundary>
+                            )}/>
+                        }
+                        {renderFieldHelper.displayOrNot(PWSTabs.INFORMATION) &&
+                        <Tab
+                            id={PWSTabs.INFORMATION}
+                            title="Information"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <InfoTab tabId={PWSTabs.INFORMATION} defaults={props.defaults}/>
+                                </ErrorBoundary>
+                            )}/>
+                        }
+                        {renderFieldHelper.displayOrNot(PWSTabs.ACTIONS) &&
+                        <Tab
+                            id={PWSTabs.ACTIONS}
+                            title="Actions"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <Actions tabId={PWSTabs.ACTIONS} defaults={props.defaults}/>
+                                </ErrorBoundary>
+                            )}/>
+                        }
+                        {renderFieldHelper.displayOrNot(PWSTabs.RISKS) &&
+                        <Tab
+                            id={PWSTabs.RISKS}
+                            title="Risks"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <Risks tabId={PWSTabs.RISKS} defaults={props.defaults}/>
+                                </ErrorBoundary>
+                            )}/>
+                        }
+                        {renderFieldHelper.displayOrNot(PWSTabs.COST) &&
+                        <Tab
+                            id={PWSTabs.COST}
+                            title="Cost"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <CostTab tabId={PWSTabs.COST} defaults={props.defaults}/>
+                                </ErrorBoundary>
+                            )}/>
+                        }
+                        {renderFieldHelper.displayOrNot(PWSTabs.REPORT) &&
+                        <Tab
+                            id={PWSTabs.REPORT}
+                            title="Report"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <Report tabId={PWSTabs.REPORT} defaults={props.defaults}/>
+                                </ErrorBoundary>
+                            )}/>
+                        }
+                        {renderFieldHelper.displayOrNot(PWSTabs.REQUIREMENTS) &&
+                        <Tab
+                            id={PWSTabs.REQUIREMENTS}
+                            title="Requirements"
+                            className={styles.tab_container}
+                            disabled={!requirementsUrl}
+                            panel={(
+                                <ErrorBoundary>
+                                    <Requirements tabId={PWSTabs.REQUIREMENTS} defaults={props.defaults}/>
+                                </ErrorBoundary>
+                            )}/>
+                        }
+                        {renderFieldHelper.displayOrNot(PWSTabs.BACKLOG) &&
+                        <Tab
+                            id={PWSTabs.BACKLOG}
+                            title="Backlog"
+                            className={styles.tab_container}
+                            disabled={!metricsScope}
+                            panel={(
+                                <ErrorBoundary>
+                                    <BacklogTab tabId={PWSTabs.BACKLOG} defaults={props.defaults}/>
+                                </ErrorBoundary>
+                            )}/>
+                        }
+                        {renderFieldHelper.displayOrNot(PWSTabs.DEFECTS) &&
+                        <Tab
+                            id={PWSTabs.DEFECTS}
+                            title="Defects"
+                            className={styles.tab_container}
+                            disabled={!metricsScope}
+                            panel={(
+                                <ErrorBoundary>
+                                    <DefectsTab tabId={PWSTabs.DEFECTS} defaults={props.defaults}/>
+                                </ErrorBoundary>
+                            )}/>
+                        }
+                        {renderFieldHelper.displayOrNot(PWSTabs.BLC) &&
+                        <Tab
+                            id={PWSTabs.BLC}
+                            title="BLC Dashboard"
+                            className={styles.tab_container}
+                            panel={(
+                                <ErrorBoundary>
+                                    <BlcDashboard tabId={PWSTabs.BLC} defaults={props.defaults}/>
+                                </ErrorBoundary>
+                            )}/>
+                        }
+                    </Tabs>
+                </div>
+            </>
+        );
     }
 
-    componentDidMount() {
-        this.projectId = Number(getUrlParam("projectId"));
-        this.props.loadData(this.projectId);
+    function getActiveTabName(defaultTabNames, defaultSelectedTab) {
+        const urlParams = props.location.search;
+        const tabName = new URLSearchParams(urlParams).get('tab');
+        return isTabNameExists(defaultTabNames, tabName) && renderFieldHelper.displayOrNot(tabName)
+            ? tabName.toLowerCase()
+            : defaultSelectedTab;
     }
 
-    componentWillUnmount() {
-        this.props.resetData();
+    function isTabNameExists(defaultTabNames, name) {
+        return defaultTabNames.includes(String(name).toLowerCase());
     }
 
-
-    render() {
-        const {loading, error} = this.props.defaults;
-        if (loading) {
-            return <StatusContainer><LoadingStatus/></StatusContainer>;
-        } else if (error) {
-            return <ProjectNotFoundStatus id={this.projectId}/>;
-        } else {
-            this.renderFieldHelper = new RenderFieldHelper(config, this.props.defaults.payload);
-            const tabName = this.getActiveTabName();
-            const {projectName, requirementsUrl, metricsScope} = this.props.defaults.payload;
-            const selectedTabId = this.state.selectedId || tabName;
-            return (
-                <>
-                    <Helmet>
-                        <title>{projectName}</title>
-                    </Helmet>
-                    <div className={styles.pws_container}>
-                        <h1>Project {projectName}</h1>
-                        <Tabs
-                            id="pws_tabs"
-                            large
-                            renderActiveTabPanelOnly
-                            selectedTabId={selectedTabId}
-                            className={styles.tabs}
-                            onChange={this.onChange}
-                        >
-                            {this.renderFieldHelper.displayOrNot(PWSTabs.SUMMARY) &&
-                            <Tab
-                                id={PWSTabs.SUMMARY}
-                                title="Summary"
-                                className={styles.tab_container}
-                                panel={(
-                                    <ErrorBoundary>
-                                        <SummaryTab tabId={PWSTabs.SUMMARY} defaults={this.props.defaults}/>
-                                    </ErrorBoundary>
-                                )}
-                            />
-                            }
-                            {this.renderFieldHelper.displayOrNot(PWSTabs.INDICATORS) &&
-                            <Tab
-                                id={PWSTabs.INDICATORS}
-                                title="Indicators"
-                                className={styles.tab_container}
-                                panel={(
-                                    <ErrorBoundary>
-                                        <IndicatorsTab tabId={PWSTabs.INDICATORS} defaults={this.props.defaults}/>
-                                    </ErrorBoundary>
-                                )}/>
-                            }
-                            {this.renderFieldHelper.displayOrNot(PWSTabs.INFORMATION) &&
-                            <Tab
-                                id={PWSTabs.INFORMATION}
-                                title="Information"
-                                className={styles.tab_container}
-                                panel={(
-                                    <ErrorBoundary>
-                                        <InfoTab tabId={PWSTabs.INFORMATION} defaults={this.props.defaults}/>
-                                    </ErrorBoundary>
-                                )}/>
-                            }
-                            {this.renderFieldHelper.displayOrNot(PWSTabs.ACTIONS) &&
-                            <Tab
-                                id={PWSTabs.ACTIONS}
-                                title="Actions"
-                                className={styles.tab_container}
-                                panel={(
-                                    <ErrorBoundary>
-                                        <Actions tabId={PWSTabs.ACTIONS} defaults={this.props.defaults}/>
-                                    </ErrorBoundary>
-                                )}/>
-                            }
-                            {this.renderFieldHelper.displayOrNot(PWSTabs.RISKS) &&
-                            <Tab
-                                id={PWSTabs.RISKS}
-                                title="Risks"
-                                className={styles.tab_container}
-                                panel={(
-                                    <ErrorBoundary>
-                                        <Risks tabId={PWSTabs.RISKS} defaults={this.props.defaults}/>
-                                    </ErrorBoundary>
-                                )}/>
-                            }
-                            {this.renderFieldHelper.displayOrNot(PWSTabs.COST) &&
-                            <Tab
-                                id={PWSTabs.COST}
-                                title="Cost"
-                                className={styles.tab_container}
-                                panel={(
-                                    <ErrorBoundary>
-                                        <CostTab tabId={PWSTabs.COST} defaults={this.props.defaults}/>
-                                    </ErrorBoundary>
-                                )}/>
-                            }
-                            {this.renderFieldHelper.displayOrNot(PWSTabs.REPORT) &&
-                            <Tab
-                                id={PWSTabs.REPORT}
-                                title="Report"
-                                className={styles.tab_container}
-                                panel={(
-                                    <ErrorBoundary>
-                                        <Report tabId={PWSTabs.REPORT} defaults={this.props.defaults}/>
-                                    </ErrorBoundary>
-                                )}/>
-                            }
-                            {this.renderFieldHelper.displayOrNot(PWSTabs.REQUIREMENTS) &&
-                            <Tab
-                                id={PWSTabs.REQUIREMENTS}
-                                title="Requirements"
-                                className={styles.tab_container}
-                                disabled={!requirementsUrl}
-                                panel={(
-                                    <ErrorBoundary>
-                                        <Requirements tabId={PWSTabs.REQUIREMENTS} defaults={this.props.defaults}/>
-                                    </ErrorBoundary>
-                                )}/>
-                            }
-                            {this.renderFieldHelper.displayOrNot(PWSTabs.BACKLOG) &&
-                            <Tab
-                                id={PWSTabs.BACKLOG}
-                                title="Backlog"
-                                className={styles.tab_container}
-                                disabled={!metricsScope}
-                                panel={(
-                                    <ErrorBoundary>
-                                        <BacklogTab tabId={PWSTabs.BACKLOG} defaults={this.props.defaults}/>
-                                    </ErrorBoundary>
-                                )}/>
-                            }
-                            {this.renderFieldHelper.displayOrNot(PWSTabs.DEFECTS) &&
-                            <Tab
-                                id={PWSTabs.DEFECTS}
-                                title="Defects"
-                                className={styles.tab_container}
-                                disabled={!metricsScope}
-                                panel={(
-                                    <ErrorBoundary>
-                                        <DefectsTab tabId={PWSTabs.DEFECTS} defaults={this.props.defaults}/>
-                                    </ErrorBoundary>
-                                )}/>
-                            }
-                            {this.renderFieldHelper.displayOrNot(PWSTabs.BLC) &&
-                            <Tab
-                                id={PWSTabs.BLC}
-                                title="BLC Dashboard"
-                                className={styles.tab_container}
-                                panel={(
-                                    <ErrorBoundary>
-                                        <BlcDashboard tabId={PWSTabs.BLC} defaults={this.props.defaults}/>
-                                    </ErrorBoundary>
-                                )}/>
-                            }
-                        </Tabs>
-                    </div>
-                </>
-            );
-        }
-    }
-
-    getDefaultTabNames() {
+    function getDefaultTabNames() {
         return Object.keys(PWSTabs).map(key => PWSTabs[key])
     }
-
-    onChange = (tabId) => (
-        this.setState({selectedId: tabId})
-    );
-
-    getActiveTabName() {
-        const urlParams = this.props.location.search;
-        const tabName = new URLSearchParams(urlParams).get('tab');
-        return this.isTabNameExists(tabName) && this.renderFieldHelper.displayOrNot(tabName)
-            ? tabName.toLowerCase()
-            : this.state.defaults.defaultSelectedTab;
-    }
-
-    isTabNameExists(name) {
-        return this.state.defaults.defaultTabNames.includes(String(name).toLowerCase());
-    }
 }
+
 
 PWS.propTypes = {
     defaults: PropTypes.shape({

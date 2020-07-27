@@ -4,7 +4,7 @@ import styles from './breadcrumbs.module.scss';
 import classNames from 'classnames';
 import PropTypes from "prop-types";
 
-export const CustomBreadcrumbs = ({className}) => {
+export const CustomBreadcrumbs = React.memo(({className}) => {
     const BREADCRUMBS = [
         {href: "/", icon: "folder-close", text: "Home"},
         {href: "/test", icon: "folder-close", text: "Test page"},
@@ -20,7 +20,7 @@ export const CustomBreadcrumbs = ({className}) => {
             />
         </div>
     )
-};
+});
 
 CustomBreadcrumbs.propTypes = {
     className: PropTypes.string,

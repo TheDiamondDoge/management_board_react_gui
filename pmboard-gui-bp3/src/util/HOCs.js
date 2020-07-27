@@ -1,4 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {callAllFuncs} from "./util";
+
+export function useOnMountCall(mountFuncsArr, unmountFuncsArr) {
+    useEffect(() => {
+        callAllFuncs(mountFuncsArr);
+        return () => {
+            callAllFuncs(unmountFuncsArr);
+        }
+    }, [mountFuncsArr, unmountFuncsArr])
+}
 
 export function withOnMountCall(Component, config) {
     const WithOnMountCall = class extends React.Component {
@@ -23,6 +33,18 @@ export function withOnMountCall(Component, config) {
     return WithOnMountCall;
 }
 
+export function usePwsTabNameUrlChanger(tabId) {
+    useEffect(() => {
+        if (tabId) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlBase = window.location.pathname;
+            urlParams.set("tab", tabId);
+
+            const url = `${urlBase}?${urlParams.toString()}`;
+            window.history.pushState("Tabs", `${tabId} tab`, url);
+        }
+    }, [tabId])
+}
 
 export function withPwsTabNameUrlChanger(Component) {
     const WithPwsTabNameUrlChanger = class extends React.Component {

@@ -33,6 +33,7 @@ export default class World extends React.Component {
         this.state = {
             selectedItems: ["Hi", "I", "am", "Robert"],
             isDialog: false,
+            count: 0,
             quill: "<h1>Hell-0</h1>",
             toasts: [
                 {id: 1, name: "Hello", isShown: true},

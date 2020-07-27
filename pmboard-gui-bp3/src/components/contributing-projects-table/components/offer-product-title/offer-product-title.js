@@ -4,23 +4,18 @@ import FieldName from "../../../field-name/field-name";
 import classNames from "classnames";
 import styles from "./offer-product-title.module.scss";
 
-export default class OfferProductTitle extends React.PureComponent {
-    render() {
-        const {isOffer, isContrib, className} = this.props;
-        const classes = classNames(
-            className,
-            {[styles.red]: (!isOffer && !isContrib)}
-        );
+export default function OfferProductTitle({isOffer, isContrib, className}) {
+    const classes = classNames(
+        className,
+        {[styles.red]: (!isOffer && !isContrib)}
+    );
 
-        let title = this.getTitle();
-        return (
-            <FieldName className={classes} name={title}/>
-        );
-    }
+    let title = getTitle();
+    return (
+        <FieldName className={classes} name={title}/>
+    );
 
-    getTitle() {
-        const {isOffer, isContrib} = this.props;
-
+    function getTitle() {
         if (isOffer) {
             return "Contributing Open Projects:";
         } else if (isContrib) {

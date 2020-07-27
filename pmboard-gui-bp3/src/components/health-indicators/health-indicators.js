@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import FieldName from "../field-name/field-name";
 import {HTMLTable, Position, Tooltip} from "@blueprintjs/core";
 import styles from "./health-indicators.module.scss";
@@ -17,70 +17,48 @@ import {Messages} from "../../util/constants";
 import validationSchema from "./validation-schema";
 import OnSubmitValidationError from "../formik-onsubmit-validator";
 
-export default class HealthIndicators extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            editStatusMode: false,
-            editCommentMode: false,
-        };
+export default function HealthIndicators(props) {
+    const [editStatusMode, setEditStatusMode] = useState(false);
+    const [editCommentMode, setEditCommentMode] = useState(false);
 
-        this.onClickEditStatus = this.onClickEditStatus.bind(this);
-        this.onClickEditComment = this.onClickEditComment.bind(this);
-    }
-
-    submitForm = null;
-
-    bindFormSubmission = (formikSubmitForm) => {
-        this.submitForm = formikSubmitForm;
+    const onClickEditStatus = () => {
+        setEditStatusMode(status => !status)
     };
 
-    onClickEditStatus = () => {
-        this.setState(
-            (prevState) => ({editStatusMode: !prevState.editStatusMode})
-        )
+    const onClickEditComment = () => {
+        setEditCommentMode(status => !status)
     };
 
-    onClickEditComment = () => {
-        this.setState(
-            (prevState) => ({editCommentMode: !prevState.editCommentMode})
-        )
-    };
-
-    render() {
-        const {isSummaryMode, indicators, onIndicatorsSubmit, onCommentsSubmit} = this.props;
-        return (
-            <Formik
-                isInitialValid
-                onSubmit={(values, formikActions) => {
-                    formikActions.setSubmitting(false);
-                    if (this.state.editStatusMode) {
-                        onIndicatorsSubmit(values);
-                    } else if (this.state.editCommentMode) {
-                        onCommentsSubmit(values);
-                    }
-                }}
-                initialValues={{
-                    ...indicators
-                }}
-                validationSchema={
-                    validationSchema
+    const {isSummaryMode, indicators, onIndicatorsSubmit, onCommentsSubmit} = props;
+    return (
+        <Formik
+            isInitialValid
+            onSubmit={(values, formikActions) => {
+                formikActions.setSubmitting(false);
+                if (editStatusMode) {
+                    onIndicatorsSubmit(values);
+                } else if (editCommentMode) {
+                    onCommentsSubmit(values);
                 }
-                render={
-                    (formikProps) => {
-                        this.bindFormSubmission(formikProps.submitForm);
-                        return (this.getHealthIndicatorsTable(formikProps.values, isSummaryMode))
-                    }
-                }
-            />
-        )
-    }
+            }}
+            initialValues={{
+                ...indicators
+            }}
+            validationSchema={
+                validationSchema
+            }
+            render={
+                (formikProps) =>
+                    (getHealthIndicatorsTable(formikProps.values, isSummaryMode, formikProps.submitForm))
+            }
+        />
+    )
 
-    getHealthIndicatorsTable = (values, isSummaryMode) => {
+    function getHealthIndicatorsTable(values, isSummaryMode, submitForm) {
         const {prevStatusSet, currentStatusSet} = values;
-        const {onCancel, fieldsToRender, blocked} = this.props;
-        const isStatusControlsShown = !isSummaryMode && !blocked && !this.state.editCommentMode;
-        const isCommentsControlsShown = !this.state.editStatusMode && !blocked;
+        const {onCancel, fieldsToRender, blocked} = props;
+        const isStatusControlsShown = !isSummaryMode && !blocked && !editCommentMode;
+        const isCommentsControlsShown = !editStatusMode && !blocked;
         const prevDate = dateFormatToString(new Date(prevStatusSet));
         const currentDate = dateFormatToString(new Date(currentStatusSet));
         return (
@@ -115,9 +93,9 @@ export default class HealthIndicators extends React.Component {
                                 <EditSaveControls
                                     smallSize
                                     className={styles.inline_block}
-                                    editMode={this.state.editStatusMode}
-                                    onClick={this.onClickEditStatus}
-                                    onSubmit={this.submitForm}
+                                    editMode={editStatusMode}
+                                    onClick={onClickEditStatus}
+                                    onSubmit={submitForm}
                                     onCancel={onCancel}
                                 />
                             }
@@ -140,10 +118,10 @@ export default class HealthIndicators extends React.Component {
                                     <EditSaveControls
                                         smallSize
                                         className={styles.inline_block}
-                                        editMode={this.state.editCommentMode}
-                                        onClick={this.onClickEditComment}
+                                        editMode={editCommentMode}
+                                        onClick={onClickEditComment}
                                         onCancel={onCancel}
-                                        onSubmit={this.submitForm}
+                                        onSubmit={submitForm}
                                     />
                                 }
                             </th>
@@ -166,22 +144,22 @@ export default class HealthIndicators extends React.Component {
                                         <FieldName name={label}/>
                                     </td>
 
-                                    {this.getImmutableIndicatorTd(prevValue, immutableIndicatorName, styles)}
-                                    {this.getIndicatorTd(currentValue, indicatorName, styles)}
-                                    {isSummaryMode || this.getCommentTd(comment, commentName, styles)}
+                                    {getImmutableIndicatorTd(prevValue, immutableIndicatorName, styles)}
+                                    {getIndicatorTd(currentValue, indicatorName, styles)}
+                                    {isSummaryMode || getCommentTd(comment, commentName, styles)}
                                 </tr>
                             )
                         })
                     }
                     </tbody>
                 </HTMLTable>
-                <OnSubmitValidationError callback={this.handleSubmitWithErrors}/>
+                <OnSubmitValidationError callback={handleSubmitWithErrors}/>
             </>
         )
-    };
+    }
 
-    getCommentTd = (comment, name, styles) => {
-        if (this.state.editCommentMode) {
+    function getCommentTd(comment, name, styles) {
+        if (editCommentMode) {
             return (
                 <td>
                     <FormikInput type="textarea" name={name}/>
@@ -194,15 +172,15 @@ export default class HealthIndicators extends React.Component {
                 </td>
             )
         }
-    };
+    }
 
-    getImmutableIndicatorTd = (status, name, styles) => (
-        this.getIndicatorTd(status, name, styles, false)
-    );
+    function getImmutableIndicatorTd(status, name, styles) {
+        return getIndicatorTd(status, name, styles, false)
+    }
 
-    getIndicatorTd = (status, name, styles, isMutable = true) => {
-        if (isMutable && this.state.editStatusMode) {
-            const selectComponent = this.selectElement(name);
+    function getIndicatorTd(status, name, styles, isMutable = true) {
+        if (isMutable && editStatusMode) {
+            const selectComponent = selectElement(name);
             return (
                 <td className={styles.column_align_center}>
                     {selectComponent}
@@ -219,9 +197,9 @@ export default class HealthIndicators extends React.Component {
                 </td>
             )
         }
-    };
+    }
 
-    selectElement = (name) => {
+    function selectElement(name) {
         return (
             <Field component="select" name={name}>
                 <option value="">&nbsp;</option>
@@ -230,11 +208,11 @@ export default class HealthIndicators extends React.Component {
                 <option value="3">Red</option>
             </Field>
         )
-    };
+    }
 
-    handleSubmitWithErrors = (formikProps) => {
+    function handleSubmitWithErrors(formikProps) {
         if (!formikProps.isValid) {
-            this.props.onSubmitErrorCallback(Messages.FORM_SUBMIT_ERROR)
+            props.onSubmitErrorCallback(Messages.FORM_SUBMIT_ERROR)
         }
     }
 }
@@ -253,9 +231,13 @@ HealthIndicators.propTypes = {
 
 HealthIndicators.defaultProps = {
     isSummaryMode: false,
-    onIndicatorsSubmit: () => {},
-    onCommentsSubmit: () => {},
-    onCancel: () => {},
+    onIndicatorsSubmit: () => {
+    },
+    onCommentsSubmit: () => {
+    },
+    onCancel: () => {
+    },
     blocked: false,
-    onSubmitErrorCallback: () => {}
+    onSubmitErrorCallback: () => {
+    }
 }

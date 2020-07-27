@@ -2,35 +2,33 @@ import React from "react";
 import {Button, Classes, Dialog, Intent} from "@blueprintjs/core";
 import PropTypes from "prop-types";
 
-export default class ConfirmationPopup extends React.Component {
-    render() {
-        const {isOpen, title, icon, body, onClose, onConfirm, onCancel, confirmLabel, cancelLabel} = this.props;
-        return (
-            <Dialog
-                isOpen={isOpen}
-                onClose={onClose}
-                title={title}
-                icon={icon}
-            >
-                <div className={Classes.DIALOG_BODY}>
-                    {body}
+export default function ConfirmationPopup(props) {
+    const {isOpen, title, icon, body, onClose, onConfirm, onCancel, confirmLabel, cancelLabel} = props;
+    return (
+        <Dialog
+            isOpen={isOpen}
+            onClose={onClose}
+            title={title}
+            icon={icon}
+        >
+            <div className={Classes.DIALOG_BODY}>
+                {body}
+            </div>
+            <div className={Classes.DIALOG_FOOTER}>
+                <div className={Classes.DIALOG_FOOTER_ACTIONS}>
+                    <Button onClick={onConfirm}>
+                        {confirmLabel}
+                    </Button>
+                    <Button
+                        intent={Intent.DANGER}
+                        onClick={onCancel}
+                    >
+                        {cancelLabel}
+                    </Button>
                 </div>
-                <div className={Classes.DIALOG_FOOTER}>
-                    <div className={Classes.DIALOG_FOOTER_ACTIONS}>
-                        <Button onClick={onConfirm}>
-                            {confirmLabel}
-                        </Button>
-                        <Button
-                            intent={Intent.DANGER}
-                            onClick={onCancel}
-                        >
-                            {cancelLabel}
-                        </Button>
-                    </div>
-                </div>
-            </Dialog>
-        );
-    }
+            </div>
+        </Dialog>
+    );
 }
 
 ConfirmationPopup.propTypes = {
@@ -48,9 +46,12 @@ ConfirmationPopup.propTypes = {
 ConfirmationPopup.defaultProps = {
     isOpen: false,
     title: "",
-    onClose: () => {},
-    onConfirm: () => {},
-    onCancel: () => {},
+    onClose: () => {
+    },
+    onConfirm: () => {
+    },
+    onCancel: () => {
+    },
     confirmLabel: "Confirm",
     cancelLabel: "Cancel"
 };

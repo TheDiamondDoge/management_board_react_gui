@@ -114,3 +114,13 @@ export function getSpecialNumericRegexp() {
 export function getProjectUrl(projectId) {
     return `/pws?projectId=${projectId}`
 }
+
+export function callAllFuncs(funct) {
+    if (funct) {
+        if (funct instanceof Function) {
+            funct();
+        } else if (Array.isArray(funct)) {
+            funct.forEach((func) => func());
+        }
+    }
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import styles from './custom-quill.module.scss';
 import EditSaveControls from "../controls/edit-save-controls/edit-save-controls";
@@ -9,96 +9,71 @@ import classNames from "classnames";
 
 import 'react-quill/dist/quill.snow.css';
 
-export default class CustomQuill extends React.Component {
-    constructor(props) {
-        super(props);
+export default function CustomQuill(props) {
+    const {header, onSubmit, loading, ...otherProps} = props;
+    const [editMode, setEditMode] = useState(false);
+    const [defaultValue] = useState("<p>(Empty)</p>");
+    const [toolbar] = useState(() => getQuillModuleToolbar());
 
-        this.state = {
-            editMode: false,
-            default: {
-                value: "<p>(Empty)</p>",
-                modules: {
-                    toolbar: getQuillModuleToolbar(),
-                }
-            }
-        };
-
-        this.onEditChange = this.onEditChange.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
-    }
-
-    submitForm = null;
-
-    render() {
-        const {header, onSubmit, loading, ...otherProps} = this.props;
-        const value = this.props.value || this.state.default.value;
-        const {editMode} = this.state;
-        const readOnly = !editMode;
-        let modules = this.getModules();
-        const quillClasses = classNames({[styles.display_mode] : !editMode});
-        return (
-            <Formik
-                enableReinitialize
-                onSubmit={(values, formikActions) => {
-                    formikActions.setSubmitting(false);
-                    onSubmit(values.text);
-                    this.onEditChange();
-                }}
-                initialValues={{text: value}}
-                render={(formikProps) => {
-                    this.submitForm = formikProps.submitForm;
-                    return (
-                        <>
-                            <div>
-                                <div className={styles.inline_block}>
-                                    {header}
-                                </div>
-                                <EditSaveControls
-                                    smallSize
-                                    className={styles.inline_block}
-                                    onClick={this.onEditChange}
-                                    onCancel={this.handleCancel}
-                                    onSubmit={this.submitForm}
-                                    editMode={editMode}
-                                    loading={loading}
-                                />
+    const value = props.value || defaultValue;
+    const readOnly = !editMode;
+    let modules = getModules(readOnly);
+    const quillClasses = classNames({[styles.display_mode]: !editMode});
+    return (
+        <Formik
+            enableReinitialize
+            onSubmit={(values, formikActions) => {
+                formikActions.setSubmitting(false);
+                onSubmit(values.text);
+                onEditChange();
+            }}
+            initialValues={{text: value}}
+            render={(formikProps) => {
+                return (
+                    <>
+                        <div>
+                            <div className={styles.inline_block}>
+                                {header}
                             </div>
-                            <FormikInput
-                                {...otherProps}
-                                type={"quill"}
-                                name={"text"}
-                                readOnly={readOnly}
-                                modules={modules}
-                                className={quillClasses}
+                            <EditSaveControls
+                                smallSize
+                                className={styles.inline_block}
+                                onClick={onEditChange}
+                                onCancel={handleCancel}
+                                onSubmit={formikProps.submitForm}
+                                editMode={editMode}
+                                loading={loading}
                             />
-                        </>
-                    )
-                }}
-            />
-        );
-    }
+                        </div>
+                        <FormikInput
+                            {...otherProps}
+                            type={"quill"}
+                            name={"text"}
+                            readOnly={readOnly}
+                            modules={modules}
+                            className={quillClasses}
+                        />
+                    </>
+                )
+            }}
+        />
+    );
 
-    getModules() {
-        const {editMode} = this.state;
-
-        if (!editMode) {
-            let modules = {...this.state.default.modules};
-            modules.toolbar = null;
-            return modules;
+    function getModules(isReadOnly) {
+        if (isReadOnly) {
+            return {toolbar: null};
         } else {
-            return this.state.default.modules;
+            return {toolbar};
         }
     }
 
-    handleCancel() {
-        this.onEditChange();
-        this.props.onCancel();
+    function handleCancel() {
+        onEditChange();
+        props.onCancel();
     }
 
-    onEditChange() {
-        this.setState((prev => ({
-            editMode: !prev.editMode
-        })))
+    function onEditChange() {
+        setEditMode(prev => !prev);
     }
 }
 
@@ -113,7 +88,9 @@ CustomQuill.propTypes = {
 CustomQuill.defaultProps = {
     header: '',
     value: '',
-    onSubmit: () => {},
-    onCancel: () => {},
+    onSubmit: () => {
+    },
+    onCancel: () => {
+    },
     loading: false,
 };

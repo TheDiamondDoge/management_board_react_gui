@@ -8,83 +8,84 @@ import {FastField} from "formik";
 import FormikInput from "../controls/util-renderers";
 import Comment from "../comment/comment";
 
-export default class BlcRow extends React.Component {
-    render() {
-        const {roleName, lastUpdatedBy, updatedOn, rowValues, comment, onClickEdit, isValuesEdit, isCommentsEdit} = this.props;
-        const tdClasses = style.td_style;
-        const commentName = `${this.props.rowName}.comment`;
-        const updatedOnString = getDateFromStringWithTime(updatedOn);
-        const isEditShown = this.shouldShowEditButton();
-        return (
-            <tr>
-                <td className={style.sticky_white}>
-                    <div>
-                        <div className={style.inline_block}>
-                            {
-                                isEditShown &&
-                                <Button
-                                    minimal
-                                    icon={"edit"}
-                                    intent={"primary"}
-                                    onClick={onClickEdit}
-                                />
-                            }
-                        </div>
-                        <div className={style.inline_block}>
-                            {roleName}
-                        </div>
-                    </div>
-                </td>
-                <td className={tdClasses}>
-                    {lastUpdatedBy}
-                </td>
-                <td className={tdClasses}>
-                    {updatedOnString}
-                </td>
-
-                {Object.keys(rowValues).map((key) => {
-                    const status = blcNumberToState(rowValues[key]);
-                    return (
-                        <td
-                            key={key}
-                            className={tdClasses}
-                        >
-                            {
-                                isValuesEdit
-                                    ? this.selectElement(rowValues[key], key)
-                                    : (
-                                        <StatusIndicator
-                                            className={style.inline_block}
-                                            status={status}
-                                        />
-                                    )
-                            }
-                        </td>
-                    )
-                })}
-
-                <td className={tdClasses}>
-                    {isCommentsEdit
-                        ? (
-                            <FormikInput
-                                fill
-                                type="textarea"
-                                name={commentName}
+export default function BlcRow(props) {
+    const {
+        roleName, lastUpdatedBy, updatedOn, rowValues, comment, onClickEdit, isControlsHidden, blocked, rowName,
+        isValuesEdit, isCommentsEdit
+    } = props;
+    const tdClasses = style.td_style;
+    const commentName = `${rowName}.comment`;
+    const updatedOnString = getDateFromStringWithTime(updatedOn);
+    const isEditShown = shouldShowEditButton();
+    return (
+        <tr>
+            <td className={style.sticky_white}>
+                <div>
+                    <div className={style.inline_block}>
+                        {
+                            isEditShown &&
+                            <Button
+                                minimal
+                                icon={"edit"}
+                                intent={"primary"}
+                                onClick={onClickEdit}
                             />
-                        )
-                        : <Comment value={comment}/>
-                    }
-                </td>
-            </tr>
-        )
+                        }
+                    </div>
+                    <div className={style.inline_block}>
+                        {roleName}
+                    </div>
+                </div>
+            </td>
+            <td className={tdClasses}>
+                {lastUpdatedBy}
+            </td>
+            <td className={tdClasses}>
+                {updatedOnString}
+            </td>
+
+            {Object.keys(rowValues).map((key) => {
+                const status = blcNumberToState(rowValues[key]);
+                return (
+                    <td
+                        key={key}
+                        className={tdClasses}
+                    >
+                        {
+                            isValuesEdit
+                                ? selectElement(rowValues[key], key)
+                                : (
+                                    <StatusIndicator
+                                        className={style.inline_block}
+                                        status={status}
+                                    />
+                                )
+                        }
+                    </td>
+                )
+            })}
+
+            <td className={tdClasses}>
+                {isCommentsEdit
+                    ? (
+                        <FormikInput
+                            fill
+                            type="textarea"
+                            name={commentName}
+                        />
+                    )
+                    : <Comment value={comment}/>
+                }
+            </td>
+        </tr>
+    )
+
+    function shouldShowEditButton() {
+        return !isValuesEdit && !isCommentsEdit && !isControlsHidden && !blocked
     }
 
-    shouldShowEditButton() {
-        return !this.props.isValuesEdit && !this.props.isCommentsEdit && !this.props.isControlsHidden && !this.props.blocked
-    }
-
-    selectElement = (num, key) => {
-        const name = `${this.props.rowName}.indicators.${key}`;
+    function selectElement(num, key) {
+        const name = `${rowName}.indicators.${key}`;
         return (
             <FastField
                 component="select"
@@ -96,7 +97,7 @@ export default class BlcRow extends React.Component {
                 <option value="8">8</option>
             </FastField>
         )
-    };
+    }
 }
 
 BlcRow.propTypes = {
@@ -119,8 +120,10 @@ BlcRow.defaultProps = {
     lastUpdatedBy: '',
     updatedOn: '',
     className: '',
-    onClickEdit: () => {},
-    onChange: () => {},
+    onClickEdit: () => {
+    },
+    onChange: () => {
+    },
     isValuesEdit: false,
     isCommentsEdit: false,
     isControlsHidden: false,

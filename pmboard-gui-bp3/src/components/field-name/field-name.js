@@ -3,19 +3,16 @@ import styles from "./field-name.module.scss";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
-export default class FieldName extends React.PureComponent {
-    render() {
-        const {className, name, ...other} = this.props;
-        const styleClass = classNames(className, styles.field);
-        return (
-            <span
-                className={styleClass}
-                {...other}
-            >
+function FieldName({className, name, ...other}) {
+    const styleClass = classNames(className, styles.field);
+    return (
+        <span
+            className={styleClass}
+            {...other}
+        >
                 {name}
             </span>
-        )
-    }
+    )
 }
 
 FieldName.propTypes = {
@@ -26,3 +23,5 @@ FieldName.propTypes = {
 FieldName.defaultProps = {
     className: ''
 }
+
+export default React.memo(FieldName);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {TextArea, InputGroup, Checkbox, NumericInput} from "@blueprintjs/core";
 import {DateInput} from "@blueprintjs/datetime";
 import {dateFormatToString, stringToDateFormat, transformDateForInput} from "../../util/transform-funcs";
@@ -9,55 +9,45 @@ import PropTypes from "prop-types";
 import FormikSelectList from "../formik-select-list";
 import ReactQuill from "react-quill";
 
-export default class FormikCustomField extends React.Component {
-    constructor(props) {
-        super(props);
+export default function FormikCustomField(props) {
+    const [minDate] = useState(() => new Date("1900-01-01"))
+    const [maxDate] = useState(() => new Date("2040-01-01"))
 
-        this.state = {
-            dateRange: {
-                min: new Date("1900-01-01"),
-                max: new Date("2040-01-01")
-            }
-        }
+    if (!(props === undefined)) {
+        const {field, form: {touched, errors}, type, values, ...otherProps} = props;
+        const touchedValue = getPropFromStringPath(touched, field.name);
+        const errorsValue = getPropFromStringPath(errors, field.name);
+
+        return (
+            <div>
+                {fieldFactory(type, field, otherProps, values)}
+                {touchedValue && errorsValue &&
+                <div className={styles.error}>{errorsValue}</div>
+                }
+            </div>
+        );
+    } else {
+        return (
+            <div>
+                {fieldFactory("text", null, null)}
+            </div>
+        )
     }
 
-    render() {
-        if (!(this.props === undefined)) {
-            const {field, form: {touched, errors}, type, values, ...props} = this.props;
-            const touchedValue = getPropFromStringPath(touched, field.name);
-            const errorsValue = getPropFromStringPath(errors, field.name);
 
-            return (
-                <div>
-                    {this.fieldFactory(type, field, props, values)}
-                    {touchedValue && errorsValue &&
-                    <div className={styles.error}>{errorsValue}</div>
-                    }
-                </div>
-            );
-        } else {
-            return (
-                <div>
-                    {this.fieldFactory("text", null, null)}
-                </div>
-            )
-        }
-    }
-
-    fieldFactory = (type, field, props, values = []) => {
+    function fieldFactory(type, field, otherProps, values = []) {
         type = type || "";
         switch (type.toLowerCase()) {
             case "textarea":
-                return (<TextArea fill {...field} {...props} />);
+                return (<TextArea fill {...field} {...otherProps} />);
             case "date":
                 const date = transformDateForInput(field.value);
-                const {min, max} = this.state.dateRange;
                 return (
                     <DateInput formatDate={date => dateFormatToString(date)}
                                parseDate={str => stringToDateFormat(str.toString())}
-                               maxDate={max}
-                               minDate={min}
-                               {...field} {...props}
+                               maxDate={maxDate}
+                               minDate={minDate}
+                               {...field} {...otherProps}
                                value={date}
                     />
                 );
@@ -67,7 +57,7 @@ export default class FormikCustomField extends React.Component {
                     <NumericInput allowNumericCharactersOnly
                                   fill
                                   buttonPosition="none"
-                                  {...field} {...props}
+                                  {...field} {...otherProps}
 
                     />
                 );
@@ -77,12 +67,12 @@ export default class FormikCustomField extends React.Component {
                         className={styles.no_margin}
                         defaultChecked={field.value}
                         inline
-                        {...field} {...props}
+                        {...field} {...otherProps}
                     />
                 );
             case "select":
                 return (
-                    <Field component="select" {...field} {...props}>
+                    <Field component="select" {...field} {...otherProps}>
                         {values.map((obj) => {
                             const {label, value} = obj;
                             return (
@@ -98,13 +88,13 @@ export default class FormikCustomField extends React.Component {
                 );
             case "multiselect":
                 return (
-                    <FormikSelectList {...props} {...field}/>
+                    <FormikSelectList {...otherProps} {...field}/>
                 );
             case "quill":
                 const {value, onChange, name, ...restField} = field;
                 return (
                     <ReactQuill
-                        {...props}
+                        {...otherProps}
                         {...restField}
                         value={value}
                         onChange={onChange(name)}
@@ -112,9 +102,9 @@ export default class FormikCustomField extends React.Component {
                 );
             case "text":
             default:
-                return (<InputGroup {...field} {...props} />);
+                return (<InputGroup {...field} {...otherProps} />);
         }
-    };
+    }
 }
 
 FormikCustomField.propTypes = {

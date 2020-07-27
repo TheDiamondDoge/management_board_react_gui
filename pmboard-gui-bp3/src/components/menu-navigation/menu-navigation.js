@@ -14,6 +14,7 @@ export default class MenuNavigation extends React.PureComponent {
     handleClick = (stateName) => {
         const {id} = stateName;
         this.setState({[id]: !this.state[id]})
+        this.setState((state, props) => {console.log(state,props)});
     };
 
     render() {
